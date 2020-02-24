@@ -12,8 +12,6 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 	//clusters.size(num_clusters);
 
 
-	if (restricciones.size() == datos.size())
-		std::cout << "todo bien" << std::endl;
 }
 
 
@@ -115,4 +113,13 @@ void PAR::leerRestricciones(const std::string fichero){
 		std::cerr << "Error abriendo " << fichero << std::endl;
 	}
 
+}
+
+
+int PAR::getNumClusters() const{
+	return num_clusters;
+}
+
+void PAR::setNumClusters(const int n_num_clusters){
+	num_clusters = n_num_clusters;
 }
