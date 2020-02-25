@@ -16,15 +16,22 @@ class PAR{
 		int getNumClusters() const;
 		void setNumClusters(const int n_num_clusters);
 
+		std::vector<Cluster> algoritmoCOPKM();
+
 
 		class Cluster{
 			private:
 				std::vector<double> centroide;
+				std::vector<double> distancia_intra_cluster;
+
 				std::set<int> elementos;
+
 
 			public:
 				Cluster();
 				void calcularCentroide();
+				void calcularDistanciaIntraCluster();
+
 
 				void setCentroide(const std::vector<double> n_centroide);
 				std::vector<double> getCentroide() const;

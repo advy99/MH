@@ -3,6 +3,9 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <algorithm>
+#include <cstdlib>
+#include <ctime>
 
 /*
 
@@ -131,6 +134,52 @@ void PAR::setNumClusters(const int n_num_clusters){
 }
 
 
+std::vector<Cluster> PAR::algoritmoCOPKM(){
+	std::vector<int> indices;
+
+	for (int i = 0; i < datos.size(); i++){
+		indices.push_back(i);
+	}
+
+	std::srand ( unsigned ( std::time(0) ) );
+
+	std::random_shuffle(indices.begin(), indices.end());
+
+
+	bool hay_cambios = false;
+
+	int num_cluster;
+
+	do {
+
+		for (int i = 0; i < indices.size(); i++){
+			 num_cluster = buscarCluster(datos[indices[i]]);
+
+			 if (num_cluster == -1){
+				 return std::vector<Cluster>;
+			 } else {
+				 clusters[num_cluster].addElemento(indices[i]);
+			 }
+		}
+
+		for (int i = 0; i < num_clusters; i ++){
+			clusters[i].calcularCentroide();
+		}
+
+	} while(hay_cambios);
+
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -145,10 +194,49 @@ PAR::Cluster::Cluster(){
 
 }
 
+
+/*
+ Función para calcular el centroide de un cluster
+
+ PRE: El cluster tiene al menos un elemento
+
+*/
+
 void PAR::Cluster::calcularCentroide(){
+
+
+	auto it = elementos.begin();
+
+	centroide.resize((*it).size());
+
+	++it;
+
+	for (int i = 0; i < centroide.size(); i++){
+
+		it = elementos.begin();
+
+
+		for (int j = 0; j < elementos.size(); j++){
+			centroide[i] += datos[(*it)][i];
+
+			++it;
+
+		}
+
+		centroide[i] /= datos[(*it)].size();
+
+	}
 
 }
 
+
+void PAR::Cluster::calcularDistanciaIntraCluster(){
+	auto it = elementos.begin();
+
+	distancia_intra_cluster = std::vector<double>(centroide.size(), 0);
+
+
+}
 
 void PAR::Cluster::setCentroide(const std::vector<double> n_centroide){
 
@@ -169,5 +257,5 @@ void PAR::Cluster::addElemento(const int elemento){
 }
 
 void PAR::Cluster::deleteElemento(const int elemento){
-	
+
 }
