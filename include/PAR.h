@@ -1,7 +1,6 @@
 #ifndef PAR_H_INCLUDED
 #define PAR_H_INCLUDED
 
-//#include "Cluster.h"
 #include <vector>
 #include <set>
 #include <string>
@@ -15,6 +14,7 @@ class PAR{
 		void leerRestricciones(const std::string fichero);
 
 		int getNumClusters() const;
+		void setNumClusters(const int n_num_clusters);
 
 
 		class Cluster{
@@ -27,7 +27,7 @@ class PAR{
 				void calcularCentroide();
 
 				void setCentroide(const std::vector<double> n_centroide);
-				std::pair<double, double> getCentroide() const;
+				std::vector<double> getCentroide() const;
 
 				std::set<int> getElementos() const;
 				void addElemento(const int elemento);
@@ -43,7 +43,6 @@ class PAR{
 
 		int num_clusters;
 
-		void setNumClusters(const int n_num_clusters);
 
 };
 

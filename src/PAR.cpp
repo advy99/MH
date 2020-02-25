@@ -4,12 +4,18 @@
 #include <sstream>
 #include <iostream>
 
+/*
+
+Clase PAR
+
+*/
+
 PAR::PAR(const std::string fichero_datos, const std::string fichero_restricciones,
 	 		const int n_clusters):num_clusters(n_clusters){
 
 	leerDatos(fichero_datos);
 	leerRestricciones(fichero_restricciones);
-	//clusters.size(num_clusters);
+	clusters.resize(num_clusters);
 
 
 }
@@ -122,4 +128,46 @@ int PAR::getNumClusters() const{
 
 void PAR::setNumClusters(const int n_num_clusters){
 	num_clusters = n_num_clusters;
+}
+
+
+
+
+
+
+/*
+
+Clase Cluster
+
+*/
+
+PAR::Cluster::Cluster(){
+
+}
+
+void PAR::Cluster::calcularCentroide(){
+
+}
+
+
+void PAR::Cluster::setCentroide(const std::vector<double> n_centroide){
+
+}
+
+
+std::vector<double> PAR::Cluster::getCentroide() const{
+	return centroide;
+}
+
+std::set<int> PAR::Cluster::getElementos() const{
+	return elementos;
+}
+
+
+void PAR::Cluster::addElemento(const int elemento){
+
+}
+
+void PAR::Cluster::deleteElemento(const int elemento){
+	
 }
