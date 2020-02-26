@@ -12,6 +12,7 @@ class PAR{
 
 		class Cluster{
 			private:
+
 				std::vector<double> centroide;
 				std::vector<double> distancia_intra_cluster;
 
@@ -57,6 +58,8 @@ class PAR{
 
 		double distancia_puntos(const std::vector<double> p1,
 									 	const std::vector<double> p2);
+
+		std::vector<int> clusters_to_solucion();
 
 
 };

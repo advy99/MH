@@ -23,6 +23,10 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 		clusters.push_back( Cluster((*this)) );
 	}
 
+	for(auto it = restricciones.begin(); it != restricciones.end(); ++it){
+		std::cout << (*it).first.first << " " << (*it).first.second << " " << (*it).second << std::endl;
+	}
+
 
 }
 
@@ -189,15 +193,59 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 
 int PAR::buscar_cluster(const int elemento){
 
-	for (int i = 0; i < num_clusters; i++){
+	double d;
+	double menor_distancia = distancia_puntos(clusters[0].get_centroide(), datos[elemento]);
+	int cluster_menor_distancia = 0;
 
+	std::map<double, int> distancias;
+
+	distancias.insert(std::make_pair(menor_distancia, 0));
+
+	for (int i = 1; i < num_clusters; i++){
+		d = distancia_puntos(clusters[i].get_centroide(), datos[elemento]);
+
+		distancias.insert(std::make_pair(d, i));
 	}
 
+	int asignado = -1;
+
+	for (auto it = distancias.begin(); it != distancias.end(); ++it){
+		cumple_restricciones(elemento, i);
+	}
 
 	return 0;
 }
 
 
+std::vector<int> PAR::clusters_to_solucion(){
+	std::vector<int> solucion;
+
+	solucion.resize(num_clusters);
+
+	for (int i = 0; i < clusters.size(); i++){
+		for (auto it = clusters[i].get_elementos().begin(); it != clusters[i].get_elementos().end(); ++it ){
+			solucion[(*it)] = i;
+		}
+	}
+
+	return solucion;
+}
+
+
+double PAR::distancia_puntos(const std::vector<double> p1,
+									  const std::vector<double> p2){
+
+
+	double distancia;
+
+	for (int i = 0; i < p1.size(); i++){
+		distancia += std::abs(p1[i] - p2[i]) * std::abs(p1[i] - p2[i]);
+	}
+
+
+
+	return distancia;
+}
 
 
 
