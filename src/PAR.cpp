@@ -18,8 +18,10 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 
 	leerDatos(fichero_datos);
 	leerRestricciones(fichero_restricciones);
-	clusters.resize(num_clusters);
 
+	for (int i = 0; i < num_clusters; i++){
+		clusters.push_back( Cluster((*this)) );
+	}
 
 }
 
@@ -134,7 +136,7 @@ void PAR::setNumClusters(const int n_num_clusters){
 }
 
 
-std::vector<Cluster> PAR::algoritmoCOPKM(){
+std::vector<PAR::Cluster> PAR::algoritmoCOPKM(){
 	std::vector<int> indices;
 
 	for (int i = 0; i < datos.size(); i++){
@@ -153,10 +155,10 @@ std::vector<Cluster> PAR::algoritmoCOPKM(){
 	do {
 
 		for (int i = 0; i < indices.size(); i++){
-			 num_cluster = buscarCluster(datos[indices[i]]);
+			 //num_cluster = buscarCluster(datos[indices[i]]);
 
 			 if (num_cluster == -1){
-				 return std::vector<Cluster>;
+				 return std::vector<PAR::Cluster>();
 			 } else {
 				 clusters[num_cluster].addElemento(indices[i]);
 			 }
@@ -168,8 +170,10 @@ std::vector<Cluster> PAR::algoritmoCOPKM(){
 
 	} while(hay_cambios);
 
-}
 
+	return clusters;
+
+}
 
 
 
@@ -190,7 +194,7 @@ Clase Cluster
 
 */
 
-PAR::Cluster::Cluster(){
+PAR::Cluster::Cluster( PAR & p ):problema(p){
 
 }
 
@@ -207,7 +211,7 @@ void PAR::Cluster::calcularCentroide(){
 
 	auto it = elementos.begin();
 
-	centroide.resize((*it).size());
+	centroide.resize(problema.datos[(*it)].size());
 
 	++it;
 
@@ -217,13 +221,13 @@ void PAR::Cluster::calcularCentroide(){
 
 
 		for (int j = 0; j < elementos.size(); j++){
-			centroide[i] += datos[(*it)][i];
+			centroide[i] += problema.datos[(*it)][i];
 
 			++it;
 
 		}
 
-		centroide[i] /= datos[(*it)].size();
+		centroide[i] /= problema.datos[(*it)].size();
 
 	}
 

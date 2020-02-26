@@ -8,15 +8,7 @@
 class PAR{
 
 	public:
-		PAR(const std::string fichero_datos, const std::string fichero_restricciones,
-			 const int num_clusters);
-		void leerDatos(const std::string fichero);
-		void leerRestricciones(const std::string fichero);
 
-		int getNumClusters() const;
-		void setNumClusters(const int n_num_clusters);
-
-		std::vector<Cluster> algoritmoCOPKM();
 
 
 		class Cluster{
@@ -26,9 +18,11 @@ class PAR{
 
 				std::set<int> elementos;
 
+				PAR& problema;
+
 
 			public:
-				Cluster();
+				Cluster( PAR & p);
 				void calcularCentroide();
 				void calcularDistanciaIntraCluster();
 
@@ -43,8 +37,19 @@ class PAR{
 		};
 
 
+		PAR(const std::string fichero_datos, const std::string fichero_restricciones,
+			 const int num_clusters);
+		void leerDatos(const std::string fichero);
+		void leerRestricciones(const std::string fichero);
+
+		int getNumClusters() const;
+		void setNumClusters(const int n_num_clusters);
+
+		std::vector<Cluster> algoritmoCOPKM();
+
+
 	private:
-		std::vector< Cluster > clusters;
+		std::vector<Cluster> clusters;
 		std::vector< std::vector<int> > restricciones;
 		std::vector< std::vector<double> > datos;
 
