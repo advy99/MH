@@ -3,13 +3,12 @@
 
 #include <vector>
 #include <set>
+#include <map>
 #include <string>
 
 class PAR{
 
 	public:
-
-
 
 		class Cluster{
 			private:
@@ -46,11 +45,12 @@ class PAR{
 		void setNumClusters(const int n_num_clusters);
 
 		std::vector<Cluster> algoritmoCOPKM();
-
+		int buscarCluster(const int elemento);
 
 	private:
 		std::vector<Cluster> clusters;
-		std::vector< std::vector<int> > restricciones;
+		//std::vector< std::vector<int> > restricciones;
+		std::map< std::pair<int, int>, int> restricciones;
 		std::vector< std::vector<double> > datos;
 
 		int num_clusters;

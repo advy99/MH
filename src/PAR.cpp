@@ -23,6 +23,10 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 		clusters.push_back( Cluster((*this)) );
 	}
 
+
+	for (auto it = restricciones.begin(); it != restricciones.end(); ++it){
+		std::cout << (*it).first.first << " " << (*it).first.second << " : " << (*it).second << std::endl;
+	}
 }
 
 
@@ -89,6 +93,9 @@ void PAR::leerRestricciones(const std::string fichero){
 
 
 		int num_linea = 0;
+		int num_elemento = 0;
+
+		int v_res;
 
 
 		std::istringstream dato_linea;
@@ -98,14 +105,22 @@ void PAR::leerRestricciones(const std::string fichero){
 		while( !entrada.eof() ){
 			dato_linea.str(linea);
 
-			restricciones.resize(num_linea+1);
+			//restricciones.resize(num_linea+1);
 
+			num_elemento = 0;
 
-			while( !dato_linea.eof() ){
+			while( !dato_linea.eof() && num_elemento < num_linea ){
 
 				getline(dato_linea, valor, ',');
 
-				restricciones[num_linea].push_back(atoi(valor.c_str()));
+				v_res = atoi(valor.c_str());
+
+				//restricciones[num_linea].push_back(atoi(valor.c_str()));
+
+				if (v_res != 0)
+					restricciones.insert( std::make_pair( std::make_pair(num_linea, num_elemento), v_res ));
+
+				num_elemento++;
 
 			}
 
@@ -143,7 +158,7 @@ std::vector<PAR::Cluster> PAR::algoritmoCOPKM(){
 		indices.push_back(i);
 	}
 
-	std::srand ( unsigned ( std::time(0) ) );
+	std::srand( unsigned( std::time(0) ) );
 
 	std::random_shuffle(indices.begin(), indices.end());
 
@@ -155,7 +170,7 @@ std::vector<PAR::Cluster> PAR::algoritmoCOPKM(){
 	do {
 
 		for (int i = 0; i < indices.size(); i++){
-			 //num_cluster = buscarCluster(datos[indices[i]]);
+			 num_cluster = buscarCluster(indices[i]);
 
 			 if (num_cluster == -1){
 				 return std::vector<PAR::Cluster>();
@@ -175,7 +190,10 @@ std::vector<PAR::Cluster> PAR::algoritmoCOPKM(){
 
 }
 
+int PAR::buscarCluster(const int elemento){
 
+	return 0;
+}
 
 
 
