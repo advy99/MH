@@ -24,8 +24,8 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 		clusters.push_back( Cluster((*this)) );
 	}
 
-	std::srand( unsigned( 15091999 ) );
-	Set_random(15091999);
+	std::srand( unsigned( std::time(0) ) );
+	Set_random(std::time(0));
 
 }
 
@@ -164,7 +164,7 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 		for (int j = 0; j < clusters[i].get_centroide().size(); j++){
 			n_centroide.push_back(Rand()*4.0);
 		}
-
+		clusters[i].limpiar();
 		clusters[i].set_centroide(n_centroide);
 	}
 
@@ -186,6 +186,7 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 				 return std::vector<PAR::Cluster>();
 			 } else {
 				 clusters[num_cluster].add_elemento(indices[i]);
+				 //hay_cambios = true;
 			 }
 		}
 
@@ -196,6 +197,7 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 	} while(hay_cambios);
 
 
+	std::cout << clusters.size() << std::endl;
 
 	return clusters;
 
@@ -210,7 +212,7 @@ int PAR::buscar_cluster(const int elemento){
 
 	for (int i = 0; i < num_clusters; i++){
 
-		if (cumple_restricciones(elemento, i)){
+		//if (cumple_restricciones(elemento, i)){
 			d = distancia_puntos(clusters[i].get_centroide(), datos[elemento]);
 
 			if (d < menor_distancia){
@@ -218,7 +220,7 @@ int PAR::buscar_cluster(const int elemento){
 				cluster_menor_distancia = i;
 			}
 
-		}
+		//}
 
 	}
 
@@ -322,25 +324,21 @@ PAR::Cluster::Cluster( PAR & p ):problema(p){
 void PAR::Cluster::calcular_centroide(){
 
 
-	auto it = elementos.begin();
 
-	centroide.resize(problema.datos[(*it)].size());
+	for(auto it = elementos.begin(); it != elementos.end(); ++it){
 
-	++it;
-
-	for (int i = 0; i < centroide.size(); i++){
-
-		it = elementos.begin();
-
-
-		for (int j = 0; j < elementos.size(); j++){
-			centroide[i] += problema.datos[(*it)][i];
-
-			++it;
+		for (int j = 0; j < problema.datos[(*it)].size(); j++){
+			centroide[j] += problema.datos[(*it)][j];
 
 		}
 
-		centroide[i] /= problema.datos[(*it)].size();
+
+	}
+
+
+	for (int i = 0; i < centroide.size(); i++){
+
+		centroide[i] /= centroide.size();
 
 	}
 
@@ -375,4 +373,8 @@ void PAR::Cluster::add_elemento(const int elemento){
 
 void PAR::Cluster::delete_elemento(const int elemento){
 	elementos.erase(elementos.find(elemento));
+}
+
+void PAR::Cluster::limpiar(){
+	elementos.clear();
 }

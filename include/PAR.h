@@ -33,6 +33,7 @@ class PAR{
 				const std::set<int> & get_elementos() const;
 				void add_elemento(const int elemento);
 				void delete_elemento(const int elemento);
+				void limpiar();
 
 		};
 
