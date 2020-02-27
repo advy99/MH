@@ -271,11 +271,16 @@ bool PAR::cumple_restricciones(const int elemento, const int cluster){
 
 	bool las_cumple = true;
 
+	// para el cluster dado, iteramos sobre todos sus elementos
 	for (auto it = clusters[cluster].get_elementos().begin();
 		  it != clusters[cluster].get_elementos().end() && las_cumple; ++it){
 
+		// buscamos la restricción asociada al elemento dado con todos los elementos
+		// pertenecientes al cluster
 		auto pos = restricciones.find(std::make_pair(elemento, (*it)));
 
+		// si encuentra una restricción asociada y es que no pueden ir juntos,
+		// quiere decir que no cumple dichas restricciones
 		if (pos != restricciones.end() && (*pos).second == -1){
 			las_cumple = false;
 		}
@@ -289,11 +294,13 @@ bool PAR::cumple_restricciones(const int elemento, const int cluster){
 		// para todos los demas clusters
 		for (int i = 0; i < num_clusters; i++){
 			if (i != cluster){
+				// buscamos si es obigatorio que tengan que ir juntos
 				for (auto it = clusters[i].get_elementos().begin();
 					  it != clusters[i].get_elementos().end() && las_cumple; ++it){
 
 					auto pos = restricciones.find(std::make_pair(elemento, (*it)));
-					// si tienen que ir juntos, no cumple las restricciones
+					// si tienen que ir juntos, no cumple las restricciones ya que estamos
+					// intentando meterlo en un cluster distinto
 					if (pos != restricciones.end() && (*pos).second == 1)
 						las_cumple = false;
 				}
@@ -331,23 +338,14 @@ PAR::Cluster::Cluster( PAR & p ):problema(p){
 
 void PAR::Cluster::calcular_centroide(){
 
-
-
 	for(auto it = elementos.begin(); it != elementos.end(); ++it){
-
 		for (int j = 0; j < problema.datos[(*it)].size(); j++){
 			centroide[j] += problema.datos[(*it)][j];
-
 		}
-
-
 	}
 
-
 	for (int i = 0; i < centroide.size(); i++){
-
 		centroide[i] /= centroide.size();
-
 	}
 
 }
