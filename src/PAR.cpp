@@ -179,20 +179,26 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 
 	do {
 
-		for (int i = 0; i < indices.size(); i++){
-			 num_cluster = buscar_cluster(indices[i]);
+		hay_cambios = false;
+
+		// no hace falta ++it, porque los vamos borrando y se va actualizando al
+		// siguiente cada vez que borramos uno
+		for (auto it = indices.begin(); it != indices.end();){
+			 num_cluster = buscar_cluster( (*it) );
 
 			 if (num_cluster == -1){
 				 return std::vector<PAR::Cluster>();
 			 } else {
-				 clusters[num_cluster].add_elemento(indices[i]);
-				 //hay_cambios = true;
+				 clusters[num_cluster].add_elemento( (*it) );
+				 it = indices.erase(it);
+				 hay_cambios = true;
 			 }
 		}
 
 		for (int i = 0; i < num_clusters; i++){
 			clusters[i].calcular_centroide();
 		}
+
 
 	} while(hay_cambios);
 
@@ -212,7 +218,7 @@ int PAR::buscar_cluster(const int elemento){
 
 	for (int i = 0; i < num_clusters; i++){
 
-		//if (cumple_restricciones(elemento, i)){
+		if (cumple_restricciones(elemento, i)){
 			d = distancia_puntos(clusters[i].get_centroide(), datos[elemento]);
 
 			if (d < menor_distancia){
@@ -220,7 +226,7 @@ int PAR::buscar_cluster(const int elemento){
 				cluster_menor_distancia = i;
 			}
 
-		//}
+		}
 
 	}
 
@@ -275,6 +281,8 @@ bool PAR::cumple_restricciones(const int elemento, const int cluster){
 		}
 
  	}
+
+
 
 	// si las sigue cumpliendo
 	if (las_cumple)
