@@ -24,8 +24,11 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 		clusters.push_back( Cluster((*this)) );
 	}
 
-	std::srand( unsigned( std::time(0) ) );
-	Set_random(std::time(0));
+	//std::srand( unsigned( std::time(0) ) );
+	//Set_random(std::time(0));
+
+	std::srand( unsigned(15091999) );
+	Set_random( unsigned(15091999) );
 
 }
 
@@ -162,7 +165,7 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 	for (int i = 0; i < num_clusters; i++){
 		std::vector<double> n_centroide;
 		for (int j = 0; j < clusters[i].get_centroide().size(); j++){
-			n_centroide.push_back(Rand()*8.0);
+			n_centroide.push_back(Randfloat(0.0, 100.0));
 		}
 		clusters[i].limpiar();
 		clusters[i].set_centroide(n_centroide);
@@ -170,7 +173,7 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 
 
 
-	std::random_shuffle(indices.begin(), indices.end());
+	std::random_shuffle(indices.begin(), indices.end(), RandPositiveInt);
 
 
 	bool hay_cambios = false;
@@ -179,20 +182,20 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 
 	std::vector<double> centroide_antiguo;
 
+
 	do {
 
 		hay_cambios = false;
 
 		// no hace falta ++it, porque los vamos borrando y se va actualizando al
 		// siguiente cada vez que borramos uno
-		for (auto it = indices.begin(); it != indices.end();){
+		for (auto it = indices.begin(); it != indices.end(); ++it){
 			 num_cluster = buscar_cluster( (*it) );
 
 			 if (num_cluster == -1){
 				 return std::vector<PAR::Cluster>();
 			 } else {
 				 clusters[num_cluster].add_elemento( (*it) );
-				 it = indices.erase(it);
 			 }
 		}
 
@@ -202,14 +205,15 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 			if (centroide_antiguo != clusters[i].get_centroide()){
 				hay_cambios = true;
 			}
+
 			clusters[i].limpiar();
+
 		}
 
 
 	} while(hay_cambios);
 
 
-	std::cout << clusters.size() << std::endl;
 
 	return clusters;
 
@@ -219,7 +223,7 @@ int PAR::buscar_cluster(const int elemento){
 
 	double d;
 	double menor_distancia = std::numeric_limits<double>::infinity();
-	int cluster_menor_distancia = -1;
+	int cluster_menor_distancia = 1;
 
 
 	for (int i = 0; i < num_clusters; i++){
@@ -236,19 +240,17 @@ int PAR::buscar_cluster(const int elemento){
 
 	}
 
-
-
 	return cluster_menor_distancia;
 }
 
 
-std::vector<int> PAR::clusters_to_solucion(){
+std::vector<int> PAR::clusters_to_solucion() {
 	std::vector<int> solucion;
-
 	solucion.resize(num_clusters);
 
 	for (int i = 0; i < clusters.size(); i++){
-		for (auto it = clusters[i].get_elementos().begin(); it != clusters[i].get_elementos().end(); ++it ){
+		for (auto it = clusters[i].get_elementos().begin();
+		     it != clusters[i].get_elementos().end(); ++it ){
 			solucion[(*it)] = i;
 		}
 	}

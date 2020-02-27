@@ -17,6 +17,9 @@ float Rand(void);
 /* Genera un numero aleatorio entero en {low,...,high} */
 int Randint(int low, int high);
 
+/* Genera un numero aleatorio entero en {0,...,high} */
+int RandPositiveInt(int high);
+
 /* Genera un numero aleatorio real en el intervalo [low,...,high[
    (incluyendo 'low' pero sin incluir 'high') */
 float Randfloat(float low, float high);

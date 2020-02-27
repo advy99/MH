@@ -33,6 +33,10 @@ int Randint(int low, int high)
     return (int) (low + (high-(low)+1) * Rand());
 }
 
+int RandPositiveInt(int high){
+	return Randint(0, high);
+}
+
 float Randfloat(float low, float high)
 /* Genera un numero aleatorio real en el intervalo [low,...,high[
    (incluyendo 'low' pero sin incluir 'high') */
