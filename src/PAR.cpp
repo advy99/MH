@@ -223,7 +223,7 @@ int PAR::buscar_cluster(const int elemento){
 
 	double d;
 	double menor_distancia = std::numeric_limits<double>::infinity();
-	int cluster_menor_distancia = 1;
+	int cluster_menor_distancia = -1;
 
 
 	for (int i = 0; i < num_clusters; i++){
