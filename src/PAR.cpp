@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
+#include "random.h"
 
 /*
 
@@ -23,10 +24,8 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 		clusters.push_back( Cluster((*this)) );
 	}
 
-	for(auto it = restricciones.begin(); it != restricciones.end(); ++it){
-		std::cout << (*it).first.first << " " << (*it).first.second << " " << (*it).second << std::endl;
-	}
-
+	std::srand( unsigned( 15091999 ) );
+	Set_random(15091999);
 
 }
 
@@ -110,7 +109,7 @@ void PAR::leer_restricciones(const std::string fichero){
 
 			num_elemento = 0;
 
-			while( !dato_linea.eof() && num_elemento < num_linea ){
+			while( !dato_linea.eof() /*&& num_elemento < num_linea */){
 
 				getline(dato_linea, valor, ',');
 
@@ -118,7 +117,7 @@ void PAR::leer_restricciones(const std::string fichero){
 
 				//restricciones[num_linea].push_back(atoi(valor.c_str()));
 
-				if (v_res != 0)
+				if (v_res != 0 && num_linea != num_elemento)
 					restricciones.insert( std::make_pair( std::make_pair(num_linea, num_elemento), v_res ));
 
 				num_elemento++;
@@ -153,13 +152,23 @@ void PAR::set_num_clusters(const int n_num_clusters){
 
 
 std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
+
 	std::vector<int> indices;
 
 	for (int i = 0; i < datos.size(); i++){
 		indices.push_back(i);
 	}
 
-	std::srand( unsigned( std::time(0) ) );
+	for (int i = 0; i < num_clusters; i++){
+		std::vector<double> n_centroide;
+		for (int j = 0; j < clusters[i].get_centroide().size(); j++){
+			n_centroide.push_back(Rand()*4.0);
+		}
+
+		clusters[i].set_centroide(n_centroide);
+	}
+
+
 
 	std::random_shuffle(indices.begin(), indices.end());
 
@@ -180,11 +189,12 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 			 }
 		}
 
-		for (int i = 0; i < num_clusters; i ++){
+		for (int i = 0; i < num_clusters; i++){
 			clusters[i].calcular_centroide();
 		}
 
 	} while(hay_cambios);
+
 
 
 	return clusters;
@@ -194,26 +204,27 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 int PAR::buscar_cluster(const int elemento){
 
 	double d;
-	double menor_distancia = distancia_puntos(clusters[0].get_centroide(), datos[elemento]);
-	int cluster_menor_distancia = 0;
+	double menor_distancia = std::numeric_limits<double>::infinity();
+	int cluster_menor_distancia = -1;
 
-	std::map<double, int> distancias;
 
-	distancias.insert(std::make_pair(menor_distancia, 0));
+	for (int i = 0; i < num_clusters; i++){
 
-	for (int i = 1; i < num_clusters; i++){
-		d = distancia_puntos(clusters[i].get_centroide(), datos[elemento]);
+		if (cumple_restricciones(elemento, i)){
+			d = distancia_puntos(clusters[i].get_centroide(), datos[elemento]);
 
-		distancias.insert(std::make_pair(d, i));
+			if (d < menor_distancia){
+				menor_distancia = d;
+				cluster_menor_distancia = i;
+			}
+
+		}
+
 	}
 
-	int asignado = -1;
 
-	for (auto it = distancias.begin(); it != distancias.end(); ++it){
-		cumple_restricciones(elemento, i);
-	}
 
-	return 0;
+	return cluster_menor_distancia;
 }
 
 
@@ -248,7 +259,41 @@ double PAR::distancia_puntos(const std::vector<double> p1,
 }
 
 
+bool PAR::cumple_restricciones(const int elemento, const int cluster){
 
+	bool las_cumple = true;
+
+	for (auto it = clusters[cluster].get_elementos().begin();
+		  it != clusters[cluster].get_elementos().end() && las_cumple; ++it){
+
+		auto pos = restricciones.find(std::make_pair(elemento, (*it)));
+
+		if (pos != restricciones.end() && (*pos).second == -1){
+			las_cumple = false;
+		}
+
+ 	}
+
+	// si las sigue cumpliendo
+	if (las_cumple)
+		// para todos los demas clusters
+		for (int i = 0; i < num_clusters; i++){
+			if (i != cluster){
+				for (auto it = clusters[i].get_elementos().begin();
+					  it != clusters[i].get_elementos().end() && las_cumple; ++it){
+
+					auto pos = restricciones.find(std::make_pair(elemento, (*it)));
+					// si tienen que ir juntos, no cumple las restricciones
+					if (pos != restricciones.end() && (*pos).second == 1)
+						las_cumple = false;
+				}
+			}
+
+		}
+
+
+	return las_cumple;
+}
 
 
 
@@ -263,7 +308,7 @@ Clase Cluster
 */
 
 PAR::Cluster::Cluster( PAR & p ):problema(p){
-
+	centroide = std::vector<double>(p.datos[0].size(), 0);
 }
 
 
@@ -311,23 +356,23 @@ void PAR::Cluster::calcular_distancia_intra_cluster(){
 }
 
 void PAR::Cluster::set_centroide(const std::vector<double> n_centroide){
-
+	centroide = n_centroide;;
 }
 
 
-std::vector<double> PAR::Cluster::get_centroide() const{
+const std::vector<double> & PAR::Cluster::get_centroide() const{
 	return centroide;
 }
 
-std::set<int> PAR::Cluster::get_elementos() const{
+const std::set<int> & PAR::Cluster::get_elementos() const{
 	return elementos;
 }
 
 
 void PAR::Cluster::add_elemento(const int elemento){
-
+	elementos.insert(elemento);
 }
 
 void PAR::Cluster::delete_elemento(const int elemento){
-
+	elementos.erase(elementos.find(elemento));
 }

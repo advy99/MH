@@ -28,9 +28,9 @@ class PAR{
 
 
 				void set_centroide(const std::vector<double> n_centroide);
-				std::vector<double> get_centroide() const;
+				const std::vector<double> & get_centroide() const;
 
-				std::set<int> get_elementos() const;
+				const std::set<int> & get_elementos() const;
 				void add_elemento(const int elemento);
 				void delete_elemento(const int elemento);
 
@@ -60,6 +60,7 @@ class PAR{
 									 	const std::vector<double> p2);
 
 		std::vector<int> clusters_to_solucion();
+		bool cumple_restricciones(const int elemento, const int num_cluster);
 
 
 };
