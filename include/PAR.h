@@ -40,8 +40,7 @@ class PAR{
 
 		PAR(const std::string fichero_datos, const std::string fichero_restricciones,
 			 const int num_clusters);
-		void leer_datos(const std::string fichero);
-		void leer_restricciones(const std::string fichero);
+
 
 		int get_num_clusters() const;
 		void set_num_clusters(const int n_num_clusters);
@@ -62,6 +61,8 @@ class PAR{
 
 		std::vector<int> clusters_to_solucion();
 		bool cumple_restricciones(const int elemento, const int num_cluster);
+		void leer_datos(const std::string fichero);
+		void leer_restricciones(const std::string fichero);
 
 
 };

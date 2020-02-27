@@ -162,7 +162,7 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 	for (int i = 0; i < num_clusters; i++){
 		std::vector<double> n_centroide;
 		for (int j = 0; j < clusters[i].get_centroide().size(); j++){
-			n_centroide.push_back(Rand()*4.0);
+			n_centroide.push_back(Rand()*8.0);
 		}
 		clusters[i].limpiar();
 		clusters[i].set_centroide(n_centroide);
@@ -176,6 +176,8 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 	bool hay_cambios = false;
 
 	int num_cluster;
+
+	std::vector<double> centroide_antiguo;
 
 	do {
 
@@ -191,12 +193,16 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 			 } else {
 				 clusters[num_cluster].add_elemento( (*it) );
 				 it = indices.erase(it);
-				 hay_cambios = true;
 			 }
 		}
 
 		for (int i = 0; i < num_clusters; i++){
+			centroide_antiguo = clusters[i].get_centroide();
 			clusters[i].calcular_centroide();
+			if (centroide_antiguo != clusters[i].get_centroide()){
+				hay_cambios = true;
+			}
+			clusters[i].limpiar();
 		}
 
 
@@ -311,6 +317,20 @@ bool PAR::cumple_restricciones(const int elemento, const int cluster){
 
 	return las_cumple;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
