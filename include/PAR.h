@@ -35,6 +35,9 @@ class PAR{
 				void delete_elemento(const int elemento);
 				void limpiar();
 
+				Cluster & operator = (const Cluster & otro);
+
+
 		};
 
 
@@ -56,8 +59,8 @@ class PAR{
 
 		int num_clusters;
 
-		double distancia_puntos(const std::vector<double> p1,
-									 	const std::vector<double> p2);
+		double distancia_puntos(const std::vector<double> & p1,
+									 	const std::vector<double> & p2);
 
 		std::vector<int> clusters_to_solucion();
 		bool cumple_restricciones(const int elemento, const int num_cluster);

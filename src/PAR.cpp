@@ -24,11 +24,11 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 		clusters.push_back( Cluster((*this)) );
 	}
 
-	//std::srand( unsigned( std::time(0) ) );
-	//Set_random(std::time(0));
+	std::srand( unsigned( std::time(0) ) );
+	Set_random(std::time(0));
 
-	std::srand( unsigned(15091999) );
-	Set_random( unsigned(15091999) );
+	//std::srand( unsigned(15091999) );
+	//Set_random( unsigned(15091999) );
 
 }
 
@@ -182,6 +182,8 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 
 	std::vector<double> centroide_antiguo;
 
+	std::vector<Cluster> n_sol = clusters;
+
 
 	do {
 
@@ -199,12 +201,20 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 			 }
 		}
 
+
 		for (int i = 0; i < num_clusters; i++){
-			centroide_antiguo = clusters[i].get_centroide();
-			clusters[i].calcular_centroide();
-			if (centroide_antiguo != clusters[i].get_centroide()){
+
+			if (n_sol[i].get_elementos() != clusters[i].get_elementos()){
 				hay_cambios = true;
 			}
+
+			//centroide_antiguo = clusters[i].get_centroide();
+			clusters[i].calcular_centroide();
+			//if (centroide_antiguo != clusters[i].get_centroide()){
+			//	hay_cambios = true;
+			//}
+
+			n_sol[i] = clusters[i];
 
 			clusters[i].limpiar();
 
@@ -228,7 +238,7 @@ int PAR::buscar_cluster(const int elemento){
 
 	for (int i = 0; i < num_clusters; i++){
 
-		if (cumple_restricciones(elemento, i)){
+		//if (cumple_restricciones(elemento, i)){
 			d = distancia_puntos(clusters[i].get_centroide(), datos[elemento]);
 
 			if (d < menor_distancia){
@@ -236,7 +246,7 @@ int PAR::buscar_cluster(const int elemento){
 				cluster_menor_distancia = i;
 			}
 
-		}
+		//}
 
 	}
 
@@ -259,11 +269,11 @@ std::vector<int> PAR::clusters_to_solucion() {
 }
 
 
-double PAR::distancia_puntos(const std::vector<double> p1,
-									  const std::vector<double> p2){
+double PAR::distancia_puntos(const std::vector<double> & p1,
+									  const std::vector<double> & p2){
 
 
-	double distancia;
+	double distancia = 0;
 
 	for (int i = 0; i < p1.size(); i++){
 		distancia += std::abs(p1[i] - p2[i]) * std::abs(p1[i] - p2[i]);
@@ -405,4 +415,13 @@ void PAR::Cluster::delete_elemento(const int elemento){
 
 void PAR::Cluster::limpiar(){
 	elementos.clear();
+}
+
+PAR::Cluster & PAR::Cluster::operator=(const PAR::Cluster & otro){
+	this->centroide = otro.centroide;
+	this->distancia_intra_cluster = otro.distancia_intra_cluster;
+	this->elementos = otro.elementos;
+	this->problema = otro.problema;
+
+	return *this;
 }

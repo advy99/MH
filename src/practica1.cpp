@@ -5,7 +5,7 @@
 
 
 int main(int argc, char ** argv){
-	PAR par("datos/iris_set.dat", "datos/iris_set_const_10.const", 3);
+	PAR par("datos/rand_set.dat", "datos/rand_set_const_10.const", 3);
 
 	int sol = 0;
 	int ejecuciones = 0;
@@ -13,7 +13,7 @@ int main(int argc, char ** argv){
 	if (argc > 1){
 		ejecuciones = atoi(argv[1]);
 	} else {
-		ejecuciones = 1000;
+		ejecuciones = 5;
 	}
 
 
