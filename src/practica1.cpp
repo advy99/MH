@@ -18,6 +18,8 @@ int main(int argc, char ** argv){
 
 
 	for (int i = 0; i < ejecuciones; i++){
+		if (i == 500000)
+			std::cout << i << std::endl;
 		if (par.algoritmo_COPKM().size() != 0){
 			sol++;
 		}

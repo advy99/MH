@@ -24,11 +24,11 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 		clusters.push_back( Cluster((*this)) );
 	}
 
-	std::srand( unsigned( std::time(0) ) );
-	Set_random(std::time(0));
+	//std::srand( unsigned( std::time(0) ) );
+	//Set_random(std::time(0));
 
-	//std::srand( unsigned(15091999) );
-	//Set_random( unsigned(15091999) );
+	std::srand( unsigned(15091999) );
+	Set_random( unsigned(15091999) );
 
 }
 
@@ -162,6 +162,9 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 		indices.push_back(i);
 	}
 
+	std::random_shuffle(indices.begin(), indices.end());
+
+
 	for (int i = 0; i < num_clusters; i++){
 		std::vector<double> n_centroide;
 		for (int j = 0; j < clusters[i].get_centroide().size(); j++){
@@ -171,9 +174,6 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 		clusters[i].set_centroide(n_centroide);
 	}
 
-
-
-	std::random_shuffle(indices.begin(), indices.end(), RandPositiveInt);
 
 
 	bool hay_cambios = false;
@@ -189,9 +189,8 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 
 		hay_cambios = false;
 
-		// no hace falta ++it, porque los vamos borrando y se va actualizando al
-		// siguiente cada vez que borramos uno
 		for (auto it = indices.begin(); it != indices.end(); ++it){
+
 			 num_cluster = buscar_cluster( (*it) );
 
 			 if (num_cluster == -1){
@@ -204,9 +203,7 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 
 		for (int i = 0; i < num_clusters; i++){
 
-			if (n_sol[i].get_elementos() != clusters[i].get_elementos()){
-				hay_cambios = true;
-			}
+			hay_cambios = n_sol[i].get_elementos() != clusters[i].get_elementos();
 
 			//centroide_antiguo = clusters[i].get_centroide();
 			clusters[i].calcular_centroide();
@@ -214,7 +211,10 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 			//	hay_cambios = true;
 			//}
 
-			n_sol[i] = clusters[i];
+			if (hay_cambios){
+				n_sol[i] = clusters[i];
+			}
+
 
 			clusters[i].limpiar();
 
@@ -224,6 +224,7 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 	} while(hay_cambios);
 
 
+	clusters = n_sol;
 
 	return clusters;
 
@@ -238,7 +239,7 @@ int PAR::buscar_cluster(const int elemento){
 
 	for (int i = 0; i < num_clusters; i++){
 
-		//if (cumple_restricciones(elemento, i)){
+		if (cumple_restricciones(elemento, i)){
 			d = distancia_puntos(clusters[i].get_centroide(), datos[elemento]);
 
 			if (d < menor_distancia){
@@ -246,7 +247,7 @@ int PAR::buscar_cluster(const int elemento){
 				cluster_menor_distancia = i;
 			}
 
-		//}
+		}
 
 	}
 
@@ -329,6 +330,8 @@ bool PAR::cumple_restricciones(const int elemento, const int cluster){
 
 	return las_cumple;
 }
+
+
 
 
 
