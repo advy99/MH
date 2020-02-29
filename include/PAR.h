@@ -28,6 +28,7 @@ class PAR{
 
 
 				void set_centroide(const std::vector<double> n_centroide);
+				double get_distancia_intra_cluster() const;
 				const std::vector<double> & get_centroide() const;
 
 				const std::set<int> & get_elementos() const;
@@ -48,14 +49,18 @@ class PAR{
 		int get_num_clusters() const;
 		void set_num_clusters(const int n_num_clusters);
 
-		std::vector<Cluster> algoritmo_COPKM();
 		int buscar_cluster(const int elemento);
+		void calcular_desviacion_general();
+		std::vector<Cluster> algoritmo_COPKM();
+		std::vector<Cluster> algoritmo_BL();
+
 
 	private:
 		std::vector<Cluster> clusters;
 		//std::vector< std::vector<int> > restricciones;
 		std::map< std::pair<int, int>, int> restricciones;
 		std::vector< std::vector<double> > datos;
+		double desviacion_general;
 
 		int num_clusters;
 

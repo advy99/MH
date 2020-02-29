@@ -332,6 +332,24 @@ bool PAR::cumple_restricciones(const int elemento, const int cluster){
 }
 
 
+void PAR::calcular_desviacion_general(){
+
+
+
+	for (int i = 0; i < num_clusters; i++){
+		clusters[i].calcular_distancia_intra_cluster();
+		desviacion_general += clusters[i].get_distancia_intra_cluster();
+	}
+
+	desviacion_general /= num_clusters;
+}
+
+std::vector<PAR::Cluster> PAR::algoritmo_BL(){
+
+}
+
+
+
 
 
 
@@ -389,8 +407,14 @@ void PAR::Cluster::calcular_centroide(){
 void PAR::Cluster::calcular_distancia_intra_cluster(){
 	auto it = elementos.begin();
 
-	distancia_intra_cluster = std::vector<double>(centroide.size(), 0);
+	double distancia = 0;
 
+
+	for (int i = 0; i < problema.datos[(*it)]).size(); i++){
+		distancia += std::abs(problema.datos[(*it)][i] - centroide[i]) * std::abs(problema.datos[(*it)][i] - centroide[i]);
+	}
+
+	distancia_intra_cluster = distancia;
 
 }
 
@@ -427,4 +451,8 @@ PAR::Cluster & PAR::Cluster::operator=(const PAR::Cluster & otro){
 	this->problema = otro.problema;
 
 	return *this;
+}
+
+double PAR::Cluster::get_distancia_intra_cluster() const{
+	return distancia_intra_cluster;
 }
