@@ -16,12 +16,24 @@ int main(int argc, char ** argv){
 		ejecuciones = 5;
 	}
 
+	std::vector<PAR::Cluster> solucion;
 
 	for (int i = 0; i < ejecuciones; i++){
 		if (i == 500000)
 			std::cout << i << std::endl;
-		if (par.algoritmo_COPKM().size() != 0){
+
+		solucion = par.algoritmo_COPKM();
+		if (solucion.size() != 0){
 			sol++;
+
+			for (int i = 0; i < solucion.size(); i++){
+				std::cout << "Cluster " << i << ": " << std::endl;
+				for (auto it = solucion[i].get_elementos().begin(); it != solucion[i].get_elementos().end(); ++it){
+					std::cout << (*it) << " ";
+				}
+
+				std::cout << std::endl;
+			}
 		}
 
 	}

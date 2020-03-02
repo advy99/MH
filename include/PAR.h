@@ -62,6 +62,7 @@ class PAR{
 		std::vector< std::vector<double> > datos;
 		double desviacion_general;
 
+		double mayor_distancia;
 		int num_clusters;
 
 		double distancia_puntos(const std::vector<double> & p1,

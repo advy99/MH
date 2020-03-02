@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "random.h"
+#include <cmath>
 
 /*
 
@@ -23,6 +24,23 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 	for (int i = 0; i < num_clusters; i++){
 		clusters.push_back( Cluster((*this)) );
 	}
+
+	double d;
+
+	mayor_distancia = std::numeric_limits<double>::infinity();
+
+	for (int i = 0; i < datos.size() - 1; i++){
+		for (int j = i; j < datos.size(); j++){
+			d = distancia_puntos(datos[i], datos[j]);
+
+			if (d < mayor_distancia){
+				mayor_distancia = d;
+			}
+
+		}
+	}
+
+	mayor_distancia = sqrt(mayor_distancia);
 
 	//std::srand( unsigned( std::time(0) ) );
 	//Set_random(std::time(0));
@@ -170,7 +188,7 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 	for (int i = 0; i < num_clusters; i++){
 		std::vector<double> n_centroide;
 		for (int j = 0; j < clusters[i].get_centroide().size(); j++){
-			n_centroide.push_back(Randfloat(0.0, 100.0));
+			n_centroide.push_back(Randfloat(0.0, mayor_distancia));
 		}
 		clusters[i].limpiar();
 		clusters[i].set_centroide(n_centroide);
@@ -234,6 +252,9 @@ int PAR::buscar_cluster(const int elemento){
 	double d;
 	double menor_distancia = std::numeric_limits<double>::infinity();
 	int cluster_menor_distancia = -1;
+	int menor_restricciones = restricciones.size();
+
+
 	int aumento_infactibilidad;
 
 
@@ -241,16 +262,21 @@ int PAR::buscar_cluster(const int elemento){
 
 		aumento_infactibilidad = cumple_restricciones(elemento, i);
 
-		d = distancia_puntos(clusters[i].get_centroide(), datos[elemento]);
+		if (aumento_infactibilidad <= menor_restricciones){
+			d = distancia_puntos(clusters[i].get_centroide(), datos[elemento]);
 
-		d = d * (aumento_infactibilidad + 1);
+			if (d < menor_distancia){
+				menor_distancia = d;
+				cluster_menor_distancia = i;
+			}
 
-		if (d < menor_distancia){
-			menor_distancia = d;
-			cluster_menor_distancia = i;
+			menor_restricciones = aumento_infactibilidad;
 		}
 
+
 	}
+
+
 
 	return cluster_menor_distancia;
 }
