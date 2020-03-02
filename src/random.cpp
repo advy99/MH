@@ -34,7 +34,7 @@ int Randint(int low, int high)
 }
 
 int RandintLow(int low, int high)
-/* Genera un numero aleatorio entero en {low,...,high} */
+/* Genera un numero aleatorio entero en [low,...,high[ */
 {
     return (int) (low + (high-(low)) * Rand());
 }

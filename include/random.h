@@ -20,7 +20,7 @@ int Randint(int low, int high);
 /* Genera un numero aleatorio entero en [low,...,high[ */
 int RandintLow(int low, int high);
 
-/* Genera un numero aleatorio entero en {0,...,high} */
+/* Genera un numero aleatorio entero en [0,...,high[ */
 int RandPositiveInt(int high);
 
 

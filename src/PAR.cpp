@@ -179,7 +179,7 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 		indices.push_back(i);
 	}
 
-	std::random_shuffle(indices.begin(), indices.end());
+	std::random_shuffle(indices.begin(), indices.end(), RandPositiveInt);
 
 
 	double minimo = std::numeric_limits<double>::infinity();
@@ -216,8 +216,6 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 
 	int num_cluster;
 
-	std::vector<double> centroide_antiguo;
-
 	std::vector<Cluster> n_sol = clusters;
 
 
@@ -233,7 +231,7 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 
 		}
 
-		std::cout << std::endl << std::endl;
+		//std::cout << std::endl << std::endl;
 		for (int i = 0; i < num_clusters; i++){
 
 			sin_cambios[i] = n_sol[i].get_elementos() != clusters[i].get_elementos();
@@ -246,9 +244,9 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 
 			if (sin_cambios[i]){
 				clusters[i].calcular_centroide();
-				std::cout << std::endl << "Cluster " << i << std::endl;
-				for (auto it = clusters[i].get_centroide().begin(); it != clusters[i].get_centroide().end(); ++it)
-					std::cout << (*it) << " ";
+				//std::cout << std::endl << "Cluster " << i << std::endl;
+				//for (auto it = clusters[i].get_centroide().begin(); it != clusters[i].get_centroide().end(); ++it)
+				//	std::cout << (*it) << " ";
 				n_sol[i] = clusters[i];
 			}
 
@@ -256,7 +254,7 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 			clusters[i].limpiar();
 
 		}
-		std::cout << std::endl << std::endl;
+		//std::cout << std::endl << std::endl;
 
 		for (int i = 0; i < sin_cambios.size(); i++){
 			hay_cambios = hay_cambios || sin_cambios[i];
@@ -290,6 +288,10 @@ int PAR::buscar_cluster(const int elemento){
 	}
 
 	std::sort(aumento_infactibilidad.begin(), aumento_infactibilidad.end());
+	//std::cout << "-----------------" <<std::endl;
+	//for (int i = 0; i < aumento_infactibilidad.size(); i++){
+	//	std::cout << aumento_infactibilidad[i].first << " " << aumento_infactibilidad[i].second << std::endl;
+	//}
 
 	menor_restricciones = aumento_infactibilidad.begin()->first;
 
@@ -303,6 +305,10 @@ int PAR::buscar_cluster(const int elemento){
 		}
 
 	}
+
+	//std::cout << "|||||||||||||||||||" <<std::endl;
+
+	//std::cout << elemento << " " << cluster_menor_distancia << std::endl;
 
 	return cluster_menor_distancia;
 }
