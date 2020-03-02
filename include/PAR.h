@@ -72,6 +72,7 @@ class PAR{
 		int cumple_restricciones(const int elemento, const int num_cluster);
 		void leer_datos(const std::string fichero);
 		void leer_restricciones(const std::string fichero);
+		int restricciones_incumplidas();
 
 
 };

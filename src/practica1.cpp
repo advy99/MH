@@ -27,6 +27,7 @@ int main(int argc, char ** argv){
 		if (solucion.size() != 0){
 			sol++;
 
+			std::cout << "Solución para la ejecución " << i << std::endl;
 			for (int i = 0; i < solucion.size(); i++){
 				std::cout << "Cluster " << i << ": " << std::endl;
 				for (auto it = solucion[i].get_elementos().begin(); it != solucion[i].get_elementos().end(); ++it){
@@ -35,6 +36,8 @@ int main(int argc, char ** argv){
 
 				std::cout << std::endl;
 			}
+
+			std::cout << std::endl << std::endl;
 		}
 
 	}

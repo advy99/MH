@@ -42,10 +42,8 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 	mayor_distancia = sqrt(mayor_distancia);
 
 
-	//std::srand( unsigned( std::time(0) ) );
 	//Set_random(std::time(0));
 
-	std::srand( unsigned(15091999) );
 	Set_random( unsigned(15091999) );
 
 }
@@ -184,11 +182,28 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 	std::random_shuffle(indices.begin(), indices.end());
 
 
+	double minimo = std::numeric_limits<double>::infinity();
+
+	double maximo = std::numeric_limits<double>::infinity();
+	maximo = -maximo;
+
+
+	for (int i = 0; i < datos.size(); i++){
+		for (int j = 0; j < datos[i].size(); j++){
+			if (datos[i][j] < minimo){
+				minimo = datos[i][j];
+			}
+			if (datos[i][j] > maximo){
+				maximo = datos[i][j];
+			}
+		}
+	}
+
 	// inicialización de centroides aleatorios
 	for (int i = 0; i < num_clusters; i++){
 		std::vector<double> n_centroide;
 		for (int j = 0; j < clusters[i].get_centroide().size(); j++){
-			n_centroide.push_back(Randfloat(0.0, mayor_distancia));
+			n_centroide.push_back(Randfloat(minimo, maximo));
 		}
 		clusters[i].limpiar();
 		clusters[i].set_centroide(n_centroide);
@@ -197,6 +212,7 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 
 
 	bool hay_cambios = false;
+	std::vector<bool> sin_cambios(clusters.size(), false);
 
 	int num_cluster;
 
@@ -206,8 +222,8 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 
 
 	do {
-
 		hay_cambios = false;
+		sin_cambios = std::vector<bool>(clusters.size(), false);
 
 		for (auto it = indices.begin(); it != indices.end(); ++it){
 
@@ -217,24 +233,33 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 
 		}
 
-
+		std::cout << std::endl << std::endl;
 		for (int i = 0; i < num_clusters; i++){
 
-			hay_cambios = n_sol[i].get_elementos() != clusters[i].get_elementos();
+			sin_cambios[i] = n_sol[i].get_elementos() != clusters[i].get_elementos();
 
 			//centroide_antiguo = clusters[i].get_centroide();
-			clusters[i].calcular_centroide();
+
 			//if (centroide_antiguo != clusters[i].get_centroide()){
 			//	hay_cambios = true;
 			//}
 
-			if (hay_cambios){
+			if (sin_cambios[i]){
+				clusters[i].calcular_centroide();
+				std::cout << std::endl << "Cluster " << i << std::endl;
+				for (auto it = clusters[i].get_centroide().begin(); it != clusters[i].get_centroide().end(); ++it)
+					std::cout << (*it) << " ";
 				n_sol[i] = clusters[i];
 			}
 
 
 			clusters[i].limpiar();
 
+		}
+		std::cout << std::endl << std::endl;
+
+		for (int i = 0; i < sin_cambios.size(); i++){
+			hay_cambios = hay_cambios || sin_cambios[i];
 		}
 
 
@@ -255,28 +280,29 @@ int PAR::buscar_cluster(const int elemento){
 	int menor_restricciones = restricciones.size();
 
 
-	int aumento_infactibilidad;
+	std::vector< std::pair<int, int>> aumento_infactibilidad;
 
 
 	for (int i = 0; i < num_clusters; i++){
 
-		aumento_infactibilidad = cumple_restricciones(elemento, i);
-
-		if (aumento_infactibilidad <= menor_restricciones){
-			d = distancia_puntos(clusters[i].get_centroide(), datos[elemento]);
-
-			if (d < menor_distancia){
-				menor_distancia = d;
-				cluster_menor_distancia = i;
-			}
-
-			menor_restricciones = aumento_infactibilidad;
-		}
-
+		aumento_infactibilidad.push_back( std::make_pair(cumple_restricciones(elemento, i), i ) );
 
 	}
 
+	std::sort(aumento_infactibilidad.begin(), aumento_infactibilidad.end());
 
+	menor_restricciones = aumento_infactibilidad.begin()->first;
+
+	for (auto it = aumento_infactibilidad.begin(); it->first == menor_restricciones && it != aumento_infactibilidad.end(); ++it){
+
+		d = distancia_puntos(clusters[(*it).second].get_centroide(), datos[elemento]);
+
+		if (d < menor_distancia){
+			menor_distancia = d;
+			cluster_menor_distancia = (*it).second;
+		}
+
+	}
 
 	return cluster_menor_distancia;
 }
@@ -370,6 +396,27 @@ void PAR::calcular_desviacion_general(){
 	desviacion_general /= num_clusters;
 }
 
+int PAR::restricciones_incumplidas(){
+
+	int total = 0;
+
+	for (int i = 0; i < num_clusters; i++){
+		for (auto it = clusters[i].get_elementos().begin(); it != clusters[i].get_elementos().end(); ++it){
+			for (auto it2 = std::next(it, 1); it2 != clusters[i].get_elementos().end(); ++it2 ){
+				auto pos = restricciones.find(std::make_pair( (*it), (*it2) ));
+
+				if (pos != restricciones.end()){
+					total++;
+				}
+			}
+		}
+	}
+
+	return total;
+
+}
+
+
 std::vector<PAR::Cluster> PAR::algoritmo_BL(){
 
 }
@@ -424,7 +471,7 @@ void PAR::Cluster::calcular_centroide(){
 	}
 
 	for (int i = 0; i < centroide.size(); i++){
-		centroide[i] /= centroide.size()*1.0;
+		centroide[i] /= elementos.size()*1.0;
 	}
 
 }
