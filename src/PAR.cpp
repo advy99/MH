@@ -16,12 +16,13 @@ Clase PAR
 */
 
 PAR::PAR(const std::string fichero_datos, const std::string fichero_restricciones,
-	 		const int n_clusters):num_clusters(n_clusters){
+	 		const int n_clusters){
 
 	leer_datos(fichero_datos);
 	leer_restricciones(fichero_restricciones);
 
-	for (int i = 0; i < num_clusters; i++){
+	// creamos todos
+	for (int i = 0; i < n_clusters; i++){
 		clusters.push_back( Cluster((*this)) );
 	}
 
@@ -162,12 +163,9 @@ void PAR::leer_restricciones(const std::string fichero){
 
 
 int PAR::get_num_clusters() const{
-	return num_clusters;
+	return clusters.size();
 }
 
-void PAR::set_num_clusters(const int n_num_clusters){
-	num_clusters = n_num_clusters;
-}
 
 
 std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
@@ -200,7 +198,7 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 	}
 
 	// inicialización de centroides aleatorios
-	for (int i = 0; i < num_clusters; i++){
+	for (int i = 0; i < clusters.size(); i++){
 		std::vector<double> n_centroide;
 		for (int j = 0; j < clusters[i].get_centroide().size(); j++){
 			n_centroide.push_back(Randfloat(minimo, maximo));
@@ -231,7 +229,7 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 
 		}
 
-		for (int i = 0; i < num_clusters; i++){
+		for (int i = 0; i < clusters.size(); i++){
 
 			sin_cambios[i] = n_sol[i].get_elementos() != clusters[i].get_elementos();
 
@@ -271,7 +269,7 @@ int PAR::buscar_cluster(const int elemento){
 	std::vector< std::pair<int, int>> aumento_infactibilidad;
 
 
-	for (int i = 0; i < num_clusters; i++){
+	for (int i = 0; i < clusters.size(); i++){
 
 		aumento_infactibilidad.push_back( std::make_pair(cumple_restricciones(elemento, i), i ) );
 
@@ -297,8 +295,9 @@ int PAR::buscar_cluster(const int elemento){
 
 
 std::vector<int> PAR::clusters_to_solucion() {
+
 	std::vector<int> solucion;
-	solucion.resize(num_clusters);
+	solucion.resize(clusters.size());
 
 	for (int i = 0; i < clusters.size(); i++){
 		for (auto it = clusters[i].get_elementos().begin();
@@ -311,12 +310,24 @@ std::vector<int> PAR::clusters_to_solucion() {
 }
 
 
+/**
+	@brief Función para calcular la distancia entre dos puntos
+
+	@param p1 Punto 1
+	@param p2 Punto 2
+
+	@return double Distancia entre dos puntos
+*/
+
 double PAR::distancia_puntos(const std::vector<double> & p1,
 									  const std::vector<double> & p2){
 
 
 	double distancia = 0;
 
+	// hacemos la distancia euclidea de los dos puntos
+	// de momento no hacemos la raiz cuadrada, operacion demasiado costosa
+	// y en realidad nos da igual al comparar
 	for (int i = 0; i < p1.size(); i++){
 		distancia += std::abs(p1[i] - p2[i]) * std::abs(p1[i] - p2[i]);
 	}
@@ -326,6 +337,15 @@ double PAR::distancia_puntos(const std::vector<double> & p1,
 	return distancia;
 }
 
+
+/**
+	@brief Función para calcular el número de restricciones que no son cumplidas
+
+	@param elemento Elemento que queremos insertar en los clusters
+	@param
+
+	@return double Distancia entre dos puntos
+*/
 
 int PAR::cumple_restricciones(const int elemento, const int cluster){
 
@@ -351,7 +371,7 @@ int PAR::cumple_restricciones(const int elemento, const int cluster){
 
 
 	// para todos los demas clusters
-	for (int i = 0; i < num_clusters; i++){
+	for (int i = 0; i < clusters.size(); i++){
 		if (i != cluster){
 			// buscamos si es obigatorio que tengan que ir juntos
 			for (auto it = clusters[i].get_elementos().begin();
@@ -376,19 +396,19 @@ void PAR::calcular_desviacion_general(){
 
 
 
-	for (int i = 0; i < num_clusters; i++){
+	for (int i = 0; i < clusters.size(); i++){
 		clusters[i].calcular_distancia_intra_cluster();
 		desviacion_general += clusters[i].get_distancia_intra_cluster();
 	}
 
-	desviacion_general /= num_clusters;
+	desviacion_general /= clusters.size();
 }
 
 int PAR::restricciones_incumplidas(){
 
 	int total = 0;
 
-	for (int i = 0; i < num_clusters; i++){
+	for (int i = 0; i < clusters.size(); i++){
 		for (auto it = clusters[i].get_elementos().begin(); it != clusters[i].get_elementos().end(); ++it){
 			for (auto it2 = std::next(it, 1); it2 != clusters[i].get_elementos().end(); ++it2 ){
 				auto pos = restricciones.find(std::make_pair( (*it), (*it2) ));

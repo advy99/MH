@@ -5,7 +5,7 @@
 
 
 int main(int argc, char ** argv){
-	PAR par("datos/iris_set.dat", "datos/iris_set_const_10.const", 3);
+	PAR par("datos/ecoli_set.dat", "datos/ecoli_set_const_10.const", 3);
 
 
 	int sol = 0;
@@ -20,8 +20,6 @@ int main(int argc, char ** argv){
 	std::vector<PAR::Cluster> solucion;
 
 	for (int i = 0; i < ejecuciones; i++){
-		if (i == 500000)
-			std::cout << i << std::endl;
 
 		solucion = par.algoritmo_COPKM();
 		if (solucion.size() != 0){

@@ -47,7 +47,6 @@ class PAR{
 
 
 		int get_num_clusters() const;
-		void set_num_clusters(const int n_num_clusters);
 
 		int buscar_cluster(const int elemento);
 		void calcular_desviacion_general();
@@ -63,7 +62,6 @@ class PAR{
 		double desviacion_general;
 
 		double mayor_distancia;
-		int num_clusters;
 
 		double distancia_puntos(const std::vector<double> & p1,
 									 	const std::vector<double> & p2);
