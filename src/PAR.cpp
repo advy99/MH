@@ -156,6 +156,7 @@ void PAR::set_num_clusters(const int n_num_clusters){
 
 std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 
+	// inicialización de indices aleatorios
 	std::vector<int> indices;
 
 	for (int i = 0; i < datos.size(); i++){
@@ -165,6 +166,7 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 	std::random_shuffle(indices.begin(), indices.end());
 
 
+	// inicialización de centroides aleatorios
 	for (int i = 0; i < num_clusters; i++){
 		std::vector<double> n_centroide;
 		for (int j = 0; j < clusters[i].get_centroide().size(); j++){
@@ -193,11 +195,8 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 
 			 num_cluster = buscar_cluster( (*it) );
 
-			 if (num_cluster == -1){
-				 return std::vector<PAR::Cluster>();
-			 } else {
-				 clusters[num_cluster].add_elemento( (*it) );
-			 }
+			 clusters[num_cluster].add_elemento( (*it) );
+
 		}
 
 
@@ -235,18 +234,20 @@ int PAR::buscar_cluster(const int elemento){
 	double d;
 	double menor_distancia = std::numeric_limits<double>::infinity();
 	int cluster_menor_distancia = -1;
+	int aumento_infactibilidad;
 
 
 	for (int i = 0; i < num_clusters; i++){
 
-		if (cumple_restricciones(elemento, i)){
-			d = distancia_puntos(clusters[i].get_centroide(), datos[elemento]);
+		aumento_infactibilidad = cumple_restricciones(elemento, i);
 
-			if (d < menor_distancia){
-				menor_distancia = d;
-				cluster_menor_distancia = i;
-			}
+		d = distancia_puntos(clusters[i].get_centroide(), datos[elemento]);
 
+		d = d * (aumento_infactibilidad + 1);
+
+		if (d < menor_distancia){
+			menor_distancia = d;
+			cluster_menor_distancia = i;
 		}
 
 	}
@@ -286,13 +287,13 @@ double PAR::distancia_puntos(const std::vector<double> & p1,
 }
 
 
-bool PAR::cumple_restricciones(const int elemento, const int cluster){
+int PAR::cumple_restricciones(const int elemento, const int cluster){
 
-	bool las_cumple = true;
+	int incumplidas = 0;
 
 	// para el cluster dado, iteramos sobre todos sus elementos
 	for (auto it = clusters[cluster].get_elementos().begin();
-		  it != clusters[cluster].get_elementos().end() && las_cumple; ++it){
+		  it != clusters[cluster].get_elementos().end(); ++it){
 
 		// buscamos la restricción asociada al elemento dado con todos los elementos
 		// pertenecientes al cluster
@@ -301,34 +302,33 @@ bool PAR::cumple_restricciones(const int elemento, const int cluster){
 		// si encuentra una restricción asociada y es que no pueden ir juntos,
 		// quiere decir que no cumple dichas restricciones
 		if (pos != restricciones.end() && (*pos).second == -1){
-			las_cumple = false;
+			incumplidas++;
 		}
 
  	}
 
 
 
-	// si las sigue cumpliendo
-	if (las_cumple)
-		// para todos los demas clusters
-		for (int i = 0; i < num_clusters; i++){
-			if (i != cluster){
-				// buscamos si es obigatorio que tengan que ir juntos
-				for (auto it = clusters[i].get_elementos().begin();
-					  it != clusters[i].get_elementos().end() && las_cumple; ++it){
 
-					auto pos = restricciones.find(std::make_pair(elemento, (*it)));
-					// si tienen que ir juntos, no cumple las restricciones ya que estamos
-					// intentando meterlo en un cluster distinto
-					if (pos != restricciones.end() && (*pos).second == 1)
-						las_cumple = false;
-				}
+	// para todos los demas clusters
+	for (int i = 0; i < num_clusters; i++){
+		if (i != cluster){
+			// buscamos si es obigatorio que tengan que ir juntos
+			for (auto it = clusters[i].get_elementos().begin();
+				  it != clusters[i].get_elementos().end(); ++it){
+
+				auto pos = restricciones.find(std::make_pair(elemento, (*it)));
+				// si tienen que ir juntos, no cumple las restricciones ya que estamos
+				// intentando meterlo en un cluster distinto
+				if (pos != restricciones.end() && (*pos).second == 1)
+					incumplidas++;
 			}
-
 		}
 
+	}
 
-	return las_cumple;
+
+	return incumplidas;
 }
 
 
@@ -410,7 +410,7 @@ void PAR::Cluster::calcular_distancia_intra_cluster(){
 	double distancia = 0;
 
 
-	for (int i = 0; i < problema.datos[(*it)]).size(); i++){
+	for (int i = 0; i < problema.datos[(*it)].size(); i++){
 		distancia += std::abs(problema.datos[(*it)][i] - centroide[i]) * std::abs(problema.datos[(*it)][i] - centroide[i]);
 	}
 

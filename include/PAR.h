@@ -14,7 +14,7 @@ class PAR{
 			private:
 
 				std::vector<double> centroide;
-				std::vector<double> distancia_intra_cluster;
+				double distancia_intra_cluster;
 
 				std::set<int> elementos;
 
@@ -68,7 +68,7 @@ class PAR{
 									 	const std::vector<double> & p2);
 
 		std::vector<int> clusters_to_solucion();
-		bool cumple_restricciones(const int elemento, const int num_cluster);
+		int cumple_restricciones(const int elemento, const int num_cluster);
 		void leer_datos(const std::string fichero);
 		void leer_restricciones(const std::string fichero);
 
