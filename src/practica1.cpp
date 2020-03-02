@@ -1,11 +1,12 @@
 #include <iostream>
 
 #include "PAR.h"
-
+#include "random.h"
 
 
 int main(int argc, char ** argv){
 	PAR par("datos/rand_set.dat", "datos/rand_set_const_10.const", 3);
+
 
 	int sol = 0;
 	int ejecuciones = 0;

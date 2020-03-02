@@ -27,20 +27,20 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 
 	double d;
 
-	mayor_distancia = std::numeric_limits<double>::infinity();
+	mayor_distancia = 0;
 
 	for (int i = 0; i < datos.size() - 1; i++){
 		for (int j = i; j < datos.size(); j++){
 			d = distancia_puntos(datos[i], datos[j]);
-
-			if (d < mayor_distancia){
-				mayor_distancia = d;
+			if (d > mayor_distancia){
+				mayor_distancia = d * 1.0;
 			}
 
 		}
 	}
 
 	mayor_distancia = sqrt(mayor_distancia);
+
 
 	//std::srand( unsigned( std::time(0) ) );
 	//Set_random(std::time(0));
@@ -424,7 +424,7 @@ void PAR::Cluster::calcular_centroide(){
 	}
 
 	for (int i = 0; i < centroide.size(); i++){
-		centroide[i] /= centroide.size();
+		centroide[i] /= centroide.size()*1.0;
 	}
 
 }
