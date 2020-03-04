@@ -172,9 +172,8 @@ double PAR::get_desviacion_general() const{
 
 
 
-std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
+std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_COPKM(){
 
-	infactibilidad = 0;
 
 	// inicialización de indices aleatorios
 	std::vector<int> indices;
@@ -222,8 +221,12 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 
 	std::vector<Cluster> n_sol = clusters;
 
+	int inf = 0;
 
 	do {
+
+		infactibilidad = 0;
+
 		hay_cambios = false;
 		sin_cambios = std::vector<bool>(clusters.size(), false);
 
@@ -260,7 +263,8 @@ std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
 
 	clusters = n_sol;
 
-	return clusters;
+
+	return std::make_pair(clusters, infactibilidad);
 
 }
 
@@ -419,7 +423,7 @@ void PAR::calcular_desviacion_general(){
 
 
 
-std::vector<PAR::Cluster> PAR::algoritmo_BL(){
+std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 
 	generar_solucion_aleatoria();
 

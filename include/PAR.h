@@ -51,8 +51,8 @@ class PAR{
 
 		int buscar_cluster(const int elemento);
 		void calcular_desviacion_general();
-		std::vector<Cluster> algoritmo_COPKM();
-		std::vector<Cluster> algoritmo_BL();
+		std::pair<std::vector<PAR::Cluster>,int> algoritmo_COPKM();
+		std::pair<std::vector<PAR::Cluster>,int> algoritmo_BL();
 
 
 	private:
