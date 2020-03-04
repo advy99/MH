@@ -47,6 +47,7 @@ class PAR{
 
 
 		int get_num_clusters() const;
+		double get_desviacion_general() const;
 
 		int buscar_cluster(const int elemento);
 		void calcular_desviacion_general();
@@ -70,7 +71,10 @@ class PAR{
 		int cumple_restricciones(const int elemento, const int num_cluster);
 		void leer_datos(const std::string fichero);
 		void leer_restricciones(const std::string fichero);
-		int restricciones_incumplidas();
+		void generar_solucion_aleatoria();
+
+		int infactibilidad;
+
 
 
 };

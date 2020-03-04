@@ -166,9 +166,15 @@ int PAR::get_num_clusters() const{
 	return clusters.size();
 }
 
+double PAR::get_desviacion_general() const{
+	return desviacion_general;
+}
+
 
 
 std::vector<PAR::Cluster> PAR::algoritmo_COPKM(){
+
+	infactibilidad = 0;
 
 	// inicialización de indices aleatorios
 	std::vector<int> indices;
@@ -290,6 +296,8 @@ int PAR::buscar_cluster(const int elemento){
 
 	}
 
+	infactibilidad += menor_restricciones;
+
 	return cluster_menor_distancia;
 }
 
@@ -395,41 +403,73 @@ int PAR::cumple_restricciones(const int elemento, const int cluster){
 void PAR::calcular_desviacion_general(){
 
 
-
+	// para todos los clusters
 	for (int i = 0; i < clusters.size(); i++){
+		// calculamos su distancia intra cluster
 		clusters[i].calcular_distancia_intra_cluster();
+
+		// la sumamos a la desviacion general
 		desviacion_general += clusters[i].get_distancia_intra_cluster();
 	}
 
+	// dividimos la desviación general por el total de clusters
 	desviacion_general /= clusters.size();
 }
 
-int PAR::restricciones_incumplidas(){
 
-	int total = 0;
-
-	for (int i = 0; i < clusters.size(); i++){
-		for (auto it = clusters[i].get_elementos().begin(); it != clusters[i].get_elementos().end(); ++it){
-			for (auto it2 = std::next(it, 1); it2 != clusters[i].get_elementos().end(); ++it2 ){
-				auto pos = restricciones.find(std::make_pair( (*it), (*it2) ));
-
-				if (pos != restricciones.end()){
-					total++;
-				}
-			}
-		}
-	}
-
-	return total;
-
-}
 
 
 std::vector<PAR::Cluster> PAR::algoritmo_BL(){
 
+	generar_solucion_aleatoria();
+
+	double desviacion = get_desviacion_general();
+
+	constexpr double lambda = mayor_distancia / (restricciones.size()/2.0);
+
+	
+
 }
 
 
+
+
+
+
+void PAR::generar_solucion_aleatoria(){
+
+	for (auto it = clusters.begin(); it != clusters.end(); ++it){
+		it->limpiar();
+	}
+
+	// inicialización de indices aleatorios
+	std::vector<int> indices;
+
+	for (int i = 0; i < datos.size(); i++){
+		indices.push_back(i);
+	}
+
+	std::random_shuffle(indices.begin(), indices.end(), RandPositiveInt);
+
+	auto it = indices.begin();
+
+	// metemos en los clusters al menos un elemento
+	for (int i = 0; i < clusters.size(); i++){
+		clusters[i].add_elemento((*it));
+		++it;
+	}
+
+	// introducimos los elementos restantes escogiendo los clusters de forma aleatoria
+
+	while (it != indices.end()){
+		clusters[RandPositiveInt(clusters.size())].add_elemento((*it));
+		++it;
+	}
+
+
+	calcular_desviacion_general();
+
+}
 
 
 
@@ -490,6 +530,7 @@ void PAR::Cluster::calcular_distancia_intra_cluster(){
 
 	double distancia = 0;
 
+	calcular_centroide();
 
 	for (int i = 0; i < problema.datos[(*it)].size(); i++){
 		distancia += std::abs(problema.datos[(*it)][i] - centroide[i]) * std::abs(problema.datos[(*it)][i] - centroide[i]);
