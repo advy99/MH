@@ -40,7 +40,7 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 		}
 	}
 
-	mayor_distancia = sqrt(mayor_distancia);
+	//mayor_distancia = sqrt(mayor_distancia);
 
 
 	//Set_random(std::time(0));
@@ -215,20 +215,20 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_COPKM(){
 
 
 	bool hay_cambios = false;
-	std::vector<bool> sin_cambios(clusters.size(), false);
+	std::vector<bool> cambios(clusters.size(), false);
 
 	int num_cluster;
 
 	std::vector<Cluster> n_sol = clusters;
 
-	int inf = 0;
+	int i = 0;
 
 	do {
 
 		infactibilidad = 0;
 
 		hay_cambios = false;
-		sin_cambios = std::vector<bool>(clusters.size(), false);
+		cambios = std::vector<bool>(clusters.size(), false);
 
 		for (auto it = indices.begin(); it != indices.end(); ++it){
 
@@ -238,11 +238,26 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_COPKM(){
 
 		}
 
+		//std::cout << std::endl << std::endl << std::endl ;
+
+
 		for (int i = 0; i < clusters.size(); i++){
 
-			sin_cambios[i] = n_sol[i].get_elementos() != clusters[i].get_elementos();
+			cambios[i] = n_sol[i].get_elementos() != clusters[i].get_elementos();
+			//std::cout << "Cluster " << i << " - centroide: ";
 
-			if (sin_cambios[i]){
+		//	for (auto it = clusters[i].get_centroide().begin(); it != clusters[i].get_centroide().end(); ++it ){
+			//	std::cout << (*it) << " ";
+			//}
+
+			//std::cout << std::endl << "Elementos Cluster " << i  << std::endl;
+
+			//for (auto it = clusters[i].get_elementos().begin(); it != clusters[i].get_elementos().end(); ++it ){
+			//	std::cout << (*it) << " ";
+			//}
+			//std::cout << std::endl << std::endl << std::endl;
+
+			if (cambios[i]){
 				clusters[i].calcular_centroide();
 
 				n_sol[i] = clusters[i];
@@ -253,11 +268,11 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_COPKM(){
 
 		}
 
-		for (int i = 0; i < sin_cambios.size(); i++){
-			hay_cambios = hay_cambios || sin_cambios[i];
+		for (int i = 0; i < cambios.size(); i++){
+			hay_cambios = hay_cambios || cambios[i];
 		}
 
-
+		i++;
 	} while(hay_cambios);
 
 
@@ -345,7 +360,6 @@ double PAR::distancia_puntos(const std::vector<double> & p1,
 	}
 
 
-
 	return distancia;
 }
 
@@ -431,6 +445,14 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 
 	const double lambda = mayor_distancia / (restricciones.size()/2.0);
 
+	bool hay_cambios = false;
+
+	int i = 0;
+
+
+	do {
+
+	} while (hay_cambios && i < TOPE_BL);
 
 
 }

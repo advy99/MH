@@ -74,6 +74,7 @@ class PAR{
 		void generar_solucion_aleatoria();
 
 		int infactibilidad;
+		const int TOPE_BL = 100000;
 
 
 
