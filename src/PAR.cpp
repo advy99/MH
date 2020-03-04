@@ -425,9 +425,9 @@ std::vector<PAR::Cluster> PAR::algoritmo_BL(){
 
 	double desviacion = get_desviacion_general();
 
-	constexpr double lambda = mayor_distancia / (restricciones.size()/2.0);
+	const double lambda = mayor_distancia / (restricciones.size()/2.0);
 
-	
+
 
 }
 
