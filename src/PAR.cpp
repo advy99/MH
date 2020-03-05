@@ -278,6 +278,7 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_COPKM(){
 
 	clusters = n_sol;
 
+	infactibilidad = calcular_infactibilidad();
 
 	return std::make_pair(clusters, infactibilidad);
 
@@ -443,16 +444,40 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 
 	double desviacion = get_desviacion_general();
 
-	const double lambda = mayor_distancia / (restricciones.size()/2.0);
+	const double LAMBDA = mayor_distancia / (restricciones.size()/2.0);
 
-	bool hay_cambios = false;
+	bool he_encontrado_mejor = false;
 
 	int i = 0;
 
+	// inicialización de indices aleatorios
+	std::vector<int> indices;
+
+	for (int i = 0; i < datos.size(); i++){
+		indices.push_back(i);
+	}
+
+	int infac = calcular_infactibilidad();
+
+	double f_objetivo = desviacion + (infactibilidad * LAMBDA);
+
 
 	do {
+		// para explorar en vecindario de forma aleatoria
+		std::random_shuffle(indices.begin(), indices.end(), RandPositiveInt);
 
-	} while (hay_cambios && i < TOPE_BL);
+		he_encontrado_mejor = false;
+
+		// exploramos el vecindario
+		for (auto it = indices.begin(); it != indices.end() && !he_encontrado_mejor; ++it){
+
+		}
+
+
+		i++;
+
+		// si no tengo mejor vecino o llego al tope
+	} while (he_encontrado_mejor && i < TOPE_BL);
 
 
 }
@@ -497,7 +522,52 @@ void PAR::generar_solucion_aleatoria(){
 
 }
 
+int PAR::calcular_infactibilidad() const{
+	int infac = 0;
 
+
+	for (auto it = restricciones.begin(); it != restricciones.end(); ++it){
+		// solo comprobamos si el primer elemento es mayor que el segundo
+		// para no comprobar repetidas
+		if ( (*it).first.first > (*it).first.second ){
+			auto pos = restricciones.find( std::make_pair((*it).first.first, (*it).first.second) );
+
+			if (pos != restricciones.end()){
+
+				int c1 = -1;
+				int c2 = -1;
+
+				for (int i = 0; i < clusters.size(); i++){
+					auto p = clusters[i].get_elementos().find((*it).first.first);
+					auto p2 = clusters[i].get_elementos().find((*it).first.second);
+
+					if (p != clusters[i].get_elementos().end()){
+						c1 = i;
+					}
+
+					if (p2 != clusters[i].get_elementos().end()){
+						c2 = i;
+					}
+				}
+
+				// si tienen que estar juntos y no lo estan
+				if (pos->second == 1 && c1 != c2){
+					infac++;
+				}
+
+				// si tienen que estar separados y no lo están
+				if (pos->second == -1 && c1 == c2){
+					infac++;
+				}
+
+			}
+
+		}
+	}
+
+
+	return infac;
+}
 
 
 

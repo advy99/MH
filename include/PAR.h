@@ -53,6 +53,7 @@ class PAR{
 		void calcular_desviacion_general();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_COPKM();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_BL();
+		int calcular_infactibilidad() const;
 
 
 	private:
@@ -74,7 +75,7 @@ class PAR{
 		void generar_solucion_aleatoria();
 
 		int infactibilidad;
-		const int TOPE_BL = 100000;
+		static const int TOPE_BL = 100000;
 
 
 
