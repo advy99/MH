@@ -19,16 +19,16 @@ int main(int argc, char ** argv){
 
 	std::pair<std::vector<PAR::Cluster>,int> solucion;
 
-	for (int i = 0; i < ejecuciones; i++){
+	for (unsigned i = 0; i < ejecuciones; i++){
 
-		solucion = par.algoritmo_COPKM();
+		solucion = par.algoritmo_BL();
 		if (solucion.first.size() != 0){
 			sol++;
 
 			std::cout << "Solución para la ejecución " << i << std::endl;
 			std::cout << "Infactibilidad: " << solucion.second << std::endl;
 
-			for (int i = 0; i < solucion.first.size(); i++){
+			for (unsigned i = 0; i < solucion.first.size(); i++){
 				std::cout << "Cluster " << i << ": " << std::endl;
 				for (auto it = solucion.first[i].get_elementos().begin(); it != solucion.first[i].get_elementos().end(); ++it){
 					std::cout << (*it) << " ";

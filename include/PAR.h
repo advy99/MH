@@ -35,6 +35,7 @@ class PAR{
 				void add_elemento(const int elemento);
 				void delete_elemento(const int elemento);
 				void limpiar();
+				unsigned num_elementos() const;
 
 				Cluster & operator = (const Cluster & otro);
 
@@ -50,6 +51,8 @@ class PAR{
 		double get_desviacion_general() const;
 
 		int buscar_cluster(const int elemento);
+
+		int buscar_elemento(const int elemento) const;
 		void calcular_desviacion_general();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_COPKM();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_BL();

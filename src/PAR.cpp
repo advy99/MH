@@ -9,6 +9,18 @@
 #include "random.h"
 #include <cmath>
 
+
+
+/*
+
+Función auxiliar para comparar dos doubles
+
+*/
+
+bool compara_reales(const float & a, const float & b, const float epsilon = 0.005d){
+    return (fabs(a - b) < epsilon);
+}
+
 /*
 
 Clase PAR
@@ -30,8 +42,8 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 
 	mayor_distancia = 0;
 
-	for (int i = 0; i < datos.size() - 1; i++){
-		for (int j = i; j < datos.size(); j++){
+	for (unsigned i = 0; i < datos.size() - 1; i++){
+		for (unsigned j = i; j < datos.size(); j++){
 			d = distancia_puntos(datos[i], datos[j]);
 			if (d > mayor_distancia){
 				mayor_distancia = d * 1.0;
@@ -178,7 +190,7 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_COPKM(){
 	// inicialización de indices aleatorios
 	std::vector<int> indices;
 
-	for (int i = 0; i < datos.size(); i++){
+	for (unsigned i = 0; i < datos.size(); i++){
 		indices.push_back(i);
 	}
 
@@ -191,8 +203,8 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_COPKM(){
 	maximo = -maximo;
 
 
-	for (int i = 0; i < datos.size(); i++){
-		for (int j = 0; j < datos[i].size(); j++){
+	for (unsigned i = 0; i < datos.size(); i++){
+		for (unsigned j = 0; j < datos[i].size(); j++){
 			if (datos[i][j] < minimo){
 				minimo = datos[i][j];
 			}
@@ -203,9 +215,9 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_COPKM(){
 	}
 
 	// inicialización de centroides aleatorios
-	for (int i = 0; i < clusters.size(); i++){
+	for (unsigned i = 0; i < clusters.size(); i++){
 		std::vector<double> n_centroide;
-		for (int j = 0; j < clusters[i].get_centroide().size(); j++){
+		for (unsigned j = 0; j < clusters[i].get_centroide().size(); j++){
 			n_centroide.push_back(Randfloat(minimo, maximo));
 		}
 		clusters[i].limpiar();
@@ -241,7 +253,7 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_COPKM(){
 		//std::cout << std::endl << std::endl << std::endl ;
 
 
-		for (int i = 0; i < clusters.size(); i++){
+		for (unsigned i = 0; i < clusters.size(); i++){
 
 			cambios[i] = n_sol[i].get_elementos() != clusters[i].get_elementos();
 			//std::cout << "Cluster " << i << " - centroide: ";
@@ -268,7 +280,7 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_COPKM(){
 
 		}
 
-		for (int i = 0; i < cambios.size(); i++){
+		for (unsigned i = 0; i < cambios.size(); i++){
 			hay_cambios = hay_cambios || cambios[i];
 		}
 
@@ -295,7 +307,7 @@ int PAR::buscar_cluster(const int elemento){
 	std::vector< std::pair<int, int>> aumento_infactibilidad;
 
 
-	for (int i = 0; i < clusters.size(); i++){
+	for (unsigned i = 0; i < clusters.size(); i++){
 
 		aumento_infactibilidad.push_back( std::make_pair(cumple_restricciones(elemento, i), i ) );
 
@@ -327,7 +339,7 @@ std::vector<int> PAR::clusters_to_solucion() {
 	std::vector<int> solucion;
 	solucion.resize(clusters.size());
 
-	for (int i = 0; i < clusters.size(); i++){
+	for (unsigned i = 0; i < clusters.size(); i++){
 		for (auto it = clusters[i].get_elementos().begin();
 		     it != clusters[i].get_elementos().end(); ++it ){
 			solucion[(*it)] = i;
@@ -356,7 +368,7 @@ double PAR::distancia_puntos(const std::vector<double> & p1,
 	// hacemos la distancia euclidea de los dos puntos
 	// de momento no hacemos la raiz cuadrada, operacion demasiado costosa
 	// y en realidad nos da igual al comparar
-	for (int i = 0; i < p1.size(); i++){
+	for (unsigned i = 0; i < p1.size(); i++){
 		distancia += std::abs(p1[i] - p2[i]) * std::abs(p1[i] - p2[i]);
 	}
 
@@ -398,7 +410,7 @@ int PAR::cumple_restricciones(const int elemento, const int cluster){
 
 
 	// para todos los demas clusters
-	for (int i = 0; i < clusters.size(); i++){
+	for (unsigned i = 0; i < clusters.size(); i++){
 		if (i != cluster){
 			// buscamos si es obigatorio que tengan que ir juntos
 			for (auto it = clusters[i].get_elementos().begin();
@@ -423,7 +435,7 @@ void PAR::calcular_desviacion_general(){
 
 
 	// para todos los clusters
-	for (int i = 0; i < clusters.size(); i++){
+	for (unsigned i = 0; i < clusters.size(); i++){
 		// calculamos su distancia intra cluster
 		clusters[i].calcular_distancia_intra_cluster();
 
@@ -442,7 +454,6 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 
 	generar_solucion_aleatoria();
 
-	double desviacion = get_desviacion_general();
 
 	const double LAMBDA = mayor_distancia / (restricciones.size()/2.0);
 
@@ -452,25 +463,63 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 
 	// inicialización de indices aleatorios
 	std::vector<int> indices;
+	std::vector<int> indices_clusters;
 
-	for (int i = 0; i < datos.size(); i++){
+	for (unsigned i = 0; i < datos.size(); i++){
 		indices.push_back(i);
+	}
+
+
+	for (unsigned i = 0; i < clusters.size(); i++){
+		indices_clusters.push_back(i);
 	}
 
 	int infac = calcular_infactibilidad();
 
-	double f_objetivo = desviacion + (infactibilidad * LAMBDA);
+	double f_objetivo = get_desviacion_general() + (infactibilidad * LAMBDA);
+	double n_f_objetivo = 0.0D;
 
+	std::vector<Cluster> sol = clusters;
+
+	int clus_vecino = -1;
 
 	do {
 		// para explorar en vecindario de forma aleatoria
 		std::random_shuffle(indices.begin(), indices.end(), RandPositiveInt);
+		std::random_shuffle(indices_clusters.begin(), indices_clusters.end(), RandPositiveInt);
+
 
 		he_encontrado_mejor = false;
+
+		clus_vecino = -1;
 
 		// exploramos el vecindario
 		for (auto it = indices.begin(); it != indices.end() && !he_encontrado_mejor; ++it){
 
+			// para los distintos clusters
+			for (auto it_c = indices_clusters.begin(); it_c != indices_clusters.end() && !he_encontrado_mejor; ++it_c){
+				// solo cambiamos si el cluster es distinto al cluster donde se
+				// encuetra anteriormente el elemento
+
+				int antiguo = buscar_elemento( (*it) );
+
+				if (antiguo != (*it_c)){
+
+					clusters[antiguo].delete_elemento( (*it) );
+					clusters[(*it_c)].add_elemento( (*it) );
+
+					n_f_objetivo = get_desviacion_general() + (calcular_infactibilidad() * LAMBDA);
+
+					if (compara_reales(n_f_objetivo, f_objetivo) ){
+						f_objetivo = n_f_objetivo;
+						sol = clusters;
+						he_encontrado_mejor = true;
+					} else {
+						clusters = sol;
+					}
+
+				}
+			}
 		}
 
 
@@ -478,6 +527,10 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 
 		// si no tengo mejor vecino o llego al tope
 	} while (he_encontrado_mejor && i < TOPE_BL);
+
+	clusters = sol;
+
+	return std::make_pair(clusters, calcular_infactibilidad());
 
 
 }
@@ -496,7 +549,7 @@ void PAR::generar_solucion_aleatoria(){
 	// inicialización de indices aleatorios
 	std::vector<int> indices;
 
-	for (int i = 0; i < datos.size(); i++){
+	for (unsigned i = 0; i < datos.size(); i++){
 		indices.push_back(i);
 	}
 
@@ -505,7 +558,7 @@ void PAR::generar_solucion_aleatoria(){
 	auto it = indices.begin();
 
 	// metemos en los clusters al menos un elemento
-	for (int i = 0; i < clusters.size(); i++){
+	for (unsigned i = 0; i < clusters.size(); i++){
 		clusters[i].add_elemento((*it));
 		++it;
 	}
@@ -537,7 +590,7 @@ int PAR::calcular_infactibilidad() const{
 				int c1 = -1;
 				int c2 = -1;
 
-				for (int i = 0; i < clusters.size(); i++){
+				for (unsigned i = 0; i < clusters.size(); i++){
 					auto p = clusters[i].get_elementos().find((*it).first.first);
 					auto p2 = clusters[i].get_elementos().find((*it).first.second);
 
@@ -569,6 +622,21 @@ int PAR::calcular_infactibilidad() const{
 	return infac;
 }
 
+
+int PAR::buscar_elemento(const int elemento) const{
+	int ret = -1;
+	bool encontrado = false;;
+
+	for (int i = 0; i < clusters.size() && !encontrado; i++){
+		auto it = clusters[i].get_elementos().find(elemento);
+
+		if (it != clusters[i].get_elementos().end()){
+			ret = i;
+		}
+	}
+
+	return ret;
+}
 
 
 
@@ -609,12 +677,12 @@ PAR::Cluster::Cluster( PAR & p ):problema(p){
 void PAR::Cluster::calcular_centroide(){
 
 	for(auto it = elementos.begin(); it != elementos.end(); ++it){
-		for (int j = 0; j < problema.datos[(*it)].size(); j++){
+		for (unsigned j = 0; j < problema.datos[(*it)].size(); j++){
 			centroide[j] += problema.datos[(*it)][j];
 		}
 	}
 
-	for (int i = 0; i < centroide.size(); i++){
+	for (unsigned i = 0; i < centroide.size(); i++){
 		centroide[i] /= elementos.size()*1.0;
 	}
 
@@ -628,7 +696,7 @@ void PAR::Cluster::calcular_distancia_intra_cluster(){
 
 	calcular_centroide();
 
-	for (int i = 0; i < problema.datos[(*it)].size(); i++){
+	for (unsigned i = 0; i < problema.datos[(*it)].size(); i++){
 		distancia += std::abs(problema.datos[(*it)][i] - centroide[i]) * std::abs(problema.datos[(*it)][i] - centroide[i]);
 	}
 
@@ -673,4 +741,9 @@ PAR::Cluster & PAR::Cluster::operator=(const PAR::Cluster & otro){
 
 double PAR::Cluster::get_distancia_intra_cluster() const{
 	return distancia_intra_cluster;
+}
+
+
+unsigned PAR::Cluster::num_elementos() const{
+	return elementos.size();
 }
