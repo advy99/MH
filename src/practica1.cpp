@@ -19,7 +19,7 @@ int main(int argc, char ** argv){
 
 	std::pair<std::vector<PAR::Cluster>,int> solucion;
 
-	for (unsigned i = 0; i < ejecuciones; i++){
+	for (int i = 0; i < ejecuciones; i++){
 
 		solucion = par.algoritmo_BL();
 		if (solucion.first.size() != 0){
@@ -28,9 +28,9 @@ int main(int argc, char ** argv){
 			std::cout << "Solución para la ejecución " << i << std::endl;
 			std::cout << "Infactibilidad: " << solucion.second << std::endl;
 
-			for (unsigned i = 0; i < solucion.first.size(); i++){
-				std::cout << "Cluster " << i << ": " << std::endl;
-				for (auto it = solucion.first[i].get_elementos().begin(); it != solucion.first[i].get_elementos().end(); ++it){
+			for (unsigned j = 0; j < solucion.first.size(); j++){
+				std::cout << "Cluster " << j << ": " << std::endl;
+				for (auto it = solucion.first[j].get_elementos().begin(); it != solucion.first[j].get_elementos().end(); ++it){
 					std::cout << (*it) << " ";
 				}
 

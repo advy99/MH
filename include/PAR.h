@@ -54,7 +54,7 @@ class PAR{
 
 		int buscar_elemento(const int elemento) const;
 		void calcular_desviacion_general();
-		std::pair<std::vector<PAR::Cluster>,int> algoritmo_COPKM();
+		std::pair<std::vector<PAR::Cluster>,int> algoritmo_greedy();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_BL();
 		int calcular_infactibilidad() const;
 

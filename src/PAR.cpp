@@ -11,15 +11,6 @@
 
 
 
-/*
-
-Función auxiliar para comparar dos doubles
-
-*/
-
-bool compara_reales(const float & a, const float & b, const float epsilon = 0.005d){
-    return (fabs(a - b) < epsilon);
-}
 
 /*
 
@@ -56,8 +47,7 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 
 
 	//Set_random(std::time(0));
-
-	Set_random( unsigned(15091999) );
+	Set_random( unsigned(1591999) );
 
 }
 
@@ -71,7 +61,6 @@ void PAR::leer_datos(const std::string fichero){
 
 		std::string cadena;
 
-		double valor;
 		std::string valor_cadena;
 
 		int num_dato = 0;
@@ -184,7 +173,7 @@ double PAR::get_desviacion_general() const{
 
 
 
-std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_COPKM(){
+std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_greedy(){
 
 
 	// inicialización de indices aleatorios
@@ -411,7 +400,7 @@ int PAR::cumple_restricciones(const int elemento, const int cluster){
 
 	// para todos los demas clusters
 	for (unsigned i = 0; i < clusters.size(); i++){
-		if (i != cluster){
+		if ( (int)i != cluster){
 			// buscamos si es obigatorio que tengan que ir juntos
 			for (auto it = clusters[i].get_elementos().begin();
 				  it != clusters[i].get_elementos().end(); ++it){
@@ -459,7 +448,7 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 
 	bool he_encontrado_mejor = false;
 
-	int i = 0;
+	int contador = 0;
 
 	// inicialización de indices aleatorios
 	std::vector<int> indices;
@@ -474,24 +463,20 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 		indices_clusters.push_back(i);
 	}
 
-	int infac = calcular_infactibilidad();
-
-	double f_objetivo = get_desviacion_general() + (infactibilidad * LAMBDA);
+	double f_objetivo = get_desviacion_general() + (calcular_infactibilidad() * LAMBDA);
 	double n_f_objetivo = 0.0D;
 
 	std::vector<Cluster> sol = clusters;
 
-	int clus_vecino = -1;
 
 	do {
+
+		he_encontrado_mejor = false;
+
 		// para explorar en vecindario de forma aleatoria
 		std::random_shuffle(indices.begin(), indices.end(), RandPositiveInt);
 		std::random_shuffle(indices_clusters.begin(), indices_clusters.end(), RandPositiveInt);
 
-
-		he_encontrado_mejor = false;
-
-		clus_vecino = -1;
 
 		// exploramos el vecindario
 		for (auto it = indices.begin(); it != indices.end() && !he_encontrado_mejor; ++it){
@@ -510,7 +495,7 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 
 					n_f_objetivo = get_desviacion_general() + (calcular_infactibilidad() * LAMBDA);
 
-					if (compara_reales(n_f_objetivo, f_objetivo) ){
+					if ( n_f_objetivo < f_objetivo ){
 						f_objetivo = n_f_objetivo;
 						sol = clusters;
 						he_encontrado_mejor = true;
@@ -523,12 +508,13 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 		}
 
 
-		i++;
+		contador++;
 
 		// si no tengo mejor vecino o llego al tope
-	} while (he_encontrado_mejor && i < TOPE_BL);
+	} while (he_encontrado_mejor && contador < TOPE_BL);
 
 	clusters = sol;
+	std::cout << " He tardado " << contador << " iteraciones " << std::endl;
 
 	return std::make_pair(clusters, calcular_infactibilidad());
 
@@ -627,7 +613,7 @@ int PAR::buscar_elemento(const int elemento) const{
 	int ret = -1;
 	bool encontrado = false;;
 
-	for (int i = 0; i < clusters.size() && !encontrado; i++){
+	for (unsigned i = 0; i < clusters.size() && !encontrado; i++){
 		auto it = clusters[i].get_elementos().find(elemento);
 
 		if (it != clusters[i].get_elementos().end()){
