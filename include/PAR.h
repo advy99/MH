@@ -5,6 +5,7 @@
 #include <set>
 #include <map>
 #include <string>
+#include <ostream>
 
 class PAR{
 
@@ -38,6 +39,7 @@ class PAR{
 				unsigned num_elementos() const;
 
 				Cluster & operator = (const Cluster & otro);
+				//friend std::ostream & operator << (std::ostream & flujo, const Cluster & c);
 
 
 		};

@@ -5,7 +5,7 @@ SRC     = $(HOME)/src
 OBJ     = $(HOME)/obj
 LIB     = $(HOME)/lib
 
-FLAGS = --std=c++11 -O2
+FLAGS = --std=c++17 -O2
 
 all: $(BIN)/practica1
 

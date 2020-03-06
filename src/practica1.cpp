@@ -47,7 +47,7 @@ void ejecutar_PAR_BL(const std::string datos, const std::string restricciones,
 
 	std::pair<std::vector<PAR::Cluster>,int> solucion;
 
-	std::cout << std::endl << "Solución Greedy para " << datos << " con restricciones de " << restricciones << std::endl << std::endl;
+	std::cout << std::endl << "Solución BL para " << datos << " con restricciones de " << restricciones << std::endl << std::endl;
 
 	for (int i = 0; i < iteraciones; i++){
 
@@ -98,8 +98,25 @@ int main(int argc, char ** argv){
 
 	Set_random( unsigned(150999) );
 
-	ejecutar_PAR_greedy("datos/ecoli_set.dat", "datos/ecoli_set_const_10.const", 3, ejecuciones);
-	ejecutar_PAR_greedy("datos/ecoli_set.dat", "datos/ecoli_set_const_20.const", 3, ejecuciones);
+	//ejecutar_PAR_greedy("datos/ecoli_set.dat", "datos/ecoli_set_const_10.const", 8, ejecuciones);
+	//ejecutar_PAR_greedy("datos/ecoli_set.dat", "datos/ecoli_set_const_20.const", 8, ejecuciones);
+
+
+	Set_random( unsigned(150999) );
+
+	ejecutar_PAR_BL("datos/iris_set.dat", "datos/iris_set_const_10.const", 3, ejecuciones);
+	ejecutar_PAR_BL("datos/iris_set.dat", "datos/iris_set_const_20.const", 3, ejecuciones);
+
+	Set_random( unsigned(150999) );
+
+	ejecutar_PAR_BL("datos/rand_set.dat", "datos/rand_set_const_10.const", 3, ejecuciones);
+	ejecutar_PAR_BL("datos/rand_set.dat", "datos/rand_set_const_20.const", 3, ejecuciones);
+
+
+	Set_random( unsigned(150999) );
+
+	ejecutar_PAR_BL("datos/ecoli_set.dat", "datos/ecoli_set_const_10.const", 8, ejecuciones);
+	ejecutar_PAR_BL("datos/ecoli_set.dat", "datos/ecoli_set_const_20.const", 8, ejecuciones);
 
 
 

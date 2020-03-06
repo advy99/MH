@@ -484,7 +484,7 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 
 				int antiguo = buscar_elemento( (*it) );
 
-				if (antiguo != (*it_c)){
+				if (antiguo != (*it_c) && clusters[antiguo].num_elementos() - 1 > 0){
 
 					clusters[antiguo].delete_elemento( (*it) );
 					clusters[(*it_c)].add_elemento( (*it) );
@@ -729,3 +729,8 @@ double PAR::Cluster::get_distancia_intra_cluster() const{
 unsigned PAR::Cluster::num_elementos() const{
 	return elementos.size();
 }
+
+
+//std::ostream & std::operator << (std::ostream & flujo, const PAR::Cluster & clus) {
+//	return flujo;
+//}
