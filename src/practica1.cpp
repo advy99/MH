@@ -12,7 +12,7 @@ void ejecutar_PAR_greedy(const std::string datos, const std::string restriccione
 
 	std::pair<std::vector<PAR::Cluster>,int> solucion;
 
-	std::cout << std::endl << "Solución Greedy para " << datos << " con restricciones de " << restricciones << std::endl << std::endl; 
+	std::cout << std::endl << "Solución Greedy para " << datos << " con restricciones de " << restricciones << std::endl << std::endl;
 
 	for (int i = 0; i < iteraciones; i++){
 
@@ -50,18 +50,18 @@ int main(int argc, char ** argv){
 		ejecuciones = 5;
 	}
 
-	Set_random( unsigned(1591999) );
+	Set_random( unsigned(150999) );
 
 	ejecutar_PAR_greedy("datos/iris_set.dat", "datos/iris_set_const_10.const", 3, ejecuciones);
 	ejecutar_PAR_greedy("datos/iris_set.dat", "datos/iris_set_const_20.const", 3, ejecuciones);
 
-	Set_random( unsigned(1591999) );
+	Set_random( unsigned(150999) );
 
 	ejecutar_PAR_greedy("datos/rand_set.dat", "datos/rand_set_const_10.const", 3, ejecuciones);
 	ejecutar_PAR_greedy("datos/rand_set.dat", "datos/rand_set_const_20.const", 3, ejecuciones);
 
 
-	Set_random( unsigned(1591999) );
+	Set_random( unsigned(150999) );
 
 	ejecutar_PAR_greedy("datos/ecoli_set.dat", "datos/ecoli_set_const_10.const", 3, ejecuciones);
 	ejecutar_PAR_greedy("datos/ecoli_set.dat", "datos/ecoli_set_const_20.const", 3, ejecuciones);
