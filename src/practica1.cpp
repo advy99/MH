@@ -38,6 +38,41 @@ void ejecutar_PAR_greedy(const std::string datos, const std::string restriccione
 
 }
 
+
+void ejecutar_PAR_BL(const std::string datos, const std::string restricciones,
+	               		 const int clusters, const int iteraciones){
+
+	PAR par(datos, restricciones, clusters);
+
+
+	std::pair<std::vector<PAR::Cluster>,int> solucion;
+
+	std::cout << std::endl << "Solución Greedy para " << datos << " con restricciones de " << restricciones << std::endl << std::endl;
+
+	for (int i = 0; i < iteraciones; i++){
+
+		solucion = par.algoritmo_BL();
+		if (solucion.first.size() != 0){
+
+			std::cout << "Solución para la ejecución " << i << std::endl;
+			std::cout << "Infactibilidad: " << solucion.second << std::endl;
+
+			for (unsigned j = 0; j < solucion.first.size(); j++){
+				std::cout << "Cluster " << j << ": " << std::endl;
+				for (auto it = solucion.first[j].get_elementos().begin(); it != solucion.first[j].get_elementos().end(); ++it){
+					std::cout << (*it) << " ";
+				}
+
+				std::cout << std::endl;
+			}
+
+			std::cout << std::endl << std::endl;
+		}
+
+	}
+
+}
+
 int main(int argc, char ** argv){
 
 
