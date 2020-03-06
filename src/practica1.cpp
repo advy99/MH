@@ -4,26 +4,20 @@
 #include "random.h"
 
 
-int main(int argc, char ** argv){
-	PAR par("datos/iris_set.dat", "datos/iris_set_const_10.const", 3);
+void ejecutar_PAR_greedy(const std::string datos, const std::string restricciones,
+	               		 const int clusters, const int iteraciones){
 
+	PAR par(datos, restricciones, clusters);
 
-	int sol = 0;
-	int ejecuciones = 0;
-
-	if (argc > 1){
-		ejecuciones = atoi(argv[1]);
-	} else {
-		ejecuciones = 5;
-	}
 
 	std::pair<std::vector<PAR::Cluster>,int> solucion;
 
-	for (int i = 0; i < ejecuciones; i++){
+	std::cout << std::endl << "Solución Greedy para " << datos << " con restricciones de " << restricciones << std::endl << std::endl; 
 
-		solucion = par.algoritmo_BL();
+	for (int i = 0; i < iteraciones; i++){
+
+		solucion = par.algoritmo_greedy();
 		if (solucion.first.size() != 0){
-			sol++;
 
 			std::cout << "Solución para la ejecución " << i << std::endl;
 			std::cout << "Infactibilidad: " << solucion.second << std::endl;
@@ -42,8 +36,36 @@ int main(int argc, char ** argv){
 
 	}
 
-	std::cout << "Ejecuciones del algoritmo: " << ejecuciones << std::endl;
-	std::cout << "Soluciones encontradas: " << sol << std::endl;
+}
+
+int main(int argc, char ** argv){
+
+
+
+	int ejecuciones = 0;
+
+	if (argc > 1){
+		ejecuciones = atoi(argv[1]);
+	} else {
+		ejecuciones = 5;
+	}
+
+	Set_random( unsigned(1591999) );
+
+	ejecutar_PAR_greedy("datos/iris_set.dat", "datos/iris_set_const_10.const", 3, ejecuciones);
+	ejecutar_PAR_greedy("datos/iris_set.dat", "datos/iris_set_const_20.const", 3, ejecuciones);
+
+	Set_random( unsigned(1591999) );
+
+	ejecutar_PAR_greedy("datos/rand_set.dat", "datos/rand_set_const_10.const", 3, ejecuciones);
+	ejecutar_PAR_greedy("datos/rand_set.dat", "datos/rand_set_const_20.const", 3, ejecuciones);
+
+
+	Set_random( unsigned(1591999) );
+
+	ejecutar_PAR_greedy("datos/ecoli_set.dat", "datos/ecoli_set_const_10.const", 3, ejecuciones);
+	ejecutar_PAR_greedy("datos/ecoli_set.dat", "datos/ecoli_set_const_20.const", 3, ejecuciones);
+
 
 
 	return 0;

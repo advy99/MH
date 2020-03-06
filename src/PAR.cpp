@@ -43,11 +43,7 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 		}
 	}
 
-	//mayor_distancia = sqrt(mayor_distancia);
 
-
-	//Set_random(std::time(0));
-	Set_random( unsigned(1591999) );
 
 }
 
