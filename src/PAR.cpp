@@ -731,6 +731,49 @@ unsigned PAR::Cluster::num_elementos() const{
 }
 
 
-//std::ostream & std::operator << (std::ostream & flujo, const PAR::Cluster & clus) {
-//	return flujo;
-//}
+
+using namespace std;
+
+ostream & operator << (ostream & flujo, const PAR::Cluster & clus) {
+
+	// sacamos el centroide
+	for (auto it = clus.get_centroide().begin(); it != clus.get_centroide().end(); ++it){
+		flujo << (*it) << " ";
+	}
+
+	flujo << endl << endl;
+
+	// sacamos la distancia intra cluster
+	flujo << clus.get_distancia_intra_cluster() << endl << endl;
+
+	// mostramos los elementos
+	for (auto it = clus.get_elementos().begin(); it != centroideclus.get_elementos().end(); ++it){
+		flujo << (*it) << " ";
+	}
+
+	flujo << endl << endl;
+
+	return flujo;
+}
+
+
+
+ostream & operator << (ostream & flujo, const PAR & par) {
+
+	// sacamos la mayor distancia
+	flujo << par.mayor_distancia << endl;
+
+	flujo << endl;
+
+	// sacamos la desviacion general
+	flujo << par.get_desviacion_general() << endl << endl;
+
+	// mostramos los clusters
+	for (int i = 0; i < par.get_num_clusters(); i++){
+		flujo << par.clusters[i];
+	}
+
+	flujo << endl;
+
+	return flujo;
+}

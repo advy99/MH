@@ -39,7 +39,7 @@ class PAR{
 				unsigned num_elementos() const;
 
 				Cluster & operator = (const Cluster & otro);
-				//friend std::ostream & operator << (std::ostream & flujo, const Cluster & c);
+				friend std::ostream & operator << (std::ostream & flujo, const Cluster & c);
 
 
 		};
@@ -59,6 +59,8 @@ class PAR{
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_greedy();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_BL();
 		int calcular_infactibilidad() const;
+		friend std::ostream & operator << (std::ostream & flujo, const PAR & par);
+
 
 
 	private:
