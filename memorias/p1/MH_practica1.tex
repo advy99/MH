@@ -28,8 +28,8 @@
 
 \setmarginsrb{2 cm}{1 cm}{2 cm}{2 cm}{1 cm}{1.5 cm}{1 cm}{1.5 cm}
 
-\title{Modelos de Computación:\\
-Práctica 1. \hspace{0.05cm} }                           
+\title{Práctica 1:\\
+PAR - Greedy y Busqueda Local  \hspace{0.05cm} }                           
 \author{Antonio David Villegas Yeguas}                             
 \date{\today}                                           
 
@@ -52,10 +52,10 @@ Práctica 1. \hspace{0.05cm} }
 
 \begin{titlepage}
     \centering
-    \vspace*{0.5 cm}
-    \includegraphics[scale = 0.50]{ugr.png}\\[1.0 cm]
+    \vspace*{0.3 cm}
+    \includegraphics[scale = 0.50]{ugr.png}\\[0.7 cm]
     %\textsc{\LARGE Universidad de Granada}\\[2.0 cm]   
-    \textsc{\large 3ºA - A2}\\[0.5 cm]            
+    \textsc{\large 3º CSI 2019/20 - Grupo 1}\\[0.5 cm]            
     \textsc{\large Grado en Ingeniería Informática}\\[0.5 cm]              
     \rule{\linewidth}{0.2 mm} \\[0.2 cm]
     { \huge \bfseries \thetitle}\\
@@ -64,18 +64,22 @@ Práctica 1. \hspace{0.05cm} }
     \begin{minipage}{0.4\textwidth}
         \begin{flushleft} \large
             \emph{Autor:}\\
-            \theauthor
+            \theauthor\\ 
+			 \emph{DNI:}\\
+            77021623-M
             \end{flushleft}
             \end{minipage}~
             \begin{minipage}{0.4\textwidth}
             \begin{flushright} \large
             \emph{Asignatura: \\
-            Modelos de Computación}                   
+            Metaheurísticas}   \\     
+            \emph{Correo:}\\
+            advy99@correo.ugr.es           
         \end{flushright}
     \end{minipage}\\[0.5cm]
   
     {\large \thedate}\\[0.5cm]
-    {\url{https://github.com/advy99/MC/}}
+    {\url{https://github.com/advy99/MH/}}
     {\doclicenseThis}
  	
     \vfill
@@ -84,98 +88,27 @@ Práctica 1. \hspace{0.05cm} }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\tableofcontents
-%\pagebreak
+\tableofcontents
+\pagebreak
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\textbf{Ejercicio 1: Calcula una gramática libre de contexto que genere el lenguaje:}
 
-\begin{center}
+\section{Descripción del problema de la asignación con restricciones.}
 
-	$L_1 = \{ a^n b^m  \in \{a,b\}^* /  2n \geq m \geq n \geq 0\}$
+\section{Descripción de la implementación común y representación del problema para su resolución.}
 
-\end{center}
+\section{Métodos de resolución del problema.}
 
-En el símbolo inicial generamos $\epsilon$ o aSB, es decir, una 'a', volvemos a generar S, y en B generamos una o dos 'b'  por cada 'a', manteniendo la condición de que   $2n \geq m \geq n \geq 0$.
+\subsection{Algoritmo Greedy.}
 
-Nuestra gramática será:
+\subsection{Algoritmo de Busqueda Local.}
 
-\begin{center}
-	$S \rightarrow \epsilon\ \vert\ aSB$
-	
-	$B \rightarrow b\ \vert\ bb$
-\end{center}
+\section{Algoritmos de comparación.}
 
-\vspace{1.5cm}
-\textbf{Ejercicio 2: Calcula una gramática libre de contexto que genere el lenguaje:}
+\section{Proceso de implementación.}
 
 
-\begin{center}
-
-	$L_2 = \{ a^n b^m c^k  \in \{a,b,c\}^* /  k=n+m\}$
-
-\end{center}
-
-Para este ejercicio generamos primero las  'a', y por cada 'a' añadimos una 'c' y para generar 'b' tenemos que dejar de generar 'a', y por cada 'b' generamos una 'c' de forma que siempre cumplamos $k=n+m$
-
-\begin{center}
-	$S \rightarrow \epsilon\ \vert\ aSc\ \vert\ B$
-	
-	$B \rightarrow bBc\ \vert\ \epsilon$
-\end{center}
-
-
-\newpage
-
-\textbf{Ejercicio 3: Calcula una gramática libre de contexto que genere el lenguaje:}
-
-Una empresa de videojuegos "The fantastic platformest" está planteando diseñar una gramática capaz de generar niveles de un juego de plataformas, cada uno de los niveles siguiendo las siguientes restricciones:
-
-\begin{itemize}
-	\item{Hay 2 grupos de enemigos: grupos grandes (g) y grupos pequeños (p).}
-	\item{Hay 2 tipos de monstruos: fuertes (f) y débiles (d).}
-	\item{Los grupos grandes de enemigos tienen, al menos, 1 monstruo fuerte y 1 débil. Y los 2 primeros monstruos pueden ir en cualquier orden. A partir del tercer monstruo, irán primero los débiles y después los fuertes.}
-	\item{Los grupos pequeños tienen como mucho 1 monstruo fuerte.}
-	\item{Al final de cada nivel habrá una sala de recompensas (x).}
-\end{itemize}
-
-Por ejemplo, la cadena terminal ``gf ddddf f f pdddf x''  representa que el nivel tiene (gf ddddf f f) un grupo grande con un monstruo fuerte, 4 débiles y otros 3 fuertes; después tiene (pddddf) un grupo pequeño con 3 débiles y uno fuerte. Elaborar una gramática que genere estos niveles con sus restricciones. Cada palabra del lenguaje es un solo nivel. ¿ A qué tipo de gramática dentro de la jerarquía de Chomsky pertenece la gramática diseñada? ¿ Sería posible diseñar una gramática de tipo 3 para dicho problema?
-
-\vspace{1.5cm}
-
-He diseñado la siguiente gramática:
-
-
-\begin{center}
-
-	$S \rightarrow gfdM_g\ \vert\ gdfM_g\ \vert\ gffdM_g\ \vert gddM_{gd}\ $
-	
-	$M_g \rightarrow dM_g\ \vert\ M_{gf}\ $
-	
-	$M_{gf} \rightarrow fM_{gf}\ \vert\ M_p\ $
-	
-	$M_{gd} \rightarrow dM_{gd}\ \vert\ M_f\ $
-	
-	$M_f \rightarrow fM_f\ \vert\ fM_p\ $
-	
-	$M_p \rightarrow pM_{pd} $
-	
-	$M_{pd} \rightarrow dM_{pd}\ \vert\ M_{pf}\ $
-	
-	$M_{pf} \rightarrow fx\ \vert\ x\ $
-	
-
-\end{center}
-
-Como vemos, en la primera parte generemos el grupo grande, lo podemos generar en cualquier orden los dos primeros enemigos, sin embargo, vemos como los tres primeros casos nos llevan a una regla en la que primero ponemos los débiles, luego los fuertes, siendo opcional poner los fuertes, mientras que la ultima regla, al tener dos débiles es obligatorio poner un fuerte. Para el caso en el que generamos $gffM_g$, como es obligatorio generar un débil y van a estar ordenados, nos podemos permitir que la regla sea $gffdM_g$.
-
-Una vez acabamos de generar los fuertes pasamos a generar el grupo pequeño.
-
-En el grupo pequeño comenzamos generando los débiles, y cuando pasamos a generar los fuertes generamos uno o ninguno.
-
-Como vemos cumplimos la condición de generar dos grupos, que en el grupo grande los dos primeros estén en cualquier orden y que al menos haya uno fuerte y uno débil, y en los pequeños tienen como mucho un fuerte. 
-
-Como respuesta a las preguntas, la gramática diseñada es de tipo 3 (regular), por lo que si, podemos generar una gramática de tipo 3 para resolver este problema.
+\section{Experimentos y análisis de resultados.}
 
 \end{document}

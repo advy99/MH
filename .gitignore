@@ -34,3 +34,11 @@
 
 # Carpeta bin
 bin/
+
+
+# Para cosas de latex
+*.aux
+*.log
+*.pdf
+*.toc
+*.synctex.gz
