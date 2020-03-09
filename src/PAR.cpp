@@ -241,6 +241,7 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_greedy(){
 		for (unsigned i = 0; i < clusters.size(); i++){
 
 			cambios[i] = n_sol[i].get_elementos() != clusters[i].get_elementos();
+
 			//std::cout << "Cluster " << i << " - centroide: ";
 
 		//	for (auto it = clusters[i].get_centroide().begin(); it != clusters[i].get_centroide().end(); ++it ){
@@ -747,7 +748,7 @@ ostream & operator << (ostream & flujo, const PAR::Cluster & clus) {
 	flujo << clus.get_distancia_intra_cluster() << endl << endl;
 
 	// mostramos los elementos
-	for (auto it = clus.get_elementos().begin(); it != centroideclus.get_elementos().end(); ++it){
+	for (auto it = clus.get_elementos().begin(); it != clus.get_elementos().end(); ++it){
 		flujo << (*it) << " ";
 	}
 

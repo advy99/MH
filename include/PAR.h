@@ -41,7 +41,6 @@ class PAR{
 				Cluster & operator = (const Cluster & otro);
 				friend std::ostream & operator << (std::ostream & flujo, const Cluster & c);
 
-
 		};
 
 
