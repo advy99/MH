@@ -1,0 +1,458 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 59.57     34.82    34.82 520597781     0.00     0.00  PAR::buscar_elemento(int) const
+ 39.77     58.07    23.25    46246     0.00     0.00  PAR::calcular_infactibilidad() const
+  0.29     58.24     0.17  4502400     0.00     0.00  std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > >::find(std::pair<int, int> const&)
+  0.21     58.36     0.12   370006     0.00     0.00  PAR::Cluster::calcular_centroide()
+  0.17     58.46     0.10                             PAR::distancia_puntos(std::vector<double, std::allocator<double> > const&, std::vector<double, std::allocator<double> > const&)
+  0.02     58.47     0.01    26880     0.00     0.00  PAR::cumple_restricciones(int, int)
+  0.00     58.47     0.00   369936     0.00     0.00  PAR::Cluster::calcular_distancia_intra_cluster()
+  0.00     58.47     0.00   299906     0.00     0.00  RandPositiveInt(int)
+  0.00     58.47     0.00    95301     0.00     0.00  std::pair<std::_Rb_tree_iterator<int>, bool> std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_insert_unique<int const&>(int const&)
+  0.00     58.47     0.00    91605     0.00     0.00  PAR::Cluster::delete_elemento(int)
+  0.00     58.47     0.00    46242     0.00     0.00  PAR::calcular_desviacion_general()
+  0.00     58.47     0.00    13440     0.00     0.00  void std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >::_M_realloc_insert<std::pair<int, int> >(__gnu_cxx::__normal_iterator<std::pair<int, int>*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >, std::pair<int, int>&&)
+  0.00     58.47     0.00     4760     0.00     0.00  double& std::vector<double, std::allocator<double> >::emplace_back<double>(double&&)
+  0.00     58.47     0.00     3362     0.00     0.00  PAR::leer_datos(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)
+  0.00     58.47     0.00     3360     0.00     0.00  PAR::buscar_cluster(int)
+  0.00     58.47     0.00     3360     0.00     0.00  void std::__insertion_sort<__gnu_cxx::__normal_iterator<std::pair<int, int>*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, int>*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >, __gnu_cxx::__normal_iterator<std::pair<int, int>*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >, __gnu_cxx::__ops::_Iter_less_iter)
+  0.00     58.47     0.00     1750     0.00     0.00  void std::random_shuffle<__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int (&)(int)>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int (&)(int))
+  0.00     58.47     0.00     1344     0.00     0.00  void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag)
+  0.00     58.47     0.00     1016     0.00     0.00  int& std::vector<int, std::allocator<int> >::emplace_back<int>(int&&)
+  0.00     58.47     0.00      672     0.00     0.00  std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > >::_M_default_append(unsigned long)
+  0.00     58.47     0.00      244     0.00     0.00  std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_erase(std::_Rb_tree_node<int>*)
+  0.00     58.47     0.00       86     0.00     0.00  std::vector<double, std::allocator<double> >::operator=(std::vector<double, std::allocator<double> > const&)
+  0.00     58.47     0.00       79     0.00     0.00  std::vector<PAR::Cluster, std::allocator<PAR::Cluster> >::operator=(std::vector<PAR::Cluster, std::allocator<PAR::Cluster> > const&)
+  0.00     58.47     0.00       78     0.00     0.00  PAR::Cluster::operator=(PAR::Cluster const&)
+  0.00     58.47     0.00       78     0.00     0.00  std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > >::operator=(std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > > const&)
+  0.00     58.47     0.00       78     0.00     0.00  std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > >::operator=(std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > > const&)
+  0.00     58.47     0.00       78     0.00     0.00  std::_Rb_tree_node<int>* std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_copy<std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Reuse_or_alloc_node>(std::_Rb_tree_node<int> const*, std::_Rb_tree_node_base*, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Reuse_or_alloc_node&)
+  0.00     58.47     0.00       78     0.00     0.00  std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::operator=(std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> > const&)
+  0.00     58.47     0.00       56     0.00     0.00  Randfloat(float, float)
+  0.00     58.47     0.00       34     0.00     0.00  void std::vector<int, std::allocator<int> >::_M_realloc_insert<int>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int&&)
+  0.00     58.47     0.00       32     0.00     0.00  operator<<(std::ostream&, PAR::Cluster const&)
+  0.00     58.47     0.00       16     0.00     0.00  PAR::Cluster::Cluster(PAR&)
+  0.00     58.47     0.00       16     0.00     0.00  std::_Rb_tree_node<int>* std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_copy<std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node>(std::_Rb_tree_node<int> const*, std::_Rb_tree_node_base*, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node&)
+  0.00     58.47     0.00       12     0.00     0.00  void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*, std::forward_iterator_tag)
+  0.00     58.47     0.00        8     0.00     0.00  void std::vector<PAR::Cluster, std::allocator<PAR::Cluster> >::_M_realloc_insert<PAR::Cluster>(__gnu_cxx::__normal_iterator<PAR::Cluster*, std::vector<PAR::Cluster, std::allocator<PAR::Cluster> > >, PAR::Cluster&&)
+  0.00     58.47     0.00        4     0.00     0.00  operator<<(std::ostream&, PAR const&)
+  0.00     58.47     0.00        2     0.00     0.00  PAR::leer_restricciones(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)
+  0.00     58.47     0.00        2     0.00     0.00  PAR::PAR(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int)
+  0.00     58.47     0.00        2     0.00     0.00  std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > __gnu_cxx::__to_xstring<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, char>(int (*)(char*, unsigned long, char const*, __va_list_tag*), unsigned long, char const*, ...)
+  0.00     58.47     0.00        2     0.00     0.00  std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > >::_M_erase(std::_Rb_tree_node<std::pair<std::pair<int, int> const, int> >*)
+  0.00     58.47     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z19ejecutar_PAR_greedyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ij
+  0.00     58.47     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN3PARC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_i
+  0.00     58.47     0.00        1     0.00    58.18  PAR::algoritmo_BL()
+  0.00     58.47     0.00        1     0.00     0.18  PAR::algoritmo_greedy()
+  0.00     58.47     0.00        1     0.00     0.00  PAR::generar_solucion_aleatoria()
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.02% of 58.47 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     99.5    0.00   58.19                 ejecutar_PAR_BL(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, unsigned int) [1]
+                0.00   58.18       1/1           PAR::algoritmo_BL() [2]
+                0.00    0.00       2/4           operator<<(std::ostream&, PAR const&) [14]
+                0.00    0.00      16/244         std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_erase(std::_Rb_tree_node<int>*) [35]
+                0.00    0.00       3/12          void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*, std::forward_iterator_tag) [48]
+                0.00    0.00       1/2           PAR::PAR(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int) [51]
+                0.00    0.00       1/2           std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > __gnu_cxx::__to_xstring<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, char>(int (*)(char*, unsigned long, char const*, __va_list_tag*), unsigned long, char const*, ...) [52]
+                0.00    0.00       1/2           std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > >::_M_erase(std::_Rb_tree_node<std::pair<std::pair<int, int> const, int> >*) [53]
+-----------------------------------------------
+                0.00   58.18       1/1           ejecutar_PAR_BL(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, unsigned int) [1]
+[2]     99.5    0.00   58.18       1         PAR::algoritmo_BL() [2]
+               23.25   34.81   46241/46246       PAR::calcular_infactibilidad() const [3]
+                0.00    0.12   46240/46242       PAR::calcular_desviacion_general() [12]
+                0.00    0.00   52805/520597781     PAR::buscar_elemento(int) const [4]
+                0.00    0.00       1/1           PAR::generar_solucion_aleatoria() [15]
+                0.00    0.00   91605/91605       PAR::Cluster::delete_elemento(int) [26]
+                0.00    0.00   91605/95301       std::pair<std::_Rb_tree_iterator<int>, bool> std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_insert_unique<int const&>(int const&) [25]
+                0.00    0.00    1748/1750        void std::random_shuffle<__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int (&)(int)>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int (&)(int)) [31]
+                0.00    0.00     344/1016        int& std::vector<int, std::allocator<int> >::emplace_back<int>(int&&) [33]
+                0.00    0.00       8/16          std::_Rb_tree_node<int>* std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_copy<std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node>(std::_Rb_tree_node<int> const*, std::_Rb_tree_node_base*, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node&) [47]
+-----------------------------------------------
+                0.00    0.00       1/46246       PAR::algoritmo_greedy() [6]
+                0.00    0.00       4/46246       operator<<(std::ostream&, PAR const&) [14]
+               23.25   34.81   46241/46246       PAR::algoritmo_BL() [2]
+[3]     99.3   23.25   34.82   46246         PAR::calcular_infactibilidad() const [3]
+               34.82    0.00 520544976/520597781     PAR::buscar_elemento(int) const [4]
+-----------------------------------------------
+                0.00    0.00   52805/520597781     PAR::algoritmo_BL() [2]
+               34.82    0.00 520544976/520597781     PAR::calcular_infactibilidad() const [3]
+[4]     59.6   34.82    0.00 520597781         PAR::buscar_elemento(int) const [4]
+-----------------------------------------------
+                                                 <spontaneous>
+[5]      0.3    0.00    0.18                 ejecutar_PAR_greedy(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, unsigned int) [5]
+                0.00    0.18       1/1           PAR::algoritmo_greedy() [6]
+                0.00    0.00       2/4           operator<<(std::ostream&, PAR const&) [14]
+                0.00    0.00      16/244         std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_erase(std::_Rb_tree_node<int>*) [35]
+                0.00    0.00       3/12          void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*, std::forward_iterator_tag) [48]
+                0.00    0.00       1/2           PAR::PAR(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int) [51]
+                0.00    0.00       1/2           std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > __gnu_cxx::__to_xstring<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, char>(int (*)(char*, unsigned long, char const*, __va_list_tag*), unsigned long, char const*, ...) [52]
+                0.00    0.00       1/2           std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > >::_M_erase(std::_Rb_tree_node<std::pair<std::pair<int, int> const, int> >*) [53]
+-----------------------------------------------
+                0.00    0.18       1/1           ejecutar_PAR_greedy(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, unsigned int) [5]
+[6]      0.3    0.00    0.18       1         PAR::algoritmo_greedy() [6]
+                0.00    0.18    3360/3360        PAR::buscar_cluster(int) [8]
+                0.00    0.00       1/46246       PAR::calcular_infactibilidad() const [3]
+                0.00    0.00      70/370006      PAR::Cluster::calcular_centroide() [10]
+                0.00    0.00       1/46242       PAR::calcular_desviacion_general() [12]
+                0.00    0.00    3360/95301       std::pair<std::_Rb_tree_iterator<int>, bool> std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_insert_unique<int const&>(int const&) [25]
+                0.00    0.00     336/1016        int& std::vector<int, std::allocator<int> >::emplace_back<int>(int&&) [33]
+                0.00    0.00      96/244         std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_erase(std::_Rb_tree_node<int>*) [35]
+                0.00    0.00      70/71          PAR::Cluster::operator=(PAR::Cluster const&) <cycle 1> [38]
+                0.00    0.00      56/56          Randfloat(float, float) [43]
+                0.00    0.00      56/4760        double& std::vector<double, std::allocator<double> >::emplace_back<double>(double&&) [28]
+                0.00    0.00       8/86          std::vector<double, std::allocator<double> >::operator=(std::vector<double, std::allocator<double> > const&) [36]
+                0.00    0.00       8/16          std::_Rb_tree_node<int>* std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_copy<std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node>(std::_Rb_tree_node<int> const*, std::_Rb_tree_node_base*, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node&) [47]
+                0.00    0.00       1/1750        void std::random_shuffle<__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int (&)(int)>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int (&)(int)) [31]
+                0.00    0.00       1/71          std::vector<PAR::Cluster, std::allocator<PAR::Cluster> >::operator=(std::vector<PAR::Cluster, std::allocator<PAR::Cluster> > const&) <cycle 1> [37]
+-----------------------------------------------
+                0.01    0.17   26880/26880       PAR::buscar_cluster(int) [8]
+[7]      0.3    0.01    0.17   26880         PAR::cumple_restricciones(int, int) [7]
+                0.17    0.00 4502400/4502400     std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > >::find(std::pair<int, int> const&) [9]
+-----------------------------------------------
+                0.00    0.18    3360/3360        PAR::algoritmo_greedy() [6]
+[8]      0.3    0.00    0.18    3360         PAR::buscar_cluster(int) [8]
+                0.01    0.17   26880/26880       PAR::cumple_restricciones(int, int) [7]
+                0.00    0.00   13440/13440       void std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >::_M_realloc_insert<std::pair<int, int> >(__gnu_cxx::__normal_iterator<std::pair<int, int>*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >, std::pair<int, int>&&) [27]
+                0.00    0.00    3360/3362        PAR::leer_datos(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [29]
+                0.00    0.00    3360/3360        void std::__insertion_sort<__gnu_cxx::__normal_iterator<std::pair<int, int>*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, int>*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >, __gnu_cxx::__normal_iterator<std::pair<int, int>*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >, __gnu_cxx::__ops::_Iter_less_iter) [30]
+-----------------------------------------------
+                0.17    0.00 4502400/4502400     PAR::cumple_restricciones(int, int) [7]
+[9]      0.3    0.17    0.00 4502400         std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > >::find(std::pair<int, int> const&) [9]
+-----------------------------------------------
+                0.00    0.00      70/370006      PAR::algoritmo_greedy() [6]
+                0.12    0.00  369936/370006      PAR::Cluster::calcular_distancia_intra_cluster() [11]
+[10]     0.2    0.12    0.00  370006         PAR::Cluster::calcular_centroide() [10]
+-----------------------------------------------
+                0.00    0.12  369936/369936      PAR::calcular_desviacion_general() [12]
+[11]     0.2    0.00    0.12  369936         PAR::Cluster::calcular_distancia_intra_cluster() [11]
+                0.12    0.00  369936/370006      PAR::Cluster::calcular_centroide() [10]
+-----------------------------------------------
+                0.00    0.00       1/46242       PAR::generar_solucion_aleatoria() [15]
+                0.00    0.00       1/46242       PAR::algoritmo_greedy() [6]
+                0.00    0.12   46240/46242       PAR::algoritmo_BL() [2]
+[12]     0.2    0.00    0.12   46242         PAR::calcular_desviacion_general() [12]
+                0.00    0.12  369936/369936      PAR::Cluster::calcular_distancia_intra_cluster() [11]
+-----------------------------------------------
+                                                 <spontaneous>
+[13]     0.2    0.10    0.00                 PAR::distancia_puntos(std::vector<double, std::allocator<double> > const&, std::vector<double, std::allocator<double> > const&) [13]
+-----------------------------------------------
+                0.00    0.00       2/4           ejecutar_PAR_BL(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, unsigned int) [1]
+                0.00    0.00       2/4           ejecutar_PAR_greedy(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, unsigned int) [5]
+[14]     0.0    0.00    0.01       4         operator<<(std::ostream&, PAR const&) [14]
+                0.00    0.00       4/46246       PAR::calcular_infactibilidad() const [3]
+                0.00    0.00      32/32          operator<<(std::ostream&, PAR::Cluster const&) [45]
+-----------------------------------------------
+                0.00    0.00       1/1           PAR::algoritmo_BL() [2]
+[15]     0.0    0.00    0.00       1         PAR::generar_solucion_aleatoria() [15]
+                0.00    0.00       1/46242       PAR::calcular_desviacion_general() [12]
+                0.00    0.00     336/1016        int& std::vector<int, std::allocator<int> >::emplace_back<int>(int&&) [33]
+                0.00    0.00     336/95301       std::pair<std::_Rb_tree_iterator<int>, bool> std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_insert_unique<int const&>(int const&) [25]
+                0.00    0.00     328/299906      RandPositiveInt(int) [24]
+                0.00    0.00       8/244         std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_erase(std::_Rb_tree_node<int>*) [35]
+                0.00    0.00       1/1750        void std::random_shuffle<__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int (&)(int)>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int (&)(int)) [31]
+-----------------------------------------------
+[16]     0.0    0.00    0.00      71+86      <cycle 1 as a whole> [16]
+                0.00    0.00      79             std::vector<PAR::Cluster, std::allocator<PAR::Cluster> >::operator=(std::vector<PAR::Cluster, std::allocator<PAR::Cluster> > const&) <cycle 1> [37]
+                0.00    0.00      78             PAR::Cluster::operator=(PAR::Cluster const&) <cycle 1> [38]
+-----------------------------------------------
+                0.00    0.00     328/299906      PAR::generar_solucion_aleatoria() [15]
+                0.00    0.00  299578/299906      void std::random_shuffle<__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int (&)(int)>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int (&)(int)) [31]
+[24]     0.0    0.00    0.00  299906         RandPositiveInt(int) [24]
+-----------------------------------------------
+                0.00    0.00     336/95301       PAR::generar_solucion_aleatoria() [15]
+                0.00    0.00    3360/95301       PAR::algoritmo_greedy() [6]
+                0.00    0.00   91605/95301       PAR::algoritmo_BL() [2]
+[25]     0.0    0.00    0.00   95301         std::pair<std::_Rb_tree_iterator<int>, bool> std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_insert_unique<int const&>(int const&) [25]
+-----------------------------------------------
+                0.00    0.00   91605/91605       PAR::algoritmo_BL() [2]
+[26]     0.0    0.00    0.00   91605         PAR::Cluster::delete_elemento(int) [26]
+-----------------------------------------------
+                0.00    0.00   13440/13440       PAR::buscar_cluster(int) [8]
+[27]     0.0    0.00    0.00   13440         void std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >::_M_realloc_insert<std::pair<int, int> >(__gnu_cxx::__normal_iterator<std::pair<int, int>*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >, std::pair<int, int>&&) [27]
+-----------------------------------------------
+                0.00    0.00      56/4760        PAR::algoritmo_greedy() [6]
+                0.00    0.00    4704/4760        PAR::leer_datos(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [29]
+[28]     0.0    0.00    0.00    4760         double& std::vector<double, std::allocator<double> >::emplace_back<double>(double&&) [28]
+-----------------------------------------------
+                0.00    0.00       2/3362        PAR::PAR(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int) [51]
+                0.00    0.00    3360/3362        PAR::buscar_cluster(int) [8]
+[29]     0.0    0.00    0.00    3362         PAR::leer_datos(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [29]
+                0.00    0.00    4704/4760        double& std::vector<double, std::allocator<double> >::emplace_back<double>(double&&) [28]
+                0.00    0.00     672/1344        void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag) [32]
+                0.00    0.00     672/672         std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > >::_M_default_append(unsigned long) [34]
+-----------------------------------------------
+                0.00    0.00    3360/3360        PAR::buscar_cluster(int) [8]
+[30]     0.0    0.00    0.00    3360         void std::__insertion_sort<__gnu_cxx::__normal_iterator<std::pair<int, int>*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, int>*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >, __gnu_cxx::__normal_iterator<std::pair<int, int>*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >, __gnu_cxx::__ops::_Iter_less_iter) [30]
+-----------------------------------------------
+                0.00    0.00       1/1750        PAR::generar_solucion_aleatoria() [15]
+                0.00    0.00       1/1750        PAR::algoritmo_greedy() [6]
+                0.00    0.00    1748/1750        PAR::algoritmo_BL() [2]
+[31]     0.0    0.00    0.00    1750         void std::random_shuffle<__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int (&)(int)>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int (&)(int)) [31]
+                0.00    0.00  299578/299906      RandPositiveInt(int) [24]
+-----------------------------------------------
+                0.00    0.00     672/1344        PAR::leer_restricciones(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [50]
+                0.00    0.00     672/1344        PAR::leer_datos(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [29]
+[32]     0.0    0.00    0.00    1344         void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag) [32]
+-----------------------------------------------
+                0.00    0.00     336/1016        PAR::generar_solucion_aleatoria() [15]
+                0.00    0.00     336/1016        PAR::algoritmo_greedy() [6]
+                0.00    0.00     344/1016        PAR::algoritmo_BL() [2]
+[33]     0.0    0.00    0.00    1016         int& std::vector<int, std::allocator<int> >::emplace_back<int>(int&&) [33]
+                0.00    0.00      34/34          void std::vector<int, std::allocator<int> >::_M_realloc_insert<int>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int&&) [44]
+-----------------------------------------------
+                0.00    0.00     672/672         PAR::leer_datos(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [29]
+[34]     0.0    0.00    0.00     672         std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > >::_M_default_append(unsigned long) [34]
+-----------------------------------------------
+                                5450             std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_erase(std::_Rb_tree_node<int>*) [35]
+                0.00    0.00       8/244         PAR::generar_solucion_aleatoria() [15]
+                0.00    0.00      14/244         void std::vector<PAR::Cluster, std::allocator<PAR::Cluster> >::_M_realloc_insert<PAR::Cluster>(__gnu_cxx::__normal_iterator<PAR::Cluster*, std::vector<PAR::Cluster, std::allocator<PAR::Cluster> > >, PAR::Cluster&&) [49]
+                0.00    0.00      16/244         ejecutar_PAR_BL(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, unsigned int) [1]
+                0.00    0.00      16/244         ejecutar_PAR_greedy(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, unsigned int) [5]
+                0.00    0.00      16/244         PAR::PAR(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int) [51]
+                0.00    0.00      78/244         std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::operator=(std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> > const&) [42]
+                0.00    0.00      96/244         PAR::algoritmo_greedy() [6]
+[35]     0.0    0.00    0.00     244+5450    std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_erase(std::_Rb_tree_node<int>*) [35]
+                                5450             std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_erase(std::_Rb_tree_node<int>*) [35]
+-----------------------------------------------
+                0.00    0.00       8/86          PAR::algoritmo_greedy() [6]
+                0.00    0.00      78/86          PAR::Cluster::operator=(PAR::Cluster const&) <cycle 1> [38]
+[36]     0.0    0.00    0.00      86         std::vector<double, std::allocator<double> >::operator=(std::vector<double, std::allocator<double> > const&) [36]
+-----------------------------------------------
+                                  78             PAR::Cluster::operator=(PAR::Cluster const&) <cycle 1> [38]
+                0.00    0.00       1/71          PAR::algoritmo_greedy() [6]
+[37]     0.0    0.00    0.00      79         std::vector<PAR::Cluster, std::allocator<PAR::Cluster> >::operator=(std::vector<PAR::Cluster, std::allocator<PAR::Cluster> > const&) <cycle 1> [37]
+                                   8             PAR::Cluster::operator=(PAR::Cluster const&) <cycle 1> [38]
+-----------------------------------------------
+                                   8             std::vector<PAR::Cluster, std::allocator<PAR::Cluster> >::operator=(std::vector<PAR::Cluster, std::allocator<PAR::Cluster> > const&) <cycle 1> [37]
+                0.00    0.00      70/71          PAR::algoritmo_greedy() [6]
+[38]     0.0    0.00    0.00      78         PAR::Cluster::operator=(PAR::Cluster const&) <cycle 1> [38]
+                0.00    0.00      78/86          std::vector<double, std::allocator<double> >::operator=(std::vector<double, std::allocator<double> > const&) [36]
+                0.00    0.00      78/78          std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::operator=(std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> > const&) [42]
+                0.00    0.00      78/78          std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > >::operator=(std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > > const&) [40]
+                0.00    0.00      78/78          std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > >::operator=(std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > > const&) [39]
+                                  78             std::vector<PAR::Cluster, std::allocator<PAR::Cluster> >::operator=(std::vector<PAR::Cluster, std::allocator<PAR::Cluster> > const&) <cycle 1> [37]
+-----------------------------------------------
+                0.00    0.00      78/78          PAR::Cluster::operator=(PAR::Cluster const&) <cycle 1> [38]
+[39]     0.0    0.00    0.00      78         std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > >::operator=(std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > > const&) [39]
+-----------------------------------------------
+                0.00    0.00      78/78          PAR::Cluster::operator=(PAR::Cluster const&) <cycle 1> [38]
+[40]     0.0    0.00    0.00      78         std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > >::operator=(std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > > const&) [40]
+-----------------------------------------------
+                                1587             std::_Rb_tree_node<int>* std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_copy<std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Reuse_or_alloc_node>(std::_Rb_tree_node<int> const*, std::_Rb_tree_node_base*, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Reuse_or_alloc_node&) [41]
+                0.00    0.00      78/78          std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::operator=(std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> > const&) [42]
+[41]     0.0    0.00    0.00      78+1587    std::_Rb_tree_node<int>* std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_copy<std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Reuse_or_alloc_node>(std::_Rb_tree_node<int> const*, std::_Rb_tree_node_base*, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Reuse_or_alloc_node&) [41]
+                                1587             std::_Rb_tree_node<int>* std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_copy<std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Reuse_or_alloc_node>(std::_Rb_tree_node<int> const*, std::_Rb_tree_node_base*, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Reuse_or_alloc_node&) [41]
+-----------------------------------------------
+                0.00    0.00      78/78          PAR::Cluster::operator=(PAR::Cluster const&) <cycle 1> [38]
+[42]     0.0    0.00    0.00      78         std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::operator=(std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> > const&) [42]
+                0.00    0.00      78/78          std::_Rb_tree_node<int>* std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_copy<std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Reuse_or_alloc_node>(std::_Rb_tree_node<int> const*, std::_Rb_tree_node_base*, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Reuse_or_alloc_node&) [41]
+                0.00    0.00      78/244         std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_erase(std::_Rb_tree_node<int>*) [35]
+-----------------------------------------------
+                0.00    0.00      56/56          PAR::algoritmo_greedy() [6]
+[43]     0.0    0.00    0.00      56         Randfloat(float, float) [43]
+-----------------------------------------------
+                0.00    0.00      34/34          int& std::vector<int, std::allocator<int> >::emplace_back<int>(int&&) [33]
+[44]     0.0    0.00    0.00      34         void std::vector<int, std::allocator<int> >::_M_realloc_insert<int>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int&&) [44]
+-----------------------------------------------
+                0.00    0.00      32/32          operator<<(std::ostream&, PAR const&) [14]
+[45]     0.0    0.00    0.00      32         operator<<(std::ostream&, PAR::Cluster const&) [45]
+-----------------------------------------------
+                0.00    0.00      16/16          PAR::PAR(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int) [51]
+[46]     0.0    0.00    0.00      16         PAR::Cluster::Cluster(PAR&) [46]
+-----------------------------------------------
+                                 344             std::_Rb_tree_node<int>* std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_copy<std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node>(std::_Rb_tree_node<int> const*, std::_Rb_tree_node_base*, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node&) [47]
+                0.00    0.00       8/16          PAR::algoritmo_BL() [2]
+                0.00    0.00       8/16          PAR::algoritmo_greedy() [6]
+[47]     0.0    0.00    0.00      16+344     std::_Rb_tree_node<int>* std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_copy<std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node>(std::_Rb_tree_node<int> const*, std::_Rb_tree_node_base*, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node&) [47]
+                                 344             std::_Rb_tree_node<int>* std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_copy<std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node>(std::_Rb_tree_node<int> const*, std::_Rb_tree_node_base*, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node&) [47]
+-----------------------------------------------
+                0.00    0.00       2/12          std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > __gnu_cxx::__to_xstring<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, char>(int (*)(char*, unsigned long, char const*, __va_list_tag*), unsigned long, char const*, ...) [52]
+                0.00    0.00       3/12          ejecutar_PAR_BL(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, unsigned int) [1]
+                0.00    0.00       3/12          ejecutar_PAR_greedy(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, unsigned int) [5]
+                0.00    0.00       4/12          PAR::PAR(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int) [51]
+[48]     0.0    0.00    0.00      12         void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*, std::forward_iterator_tag) [48]
+-----------------------------------------------
+                0.00    0.00       8/8           PAR::PAR(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int) [51]
+[49]     0.0    0.00    0.00       8         void std::vector<PAR::Cluster, std::allocator<PAR::Cluster> >::_M_realloc_insert<PAR::Cluster>(__gnu_cxx::__normal_iterator<PAR::Cluster*, std::vector<PAR::Cluster, std::allocator<PAR::Cluster> > >, PAR::Cluster&&) [49]
+                0.00    0.00      14/244         std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_erase(std::_Rb_tree_node<int>*) [35]
+-----------------------------------------------
+                0.00    0.00       2/2           PAR::PAR(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int) [51]
+[50]     0.0    0.00    0.00       2         PAR::leer_restricciones(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [50]
+                0.00    0.00     672/1344        void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag) [32]
+-----------------------------------------------
+                0.00    0.00       1/2           ejecutar_PAR_BL(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, unsigned int) [1]
+                0.00    0.00       1/2           ejecutar_PAR_greedy(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, unsigned int) [5]
+[51]     0.0    0.00    0.00       2         PAR::PAR(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int) [51]
+                0.00    0.00      16/16          PAR::Cluster::Cluster(PAR&) [46]
+                0.00    0.00      16/244         std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_erase(std::_Rb_tree_node<int>*) [35]
+                0.00    0.00       8/8           void std::vector<PAR::Cluster, std::allocator<PAR::Cluster> >::_M_realloc_insert<PAR::Cluster>(__gnu_cxx::__normal_iterator<PAR::Cluster*, std::vector<PAR::Cluster, std::allocator<PAR::Cluster> > >, PAR::Cluster&&) [49]
+                0.00    0.00       4/12          void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*, std::forward_iterator_tag) [48]
+                0.00    0.00       2/3362        PAR::leer_datos(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [29]
+                0.00    0.00       2/2           PAR::leer_restricciones(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [50]
+-----------------------------------------------
+                0.00    0.00       1/2           ejecutar_PAR_BL(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, unsigned int) [1]
+                0.00    0.00       1/2           ejecutar_PAR_greedy(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, unsigned int) [5]
+[52]     0.0    0.00    0.00       2         std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > __gnu_cxx::__to_xstring<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, char>(int (*)(char*, unsigned long, char const*, __va_list_tag*), unsigned long, char const*, ...) [52]
+                0.00    0.00       2/12          void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*, std::forward_iterator_tag) [48]
+-----------------------------------------------
+                               22512             std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > >::_M_erase(std::_Rb_tree_node<std::pair<std::pair<int, int> const, int> >*) [53]
+                0.00    0.00       1/2           ejecutar_PAR_BL(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, unsigned int) [1]
+                0.00    0.00       1/2           ejecutar_PAR_greedy(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, unsigned int) [5]
+[53]     0.0    0.00    0.00       2+22512   std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > >::_M_erase(std::_Rb_tree_node<std::pair<std::pair<int, int> const, int> >*) [53]
+                               22512             std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > >::_M_erase(std::_Rb_tree_node<std::pair<std::pair<int, int> const, int> >*) [53]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [86]
+[54]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z19ejecutar_PAR_greedyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ij [54]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [86]
+[55]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN3PARC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_i [55]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [54] _GLOBAL__sub_I__Z19ejecutar_PAR_greedyNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_ij [46] PAR::Cluster::Cluster(PAR&) [48] void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*, std::forward_iterator_tag)
+  [55] _GLOBAL__sub_I__ZN3PARC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_i [38] PAR::Cluster::operator=(PAR::Cluster const&) [9] std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > >::find(std::pair<int, int> const&)
+  [24] RandPositiveInt(int)   [51] PAR::PAR(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int) [53] std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > >::_M_erase(std::_Rb_tree_node<std::pair<std::pair<int, int> const, int> >*)
+  [43] Randfloat(float, float) [52] std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > __gnu_cxx::__to_xstring<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, char>(int (*)(char*, unsigned long, char const*, __va_list_tag*), unsigned long, char const*, ...) [40] std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > >::operator=(std::_Rb_tree<std::pair<int, int>, std::pair<std::pair<int, int> const, int>, std::_Select1st<std::pair<std::pair<int, int> const, int> >, std::less<std::pair<int, int> >, std::allocator<std::pair<std::pair<int, int> const, int> > > const&)
+  [29] PAR::leer_datos(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [4] PAR::buscar_elemento(int) const [25] std::pair<std::_Rb_tree_iterator<int>, bool> std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_insert_unique<int const&>(int const&)
+   [2] PAR::algoritmo_BL()     [3] PAR::calcular_infactibilidad() const [47] std::_Rb_tree_node<int>* std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_copy<std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node>(std::_Rb_tree_node<int> const*, std::_Rb_tree_node_base*, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node&)
+   [8] PAR::buscar_cluster(int) [49] void std::vector<PAR::Cluster, std::allocator<PAR::Cluster> >::_M_realloc_insert<PAR::Cluster>(__gnu_cxx::__normal_iterator<PAR::Cluster*, std::vector<PAR::Cluster, std::allocator<PAR::Cluster> > >, PAR::Cluster&&) [41] std::_Rb_tree_node<int>* std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_copy<std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Reuse_or_alloc_node>(std::_Rb_tree_node<int> const*, std::_Rb_tree_node_base*, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Reuse_or_alloc_node&)
+   [6] PAR::algoritmo_greedy() [37] std::vector<PAR::Cluster, std::allocator<PAR::Cluster> >::operator=(std::vector<PAR::Cluster, std::allocator<PAR::Cluster> > const&) [35] std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_erase(std::_Rb_tree_node<int>*)
+  [13] PAR::distancia_puntos(std::vector<double, std::allocator<double> > const&, std::vector<double, std::allocator<double> > const&) [34] std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > >::_M_default_append(unsigned long) [42] std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::operator=(std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> > const&)
+  [50] PAR::leer_restricciones(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [39] std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > >::operator=(std::vector<std::vector<double, std::allocator<double> >, std::allocator<std::vector<double, std::allocator<double> > > > const&) [31] void std::random_shuffle<__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int (&)(int)>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, __gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int (&)(int))
+   [7] PAR::cumple_restricciones(int, int) [27] void std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >::_M_realloc_insert<std::pair<int, int> >(__gnu_cxx::__normal_iterator<std::pair<int, int>*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >, std::pair<int, int>&&) [30] void std::__insertion_sort<__gnu_cxx::__normal_iterator<std::pair<int, int>*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, int>*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >, __gnu_cxx::__normal_iterator<std::pair<int, int>*, std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > >, __gnu_cxx::__ops::_Iter_less_iter)
+  [15] PAR::generar_solucion_aleatoria() [28] double& std::vector<double, std::allocator<double> >::emplace_back<double>(double&&) [14] operator<<(std::ostream&, PAR const&)
+  [12] PAR::calcular_desviacion_general() [36] std::vector<double, std::allocator<double> >::operator=(std::vector<double, std::allocator<double> > const&) [45] operator<<(std::ostream&, PAR::Cluster const&)
+  [26] PAR::Cluster::delete_elemento(int) [33] int& std::vector<int, std::allocator<int> >::emplace_back<int>(int&&) [16] <cycle 1>
+  [10] PAR::Cluster::calcular_centroide() [44] void std::vector<int, std::allocator<int> >::_M_realloc_insert<int>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int&&)
+  [11] PAR::Cluster::calcular_distancia_intra_cluster() [32] void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag)

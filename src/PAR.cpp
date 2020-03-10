@@ -24,6 +24,11 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 	leer_datos(fichero_datos);
 	leer_restricciones(fichero_restricciones);
 
+	for (auto it = restricciones.begin(); it != restricciones.end(); ++it){
+		lista_restricciones.push_back( std::make_tuple( (*it).first.first, (*it).first.second, (*it).second ) );
+	}
+
+
 	// creamos todos
 	for (int i = 0; i < n_clusters; i++){
 		clusters.push_back( Cluster((*this)) );
@@ -373,7 +378,7 @@ double PAR::distancia_puntos(const std::vector<double> & p1,
 	@param elemento Elemento que queremos insertar en los clusters
 	@param
 
-	@return double Distancia entre dos puntos
+	@return int restricciones incumplidas
 */
 
 int PAR::cumple_restricciones(const int elemento, const int cluster){
@@ -423,6 +428,7 @@ int PAR::cumple_restricciones(const int elemento, const int cluster){
 
 void PAR::calcular_desviacion_general(){
 
+	desviacion_general = 0.0d;
 
 	// para todos los clusters
 	for (unsigned i = 0; i < clusters.size(); i++){
@@ -464,7 +470,10 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 		indices_clusters.push_back(i);
 	}
 
-	double f_objetivo = get_desviacion_general() + (calcular_infactibilidad() * LAMBDA);
+	int n_infac = calcular_infactibilidad();
+	int infac = n_infac;
+
+	double f_objetivo = get_desviacion_general() + (n_infac * LAMBDA);
 	double n_f_objetivo = 0.0D;
 
 	//std::vector<Cluster> sol = clusters;
@@ -492,20 +501,27 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 				if (antiguo != (*it_c) && clusters[antiguo].num_elementos() - 1 > 0){
 
 					clusters[antiguo].delete_elemento( (*it) );
+
+					n_infac -= cumple_restricciones( (*it), antiguo );
+					n_infac += cumple_restricciones( (*it), (*it_c) );
+
+
 					clusters[(*it_c)].add_elemento( (*it) );
 
 					calcular_desviacion_general();
 
-					n_f_objetivo = get_desviacion_general() + (calcular_infactibilidad() * LAMBDA);
+					n_f_objetivo = get_desviacion_general() + (n_infac * LAMBDA);
 
 					if ( n_f_objetivo < f_objetivo ){
 						f_objetivo = n_f_objetivo;
+						infac = n_infac;
 						//sol = clusters;
 						he_encontrado_mejor = true;
 					} else {
 						//clusters = sol;
 						clusters[(*it_c)].delete_elemento( (*it) );
 						clusters[antiguo].add_elemento( (*it) );
+						n_infac = infac;
 					}
 
 				}
@@ -571,7 +587,8 @@ int PAR::calcular_infactibilidad() const{
 	int infac = 0;
 
 
-	for (auto it = restricciones.begin(); it != restricciones.end(); ++it){
+	/*
+	for (auto it = restricciones.begin(); it != restricciones.end() ; ++it){
 		// solo comprobamos si el primer elemento es mayor que el segundo
 		// para no comprobar repetidas
 		if ( (*it).first.first > (*it).first.second ){
@@ -579,21 +596,9 @@ int PAR::calcular_infactibilidad() const{
 
 			if (pos != restricciones.end()){
 
-				int c1 = -1;
-				int c2 = -1;
+				int c1 = buscar_elemento((*it).first.first);
+				int c2 = buscar_elemento((*it).first.second);
 
-				for (unsigned i = 0; i < clusters.size(); i++){
-					auto p = clusters[i].get_elementos().find((*it).first.first);
-					auto p2 = clusters[i].get_elementos().find((*it).first.second);
-
-					if (p != clusters[i].get_elementos().end()){
-						c1 = i;
-					}
-
-					if (p2 != clusters[i].get_elementos().end()){
-						c2 = i;
-					}
-				}
 
 				// si tienen que estar juntos y no lo estan
 				if (pos->second == 1 && c1 != c2){
@@ -608,8 +613,27 @@ int PAR::calcular_infactibilidad() const{
 			}
 
 		}
-	}
 
+	}
+	*/
+
+	for (auto it = lista_restricciones.begin(); it != lista_restricciones.end(); ++it){
+		if ( std::get<0>((*it)) > std::get<1>((*it)) ){
+			int c1 = buscar_elemento(std::get<0>((*it)));
+			int c2 = buscar_elemento(std::get<1>((*it)));
+
+
+			// si tienen que estar juntos y no lo estan
+			if (std::get<2>((*it)) == 1 && c1 != c2){
+				infac++;
+			}
+
+			// si tienen que estar separados y no lo están
+			if (std::get<2>((*it)) == -1 && c1 == c2){
+				infac++;
+			}
+		}
+	}
 
 	return infac;
 }

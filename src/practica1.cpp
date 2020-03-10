@@ -49,6 +49,7 @@ void ejecutar_PAR_BL(const std::string datos, const std::string restricciones,
 
 	solucion = par.algoritmo_BL();
 	if (solucion.first.size() != 0){
+
 		fichero << par;
 
 		std::cout << par;

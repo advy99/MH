@@ -6,6 +6,7 @@
 #include <map>
 #include <string>
 #include <ostream>
+#include <list>
 
 class PAR{
 
@@ -66,6 +67,7 @@ class PAR{
 		std::vector<Cluster> clusters;
 		//std::vector< std::vector<int> > restricciones;
 		std::map< std::pair<int, int>, int> restricciones;
+		std::list< std::tuple<int, int, int> > lista_restricciones;
 		std::vector< std::vector<double> > datos;
 		double desviacion_general;
 
