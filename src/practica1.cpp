@@ -2,45 +2,35 @@
 
 #include "PAR.h"
 #include "random.h"
+#include <fstream>
 
 
 void ejecutar_PAR_greedy(const std::string datos, const std::string restricciones,
-	               		 const int clusters, const int iteraciones){
+	               		 const int clusters, const unsigned seed ){
 
 	PAR par(datos, restricciones, clusters);
 
 
 	std::pair<std::vector<PAR::Cluster>,int> solucion;
 
-	std::cout << std::endl << "Solución Greedy para " << datos << " con restricciones de " << restricciones << std::endl << std::endl;
+	std::fstream fichero;
 
-	for (int i = 0; i < iteraciones; i++){
+	std::string path = restricciones + "_" + std::to_string(seed)  + "_GREEDY.out";
 
-		solucion = par.algoritmo_greedy();
-		if (solucion.first.size() != 0){
+	fichero.open (path, std::fstream::in | std::fstream::out | std::fstream::app);
 
-			std::cout << "Solución para la ejecución " << i << std::endl;
-			std::cout << "Infactibilidad: " << solucion.second << std::endl;
-
-			for (unsigned j = 0; j < solucion.first.size(); j++){
-				std::cout << "Cluster " << j << ": " << std::endl;
-				for (auto it = solucion.first[j].get_elementos().begin(); it != solucion.first[j].get_elementos().end(); ++it){
-					std::cout << (*it) << " ";
-				}
-
-				std::cout << std::endl;
-			}
-
-			std::cout << std::endl << std::endl;
-		}
-
+	solucion = par.algoritmo_greedy();
+	if (solucion.first.size() != 0){
+		fichero << par;
+		cout << par;
 	}
+
 
 }
 
 
 void ejecutar_PAR_BL(const std::string datos, const std::string restricciones,
-	               		 const int clusters, const int iteraciones){
+	               		 const int clusters, const unsigned seed){
 
 	PAR par(datos, restricciones, clusters);
 
@@ -49,27 +39,20 @@ void ejecutar_PAR_BL(const std::string datos, const std::string restricciones,
 
 	std::cout << std::endl << "Solución BL para " << datos << " con restricciones de " << restricciones << std::endl << std::endl;
 
-	for (int i = 0; i < iteraciones; i++){
+	std::fstream fichero;
 
-		solucion = par.algoritmo_BL();
-		if (solucion.first.size() != 0){
+	std::string path = restricciones + "_" + std::to_string(seed)  + "_BL.out";
 
-			std::cout << "Solución para la ejecución " << i << std::endl;
-			std::cout << "Infactibilidad: " << solucion.second << std::endl;
+	fichero.open (path, std::fstream::in | std::fstream::out | std::fstream::app);
 
-			for (unsigned j = 0; j < solucion.first.size(); j++){
-				std::cout << "Cluster " << j << ": " << std::endl;
-				for (auto it = solucion.first[j].get_elementos().begin(); it != solucion.first[j].get_elementos().end(); ++it){
-					std::cout << (*it) << " ";
-				}
+	solucion = par.algoritmo_BL();
+	if (solucion.first.size() != 0){
+		fichero << par;
 
-				std::cout << std::endl;
-			}
-
-			std::cout << std::endl << std::endl;
-		}
-
+		cout << par;
 	}
+
+
 
 }
 
@@ -79,44 +62,22 @@ int main(int argc, char ** argv){
 
 	int ejecuciones = 0;
 
-	if (argc > 1){
-		ejecuciones = atoi(argv[1]);
-	} else {
-		ejecuciones = 5;
+	if (argc < 3){
+		std::cerr << "ERROR: Faltan argumentos:" << std::endl
+			  		 << "\t USO: " << argv[0] << " <fichero_datos> <fichero_restricciones> <num_clusters> <semilla> " << std::endl;
+		exit(-1);
 	}
 
-	Set_random( unsigned(150999) );
+	std::string datos = argv[1];
+	std::string restricciones = argv[2];
+	int clus = unsigned(atoi(argv[3]));
+	int semilla = unsigned(atoi(argv[4]));
 
-	ejecutar_PAR_greedy("datos/iris_set.dat", "datos/iris_set_const_10.const", 3, ejecuciones);
-	ejecutar_PAR_greedy("datos/iris_set.dat", "datos/iris_set_const_20.const", 3, ejecuciones);
+	Set_random( semilla );
 
-	Set_random( unsigned(150999) );
+	ejecutar_PAR_greedy(datos, restricciones, clus, semilla);
 
-	ejecutar_PAR_greedy("datos/rand_set.dat", "datos/rand_set_const_10.const", 3, ejecuciones);
-	ejecutar_PAR_greedy("datos/rand_set.dat", "datos/rand_set_const_20.const", 3, ejecuciones);
-
-
-	Set_random( unsigned(150999) );
-
-	//ejecutar_PAR_greedy("datos/ecoli_set.dat", "datos/ecoli_set_const_10.const", 8, ejecuciones);
-	//ejecutar_PAR_greedy("datos/ecoli_set.dat", "datos/ecoli_set_const_20.const", 8, ejecuciones);
-
-
-	Set_random( unsigned(150999) );
-
-	ejecutar_PAR_BL("datos/iris_set.dat", "datos/iris_set_const_10.const", 3, ejecuciones);
-	ejecutar_PAR_BL("datos/iris_set.dat", "datos/iris_set_const_20.const", 3, ejecuciones);
-
-	Set_random( unsigned(150999) );
-
-	ejecutar_PAR_BL("datos/rand_set.dat", "datos/rand_set_const_10.const", 3, ejecuciones);
-	ejecutar_PAR_BL("datos/rand_set.dat", "datos/rand_set_const_20.const", 3, ejecuciones);
-
-
-	Set_random( unsigned(150999) );
-
-	ejecutar_PAR_BL("datos/ecoli_set.dat", "datos/ecoli_set_const_10.const", 8, ejecuciones);
-	ejecutar_PAR_BL("datos/ecoli_set.dat", "datos/ecoli_set_const_20.const", 8, ejecuciones);
+	ejecutar_PAR_BL(datos, restricciones, clus, semilla);
 
 
 

@@ -43,6 +43,8 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 		}
 	}
 
+	std::cout << "Mayor distancia " << mayor_distancia << std::endl;
+
 
 
 }
@@ -276,6 +278,8 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_greedy(){
 
 	clusters = n_sol;
 
+	calcular_desviacion_general();
+
 	infactibilidad = calcular_infactibilidad();
 
 	return std::make_pair(clusters, infactibilidad);
@@ -307,7 +311,7 @@ int PAR::buscar_cluster(const int elemento){
 
 		d = distancia_puntos(clusters[(*it).second].get_centroide(), datos[elemento]);
 
-		if (d < menor_distancia){
+		if (d <= menor_distancia){
 			menor_distancia = d;
 			cluster_menor_distancia = (*it).second;
 		}
@@ -490,6 +494,8 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 					clusters[antiguo].delete_elemento( (*it) );
 					clusters[(*it_c)].add_elemento( (*it) );
 
+					calcular_desviacion_general();
+
 					n_f_objetivo = get_desviacion_general() + (calcular_infactibilidad() * LAMBDA);
 
 					if ( n_f_objetivo < f_objetivo ){
@@ -511,7 +517,8 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 	} while (he_encontrado_mejor && contador < TOPE_BL);
 
 	clusters = sol;
-	std::cout << " He tardado " << contador << " iteraciones " << std::endl;
+
+	calcular_desviacion_general();
 
 	return std::make_pair(clusters, calcular_infactibilidad());
 
@@ -738,6 +745,7 @@ using namespace std;
 ostream & operator << (ostream & flujo, const PAR::Cluster & clus) {
 
 	// sacamos el centroide
+	flujo << endl << "Centroide: " << endl;
 	for (auto it = clus.get_centroide().begin(); it != clus.get_centroide().end(); ++it){
 		flujo << (*it) << " ";
 	}
@@ -745,9 +753,11 @@ ostream & operator << (ostream & flujo, const PAR::Cluster & clus) {
 	flujo << endl << endl;
 
 	// sacamos la distancia intra cluster
+	flujo << "Distancia intra-cluster: " << endl;
 	flujo << clus.get_distancia_intra_cluster() << endl << endl;
 
 	// mostramos los elementos
+	flujo << "Elementos:" << endl;
 	for (auto it = clus.get_elementos().begin(); it != clus.get_elementos().end(); ++it){
 		flujo << (*it) << " ";
 	}
@@ -762,15 +772,24 @@ ostream & operator << (ostream & flujo, const PAR::Cluster & clus) {
 ostream & operator << (ostream & flujo, const PAR & par) {
 
 	// sacamos la mayor distancia
+	flujo << endl << "Mayor distancia: " << endl;
 	flujo << par.mayor_distancia << endl;
 
 	flujo << endl;
 
 	// sacamos la desviacion general
+	flujo << "Desviacion general: " << endl;
 	flujo << par.get_desviacion_general() << endl << endl;
 
+	// sacamos la restricciones incumplidas
+	flujo << "Restricciones inclumplidas: " << endl;
+	flujo << par.calcular_infactibilidad() << endl << endl;
+
+
 	// mostramos los clusters
+	flujo << "Mostramos los clusters: " << endl;
 	for (int i = 0; i < par.get_num_clusters(); i++){
+		flujo << "Cluster " << i << endl;
 		flujo << par.clusters[i];
 	}
 
