@@ -17,12 +17,12 @@ void ejecutar_PAR_greedy(const std::string datos, const std::string restriccione
 
 	std::string path = restricciones + "_" + std::to_string(seed)  + "_GREEDY.out";
 
-	fichero.open (path, std::fstream::in | std::fstream::out | std::fstream::app);
+	fichero.open (path, std::fstream::in | std::fstream::out);
 
 	solucion = par.algoritmo_greedy();
 	if (solucion.first.size() != 0){
 		fichero << par;
-		cout << par;
+		std::cout << par;
 	}
 
 
@@ -43,13 +43,13 @@ void ejecutar_PAR_BL(const std::string datos, const std::string restricciones,
 
 	std::string path = restricciones + "_" + std::to_string(seed)  + "_BL.out";
 
-	fichero.open (path, std::fstream::in | std::fstream::out | std::fstream::app);
+	fichero.open (path, std::fstream::in | std::fstream::out);
 
 	solucion = par.algoritmo_BL();
 	if (solucion.first.size() != 0){
 		fichero << par;
 
-		cout << par;
+		std::cout << par;
 	}
 
 
