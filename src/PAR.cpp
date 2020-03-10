@@ -467,7 +467,7 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 	double f_objetivo = get_desviacion_general() + (calcular_infactibilidad() * LAMBDA);
 	double n_f_objetivo = 0.0D;
 
-	std::vector<Cluster> sol = clusters;
+	//std::vector<Cluster> sol = clusters;
 
 
 	do {
@@ -500,10 +500,12 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 
 					if ( n_f_objetivo < f_objetivo ){
 						f_objetivo = n_f_objetivo;
-						sol = clusters;
+						//sol = clusters;
 						he_encontrado_mejor = true;
 					} else {
-						clusters = sol;
+						//clusters = sol;
+						clusters[(*it_c)].delete_elemento( (*it) );
+						clusters[antiguo].add_elemento( (*it) );
 					}
 
 				}
@@ -516,7 +518,7 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 		// si no tengo mejor vecino o llego al tope
 	} while (he_encontrado_mejor && contador < TOPE_BL);
 
-	clusters = sol;
+	//clusters = sol;
 
 	calcular_desviacion_general();
 
@@ -665,6 +667,10 @@ PAR::Cluster::Cluster( PAR & p ):problema(p){
 */
 
 void PAR::Cluster::calcular_centroide(){
+
+	for (auto it = centroide.begin(); it != centroide.end(); ++it){
+		(*it) = 0.0d;
+	}
 
 	for(auto it = elementos.begin(); it != elementos.end(); ++it){
 		for (unsigned j = 0; j < problema.datos[(*it)].size(); j++){

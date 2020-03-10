@@ -13,11 +13,13 @@ void ejecutar_PAR_greedy(const std::string datos, const std::string restriccione
 
 	std::pair<std::vector<PAR::Cluster>,int> solucion;
 
+	std::cout << std::endl << "Solución Greedy para " << datos << " con restricciones de " << restricciones << " con semilla " << seed << std::endl << std::endl << std::flush;
+
 	std::fstream fichero;
 
 	std::string path = restricciones + "_" + std::to_string(seed)  + "_GREEDY.out";
 
-	fichero.open (path, std::fstream::in | std::fstream::out);
+	fichero.open (path, std::fstream::out);
 
 	solucion = par.algoritmo_greedy();
 	if (solucion.first.size() != 0){
@@ -37,13 +39,13 @@ void ejecutar_PAR_BL(const std::string datos, const std::string restricciones,
 
 	std::pair<std::vector<PAR::Cluster>,int> solucion;
 
-	std::cout << std::endl << "Solución BL para " << datos << " con restricciones de " << restricciones << std::endl << std::endl;
+	std::cout << std::endl << "Solución BL para " << datos << " con restricciones de " << restricciones << " con semilla " << seed << std::endl << std::endl << std::flush;
 
 	std::fstream fichero;
 
 	std::string path = restricciones + "_" + std::to_string(seed)  + "_BL.out";
 
-	fichero.open (path, std::fstream::in | std::fstream::out);
+	fichero.open (path, std::fstream::out);
 
 	solucion = par.algoritmo_BL();
 	if (solucion.first.size() != 0){
