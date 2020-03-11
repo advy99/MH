@@ -450,12 +450,11 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 
 	generar_solucion_aleatoria();
 
-
 	const double LAMBDA = mayor_distancia / (restricciones.size()/2.0);
 
 	bool he_encontrado_mejor = false;
 
-	int contador = 0;
+	int evaluaciones = 0;
 
 	// inicialización de indices aleatorios
 	std::vector<int> indices;
@@ -512,7 +511,10 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 
 					n_f_objetivo = get_desviacion_general() + (n_infac * LAMBDA);
 
+					evaluaciones++;
+
 					if ( n_f_objetivo < f_objetivo ){
+
 						f_objetivo = n_f_objetivo;
 						infac = n_infac;
 						//sol = clusters;
@@ -529,10 +531,9 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 		}
 
 
-		contador++;
 
 		// si no tengo mejor vecino o llego al tope
-	} while (he_encontrado_mejor && contador < TOPE_BL);
+	} while (he_encontrado_mejor && evaluaciones < TOPE_BL);
 
 	//clusters = sol;
 
@@ -805,6 +806,9 @@ ostream & operator << (ostream & flujo, const PAR & par) {
 	flujo << endl << "Mayor distancia: " << endl;
 	flujo << par.mayor_distancia << endl;
 
+	flujo << "Numero de restricciones: " << endl;
+	flujo << par.restricciones.size()/2 << endl;
+
 	flujo << endl;
 
 	// sacamos la desviacion general
@@ -817,11 +821,11 @@ ostream & operator << (ostream & flujo, const PAR & par) {
 
 
 	// mostramos los clusters
-	flujo << "Mostramos los clusters: " << endl;
-	for (int i = 0; i < par.get_num_clusters(); i++){
-		flujo << "Cluster " << i << endl;
-		flujo << par.clusters[i];
-	}
+	//flujo << "Mostramos los clusters: " << endl;
+	//for (int i = 0; i < par.get_num_clusters(); i++){
+//		flujo << "Cluster " << i << endl;
+//		flujo << par.clusters[i];
+//	}
 
 	flujo << endl;
 

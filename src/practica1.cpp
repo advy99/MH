@@ -90,7 +90,7 @@ int main(int argc, char ** argv){
 
 	Set_random( semilla );
 
-	ejecutar_PAR_greedy(datos, restricciones, clus, semilla);
+	//ejecutar_PAR_greedy(datos, restricciones, clus, semilla);
 
 	ejecutar_PAR_BL(datos, restricciones, clus, semilla);
 
