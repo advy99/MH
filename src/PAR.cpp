@@ -821,11 +821,11 @@ ostream & operator << (ostream & flujo, const PAR & par) {
 
 
 	// mostramos los clusters
-	//flujo << "Mostramos los clusters: " << endl;
-	//for (int i = 0; i < par.get_num_clusters(); i++){
-//		flujo << "Cluster " << i << endl;
-//		flujo << par.clusters[i];
-//	}
+	flujo << "Mostramos los clusters: " << endl;
+	for (int i = 0; i < par.get_num_clusters(); i++){
+		flujo << "Cluster " << i << endl;
+		flujo << par.clusters[i];
+	}
 
 	flujo << endl;
 
