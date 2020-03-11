@@ -4,6 +4,7 @@
 #include "random.h"
 #include <fstream>
 
+#include "timer.h"
 
 void ejecutar_PAR_greedy(const std::string datos, const std::string restricciones,
 	               		 const int clusters, const unsigned seed ){
@@ -21,8 +22,14 @@ void ejecutar_PAR_greedy(const std::string datos, const std::string restriccione
 
 	fichero.open (path, std::fstream::out);
 
+	double tiempo = 0.0d;
+
+	start_timers();
 	solucion = par.algoritmo_greedy();
+	tiempo = elapsed_time();
+
 	if (solucion.first.size() != 0){
+		fichero << "Tiempo:" << std::endl << tiempo << std::endl << std::endl;
 		fichero << par;
 		std::cout << par;
 	}
@@ -47,9 +54,14 @@ void ejecutar_PAR_BL(const std::string datos, const std::string restricciones,
 
 	fichero.open (path, std::fstream::out);
 
-	solucion = par.algoritmo_BL();
-	if (solucion.first.size() != 0){
+	double tiempo = 0.0d;
 
+	start_timers();
+	solucion = par.algoritmo_BL();
+	tiempo = elapsed_time();
+
+	if (solucion.first.size() != 0){
+		fichero << "Tiempo:" << std::endl << tiempo << std::endl << std::endl;
 		fichero << par;
 
 		std::cout << par;
