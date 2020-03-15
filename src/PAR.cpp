@@ -238,25 +238,11 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_greedy(){
 
 		}
 
-		//std::cout << std::endl << std::endl << std::endl ;
-
 
 		for (unsigned i = 0; i < clusters.size(); i++){
 
 			cambios[i] = n_sol[i].get_elementos() != clusters[i].get_elementos();
 
-			//std::cout << "Cluster " << i << " - centroide: ";
-
-		//	for (auto it = clusters[i].get_centroide().begin(); it != clusters[i].get_centroide().end(); ++it ){
-			//	std::cout << (*it) << " ";
-			//}
-
-			//std::cout << std::endl << "Elementos Cluster " << i  << std::endl;
-
-			//for (auto it = clusters[i].get_elementos().begin(); it != clusters[i].get_elementos().end(); ++it ){
-			//	std::cout << (*it) << " ";
-			//}
-			//std::cout << std::endl << std::endl << std::endl;
 
 			if (cambios[i]){
 				clusters[i].calcular_centroide();
@@ -328,7 +314,14 @@ int PAR::buscar_cluster(const int elemento){
 std::vector<int> PAR::clusters_to_solucion() {
 
 	std::vector<int> solucion;
-	solucion.resize(clusters.size());
+
+	int tam_total = 0;
+
+	for (unsigned i = 0; i < clusters.size(); i++){
+		tam_total += clusters[i].num_elementos();
+	}
+
+	solucion.resize(tam_total);
 
 	for (unsigned i = 0; i < clusters.size(); i++){
 		for (auto it = clusters[i].get_elementos().begin();
@@ -351,7 +344,7 @@ std::vector<int> PAR::clusters_to_solucion() {
 */
 
 double PAR::distancia_puntos(const std::vector<double> & p1,
-									  const std::vector<double> & p2){
+									  const std::vector<double> & p2) const{
 
 
 	double distancia = 0;
@@ -694,9 +687,12 @@ void PAR::Cluster::calcular_distancia_intra_cluster(){
 
 	calcular_centroide();
 
-	for (unsigned i = 0; i < problema.datos[(*it)].size(); i++){
-		distancia += std::abs(problema.datos[(*it)][i] - centroide[i]) * std::abs(problema.datos[(*it)][i] - centroide[i]);
+
+	for (auto it = elementos.begin(); it != elementos.end(); ++it){
+		distancia += problema.distancia_puntos(problema.datos[(*it)], centroide);
 	}
+
+	distancia /= num_elementos();
 
 	distancia_intra_cluster = distancia;
 

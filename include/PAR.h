@@ -72,7 +72,7 @@ class PAR{
 		double mayor_distancia;
 
 		double distancia_puntos(const std::vector<double> & p1,
-									 	const std::vector<double> & p2);
+									 	const std::vector<double> & p2) const;
 
 		std::vector<int> clusters_to_solucion();
 		int cumple_restricciones(const int elemento, const int num_cluster);
