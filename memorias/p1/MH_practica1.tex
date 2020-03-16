@@ -464,7 +464,7 @@ indices_aleatorios = random_shuffle(indices)
 contador = 0
 
 // nos aseguramos que cada cluster tiene uno al menos
-Para cada cluster i:
+Para cada indice i desde 0 hasta clusters.size():
 	clusters[i].insertar_elemento(indices_aleatorios[contador])
 	contador++
 	
@@ -584,7 +584,83 @@ Como algoritmo de comparación usaremos un algoritmo Greedy, basado en una varia
 
 \subsection{Algoritmo Greedy.}
 
+El algoritmo se basa en recorrer los indices de forma aleatoria, asignando los elementos al cluster que menos restricciones incumpla, y de entre los que cumplan esta condición al más cercano. Este algoritmo se centrará en tener el menor número de restricciones, aunque la desviación general sea mucho mayor.
 
+\subsubsection{Función para asignar un cluster}
+
+Para resolver el problema de, una vez escogemos un elemento, buscar y asignar un cluster a dicho elemento he diseñado esta función. El principal cometido es calcular el incremento de la \textit{infeasibility} asociada a introducir el elemento en los distintos clusters usando la función para calcular la \textit{infeasibility} parcial antes comentada. Una vez tenemos los clusters que menos restricciones incumplen nos quedamos con el que tenga el centroide a menor distancia y lo asignamos a dicho cluster.
+
+
+\begin{lstlisting}
+elemento = pasado como argumento
+distancia = 0
+menor_distancia = infinito
+menor_restricciones = infinito
+
+// usamos un vector de pares para saber el indice al ordenarlos
+Para cada indice i desde 0 hasta clusters.size()
+	aumento_infactibilidad.push_back({i, incumple_restricciones(elemento, clusters[i])})
+
+sort(aumento_infactibilidad)
+menor_restricciones = aumento_infactibilidad[0].second
+
+Para cada indice i desde 0 hasta aumento_infactibilidad.size() Y aumento_infactibilidad[i].second == menor_restricciones
+	distancia = distancia_puntos(clusters[aumento_infactibilidad[i].first.get_centroide(), datos[elemento]])
+	Si distancia < menor_distancia
+		menor_distancia = distancia
+		cluster_menor_distancia = aumento_infactibilidad[i].first
+
+
+return cluster_menor_distancia
+
+\end{lstlisting}
+
+
+\subsubsection{Desarrollo del algoritmo.}
+
+Con el uso de esta función y las descritas en la sección común podemos desarrollar el algoritmo de la siguiente forma:
+
+\begin{lstlisting}
+limpiamos los clusters
+inicializamos los centroides de forma aleatoria
+
+indices = {0 ... datos.size()}
+
+random_shuffle(indices)
+
+hay_cambios = false
+cambios = vector de booleanos con tamaño clusters.size() inicializado todo a false
+
+sol_antigua = clusters
+
+do:
+	hay_cambios = false
+	cambios = {false, ..., false}
+	
+	Para cada elemento i de indices:
+		num_cluster = buscar_cluster(i)
+		clusters[num_cluster].add_elemento(i)
+		
+	Para cada indice i de 0 hasta clusters.size()
+		cambios[i] = sol_antigua[i].get_elementos != clusters[i].get_elementos()
+		
+		Si cambios[i]
+			clusters[i].calcular_centroide();
+			sol_antigua[i] = clusters[i];
+			
+		clusters[i].limpiar()
+		
+	Para cada indice i de 0 hasta cambios.size()
+		hay_cambios = hay_cambios || cambios[i]
+
+
+
+while hay_cambios
+
+
+\end{lstlisting}
+
+Notar que está factorizado, de forma que solo se actualicen los centroides que han modificado sus elementos con respecto a la iteración anterior, sin embargo para volver a iterar tenemos que comprobar que al menos un cluster ha cambiado, de ahí actualizar \texttt{hay\_cambios} en función de todos los clusters.
 
 \section{Proceso de implementación.}
 
