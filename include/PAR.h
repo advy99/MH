@@ -64,7 +64,6 @@ class PAR{
 
 	private:
 		std::vector<Cluster> clusters;
-		//std::vector< std::vector<int> > restricciones;
 		std::map< std::pair<int, int>, int> restricciones;
 		std::vector< std::vector<double> > datos;
 		double desviacion_general;

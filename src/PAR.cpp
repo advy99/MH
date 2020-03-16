@@ -221,8 +221,6 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_greedy(){
 
 	std::vector<Cluster> n_sol = clusters;
 
-	int i = 0;
-
 	do {
 
 		infactibilidad = 0;
@@ -259,7 +257,6 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_greedy(){
 			hay_cambios = hay_cambios || cambios[i];
 		}
 
-		i++;
 	} while(hay_cambios);
 
 
