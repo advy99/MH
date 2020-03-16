@@ -223,7 +223,6 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_greedy(){
 
 	do {
 
-		infactibilidad = 0;
 
 		hay_cambios = false;
 		cambios = std::vector<bool>(clusters.size(), false);
@@ -264,9 +263,8 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_greedy(){
 
 	calcular_desviacion_general();
 
-	infactibilidad = calcular_infactibilidad();
 
-	return std::make_pair(clusters, infactibilidad);
+	return std::make_pair(clusters, calcular_infactibilidad());
 
 }
 
@@ -301,8 +299,6 @@ int PAR::buscar_cluster(const int elemento){
 		}
 
 	}
-
-	infactibilidad += menor_restricciones;
 
 	return cluster_menor_distancia;
 }

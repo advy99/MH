@@ -79,7 +79,6 @@ class PAR{
 		void leer_restricciones(const std::string fichero);
 		void generar_solucion_aleatoria();
 
-		int infactibilidad;
 		static const int TOPE_BL = 100000;
 
 
