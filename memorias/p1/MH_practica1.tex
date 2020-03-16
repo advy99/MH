@@ -9,6 +9,11 @@
 \usepackage{parskip}
 \usepackage{fancyhdr}
 \usepackage{vmargin}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{chngpage}
+
+
 
 \usepackage{hyperref}
 \usepackage[
@@ -23,6 +28,73 @@
     filecolor=magenta,      
     urlcolor=cyan,
 }
+
+% para codigo
+\usepackage{listings}
+\usepackage{xcolor}
+
+%% configuración de listings
+
+\definecolor{listing-background}{HTML}{F7F7F7}
+\definecolor{listing-rule}{HTML}{B3B2B3}
+\definecolor{listing-numbers}{HTML}{B3B2B3}
+\definecolor{listing-text-color}{HTML}{000000}
+\definecolor{listing-keyword}{HTML}{435489}
+\definecolor{listing-identifier}{HTML}{435489}
+\definecolor{listing-string}{HTML}{00999A}
+\definecolor{listing-comment}{HTML}{8E8E8E}
+\definecolor{listing-javadoc-comment}{HTML}{006CA9}
+
+\lstdefinestyle{eisvogel_listing_style}{
+  language         = c++,
+%$if(listings-disable-line-numbers)$
+%  xleftmargin      = 0.6em,
+%  framexleftmargin = 0.4em,
+%$else$
+  numbers          = left,
+  xleftmargin      = 0em,
+ framexleftmargin = 0em,
+%$endif$
+  backgroundcolor  = \color{listing-background},
+  basicstyle       = \color{listing-text-color}\small\ttfamily{}\linespread{1.15}, % print whole listing small
+  breaklines       = true,
+  frame            = single,
+  framesep         = 0.19em,
+  rulecolor        = \color{listing-rule},
+  frameround       = ffff,
+  tabsize          = 4,
+  numberstyle      = \color{listing-numbers},
+  aboveskip        = 1.0em,
+  belowskip        = 0.1em,
+  abovecaptionskip = 0em,
+  belowcaptionskip = 1.0em,
+  keywordstyle     = \color{listing-keyword}\bfseries,
+  classoffset      = 0,
+  sensitive        = true,
+  identifierstyle  = \color{listing-identifier},
+  commentstyle     = \color{listing-comment},
+  morecomment      = [s][\color{listing-javadoc-comment}]{/**}{*/},
+  stringstyle      = \color{listing-string},
+  showstringspaces = false,
+  escapeinside     = {/*@}{@*/}, % Allow LaTeX inside these special comments
+  literate         =
+  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\'e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\EUR}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
+  {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1
+  {…}{{\ldots}}1 {≥}{{>=}}1 {≤}{{<=}}1 {„}{{\glqq}}1 {“}{{\grqq}}1
+  {”}{{''}}1
+}
+\lstset{style=eisvogel_listing_style}
+
 
 \usepackage[default]{sourcesanspro}
 
@@ -48,6 +120,7 @@ PAR - Greedy y Busqueda Local  \hspace{0.05cm} }
 \cfoot{\thepage}
 
 \begin{document}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{titlepage}
@@ -96,20 +169,533 @@ PAR - Greedy y Busqueda Local  \hspace{0.05cm} }
 
 \section{Descripción del problema de la asignación con restricciones.}
 
+El problema de la asignación con restricciones consiste en una generalización del problema de agrupamiento clásico, bastante común en \textit{Machine Learning}.
+
+El problema del agrupamiento clásico es un problema en el que se recibe como entrada las características de un conjunto de elementos y el número de agrupaciones a realizar, para resolver el problema tendremos como objetivo realizar dichas agrupaciones de los distintos elementos con el fin de organizarlos acorde a las características dadas. Llamaremos a estas agrupaciones \textit{Clusters}.
+
+Como extensión a este problema, nosotros trabajaremos sobre el problema de asignación con restricciones (de ahora en adelante PAR). PAR se basa en el problema del agrupamiento clásico, pero añadiendo al problema restricciones entre los propios elementos, es decir, las distintas parejas que podemos formar con los datos tendrán asociadas restricciones de dos tipos:
+
+\begin{itemize}
+	\item{Must-Link (ML): Dados dos datos $D_1$ y $D_2$, si estos datos tienen asociada una restricción ML deberán tener asignado el mismo cluster.}
+	\item{Cannot-Link (CL): Dados dos datos $D_1$ y $D_2$, si estos datos tienen asociada una restricción CL deberán tener asignado distinto cluster.}
+\end{itemize}
+
+Nosotros trataremos estas restricciones como restricciones débiles, es decir, permitiremos que se incumplan pero penalizándolas, por lo tanto, el objetivo para resolver el PAR es minimizar la distancia de los elementos que conforman los distintos clusters, así como asegurarnos que no se incumple ninguna restricción.
+
+Otra restricción fuerte del problema es que todos los clusters tienen que tener al menos un elemento.
+
+Para comprobar que la distancia entre los elementos de los distintos clusters es mínima, tendremos las siguientes características asociadas a un cluster:
+
+\begin{itemize}
+	\item{Centroide: Valor promedio de los datos que conforman el cluster. Con este elementos obtendremos la representación del elemento central del cluster.}
+	\item{Distancia media intra-cluster: Con este elemento mediremos como de disperso está nuestro cluster, es decir, si los elementos de un cluster están cercanos entre si.}
+\end{itemize}
+
+Además también contaremos con distintas características del PAR:
+
+\begin{itemize}
+	\item{Desviación general: Será la media de las desviaciones intra-cluster de los distintos clusters que conforman el PAR. Uno de nuestros objetivos será que este valor sea mínimo.}
+	\item{\textit{Infeasibility}: Esta característica nos permitirá conocer cuantas restricciones se están incumpliendo en una posible solución del PAR. Otro de nuestros objetivos será que este valor sea mínimo.}
+\end{itemize}
+
+\newpage
+
 \section{Descripción de la implementación común y representación del problema para su resolución.}
+
+Para el desarrollo e implementación del programa que resolverá el PAR he decidido usar C++ como lenguaje de programación.
+
+Para la representación del problema he decidido construir dos clases en C++, la clase PAR y la clase Cluster.
+
+
+
+\subsection{Clase PAR:}
+
+
+Esta clase contará con los siguientes atributos:
+
+\begin{itemize}
+	\item {Matriz que almacenará valores reales, donde estarán las características de los datos.}
+	\item {Vector de objetos tipo Cluster con el que representaremos las agrupaciones a conseguir.}
+	\item {Diccionario con las restricciones entre los distintos datos.}
+	\item {Desviación general del problema.}
+	\item {Mayor distancia entre dos los distintos datos del problema.}
+	\item {\textit{Infeasibility} del problema}
+\end{itemize}
+
+
+\subsection{Clase Cluster:}
+
+Con esta clase representaremos los elementos y operaciones internas de un cluster. Tendrá los siguientes atributos:
+
+\begin{itemize}
+	\item {Set que almacenará enteros, representando que elementos conforman dicho cluster.}
+	\item {Vector de reales que representará el centroide.}
+	\item {Valor real que representará la distancia intra-cluster de los elementos que lo conforman.}
+	\item {Una referencia a la clase PAR asociada, con la que obtendremos los datos necesarios sin necesidad de duplicarlos.}
+\end{itemize}
+
+Es importante mencionar que la declaración de la clase Cluster se realiza dentro de la clase PAR, ya que no tiene sentido crear un cluster sin tener un problema asociado.
+
+
+\newpage
+
+\subsection{Representación:}
+
+\subsubsection{Datos:}
+
+Con respecto a la representación del problema, los datos son almacenados en una matriz de datos tipo \texttt{double}, cada fila representará un dato, y las columnas representarán las características de dicho dato.
+
+\subsubsection{Restricciones:}
+
+Las restricciones serán almacenadas en un diccionario, donde la clave será la pareja de datos afectada por la restricción y el valor será 1 si la restricción es ML o -1 si es CL. He decidido usar esta representación ya que nos permite almacenar la información de forma eficiente sin tener que almacenar los elementos que no tiene restricciones entre sí, nos permite acceder a los elementos de una forma más rápida que con una lista (aunque no tanto comparado con una matriz, pero gracias al operador \texttt{find} de la clase esto apenas se nota) y podemos recorrer las restricciones secuencialmente de una forma rápida gracias a los iteradores disponibles en la clase diccionario de C++.
+
+
+Con esta representación de los datos y las restricciones, las distintas operaciones antes comentadas se pueden resolver de forma sencilla generalizando el número de generalizando el número de características, independientemente del problema.
+
+
+\subsubsection{Solución:}
+
+Para representar la solución he decido, como he comentado anteriormente, que la solución esté compuesta por un vector de objetos tipo cluster, a pesar de que esta representación no será valida para futuras prácticas, es mucho más sencillo y práctico trabajar con ella en la primera práctica, ya que al separar los distintos clusters en su propio objeto podemos realizar las operaciones que afecten a los clusters de forma mucho más rápida y permitiendo la factorización del problema, ya que por ejemplo, seremos capaces de recalcular el centroide de un cluster sin tener que tener en cuenta los demás, o separar los elementos.
+
+La representación dada en clase (vector de enteros de tamaño N siendo N el número de datos, y cada posición del vector se le asocia un número, que será el cluster al que pertenece) es de gran utilidad en la práctica 2, por lo que tenemos una función que nos intercambiará entre estas soluciones, es decir, una función que dado un vector de clusters nos devolverá un vector de enteros con las asignaciones del argumento dado.
+
+\begin{lstlisting}
+//vector de ints en el que devolveremos la solución
+vector_sol 
+
+Para todo cluster i en el vector de clusters:
+	Para todo elemento j en el cluster i:
+		vector_sol[j] = i;
+		
+Devolver vector_sol
+
+\end{lstlisting}
+
+
+\subsubsection{Operaciones sobre los clusters:}
+
+Los clusters tendrán principalmente dos funciones que podremos realizar:
+
+\begin{itemize}
+	\item {Calcular el centroide}
+	\item {Calcular la distancia media intra-cluster}
+\end{itemize}
+
+Para calcular el centroide basta con recorrer los elementos que conforman ese cluster (disponibles dentro de la clase Cluster) y calcular el punto medio.
+
+\begin{lstlisting}
+
+Para i = 0 hasta el tamaño del centroide (numero de caracteristicas de un dato) :
+	centroide[i]=0.0d
+	
+Para cada elemento i del cluster:
+	Para cada carasterictica j del elemento i:
+		centroide[j] += problema.datos[i][j];
+		
+Para cada caracteristica i del centroide:
+	centroide[i] /= num_elementos_cluster 
+	
+	
+\end{lstlisting}
+
+Para calcular la distancia media intra-cluster calcularemos el centroide y tras eso la distancia de todos los elementos al centroide.
+
+
+\begin{lstlisting}
+
+calcular_centroide();
+	
+Para cada elemento i del cluster:
+	Para cada carasterictica j del elemento i:
+		centroide[j] += problema.datos[i][j];
+		
+Para cada caracteristica i del centroide:
+	centroide[i] /= num_elementos_cluster 
+	
+	
+\end{lstlisting}
+
+\newpage
+
+\subsubsection{Operaciones sobre PAR:}
+
+Sobre el problema podremos aplicar las siguientes operaciones:
+
+\begin{itemize}
+	\item {Calcular la desviación general.}
+	\item {Buscar el cluster en el que se encuentra cierto elemento.}
+	\item {Calcular \textit{Infeasibility} del estado actual del PAR.}
+	\item {Calcular la distancia entre dos puntos del problema.}
+\end{itemize}
+
+Para calcular la desviación general haremos la media de las distintas desviaciones intra-cluster.
+
+
+\begin{lstlisting}
+
+desviacion_general = 0
+	
+Para cada elemento i del vector de clusters:
+	clusters[i].calcular_desviacion_intra_cluster()
+	desviacion_general += cluster[i].desviacion_intra_cluster()
+		
+desviacion_general /= clusters.size()	
+	
+\end{lstlisting}
+
+Para buscar un elemento N dado por parámetro en los distintos clusters simplemente recorreremos el vector de clusters usando el operador find de la clase set, al estar ordenados y ser únicos, esto hará que esta operación sea muy rápida.
+
+\begin{lstlisting}
+
+encontrado = false
+encontrado_en_cluster = -1
+
+Mientras !encontrado Y para cada elemento i del vector clusters
+	Si clusters[i].elementos.find(N) != clusters[i].elementos.end()
+		encontrado = true	
+		encontrado_en_cluster = i
+		
+return encontrado_en_cluster
+	
+\end{lstlisting}
+
+
+Para calcular  \textit{Infeasibility} del PAR simplemente recorreremos el diccionario de restricciones, si encontramos dos elementos en distinto cluster y son ML sumamos 1 al total, y si encontramos dos elementos en el mismo cluster y tienen la restricción de CL sumamos 1 al total.
+
+Solo comprobaremos si en el diccionario, la pareja de datos el primer elemento es mayor que el segundo. Esto lo hacemos para evitar contar dos veces la misma restricción, por ejemplo, si tenemos la restricción 0 con 1: ML, también tenemos la 1 con 0: ML, así que solo comprobaremos la 1 con 0. A pesar de usar el diccionario he decidido duplicar de esta forma las restricciones ya que a veces necesitaremos acceder sin tener en cuenta el orden de los datos.
+
+\begin{lstlisting}
+
+infac = 0
+
+Para cada elemento i de  restricciones
+	Si i.first.first > i.first.second
+		Si existe una restricción entre i.first.first e i.first.second
+			c1 = buscar_elemento(i.first.first)
+			c1 = buscar_elemento(i.first.second)
+			
+			Si c1 == c2 Y i.second == -1
+				infac++
+			Si c1 != c2 Y i.second == 1
+				infac++
+		
+		
+return infac
+	
+	
+\end{lstlisting}
+
+
+
+
+Tanto en PAR como en Cluster tendremos otras operaciones auxiliares relativas a los algoritmos de búsqueda o comparación, que explicaré más adelante.
+
+
+\subsection{Calcular \textit{Infeasibility} parcial.}
+
+Para hacer una factorización, además de poder calcular los atributos de los clusters de forma independiente sin necesidad de recalcular la de todos si no son modificados también necesitaremos una función que dado un cluster y un elemento nos calcula cuantas restricciones incumpliría si lo introducimos en dicho cluster.
+
+
+\begin{lstlisting}
+
+elemento: nos lo dan como argumento
+cluster: nos lo dan como argumento
+
+incumplidas = 0
+
+
+Para todos los elementos i del cluster dado:
+	Si i y elemento tienen una restricción Y dicha restricción == -1
+		incumplidas++
+
+Para los elementos j de los clusters != cluster:
+	Si j y elemento tienen una restricción Y dicha restricción == 1
+		incumplidas++
+
+
+
+return incumplidas
+	
+	
+\end{lstlisting}
+
+\subsection{Función objetivo.}
+
+En el caso del PAR nuestro objetivo será agrupar los datos en clusters incumpliendo el mínimo de restricciones.
+
+Para cumplir la primera parte intentaremos que los datos estén lo menos dispersos con respecto a su centroide, por lo que intentaremos minimizar el total de las desviaciones intra-cluster, en resumen, \textbf{minimizar la desviación general}. 
+
+Para la segunda parte, intentaremos minimizar el número de restricciones incumplidas penalizando las soluciones que más restricciones incumplan. Esta penalización se basará en sumar a la desviación general un valor entre 0 y la distancia más grande entre los datos del problema.
+
+Esto lo conseguiremos con este factor, al que llamaremos $\lambda$:
+
+$$ \lambda = \frac{D_{max}}{NumRestricciones} $$ 
+
+
+De forma que si incumplimos todas las restricciones la solución la consideraremos mucho peor que otra con mayor desviación general pero menor restricciones incumplidas.
+
+Nuestra función objetivo será:
+
+$$ f = C + (\textit{Infeasibility} * \lambda) $$ 
+
+
+\newpage
 
 \section{Métodos de resolución del problema.}
 
-\subsection{Algoritmo de Busqueda Local.}
+\subsection{Algoritmo de Búsqueda Local.}
+
+Este algoritmo se basa en partir de una solución inicial aleatoria, a partir de esa solución explorar una solución vecina, y si esta solución vecina es mejor que la actual, moverse a dicha solución.
+
+ Para desarrollar este algoritmo necesitamos varios componentes:
+ 
+ \subsubsection{Generador de solución inicial aleatoria.}
+ 
+ Primero he desarrollado una función que nos genera una solución aleatoria que cumple con las restricciones fuertes (todos los clusters tienen al menos un elemento).
+ 
+ \begin{lstlisting}
+
+vaciar_clusters()
+
+indices_aleatorios = {0...datos.size()}
+
+indices_aleatorios = random_shuffle(indices)
+
+contador = 0
+
+// nos aseguramos que cada cluster tiene uno al menos
+Para cada cluster i:
+	clusters[i].insertar_elemento(indices_aleatorios[contador])
+	contador++
+	
+Para contador < indices_aleatorios.size()
+	clusters[EnteroAleatorio(0, clusters.size())].insertar_elemento(indices_aleatorios[contador])
+	contador++
+	
+
+\end{lstlisting}
+ 
+ 
+\subsubsection{Generador de vecinos}
+
+En nuestro caso, construiremos el vecindario a partir de una solución, modificando un único elemento de cluster, siempre que no se queden clusters vacíos, es decir, si tenemos una solución S, generaremos un vecino $S_1$ eliminando un elemento de un cluster $i$ e insertandolo en otro cluster $j$, siempre que el cluster $i$ no se quede vacío y $i$ sea distinto a $j$.
+
+El elemento a mover y el nuevo cluster lo escogeremos de forma aleatoria, como explicaré más adelante en el desarrollo del algoritmo completo.
+
+ 
+\subsubsection{Función objetivo} 
+ 
+Una vez tenemos una primera solución, necesitamos conocer como obtener el valor de la función objetivo asociada a esa función.
+
+Cada vez que generemos un vecino recalcularemos su desviación general, por lo que calcular su función objetivo será:
+
+\begin{lstlisting}
+
+funcion_objetivo = get_desviacion_promedio + ( LAMBDA * calcular_infactibilidad() )
+
+ \end{lstlisting}
+
+
+Sin embargo, para reducir el tiempo de ejecución vamos a factorizar el cálculo de \textit{Infeasibility}, ya que dado un \textit{Infeasibility} de X, el valor para cualquier vecino será:
+
+$$X - \textit{Infeasibility}_cambios_salida + \textit{Infeasibility}_cambios_entrada$$
+ 
+ Al solo modificar un elemento por vecino, \textit{Infeasibility}\_cambios\_salida  es el número de restricciones que incumplía dicho elemento en el cluster antiguo y \textit{Infeasibility}\_cambios\_entrada es el número de restricciones que incumple el nuevo cluster.
+ 
+ 
+ 
+\begin{lstlisting}
+
+infact -= cumple_restricciones(elemento, antiguo_num_cluster)
+infact += cumple_restricciones(elemento, nuevo_num_cluster)
+
+funcion_objetivo = get_desviacion_promedio + ( LAMBDA * calcular_infactibilidad() )
+
+ \end{lstlisting}
+
+\subsubsection{Criterio de aceptación.}
+
+Se aceptará un vecino si su función objetivo es menor que la de la solución actual, es decir, seguiremos una estrategia primero el mejor, en cuanto tengamos un mejor candidato nos movemos a el, en lugar de generar todo el vecindario y quedarnos con el mejor del vecindario.
+
+Finalizaremos la búsqueda si no encontramos mejor vecino en todo el vecindario.
+
+\subsubsection{Exploración del entorno.}
+
+La exploración del entorno se realizará de forma aleatoria, cada iteración (no evaluación) reordenaremos de forma aleatoria los indices con los que recorreremos los elementos y los indices con los que recorreremos los clusters. Lo veremos más adelante en el algoritmo.
+
+\subsubsection{Desarrollo del algoritmo.}
+
+El algoritmo de búsqueda local se basará en generar una solución aleatoria, a partir de esa solución aleatoria generar vecinos, evaluarlos hasta que encuentre un mejor vecino, en cuanto encuentre un mejor vecino moverse a este, y parar en caso de que en todo el vecindario no encuentre un mejor vecino o se llegue al límite de evaluaciones, en nuestro caso 100.000.
+
+\newpage
+
+Con las distintas operaciones podemos codificar el algoritmo de la siguiente forma:
+
+{\small
+\begin{lstlisting}
+generar_solucion_aleatoria()
+calcular_desviacion_general()
+
+LAMBDA = mayor_distancia / restricciones.size()
+evaluaciones = 0
+encontrado_mejor = false
+indices = {0..datos.size()}
+indices_clusters = {0..clusters.size()}
+infac = calcular_infactibilidad()
+infac_vecino = infac
+f_objetivo = get_desviacion_general() + (infac * LAMBDA)
+f_objetivo_vecino = 0
+
+do:
+	encontrado_mejor = false
+	reordenar_aleatoriamente(indices)
+	reordenar_aleatoriamente(indices_clusters)
+	
+	Para cada elemento i de indices Y !encontrado_mejor
+		Para cada elemento j del indices_clusters Y !encontrado_mejor
+			antiguo_cluster = buscar_elemento(i)
+			Si antiguo_cluster != j Y clusters[antiguo_cluster].size() - 1 > 0
+				clusters[antiguo_cluster].eliminar_elemento(i)
+				infac_vecino -= incumple_restricciones(i, antiguo_cluster)
+				infac_vecino += incumple_restricciones(i, j)
+				clusters[j].añadir_elemento(i)
+				calcular_desviacion_general()
+				
+				f_objetivo_vecino = get_desviacion_general() + (infac_vecino * LAMBDA)
+				evaluaciones++				
+				
+				Si f_objetivo_vecino < f_objetivo
+					f_objetivo = f_objetivo_vecino
+					infac = infac_vecino
+					encontrado_mejor = true
+				Si NO
+					clusters[j].eliminar_elemento(i)
+					clusters[antiguo_cluster].añadir_elemento(i)
+					infact_vecino = infac
+
+while evaluaciones < TOPE_BL Y encontrado_mejor
+
+ \end{lstlisting}
+ }
 
 \section{Algoritmo de comparación.}
 
+Como algoritmo de comparación usaremos un algoritmo Greedy, basado en una variación del algoritmo k-medias.
+
 \subsection{Algoritmo Greedy.}
+
 
 
 \section{Proceso de implementación.}
 
 
 \section{Experimentos y análisis de resultados.}
+
+
+
+
+\begin{table}[H]
+\small
+
+\begin{adjustwidth}{-1cm}{-1cm}%
+
+\begin{tabular}{|l|l|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{13}{|c|}{\textbf{Ejecuciones BL con un 10\% de restricciones}}                                                                                                                                                                                                                                                                                                                                                     \\ \hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{\textbf{Iris}}                                                                                 & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                                                & \multicolumn{4}{c|}{\textbf{Rand}}                                                                                 \\ \cline{2-13} 
+\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
+123452244                                               & 6,70                         & 25,00                          & 7,82                      & 0,04                   & 237,60                       & 144,00                         & 820,97                    & 1,58                   & 8,01                         & 27,00                          & 9,58                      & 0,04                   \\ \hline
+9398429                                                 & 5,69                         & 27,00                          & 6,90                      & 0,03                   & 295,52                       & 122,00                         & 789,76                    & 1,03                   & 8,93                         & 34,00                          & 10,90                     & 0,04                   \\ \hline
+12321                                                   & 5,69                         & 27,00                          & 6,90                      & 0,07                   & 240,15                       & 150,00                         & 847,82                    & 1,16                   & 7,94                         & 52,00                          & 10,96                     & 0,07                   \\ \hline
+213566                                                  & 5,69                         & 27,00                          & 6,90                      & 0,05                   & 285,12                       & 124,00                         & 787,47                    & 1,73                   & 9,23                         & 29,00                          & 10,92                     & 0,04                   \\ \hline
+3939021                                                 & 6,70                         & 25,00                          & 7,82                      & 0,04                   & 421,95                       & 172,00                         & 1118,75                   & 1,43                   & 8,02                         & 49,00                          & 10,86                     & 0,04                   \\ \hline
+\textbf{Media}                                          & 6,09                         & 26,20                          & 7,27                      & 0,05                   & 296,07                       & 142,40                         & 872,95                    & 1,39                   & 8,43                         & 38,20                          & 10,64                     & 0,05                   \\ \hline
+\end{tabular}
+
+\end{adjustwidth}
+
+\end{table}	
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+
+\small
+
+\begin{adjustwidth}{-1cm}{-1cm}%
+
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{13}{|c|}{\textbf{Ejecuciones Greedy con un 10\% de restricciones}}                                                                                                                                                                                                                                                                                                                                        \\ \hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{\textbf{Iris}}                                                                                 & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                                                & \multicolumn{4}{c|}{\textbf{Rand}}                                                                                 \\ \cline{2-13} 
+\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
+123452244                                               & 0,71                         & 7,00                           & 1,02                      & 0,04                   & 1941,63                      & 408,00                         & 3594,51                   & 1,58                   & 0,90                         & 0,00                           & 0,90                      & 0,01                   \\ \hline
+9398429                                                 & 2,25                         & 47,00                          & 4,36                      & 0,03                   & 2254,17                      & 256,00                         & 3291,27                   & 1,03                   & 0,90                         & 0,00                           & 0,90                      & 0,00                   \\ \hline
+12321                                                   & 0,78                         & 30,00                          & 2,13                      & 0,07                   & 2551,32                      & 172,00                         & 3248,12                   & 1,16                   & 0,90                         & 0,00                           & 0,90                      & 0,00                   \\ \hline
+213566                                                  & 0,72                         & 0,00                           & 0,72                      & 0,05                   & 2552,40                      & 95,00                          & 2937,26                   & 1,73                   & 0,90                         & 0,00                           & 0,90                      & 0,00                   \\ \hline
+3939021                                                 & 0,71                         & 7,00                           & 1,02                      & 0,04                   & 2357,05                      & 195,00                         & 3147,03                   & 1,43                   & 0,90                         & 0,00                           & 0,90                      & 0,01                   \\ \hline
+\textbf{Media}                                          & 1,03                         & 18,20                          & 1,85                      & 0,05                   & 2331,31                      & 225,20                         & 3243,64                   & 1,39                   & 0,90                         & 0,00                           & 0,90                      & 0,00                   \\ \hline
+\end{tabular}
+
+\end{adjustwidth}
+
+\end{table}
+
+
+
+
+
+
+\begin{table}[H]
+
+\small
+
+\begin{adjustwidth}{-1cm}{-1cm}%
+
+
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{13}{|c|}{\textbf{Ejecuciones BL con un 20\% de restricciones}}                                                                                                                                                                                                                                                                                                                                            \\ \hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{\textbf{Iris}}                                                                                 & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                                                & \multicolumn{4}{c|}{\textbf{Rand}}                                                                                 \\ \cline{2-13} 
+\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
+123452244                                               & 0,72                         & 0,00                           & 0,72                      & 0,06                   & 383,25                       & 321,00                         & 1683,68                   & 1,99                   & 8,85                         & 73,00                          & 13,08                     & 0,04                   \\ \hline
+9398429                                                 & 0,72                         & 0,00                           & 0,72                      & 0,10                   & 393,79                       & 163,00                         & 1054,13                   & 2,52                   & 8,85                         & 73,00                          & 13,08                     & 0,04                   \\ \hline
+12321                                                   & 0,72                         & 0,00                           & 0,72                      & 0,06                   & 654,00                       & 279,00                         & 1784,28                   & 1,67                   & 8,85                         & 73,00                          & 13,08                     & 0,05                   \\ \hline
+213566                                                  & 0,72                         & 0,00                           & 0,72                      & 0,07                   & 281,35                       & 264,00                         & 1350,86                   & 2,19                   & 8,85                         & 73,00                          & 13,08                     & 0,06                   \\ \hline
+3939021                                                 & 0,72                         & 0,00                           & 0,72                      & 0,06                   & 410,84                       & 269,00                         & 1500,60                   & 1,95                   & 8,85                         & 73,00                          & 13,08                     & 0,06                   \\ \hline
+\textbf{Media}                                          & 0,72                         & 0,00                           & 0,72                      & 0,07                   & 424,65                       & 259,20                         & 1474,71                   & 2,06                   & 8,85                         & 73,00                          & 13,08                     & 0,05                   \\ \hline
+\end{tabular}
+\end{adjustwidth}
+
+\end{table}
+
+
+
+
+\begin{table}[H]
+\small
+
+\begin{adjustwidth}{-1cm}{-1cm}%
+
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{13}{|c|}{\textbf{Ejecuciones Greedy con un 20\% de restricciones}}                                                                                                                                                                                                                                                                                                                                        \\ \hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{\textbf{Iris}}                                                                                 & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                                                & \multicolumn{4}{c|}{\textbf{Rand}}                                                                                 \\ \cline{2-13} 
+\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
+123452244                                               & 10,11                        & 69,00                          & 13,21                     & 0,01                   & 2230,82                      & 307,00                         & 3474,53                   & 0,31                   & 0,90                         & 0,00                           & 0,90                      & 0,01                   \\ \hline
+9398429                                                 & 0,67                         & 17,00                          & 1,43                      & 0,02                   & 1132,79                      & 282,00                         & 2275,22                   & 0,16                   & 0,90                         & 0,00                           & 0,90                      & 0,01                   \\ \hline
+12321                                                   & 0,72                         & 0,00                           & 0,72                      & 0,01                   & 1247,50                      & 108,00                         & 1685,03                   & 0,70                   & 0,90                         & 0,00                           & 0,90                      & 0,01                   \\ \hline
+213566                                                  & 0,86                         & 52,00                          & 3,20                      & 0,01                   & 1393,37                      & 215,00                         & 2264,37                   & 0,27                   & 0,90                         & 0,00                           & 0,90                      & 0,01                   \\ \hline
+3939021                                                 & 0,78                         & 17,00                          & 1,54                      & 0,01                   & 1966,33                      & 191,00                         & 2740,10                   & 0,39                   & 0,90                         & 0,00                           & 0,90                      & 0,01                   \\ \hline
+\textbf{Media}                                          & 2,62                         & 31,00                          & 4,02                      & 0,01                   & 1594,16                      & 220,60                         & 2487,85                   & 0,37                   & 0,90                         & 0,00                           & 0,90                      & 0,01                   \\ \hline
+\end{tabular}
+
+\end{adjustwidth}
+
+\end{table}
+
+
+
 
 \end{document}
