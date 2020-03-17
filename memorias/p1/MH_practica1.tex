@@ -657,12 +657,67 @@ do:
 
 while hay_cambios
 
+calcular_desviacion_general()
 
 \end{lstlisting}
 
 Notar que está factorizado, de forma que solo se actualicen los centroides que han modificado sus elementos con respecto a la iteración anterior, sin embargo para volver a iterar tenemos que comprobar que al menos un cluster ha cambiado, de ahí actualizar \texttt{hay\_cambios} en función de todos los clusters.
 
 \section{Proceso de implementación.}
+
+Para la implementación he desarrollado mis propias clases en C++, como adjunto en la carpeta de fuentes. Para las estructuras de datos he utilizado la STL:
+
+\begin{itemize}
+	\item Clase map para las restricciones.
+	\item Clase vector para los datos y centroides
+	\item Clase set para los elementos de los clusters
+	\item Clase pair para almacenar las parejas de restricciones, así como para operaciones auxiliares, como el uso en la función auxiliar del algoritmo greedy.
+\end{itemize}
+
+Además de estas clases de C++ y las implementadas por mi explicadas a lo largo de este guión también he usado las funciones de generación de números aleatorios dadas por los profesores añadiendo algunas funciones, como por ejemplo generar un número aleatorio entre 0 y un número dado, de forma que el número generado N cumpla que 0 <= N entre otras.
+
+También he utilizado las funciones dadas por los profesores de la asignatura para medir el tiempo.
+
+
+\subsection{Manual de uso.}
+
+En la carpeta del código fuente existe un fichero Markdown (se puede abrir como texto plano, pero recomiendo un lector de Markdown para facilitar la lectura, editores como Atom o VSCode tienen uno integrado) README.md en el que se explica toda la estructura del código, carpetas, etc.
+
+En esta sección haré un resumen de esto con lo necesario para compilar y ejecutar el programa.
+
+\subsubsection{Compilar:}
+
+Para compilar el programa hay que moverse a la carpeta de fuentes, donde se encuentra el archivo \texttt{Makefile} y ejecutar:
+
+\begin{lstlisting}
+make
+\end{lstlisting}
+
+Esto nos generará en la carpeta \textit{bin/} el ejecutable.
+
+
+\subsubsection{Ejecución:}
+
+Podemos lanzar el programa con:
+
+\begin{lstlisting}
+./bin/practica1 <fichero_datos> <fichero_restricciones> <num_clusters> <semilla>
+\end{lstlisting}
+
+Cada ejecución del programa lanzará todos los algoritmos explicados en esa misma ejecución.
+
+También cabe destacar que en la ruta del fichero de datos se creará un fichero con la extensión \texttt{.out} con la salida y solución del PAR, este fichero contendrá en su nombre la semilla con la que se ha ejecutado, el algoritmo y el conjunto de datos usado.
+
+
+
+
+
+
+
+
+
+
+
 
 
 \section{Experimentos y análisis de resultados.}
