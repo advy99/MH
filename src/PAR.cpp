@@ -428,9 +428,12 @@ void PAR::calcular_desviacion_general(){
 
 
 
-std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
+std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(const std::vector<Cluster> & ini){
 
-	generar_solucion_aleatoria();
+	clusters = ini;
+
+	calcular_desviacion_general();
+
 
 	// restricciones.size() / 2 ya que almacenamos las restricciones duplicadas
 	// al poder tener la {0,1} y la {1,0}
@@ -533,11 +536,15 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 
 
 
-void PAR::generar_solucion_aleatoria(){
+std::vector<PAR::Cluster> PAR::generar_solucion_aleatoria(){
 
-	for (auto it = clusters.begin(); it != clusters.end(); ++it){
-		it->limpiar();
+	std::vector<PAR::Cluster> sol;
+
+	for (int i = 0; i < clusters.size(); i++){
+			sol.push_back( Cluster((*this)) );
+		sol[i].limpiar();
 	}
+
 
 	// inicialización de indices aleatorios
 	std::vector<int> indices;
@@ -551,20 +558,19 @@ void PAR::generar_solucion_aleatoria(){
 	auto it = indices.begin();
 
 	// metemos en los clusters al menos un elemento
-	for (unsigned i = 0; i < clusters.size(); i++){
-		clusters[i].add_elemento((*it));
+	for (unsigned i = 0; i < sol.size(); i++){
+		sol[i].add_elemento((*it));
 		++it;
 	}
 
 	// introducimos los elementos restantes escogiendo los clusters de forma aleatoria
 
 	while (it != indices.end()){
-		clusters[RandPositiveInt(clusters.size())].add_elemento((*it));
+		sol[RandPositiveInt(sol.size())].add_elemento((*it));
 		++it;
 	}
 
-
-	calcular_desviacion_general();
+	return sol;
 
 }
 
@@ -769,6 +775,9 @@ ostream & operator << (ostream & flujo, const PAR::Cluster & clus) {
 
 ostream & operator << (ostream & flujo, const PAR & par) {
 
+	int infact = par.calcular_infactibilidad();
+	flujo << "Datos para las tablas, ordenados:" << endl; 
+	flujo << par.get_desviacion_general() << "\t" << infact << "\t" << par.get_desviacion_general() + (infact * (par.mayor_distancia/(par.restricciones.size()/2))) << endl;
 	// sacamos la mayor distancia
 	flujo << endl << "Mayor distancia: " << endl;
 	flujo << par.mayor_distancia << endl;
@@ -784,7 +793,7 @@ ostream & operator << (ostream & flujo, const PAR & par) {
 
 	// sacamos la restricciones incumplidas
 	flujo << "Restricciones inclumplidas: " << endl;
-	flujo << par.calcular_infactibilidad() << endl << endl;
+	flujo << infact << endl << endl;
 
 
 	// mostramos los clusters

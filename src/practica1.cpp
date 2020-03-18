@@ -57,7 +57,8 @@ void ejecutar_PAR_BL(const std::string datos, const std::string restricciones,
 	double tiempo = 0.0d;
 
 	start_timers();
-	solucion = par.algoritmo_BL();
+	solucion = par.algoritmo_BL(par.generar_solucion_aleatoria());
+	//solucion = par.algoritmo_BL(par.algoritmo_greedy().first);
 	tiempo = elapsed_time();
 
 	if (solucion.first.size() != 0){

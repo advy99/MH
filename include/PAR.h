@@ -56,8 +56,9 @@ class PAR{
 		int buscar_elemento(const int elemento) const;
 		void calcular_desviacion_general();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_greedy();
-		std::pair<std::vector<PAR::Cluster>,int> algoritmo_BL();
+		std::pair<std::vector<PAR::Cluster>,int> algoritmo_BL(const std::vector<Cluster> & ini);
 		int calcular_infactibilidad() const;
+		std::vector<Cluster> generar_solucion_aleatoria();
 		friend std::ostream & operator << (std::ostream & flujo, const PAR & par);
 
 
@@ -77,7 +78,6 @@ class PAR{
 		int cumple_restricciones(const int elemento, const int num_cluster);
 		void leer_datos(const std::string fichero);
 		void leer_restricciones(const std::string fichero);
-		void generar_solucion_aleatoria();
 
 		static const int TOPE_BL = 100000;
 
