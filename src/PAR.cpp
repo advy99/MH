@@ -432,6 +432,8 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(){
 
 	generar_solucion_aleatoria();
 
+	// restricciones.size() / 2 ya que almacenamos las restricciones duplicadas
+	// al poder tener la {0,1} y la {1,0}
 	const double LAMBDA = mayor_distancia / (restricciones.size()/2.0);
 
 	bool he_encontrado_mejor = false;
@@ -674,7 +676,6 @@ void PAR::Cluster::calcular_centroide(){
 
 
 void PAR::Cluster::calcular_distancia_intra_cluster(){
-	auto it = elementos.begin();
 
 	double distancia = 0;
 
