@@ -446,7 +446,11 @@ $$ f = C + (\textit{Infeasibility} * \lambda) $$
 
 Este algoritmo se basa en partir de una solución inicial aleatoria, a partir de esa solución explorar una solución vecina, y si esta solución vecina es mejor que la actual, moverse a dicha solución.
 
- Para desarrollar este algoritmo necesitamos varios componentes:
+Este algoritmo no nos asegurará obtener el optimo, solo nos garantiza obtener un mínimo local (puede que este mínimo local sea el optimo, pero no lo podemos asegurar).
+
+El algoritmo solo cambiará una solución por otra mejor, por lo que el punto de inicio será muy importante.
+
+Para desarrollar este algoritmo necesitamos varios componentes:
  
  \subsubsection{Generador de solución inicial aleatoria.}
  
@@ -494,7 +498,7 @@ funcion_objetivo = get_desviacion_promedio + ( LAMBDA * calcular_infactibilidad(
 
 Sin embargo, para reducir el tiempo de ejecución vamos a factorizar el cálculo de \textit{Infeasibility}, ya que dado un \textit{Infeasibility} de X, el valor para cualquier vecino será:
 
-$$X - \textit{Infeasibility}_cambios_salida + \textit{Infeasibility}_cambios_entrada$$
+$$X - \textit{Infeasibility}\_cambios\_salida + \textit{Infeasibility}\_cambios\_entrada$$
  
  Al solo modificar un elemento por vecino, \textit{Infeasibility}\_cambios\_salida  es el número de restricciones que incumplía dicho elemento en el cluster antiguo y \textit{Infeasibility}\_cambios\_entrada es el número de restricciones que incumple el nuevo cluster.
  
@@ -1153,5 +1157,104 @@ Para la primera modificación vemos como intenta minimizar el número de restric
 
 
 Para la segunda modificación, como cabía esperar, la desviación general se reduce de una forma muy grande, mientras que las restricciones son incumplidas de forma sistemática. Como la penalización es muy baja, apenas se nota en el agregado. En este caso basicamente estamos resolviendo el problema de agrupación clásico, sin restricciones, al no tenerlas en cuenta.
+
+\newpage
+
+\subsubsection{Búsqueda local: usar como solución inicial la solución del algoritmo greedy}
+
+Para realizar este apartado he realizado una pequeña modificación en mi código, ahora el algoritmo de búsqueda local recibe un parámetro, la solución inicial. Por defecto este parámetro será la solución aleatoria, mientras que para este experimento ejecutaremos el algoritmo greedy, y le pasaremos la solución obtenida al algoritmo de búsqueda local.
+
+A continuación vemos los resultados obtenidos:
+
+\begin{table}[H]
+\small
+\begin{adjustwidth}{-1cm}{-1cm}%
+
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{13}{|c|}{\textbf{Ejecuciones BL con un 10\% de restricciones, solución inicial: Greedy}}                                                                                                                                                                                                                                                                                                                  \\ \hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
+\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
+123452244                                               & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1009,08                      & 21,00                          & 1009,08                   & 1,46                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
+9398429                                                 & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1004,24                      & 25,00                          & 1004,24                   & 1,25                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
+12321                                                   & 0,60                         & 0,00                           & 0,60                      & 0,06                   & 1008,26                      & 18,00                          & 1008,26                   & 1,98                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
+213566                                                  & 0,60                         & 0,00                           & 0,60                      & 0,05                   & 1000,74                      & 21,00                          & 1000,74                   & 1,76                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
+3939021                                                 & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1004,37                      & 29,00                          & 1004,37                   & 1,80                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
+\textbf{Media}                                          & 0,60                         & 0,00                           & 0,60                      & 0,05                   & 1005,34                      & 22,80                          & 1005,34                   & 1,65                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
+\end{tabular}
+
+\end{adjustwidth}
+
+\end{table}
+
+\begin{table}[H]
+\small
+\begin{adjustwidth}{-1cm}{-1cm}%
+
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{13}{|c|}{\textbf{Ejecuciones BL con un 20\% de restricciones, solución inicial: Greedy}}                                                                                                                                                                                                                                                                                                                  \\ \hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
+\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
+123452244                                               & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 988,42                       & 79,00                          & 1148,44                   & 0,97                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
+9398429                                                 & 0,60                         & 0,00                           & 0,60                      & 0,02                   & 983,47                       & 96,00                          & 1177,92                   & 0,94                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
+12321                                                   & 0,60                         & 0,00                           & 0,60                      & 0,01                   & 965,21                       & 46,00                          & 1058,39                   & 1,34                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
+213566                                                  & 0,60                         & 0,00                           & 0,60                      & 0,02                   & 976,40                       & 70,00                          & 1118,19                   & 0,65                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
+3939021                                                 & 0,60                         & 0,00                           & 0,60                      & 0,01                   & 1003,25                      & 56,00                          & 1116,69                   & 0,84                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
+\textbf{Media}                                          & 0,60                         & 0,00                           & 0,60                      & 0,02                   & 983,35                       & 69,40                          & 1123,93                   & 0,95                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
+\end{tabular}
+
+\end{adjustwidth}
+
+\end{table}
+
+\newpage
+Voy a comparar con los otros algoritmos con las tablas globales:
+
+\begin{table}[H]
+\small
+\begin{adjustwidth}{-2cm}{-2cm}%
+
+
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{13}{|c|}{\textbf{Ejecuciones BL con un 10\% de restricciones, solución inicial: Greedy}}                                                                                                                                                                                                                                                                                                                  \\ \hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
+\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
+Greedy                                                  & 0,60                         & 18,20                          & 1,42                      & 0,01                   & 1620,40                      & 225,20                         & 2532,73                   & 0,33                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
+BL                                                      & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1015,32                      & 34,40                          & 1154,68                   & 1,08                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
+BL\_Cumple\_rest                                        & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1530,58                      & 15,80                          & 1460925,04                & 1,40                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
+BL\_incumple\_rest                                      & 0,52                         & 156,20                         & 0,53                      & 0,05                   & 303,46                       & 4058,00                        & 303,50                    & 1,62                   & 0,84                         & 11,00                          & 0,84                      & 0,03                   \\ \hline
+BL\_inicio\_Greedy                                      & 0,60                         & 0,00                           & 0,60                      & 0,05                   & 1005,34                      & 22,80                          & 1005,34                   & 1,65                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
+\end{tabular}
+\end{adjustwidth}
+\end{table}
+
+
+\begin{table}[H]
+\small
+\begin{adjustwidth}{-1.9cm}{-1.9cm}%
+
+
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{13}{|c|}{\textbf{Ejecuciones BL con un 10\% de restricciones, solución inicial: Greedy}}                                                                                                                                                                                                                                                                                                                  \\ \hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
+\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
+Greedy                                                  & 0,65                         & 31,00                          & 1,35                      & 0,01                   & 1526,11                      & 220,60                         & 1972,95                   & 0,25                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
+BL                                                      & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1003,45                      & 93,20                          & 1192,24                   & 1,29                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
+BL\_Cumple\_rest                                        & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1202,01                      & 0,00                           & 1202,01                   & 1,66                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
+BL\_incumple\_rest                                      & 0,52                         & 327,20                         & 0,52                      & 0,05                   & 303,48                       & 8138,00                        & 303,56                    & 2,24                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
+BL\_inicio\_Greedy                                      & 0,60                         & 0,00                           & 0,60                      & 0,02                   & 983,35                       & 69,40                          & 1123,93                   & 0,95                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
+\end{tabular}
+
+\end{adjustwidth}
+\end{table}
+
+En este caso vemos como este algoritmo mantiene la función objetivo, y además mejora los resultados obtenidos con la búsqueda local con arranque aleatorio y con el algoritmo greedy. Esto se debe a que el algoritmo greedy nos generará una solución inicial intentando reducir la desviación general y las restricciones, y a partir de ahí encontraremos el mínimo del entorno gracias a la búsqueda local. Por así decirlo, con el uso de los dos algoritmos a la vez hemos conseguido paliar uno de los problemas de la búsqueda local, que el punto inicial puede ser muy malo, lo que podría llevar a quedarnos en un mínimo local con una mala solución.
+
+De esta forma el algoritmo greedy nos servirá para escoger un punto de inicio que el propio greedy considere bueno, y a partir de ahí buscar su mínimo.
+
+Vemos como en todos los conjuntos de datos obtenemos mejor función objetivo, por lo que podemos considerar esta opción como la mejor  de entre los algoritmos vistos hasta este momento.
 
 \end{document}
