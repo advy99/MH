@@ -1147,6 +1147,11 @@ BL\_incumple\_rest                                      & 0,52                  
 \end{adjustwidth}
 \end{table}
 
+En esta tabla podemos ver claramente como funciona las modificaciones realizadas a la función objetivo.
 
+Para la primera modificación vemos como intenta minimizar el número de restricciones a incumplir, cosa que consigue con un 20\% de restricciones, y reduce a la mitad la infactibilidad en un 10\% de restricciones en Ecoli (tanto Rand como Iris ya tenían infactibilidad 0, así que no hay diferencias), sin embargo, esta modificación de la función objetivo hace que una sola restricción penalice de forma muy grande, sumado a que la distancia en los elementos en Ecoli es bastante grande. Este algoritmo sería una buena opción si intentamos tratar las restricciones como unas restricciones más fuertes del problema, por ejemplo en el caso de que tengamos un limite superior de restricciones a incumplir. 
+
+
+Para la segunda modificación, como cabía esperar, la desviación general se reduce de una forma muy grande, mientras que las restricciones son incumplidas de forma sistemática. Como la penalización es muy baja, apenas se nota en el agregado. En este caso basicamente estamos resolviendo el problema de agrupación clásico, sin restricciones, al no tenerlas en cuenta.
 
 \end{document}
