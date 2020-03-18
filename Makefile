@@ -4,6 +4,7 @@ INCLUDE = $(HOME)/include
 SRC     = $(HOME)/src
 OBJ     = $(HOME)/obj
 LIB     = $(HOME)/lib
+DATOS	  = $(HOME)/datos
 
 FLAGS = --std=c++17 -O2
 
@@ -32,3 +33,6 @@ $(OBJ)/timer.o: $(SRC)/timer.c
 clean:
 	-rm $(OBJ)/*.o
 	-rm $(BIN)/*
+
+limpiar-datos:
+	-rm $(DATOS)/*.out
