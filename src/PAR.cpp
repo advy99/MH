@@ -304,27 +304,6 @@ int PAR::buscar_cluster(const int elemento){
 }
 
 
-std::vector<int> PAR::clusters_to_solucion() {
-
-	std::vector<int> solucion;
-
-	int tam_total = 0;
-
-	for (unsigned i = 0; i < clusters.size(); i++){
-		tam_total += clusters[i].num_elementos();
-	}
-
-	solucion.resize(tam_total);
-
-	for (unsigned i = 0; i < clusters.size(); i++){
-		for (auto it = clusters[i].get_elementos().begin();
-		     it != clusters[i].get_elementos().end(); ++it ){
-			solucion[(*it)] = i;
-		}
-	}
-
-	return solucion;
-}
 
 
 /**
@@ -628,6 +607,99 @@ int PAR::buscar_elemento(const int elemento) const{
 
 
 
+/*
+
+PRACTICA 2
+
+
+*/
+
+
+
+
+std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmo_AGG(const int tam_pob_ini, const float prob_cruce, const float prob_mutacion, const int evaluaciones_max){
+	std::vector<std::vector<int>> poblacion = generar_poblacion_inicial(tam_pob_ini);
+
+
+	std::vector<int> indices;
+
+	for (int i = 0; i < tam_pob_ini; i++){
+		indices.push_back(i);
+	}
+
+
+	int i = 0;
+
+	while (i < evaluaciones_max){
+		// simulamos la selección accediendo a los elementos de la poblacion de forma aleatoria
+		std::random_shuffle(indices.begin(), indices.end(), RandPositiveInt);
+
+		int parejas = tam_pob_ini/2;
+
+		for (int i = 0; i < parejas*prob_cruce; i++){
+			// cruzamos las parejas accediendo a traves de la variable indices
+		}
+
+
+
+	}
+
+}
+
+
+
+std::vector<std::vector<int>> PAR::generar_poblacion_inicial(const int tam_pob_ini){
+	std::vector<std::vector<int>> poblacion;
+
+	for (int i = 0; i < tam_pob_ini; i++){
+		// generamos una población aleatoria, la pasamos a la representacion usada
+		// en los algoritmos geneticos, y la introducimos en la matriz de poblacion
+		poblacion.push_back(clusters_to_solucion(generar_solucion_aleatoria()));
+	}
+
+	return poblacion;
+}
+
+
+
+std::vector<int> PAR::clusters_to_solucion() {
+
+	std::vector<int> solucion;
+
+	int tam_total = 0;
+
+	for (unsigned i = 0; i < clusters.size(); i++){
+		tam_total += clusters[i].num_elementos();
+	}
+
+	solucion.resize(tam_total);
+
+	for (unsigned i = 0; i < clusters.size(); i++){
+		for (auto it = clusters[i].get_elementos().begin();
+		     it != clusters[i].get_elementos().end(); ++it ){
+			solucion[(*it)] = i;
+		}
+	}
+
+	return solucion;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -776,7 +848,7 @@ ostream & operator << (ostream & flujo, const PAR::Cluster & clus) {
 ostream & operator << (ostream & flujo, const PAR & par) {
 
 	int infact = par.calcular_infactibilidad();
-	flujo << "Datos para las tablas, ordenados:" << endl; 
+	flujo << "Datos para las tablas, ordenados:" << endl;
 	flujo << par.get_desviacion_general() << "\t" << infact << "\t" << par.get_desviacion_general() + (infact * (par.mayor_distancia/(par.restricciones.size()/2))) << endl;
 	// sacamos la mayor distancia
 	flujo << endl << "Mayor distancia: " << endl;

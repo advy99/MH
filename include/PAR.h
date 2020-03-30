@@ -57,6 +57,8 @@ class PAR{
 		void calcular_desviacion_general();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_greedy();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_BL(const std::vector<Cluster> & ini);
+		std::pair<std::vector<PAR::Cluster>,int> algoritmo_AGG(const int tam_pob_ini, const float prob_cruce, const float prob_mutacion);
+
 		int calcular_infactibilidad() const;
 		std::vector<Cluster> generar_solucion_aleatoria();
 		friend std::ostream & operator << (std::ostream & flujo, const PAR & par);
@@ -75,6 +77,7 @@ class PAR{
 									 	const std::vector<double> & p2) const;
 
 		std::vector<int> clusters_to_solucion();
+		std::vector<std::vector<int>> generar_poblacion_inicial(const int tam_pob_ini);
 		int cumple_restricciones(const int elemento, const int num_cluster);
 		void leer_datos(const std::string fichero);
 		void leer_restricciones(const std::string fichero);
