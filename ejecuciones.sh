@@ -16,4 +16,7 @@ do
 	./bin/practica1 datos/ecoli_set.dat datos/ecoli_set_const_10.const 8 $semilla
 	./bin/practica1 datos/ecoli_set.dat datos/ecoli_set_const_20.const 8 $semilla
 
+	./bin/practica1 datos/newthyroid_set.dat datos/newthyroid_set_const_10.const 3 $semilla
+	./bin/practica1 datos/newthyroid_set.dat datos/newthyroid_set_const_20.const 3 $semilla
+
 done
