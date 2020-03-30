@@ -89,9 +89,9 @@ int main(int argc, char ** argv){
 	int clus = unsigned(atoi(argv[3]));
 	int semilla = unsigned(atoi(argv[4]));
 
-	Set_random( semilla );
+	//Set_random( semilla );
 
-	ejecutar_PAR_greedy(datos, restricciones, clus, semilla);
+	//ejecutar_PAR_greedy(datos, restricciones, clus, semilla);
 
 	Set_random( semilla );
 
