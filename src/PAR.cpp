@@ -649,6 +649,9 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmo_AGG(const int tam_pob_i
 
 	std::vector<int> indices;
 
+	const int parejas = tam_pob_ini/2;
+
+
 	for (int i = 0; i < tam_pob_ini; i++){
 		indices.push_back(i);
 	}
@@ -660,7 +663,6 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmo_AGG(const int tam_pob_i
 		// simulamos la selección accediendo a los elementos de la poblacion de forma aleatoria
 		std::random_shuffle(indices.begin(), indices.end(), RandPositiveInt);
 
-		int parejas = tam_pob_ini/2;
 
 		for (int i = 0; i < parejas*prob_cruce; i++){
 			// cruzamos las parejas accediendo a traves de la variable indices
@@ -688,7 +690,7 @@ std::vector<std::vector<int>> PAR::generar_poblacion_inicial(const int tam_pob_i
 
 
 
-std::vector<int> PAR::clusters_to_solucion(std::vector<PAR::Cluster> clusters_ini) {
+std::vector<int> PAR::clusters_to_solucion(const std::vector<PAR::Cluster> & clusters_ini) const {
 
 	std::vector<int> solucion;
 
@@ -710,6 +712,22 @@ std::vector<int> PAR::clusters_to_solucion(std::vector<PAR::Cluster> clusters_in
 	return solucion;
 }
 
+
+std::vector<PAR::Cluster> PAR::solucion_to_clusters(const std::vector<int> & sol) const{
+
+	std::vector<PAR::Cluster> devolver;
+
+	for (int i = 0; i < clusters.size(); i++){
+		devolver.push_back( Cluster((*this)) );
+	}
+
+	for (int i = 0; i < sol.size(); i++){
+		devolver[sol[i]].add_elemento(i);
+	}
+
+	return devolver;
+
+}
 
 
 

@@ -83,7 +83,8 @@ class PAR{
 		double distancia_puntos(const std::vector<double> & p1,
 									 	const std::vector<double> & p2) const;
 
-		std::vector<int> clusters_to_solucion(std::vector<PAR::Cluster> clusters_ini);
+		std::vector<int> clusters_to_solucion(std::vector<PAR::Cluster> clusters_ini) const;
+		std::vector<PAR::Cluster> solucion_to_clusters(const std::vector<int> & sol) const;
 		std::vector<std::vector<int>> generar_poblacion_inicial(const int tam_pob_ini);
 		int cumple_restricciones(const int elemento, const int num_cluster);
 		void leer_datos(const std::string fichero);
