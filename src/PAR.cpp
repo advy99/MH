@@ -24,6 +24,10 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 	leer_datos(fichero_datos);
 	leer_restricciones(fichero_restricciones);
 
+	for (auto it = restricciones.begin(); it != restricciones.end(); ++it){
+		lista_restricciones.push_back( std::make_tuple( (*it).first.first, (*it).first.second, (*it).second ) );
+	}
+
 
 	// creamos todos
 	for (int i = 0; i < n_clusters; i++){
@@ -557,7 +561,7 @@ int PAR::calcular_infactibilidad() const{
 	int infac = 0;
 
 
-
+	/*
 	for (auto it = restricciones.begin(); it != restricciones.end() ; ++it){
 		// solo comprobamos si el primer elemento es mayor que el segundo
 		// para no comprobar repetidas
@@ -584,6 +588,24 @@ int PAR::calcular_infactibilidad() const{
 
 		}
 
+	}*/
+
+	for (auto it = lista_restricciones.begin(); it != lista_restricciones.end(); ++it){
+		if ( std::get<0>((*it)) > std::get<1>((*it)) ){
+			int c1 = buscar_elemento(std::get<0>((*it)));
+			int c2 = buscar_elemento(std::get<1>((*it)));
+
+
+			// si tienen que estar juntos y no lo estan
+			if (std::get<2>((*it)) == 1 && c1 != c2){
+				infac++;
+			}
+
+			// si tienen que estar separados y no lo están
+			if (std::get<2>((*it)) == -1 && c1 == c2){
+				infac++;
+			}
+		}
 	}
 
 	return infac;
