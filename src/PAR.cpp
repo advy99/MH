@@ -38,7 +38,7 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 
 	mayor_distancia = 0;
 
-	for (unsigned i = 0; i < datos.size() - 1; i++){
+	for (unsigned i = 0; i < datos.size(); i++){
 		for (unsigned j = i; j < datos.size(); j++){
 			d = distancia_puntos(datos[i], datos[j]);
 			if (d > mayor_distancia){
@@ -323,7 +323,7 @@ double PAR::distancia_puntos(const std::vector<double> & p1,
 									  const std::vector<double> & p2) const{
 
 
-	double distancia = 0;
+	double distancia = 0.0;
 
 	// hacemos la distancia euclidea de los dos puntos
 	// de momento no hacemos la raiz cuadrada, operacion demasiado costosa
@@ -420,7 +420,7 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(const std::vector<Clu
 
 	// restricciones.size() / 2 ya que almacenamos las restricciones duplicadas
 	// al poder tener la {0,1} y la {1,0}
-	const double LAMBDA = mayor_distancia / (restricciones.size()/2.0);
+	const double LAMBDA = get_mayor_distancia() / (restricciones.size()/2.0);
 
 	bool he_encontrado_mejor = false;
 
@@ -628,6 +628,10 @@ int PAR::buscar_elemento(const int elemento) const{
 }
 
 
+double PAR::get_mayor_distancia() const{
+	return mayor_distancia;
+}
+
 
 /*
 
@@ -684,21 +688,21 @@ std::vector<std::vector<int>> PAR::generar_poblacion_inicial(const int tam_pob_i
 
 
 
-std::vector<int> PAR::clusters_to_solucion() {
+std::vector<int> PAR::clusters_to_solucion(std::vector<PAR::Cluster> clusters_ini) {
 
 	std::vector<int> solucion;
 
 	int tam_total = 0;
 
-	for (unsigned i = 0; i < clusters.size(); i++){
-		tam_total += clusters[i].num_elementos();
+	for (unsigned i = 0; i < clusters_ini.size(); i++){
+		tam_total += clusters_ini[i].num_elementos();
 	}
 
 	solucion.resize(tam_total);
 
-	for (unsigned i = 0; i < clusters.size(); i++){
-		for (auto it = clusters[i].get_elementos().begin();
-		     it != clusters[i].get_elementos().end(); ++it ){
+	for (unsigned i = 0; i < clusters_ini.size(); i++){
+		for (auto it = clusters_ini[i].get_elementos().begin();
+		     it != clusters_ini[i].get_elementos().end(); ++it ){
 			solucion[(*it)] = i;
 		}
 	}
@@ -871,10 +875,10 @@ ostream & operator << (ostream & flujo, const PAR & par) {
 
 	int infact = par.calcular_infactibilidad();
 	flujo << "Datos para las tablas, ordenados:" << endl;
-	flujo << par.get_desviacion_general() << "\t" << infact << "\t" << par.get_desviacion_general() + (infact * (par.mayor_distancia/(par.restricciones.size()/2))) << endl;
+	flujo << par.get_desviacion_general() << "\t" << infact << "\t" << par.get_desviacion_general() + (infact * (par.get_mayor_distancia()/(par.restricciones.size()/2))) << endl;
 	// sacamos la mayor distancia
 	flujo << endl << "Mayor distancia: " << endl;
-	flujo << par.mayor_distancia << endl;
+	flujo << par.get_mayor_distancia() << endl;
 
 	flujo << "Numero de restricciones: " << endl;
 	flujo << par.restricciones.size()/2 << endl;

@@ -51,6 +51,7 @@ class PAR{
 
 		int get_num_clusters() const;
 		double get_desviacion_general() const;
+		double get_mayor_distancia() const;
 
 		int buscar_cluster(const int elemento);
 
@@ -58,7 +59,10 @@ class PAR{
 		void calcular_desviacion_general();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_greedy();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_BL(const std::vector<Cluster> & ini);
-		std::pair<std::vector<PAR::Cluster>,int> algoritmo_AGG(const int tam_pob_ini, const float prob_cruce, const float prob_mutacion);
+		std::pair<std::vector<PAR::Cluster>,int> algoritmo_AGG(const int tam_pob_ini,\
+			 																	 const float prob_cruce,\
+																				 const float prob_mutacion,\
+																				 const int evaluaciones_max);
 
 		int calcular_infactibilidad() const;
 		std::vector<Cluster> generar_solucion_aleatoria();
@@ -71,7 +75,7 @@ class PAR{
 		std::map< std::pair<int, int>, int> restricciones;
 		std::vector< std::vector<double> > datos;
 		std::list< std::tuple<int, int, int> > lista_restricciones;
-		
+
 		double desviacion_general;
 
 		double mayor_distancia;
@@ -79,7 +83,7 @@ class PAR{
 		double distancia_puntos(const std::vector<double> & p1,
 									 	const std::vector<double> & p2) const;
 
-		std::vector<int> clusters_to_solucion();
+		std::vector<int> clusters_to_solucion(std::vector<PAR::Cluster> clusters_ini);
 		std::vector<std::vector<int>> generar_poblacion_inicial(const int tam_pob_ini);
 		int cumple_restricciones(const int elemento, const int num_cluster);
 		void leer_datos(const std::string fichero);
