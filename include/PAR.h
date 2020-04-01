@@ -52,6 +52,7 @@ class PAR{
 		int get_num_clusters() const;
 		double get_desviacion_general() const;
 		double get_mayor_distancia() const;
+		double get_lambda() const;
 
 		int buscar_cluster(const int elemento);
 
@@ -59,10 +60,10 @@ class PAR{
 		void calcular_desviacion_general();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_greedy();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_BL(const std::vector<Cluster> & ini);
-		std::pair<std::vector<PAR::Cluster>,int> algoritmo_AGG(const int tam_pob_ini,\
-			 																	 const float prob_cruce,\
-																				 const float prob_mutacion,\
-																				 const int evaluaciones_max);
+		std::pair<std::vector<PAR::Cluster>,int> algoritmo_AGG(const int evaluaciones_max,\
+			 																	 const int tam_pob_ini,\
+																				 const float prob_mutacion, \
+																				 const float prob_cruce);
 
 		int calcular_infactibilidad() const;
 		std::vector<Cluster> generar_solucion_aleatoria();
@@ -79,6 +80,7 @@ class PAR{
 		double desviacion_general;
 
 		double mayor_distancia;
+		double LAMBDA;
 
 		double distancia_puntos(const std::vector<double> & p1,
 									 	const std::vector<double> & p2) const;
@@ -89,6 +91,12 @@ class PAR{
 		int cumple_restricciones(const int elemento, const int num_cluster);
 		void leer_datos(const std::string fichero);
 		void leer_restricciones(const std::string fichero);
+
+		std::vector<std::vector<int>> seleccion_AGG(const std::vector<std::vector<int>> & poblacion);
+		std::vector<std::vector<int>> operador_cruce_uniforme_AGG(const std::vector<std::vector<int>> & poblacion,\
+			  																		 const int prob_cruce);
+
+
 
 		static const int TOPE_BL = 100000;
 

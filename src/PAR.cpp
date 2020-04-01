@@ -49,7 +49,7 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 	}
 
 	std::cout << "Mayor distancia " << mayor_distancia << std::endl;
-
+	LAMBDA = get_mayor_distancia() / (restricciones.size()/2.0);
 
 
 }
@@ -418,10 +418,6 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(const std::vector<Clu
 	calcular_desviacion_general();
 
 
-	// restricciones.size() / 2 ya que almacenamos las restricciones duplicadas
-	// al poder tener la {0,1} y la {1,0}
-	const double LAMBDA = get_mayor_distancia() / (restricciones.size()/2.0);
-
 	bool he_encontrado_mejor = false;
 
 	int evaluaciones = 0;
@@ -442,7 +438,7 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(const std::vector<Clu
 	int n_infac = calcular_infactibilidad();
 	int infac = n_infac;
 
-	double f_objetivo = get_desviacion_general() + (n_infac*1.0d * LAMBDA);
+	double f_objetivo = get_desviacion_general() + (n_infac*1.0d * get_lambda());
 	double n_f_objetivo = 0.0D;
 
 	//std::vector<Cluster> sol = clusters;
@@ -479,7 +475,7 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(const std::vector<Clu
 
 					calcular_desviacion_general();
 
-					n_f_objetivo = get_desviacion_general() + (n_infac * 1.0d * LAMBDA);
+					n_f_objetivo = get_desviacion_general() + (n_infac * 1.0d * get_lambda());
 
 					evaluaciones++;
 
@@ -633,6 +629,11 @@ double PAR::get_mayor_distancia() const{
 }
 
 
+double PAR::get_lambda() const{
+	return LAMBDA;
+}
+
+
 /*
 
 PRACTICA 2
@@ -643,34 +644,114 @@ PRACTICA 2
 
 
 
-std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmo_AGG(const int tam_pob_ini, const float prob_cruce, const float prob_mutacion, const int evaluaciones_max){
+std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmo_AGG(const int evaluaciones_max, const int tam_pob_ini, const float prob_mutacion, const float prob_cruce){
 	std::vector<std::vector<int>> poblacion = generar_poblacion_inicial(tam_pob_ini);
 
-
-	std::vector<int> indices;
-
-	const int parejas = tam_pob_ini/2;
-
-
-	for (int i = 0; i < tam_pob_ini; i++){
-		indices.push_back(i);
-	}
-
+	std::vector<std::vector<int>> poblacion_intermedia;
 
 	int i = 0;
 
 	while (i < evaluaciones_max){
-		// simulamos la selección accediendo a los elementos de la poblacion de forma aleatoria
-		std::random_shuffle(indices.begin(), indices.end(), RandPositiveInt);
+
+		poblacion_intermedia = seleccion_AG(poblacion);
 
 
-		for (int i = 0; i < parejas*prob_cruce; i++){
-			// cruzamos las parejas accediendo a traves de la variable indices
-		}
+		poblacion_intermedia = operador_cruce_uniforme_AGG(poblacion_intermedia, prob_cruce);
 
 
 
 	}
+
+}
+
+
+
+// operador de seleccion para el algoritmo generacional
+std::vector<std::vector<int>> PAR::seleccion_AGG(const std::vector<std::vector<int>> & poblacion){
+
+	std::vector<std::vector<int>> poblacion_intermedia;
+
+
+	while (poblacion_intermedia.size() != poblacion.size()){
+		double valoracion_c1, valoracion_c2;
+		int primer_candidato = RandPositiveInt(poblacion.size());
+		int segundo_candidato;
+
+		do {
+			segundo_candidato = RandPositiveInt(poblacion.size());
+		} while (segundo_candidato == primer_candidato);
+
+		clusters = solucion_to_clusters(poblacion[primer_candidato]);
+		calcular_desviacion_general();
+		valoracion_c1 = get_desviacion_general() + (calcular_infactibilidad() * get_lambda());
+
+		clusters = solucion_to_clusters(poblacion[segundo_candidato]);
+		calcular_desviacion_general();
+		valoracion_c2 = get_desviacion_general() + (calcular_infactibilidad() * get_lambda());
+
+		if (valoracion_c1 > valoracion_c2){
+			poblacion_intermedia.push_back(poblacion[primer_candidato]);
+		} else {
+			poblacion_intermedia.push_back(poblacion[segundo_candidato]);
+		}
+
+	}
+
+	return poblacion_intermedia;
+
+}
+
+std::vector<std::vector<int>> PAR::operador_cruce_uniforme_AGG(const std::vector<std::vector<int>> & poblacion, const int prob_cruce){
+
+	const int NUM_PAREJAS = poblacion.size()/2;
+	const int NUM_CRUCES = NUM_PAREJAS * prob_cruce;
+
+	std::vector<int> valores;
+	std::vector<std::vector<int>> poblacion_intermedia;
+	std::vector<int> cruze1;
+	std::vector<int> cruze2;
+
+	// cruzamos los elementos, no importa el orden porque ya se desordenaron en la
+	// selección, por lo que cruzamos los NUM_CRUCES primeros, el i con el i+1 y ya
+	// por eso vamos hasta NUM_CRUCES*2, y  sumamos +2 cada iteracion
+	for (int i = 0; i < NUM_CRUCES*2; i += 2){
+		valores.clear();
+
+		for (int i = 0; i < poblacion[i].size()/2; i++){
+			int valor = RandPositiveInt(poblacion[i].size());
+
+			auto pos = valores.find(valor);
+			if (pos == valores.end()){
+				valores.push_back(valor);
+			}
+
+
+		}
+
+		cruze1.resize(poblacion[i].size());
+		cruze2.resize(poblacion[i].size());
+
+		for (int j = 0; < poblacion[j].size(); j++){
+			auto pos = valores.find(j);
+			// esta entre los seleccionados aleatoriamente, lo cogemos del padre 1
+			// para el segundo descendiente, seleccionamos al contrario
+			if (pos != valores.end()){
+				cruze1[j] = poblacion[i][j];
+				//cruze2[j] = poblacion[i+1][j];
+			} else {
+				// si no está lo cogemos del padre 2
+				cruze1[j] = poblacion[i+1][j];
+				//cruze2[j] = poblacion[i][j];
+			}
+		}
+
+		poblacion_intermedia.push_back(cruce1);
+		poblacion_intermedia.push_back(cruce2);
+
+	}
+
+
+	return poblacion_intermedia;
 
 }
 
