@@ -707,46 +707,58 @@ std::vector<std::vector<int>> PAR::operador_cruce_uniforme_AGG(const std::vector
 	const int NUM_CRUCES = NUM_PAREJAS * prob_cruce;
 
 	std::vector<int> valores;
+	std::vector<int> valores2;
+
 	std::vector<std::vector<int>> poblacion_intermedia;
-	std::vector<int> cruze1;
-	std::vector<int> cruze2;
+	std::vector<int> cruze;
 
 	// cruzamos los elementos, no importa el orden porque ya se desordenaron en la
 	// selección, por lo que cruzamos los NUM_CRUCES primeros, el i con el i+1 y ya
 	// por eso vamos hasta NUM_CRUCES*2, y  sumamos +2 cada iteracion
-	for (int i = 0; i < NUM_CRUCES*2; i += 2){
+
+	// por  cada cruce tenemos que generar dos hijos, así que ejecutamos NUM_CRUCES*2
+	int indice = 0;
+	for (int i = 0; i < NUM_CRUCES*2; i++ ){
+
+		if (i % 2 == 0){
+			// si i es par es el primer hijo
+			indice = i;
+		} else {
+			// si i es impar es el segundo hijo, el indice es uno menos
+			indice = i - 1;
+		}
+
 		valores.clear();
 
-		for (int i = 0; i < poblacion[i].size()/2; i++){
-			int valor = RandPositiveInt(poblacion[i].size());
+		while (valores.size() < poblacion[indice].size()/2){
+			int valor = RandPositiveInt(poblacion[indice].size());
 
 			auto pos = valores.find(valor);
 			if (pos == valores.end()){
 				valores.push_back(valor);
 			}
-
-
 		}
 
-		cruze1.resize(poblacion[i].size());
-		cruze2.resize(poblacion[i].size());
+
+
+		cruze1.resize(poblacion[indice].size());
 
 		for (int j = 0; < poblacion[j].size(); j++){
 			auto pos = valores.find(j);
+
+			// rellenamos el hijo 1
 			// esta entre los seleccionados aleatoriamente, lo cogemos del padre 1
-			// para el segundo descendiente, seleccionamos al contrario
 			if (pos != valores.end()){
-				cruze1[j] = poblacion[i][j];
-				//cruze2[j] = poblacion[i+1][j];
+				cruze[j] = poblacion[indice][j];
 			} else {
 				// si no está lo cogemos del padre 2
-				cruze1[j] = poblacion[i+1][j];
-				//cruze2[j] = poblacion[i][j];
+				cruze[j] = poblacion[indice+1][j];
 			}
+
+
 		}
 
-		poblacion_intermedia.push_back(cruce1);
-		poblacion_intermedia.push_back(cruce2);
+		poblacion_intermedia.push_back(cruce);
 
 	}
 
