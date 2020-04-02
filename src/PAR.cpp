@@ -701,7 +701,7 @@ std::vector<std::vector<int>> PAR::seleccion_AGG(const std::vector<std::vector<i
 
 }
 
-std::vector<std::vector<int>> PAR::operador_cruce_uniforme_AGG(const std::vector<std::vector<int>> & poblacion, const int prob_cruce){
+std::vector<std::vector<int>> PAR::operador_cruce_uniforme(const std::vector<std::vector<int>> & poblacion, const int prob_cruce){
 
 	const int NUM_PAREJAS = poblacion.size()/2;
 	const int NUM_CRUCES = NUM_PAREJAS * prob_cruce;
@@ -715,7 +715,6 @@ std::vector<std::vector<int>> PAR::operador_cruce_uniforme_AGG(const std::vector
 	// cruzamos los elementos, no importa el orden porque ya se desordenaron en la
 	// selección, por lo que cruzamos los NUM_CRUCES primeros, el i con el i+1 y ya
 	// por eso vamos hasta NUM_CRUCES*2, y  sumamos +2 cada iteracion
-
 	// por  cada cruce tenemos que generar dos hijos, así que ejecutamos NUM_CRUCES*2
 	int indice = 0;
 	for (int i = 0; i < NUM_CRUCES*2; i++ ){
@@ -739,8 +738,6 @@ std::vector<std::vector<int>> PAR::operador_cruce_uniforme_AGG(const std::vector
 			}
 		}
 
-
-
 		cruze1.resize(poblacion[indice].size());
 
 		for (int j = 0; < poblacion[j].size(); j++){
@@ -754,18 +751,85 @@ std::vector<std::vector<int>> PAR::operador_cruce_uniforme_AGG(const std::vector
 				// si no está lo cogemos del padre 2
 				cruze[j] = poblacion[indice+1][j];
 			}
-
-
 		}
 
 		poblacion_intermedia.push_back(cruce);
 
 	}
 
+	return poblacion_intermedia;
+
+}
+
+
+
+
+
+
+std::vector<std::vector<int>> PAR::operador_cruce_seg_fijo(const std::vector<std::vector<int>> & poblacion, const int prob_cruce){
+
+	const int NUM_PAREJAS = poblacion.size()/2;
+	const int NUM_CRUCES = NUM_PAREJAS * prob_cruce;
+
+	std::vector<int> valores;
+	std::vector<int> valores2;
+
+	std::vector<std::vector<int>> poblacion_intermedia;
+	std::vector<int> cruze;
+
+	int tam_segmento;
+	int ini_segmento;
+
+	// cruzamos los elementos, no importa el orden porque ya se desordenaron en la
+	// selección, por lo que cruzamos los NUM_CRUCES primeros, el i con el i+1 y ya
+	// por eso vamos hasta NUM_CRUCES*2, y  sumamos +2 cada iteracion
+	// por  cada cruce tenemos que generar dos hijos, así que ejecutamos NUM_CRUCES*2
+	int indice = 0;
+	for (int i = 0; i < NUM_CRUCES*2; i++ ){
+		if (i % 2 == 0){
+			// si i es par es el primer hijo
+			indice = i;
+		} else {
+			// si i es impar es el segundo hijo, el indice es uno menos
+			indice = i - 1;
+		}
+
+		// generamos el tamaño de segmento aleatorio
+		tam_segmento = RandPositiveInt(poblacion[i].size());
+		ini_segmento = RandPositiveInt(poblacion[i].size());
+
+		cruze = std::vector<int>(poblacion[i].size(), -1);
+
+		int j = ini_segmento;
+		// copiamos del padre 1 el segmento [ini_segmento, ini_segmento+tam_segmento]
+		while (j <= ini_segmento+tam_segmento){
+			cruce[j%poblacion[indice].size()] = poblacion[indice][j%poblacion[indice].size];
+			j++;
+		}
+
+		// copiamos del padre 2 [ini_segmento+tam_segmento, fin], con modulos por si se pasa del final
+		while(j < poblacion[indice+1].size()){
+			cruce[j%poblacion[indice+1].size()] = poblacion[indice+1][j%poblacion[indice+1].size];
+			j++;
+		}
+
+		poblacion_intermedia.push_back(cruce);
+
+
+	}
 
 	return poblacion_intermedia;
 
 }
+
+
+
+
+
+
+
+
+
 
 
 

@@ -93,8 +93,11 @@ class PAR{
 		void leer_restricciones(const std::string fichero);
 
 		std::vector<std::vector<int>> seleccion_AGG(const std::vector<std::vector<int>> & poblacion);
-		std::vector<std::vector<int>> operador_cruce_uniforme_AGG(const std::vector<std::vector<int>> & poblacion,\
-			  																		 const int prob_cruce);
+		std::vector<std::vector<int>> operador_cruce_uniforme(const std::vector<std::vector<int>> & poblacion,\
+			  																	const int prob_cruce);
+
+		std::vector<std::vector<int>> operador_cruce_seg_fijo(const std::vector<std::vector<int>> & poblacion,\
+			  																	const int prob_cruce);
 
 
 
