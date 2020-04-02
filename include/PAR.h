@@ -99,7 +99,7 @@ class PAR{
 		std::vector<std::vector<int>> operador_cruce_seg_fijo(const std::vector<std::vector<int>> & poblacion,\
 			  																	const int prob_cruce);
 
-
+		void reparar_cruce(std::vector<int> & reparado);
 
 		static const int TOPE_BL = 100000;
 

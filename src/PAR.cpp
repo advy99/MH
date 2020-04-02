@@ -753,9 +753,12 @@ std::vector<std::vector<int>> PAR::operador_cruce_uniforme(const std::vector<std
 			}
 		}
 
+		reparar_cruce(cruce);
+
 		poblacion_intermedia.push_back(cruce);
 
 	}
+
 
 	return poblacion_intermedia;
 
@@ -813,6 +816,8 @@ std::vector<std::vector<int>> PAR::operador_cruce_seg_fijo(const std::vector<std
 			j++;
 		}
 
+		reparar_cruce(cruce);
+
 		poblacion_intermedia.push_back(cruce);
 
 
@@ -823,6 +828,35 @@ std::vector<std::vector<int>> PAR::operador_cruce_seg_fijo(const std::vector<std
 }
 
 
+void PAR::reparar_cruce(std::vector<int> & reparado){
+
+	std::vector<int> contador(clusters.size(), 0);
+
+	for (auto it = reparado.begin(); it != reparado.end(); ++it){
+		contador[(*it)]++;
+	}
+
+
+	for (int i = 0; i < contador.size(); i++){
+		// si tengo un cluster vacio
+		if (contador[i] == 0){
+			// de todos los elementos, saco uno aleatorio
+			int elemento_aleatorio;
+			do {
+				elemento_aleatorio = RandPositiveInt(reparado.size());
+				// hasta que encuentre un cluster que quitando un elemento no se quede vacio
+			} while (contador[reparado[elemento_aleatorio]] - 1 > 0 );
+
+			contador[reparado[elemento_aleatorio]]--;
+			reparado[elemento_aleatorio] = i;
+			contador[i]++;
+
+		}
+	}
+
+	return reparado;
+
+}
 
 
 
