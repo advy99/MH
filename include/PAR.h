@@ -94,12 +94,14 @@ class PAR{
 
 		std::vector<std::vector<int>> seleccion_AGG(const std::vector<std::vector<int>> & poblacion);
 		std::vector<std::vector<int>> operador_cruce_uniforme(const std::vector<std::vector<int>> & poblacion,\
-			  																	const int prob_cruce);
+			  																	const double prob_cruce);
 
 		std::vector<std::vector<int>> operador_cruce_seg_fijo(const std::vector<std::vector<int>> & poblacion,\
-			  																	const int prob_cruce);
+			  																	const double prob_cruce);
 
 		void reparar_cruce(std::vector<int> & reparado);
+
+		void operador_mutacion_uniforme(std::vector<std::vector<int>> & poblacion, const double prob_mut);
 
 		static const int TOPE_BL = 100000;
 

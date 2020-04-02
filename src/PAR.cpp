@@ -701,7 +701,7 @@ std::vector<std::vector<int>> PAR::seleccion_AGG(const std::vector<std::vector<i
 
 }
 
-std::vector<std::vector<int>> PAR::operador_cruce_uniforme(const std::vector<std::vector<int>> & poblacion, const int prob_cruce){
+std::vector<std::vector<int>> PAR::operador_cruce_uniforme(const std::vector<std::vector<int>> & poblacion, const double prob_cruce){
 
 	const int NUM_PAREJAS = poblacion.size()/2;
 	const int NUM_CRUCES = NUM_PAREJAS * prob_cruce;
@@ -769,7 +769,7 @@ std::vector<std::vector<int>> PAR::operador_cruce_uniforme(const std::vector<std
 
 
 
-std::vector<std::vector<int>> PAR::operador_cruce_seg_fijo(const std::vector<std::vector<int>> & poblacion, const int prob_cruce){
+std::vector<std::vector<int>> PAR::operador_cruce_seg_fijo(const std::vector<std::vector<int>> & poblacion, const double prob_cruce){
 
 	const int NUM_PAREJAS = poblacion.size()/2;
 	const int NUM_CRUCES = NUM_PAREJAS * prob_cruce;
@@ -859,6 +859,43 @@ void PAR::reparar_cruce(std::vector<int> & reparado){
 }
 
 
+
+
+void PAR::operador_mutacion_uniforme(std::vector<std::vector<int>> & poblacion , const double prob_mut){
+
+	const int NUM_MUTACIONES = poblacion.size()*poblacion[0].size() * prob_mut;
+
+	std::vector<int> contador (clusters.size(), 0);
+
+	int elemento_poblacion;
+	int gen;
+	int destino;
+
+	for (int i = 0; i < NUM_MUTACIONES; i++){
+		elemento_poblacion = RandPositiveInt(poblacion.size());
+		contador = std::vector<int>(clusters.size(), 0);
+
+		for (auto it = poblacion[elemento].begin(); it != poblacion[elemento].end(); ++it){
+			contador[(*it)]++;
+		}
+
+		do {
+			gen = RandPositiveInt(poblacion[elemento_poblacion].size());
+
+			// mientras que el tam del cluster del elemento inicial - 1 sea > 0
+			// es decir, que si movemos ese elemento no se quede el cluster vacio
+		} while (contador[poblacion[elemento_poblacion][gen]] - 1 > 0);
+
+
+		destino = RandPositiveInt(clusters.size());
+
+		contador[poblacion[elemento_poblacion][gen]]--;
+		poblacion[elemento_poblacion][gen] = destino;
+		contador[destino]++;
+
+	}
+
+}
 
 
 
