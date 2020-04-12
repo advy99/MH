@@ -85,23 +85,23 @@ class PAR{
 		double distancia_puntos(const std::vector<double> & p1,
 									 	const std::vector<double> & p2) const;
 
-		std::vector<int> clusters_to_solucion(std::vector<PAR::Cluster> clusters_ini) const;
-		std::vector<PAR::Cluster> solucion_to_clusters(const std::vector<int> & sol) const;
+		std::vector<int> clusters_to_solucion(const std::vector<PAR::Cluster> & clusters_ini) const;
+		std::vector<PAR::Cluster> solucion_to_clusters(const std::vector<int> & sol);
 		std::vector<std::vector<int>> generar_poblacion_inicial(const int tam_pob_ini);
 		int cumple_restricciones(const int elemento, const int num_cluster);
 		void leer_datos(const std::string fichero);
 		void leer_restricciones(const std::string fichero);
 
-		std::vector<std::vector<int>> seleccion_AGG(const std::vector<std::pair<std::vector<int>, double>> & poblacion);
-		std::vector<std::vector<int>> operador_cruce_uniforme(const std::vector<std::pair<std::vector<int>, double>> & poblacion,\
+		std::vector<std::pair<std::vector<int>, double>> seleccion_AGG(const std::vector<std::pair<std::vector<int>, double>> & poblacion);
+		std::vector<std::pair<std::vector<int>, double>> operador_cruce_uniforme(const std::vector<std::pair<std::vector<int>, double>> & poblacion,\
 			  																	const double prob_cruce);
 
-		std::vector<std::vector<int>> operador_cruce_seg_fijo(const std::vector<std::pair<std::vector<int>, double>> & poblacion,\
+		std::vector<std::pair<std::vector<int>, double>> operador_cruce_seg_fijo(const std::vector<std::pair<std::vector<int>, double>> & poblacion,\
 			  																	const double prob_cruce);
 
 		void reparar_cruce(std::vector<int> & reparado);
 
-		void operador_mutacion_uniforme(std::vector<std::vector<int>> & poblacion, const double prob_mut);
+		void operador_mutacion_uniforme(std::vector<std::pair<std::vector<int>, double>> & poblacion, const double prob_mut);
 
 		static const int TOPE_BL = 100000;
 

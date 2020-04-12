@@ -634,6 +634,20 @@ double PAR::get_lambda() const{
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 
 PRACTICA 2
@@ -645,9 +659,14 @@ PRACTICA 2
 
 
 std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmo_AGG(const int evaluaciones_max, const int tam_pob_ini, const float prob_mutacion, const float prob_cruce){
-	std::vector<std::pair<std::vector<int>, double>> poblacion = generar_poblacion_inicial(tam_pob_ini);
+	std::vector<std::vector<int>> p = generar_poblacion_inicial(tam_pob_ini);
+
+	std::vector<std::pair<std::vector<int>, double>> poblacion;
+
+	poblacion.resize(p.size());
 
 	for (int i = 0; i < poblacion.size(); i++){
+		poblacion[i].first = p[i];
 		clusters = solucion_to_clusters(poblacion[i].first);
 		calcular_desviacion_general();
 		poblacion[i].second = get_desviacion_general() + (calcular_infactibilidad() * get_lambda());
@@ -657,10 +676,10 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmo_AGG(const int evaluacio
 
 	while (i < evaluaciones_max){
 
-		poblacion = seleccion_AG(poblacion);
+		poblacion = seleccion_AGG(poblacion);
 
 
-		poblacion = operador_cruce_uniforme_AGG(poblacion, prob_cruce);
+		poblacion = operador_cruce_uniforme(poblacion, prob_cruce);
 
 
 
@@ -671,7 +690,7 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmo_AGG(const int evaluacio
 
 
 // operador de seleccion para el algoritmo generacional
-std::vector<std::vector<int>> PAR::seleccion_AGG(const std::vector<std::pair<std::vector<int>, double>> & poblacion){
+std::vector<std::pair<std::vector<int>, double>> PAR::seleccion_AGG(const std::vector<std::pair<std::vector<int>, double>> & poblacion){
 
 	std::vector<std::pair<std::vector<int>, double>> poblacion_intermedia;
 
@@ -698,7 +717,7 @@ std::vector<std::vector<int>> PAR::seleccion_AGG(const std::vector<std::pair<std
 
 }
 
-std::vector<std::vector<int>> PAR::operador_cruce_uniforme(const std::vector<std::pair<std::vector<int>, double>> & poblacion, const double prob_cruce){
+std::vector<std::pair<std::vector<int>, double>> PAR::operador_cruce_uniforme(const std::vector<std::pair<std::vector<int>, double>> & poblacion, const double prob_cruce){
 
 	const int NUM_PAREJAS = poblacion.size()/2;
 	const int NUM_CRUCES = NUM_PAREJAS * prob_cruce;
@@ -706,7 +725,7 @@ std::vector<std::vector<int>> PAR::operador_cruce_uniforme(const std::vector<std
 	std::vector<int> valores;
 
 	std::vector<std::pair<std::vector<int>, double>> poblacion_intermedia;
-	std::vector<int> cruze;
+	std::vector<int> cruce;
 
 	// cruzamos los elementos, no importa el orden porque ya se desordenaron en la
 	// selección, por lo que cruzamos los NUM_CRUCES primeros, el i con el i+1 y ya
@@ -728,24 +747,24 @@ std::vector<std::vector<int>> PAR::operador_cruce_uniforme(const std::vector<std
 		while (valores.size() < poblacion[indice].first.size()/2){
 			int valor = RandPositiveInt(poblacion[indice].first.size());
 
-			auto pos = valores.find(valor);
+			auto pos = std::find(valores.begin(), valores.end(), valor);
 			if (pos == valores.end()){
 				valores.push_back(valor);
 			}
 		}
 
-		cruze.resize(poblacion[indice].first.size());
+		cruce.resize(poblacion[indice].first.size());
 
 		for (int j = 0; j < poblacion[indice].first.size(); j++){
-			auto pos = valores.find(j);
+			auto pos = std::find(valores.begin(), valores.end(), j);
 
 			// rellenamos el hijo 1
 			// esta entre los seleccionados aleatoriamente, lo cogemos del padre 1
 			if (pos != valores.end()){
-				cruze[j] = poblacion[indice].first[j];
+				cruce[j] = poblacion[indice].first[j];
 			} else {
 				// si no está lo cogemos del padre 2
-				cruze[j] = poblacion[indice+1].first[j];
+				cruce[j] = poblacion[indice+1].first[j];
 			}
 		}
 
@@ -754,7 +773,7 @@ std::vector<std::vector<int>> PAR::operador_cruce_uniforme(const std::vector<std
 		clusters = solucion_to_clusters(cruce);
 		calcular_desviacion_general();
 
-		std::pair<std::vector<int>, double> cruzado (cruce, get_desviacion_general() + (calcular_infactibilidad() * get_lambda());
+		std::pair<std::vector<int>, double> cruzado (cruce, get_desviacion_general() + (calcular_infactibilidad() * get_lambda()));
 
 		poblacion_intermedia.push_back(cruzado);
 
@@ -775,7 +794,7 @@ std::vector<std::vector<int>> PAR::operador_cruce_uniforme(const std::vector<std
 
 
 
-std::vector<std::vector<int>> PAR::operador_cruce_seg_fijo(const std::vector<std::pair<std::vector<int>, double>> & poblacion, const double prob_cruce){
+std::vector<std::pair<std::vector<int>, double>> PAR::operador_cruce_seg_fijo(const std::vector<std::pair<std::vector<int>, double>> & poblacion, const double prob_cruce){
 
 	const int NUM_PAREJAS = poblacion.size()/2;
 	const int NUM_CRUCES = NUM_PAREJAS * prob_cruce;
@@ -783,7 +802,7 @@ std::vector<std::vector<int>> PAR::operador_cruce_seg_fijo(const std::vector<std
 	std::vector<int> valores;
 
 	std::vector<std::pair<std::vector<int>, double>> poblacion_intermedia;
-	std::vector<int> cruze;
+	std::vector<int> cruce;
 
 	int tam_segmento;
 	int ini_segmento;
@@ -809,14 +828,14 @@ std::vector<std::vector<int>> PAR::operador_cruce_seg_fijo(const std::vector<std
 		tam_segmento = RandPositiveInt(poblacion[i].first.size());
 		ini_segmento = RandPositiveInt(poblacion[i].first.size());
 
-		fin_segmento = (ini_segmento + tam_segmento + 1) % poblacion[indice].first.size()];
+		fin_segmento = (ini_segmento + tam_segmento + 1) % poblacion[indice].first.size();
 
-		cruze = std::vector<int>(poblacion[i].first.size(), -1);
+		cruce = std::vector<int>(poblacion[i].first.size(), -1);
 
 		int j = ini_segmento;
 		// copiamos del padre 1 el segmento [ini_segmento, ini_segmento+tam_segmento]
 		while (j <= ini_segmento+tam_segmento){
-			cruce[j%poblacion[indice].first.size()] = poblacion[indice][j%poblacion[indice].first.size()];
+			cruce[j%poblacion[indice].first.size()] = poblacion[indice].first[j%poblacion[indice].first.size()];
 			j++;
 		}
 
@@ -828,7 +847,7 @@ std::vector<std::vector<int>> PAR::operador_cruce_seg_fijo(const std::vector<std
 			//   ^       ^
 			//   |       |
 			// ini      fin
-			rango_fijo_hight = poblacion[indice].fist.size() + ini_segmento; // el modulo lo aplicamos despues, así es más facil para sacar el aleatorio
+			rango_fijo_hight = poblacion[indice].first.size() + ini_segmento; // el modulo lo aplicamos despues, así es más facil para sacar el aleatorio
 
 		} else {
 			// el segmento fijo hay que escogerlo entre fin_segmento y ini_segmento
@@ -843,22 +862,22 @@ std::vector<std::vector<int>> PAR::operador_cruce_seg_fijo(const std::vector<std
 		while (valores.size() < (rango_fijo_hight-rango_fijo_low)/2){
 			int valor = Randint(rango_fijo_low, rango_fijo_hight);
 
-			auto pos = valores.find(valor);
+			auto pos = std::find(valores.begin(), valores.end(), valor);
 			if (pos == valores.end()){
-				valores.push_back(valor % poblacion[indice].fist.size());
+				valores.push_back(valor % poblacion[indice].first.size());
 			}
 		}
 
 		for (int j = 0; j < poblacion[indice].first.size(); j++){
-			auto pos = valores.find(j);
+			auto pos = std::find(valores.begin(), valores.end(), j);
 
 			// rellenamos el hijo 1
 			// esta entre los seleccionados aleatoriamente, lo cogemos del padre 1
 			if (pos != valores.end()){
-				cruze[j] = poblacion[indice].first[j];
+				cruce[j] = poblacion[indice].first[j];
 			} else {
 				// si no está lo cogemos del padre 2
-				cruze[j] = poblacion[indice+1].first[j];
+				cruce[j] = poblacion[indice+1].first[j];
 			}
 		}
 
@@ -868,7 +887,7 @@ std::vector<std::vector<int>> PAR::operador_cruce_seg_fijo(const std::vector<std
 		clusters = solucion_to_clusters(cruce);
 		calcular_desviacion_general();
 
-		std::pair<std::vector<int>, double> cruzado (cruce, get_desviacion_general() + (calcular_infactibilidad() * get_lambda());
+		std::pair<std::vector<int>, double> cruzado (cruce, get_desviacion_general() + (calcular_infactibilidad() * get_lambda()));
 
 		poblacion_intermedia.push_back(cruzado);
 
@@ -911,16 +930,15 @@ void PAR::reparar_cruce(std::vector<int> & reparado){
 		}
 	}
 
-	return reparado;
 
 }
 
 
 
 
-void PAR::operador_mutacion_uniforme(std::vector<std::vector<int>> & poblacion , const double prob_mut){
+void PAR::operador_mutacion_uniforme(std::vector<std::pair<std::vector<int>, double>> & poblacion , const double prob_mut){
 
-	const int NUM_MUTACIONES = poblacion.size()*poblacion[0].size() * prob_mut;
+	const int NUM_MUTACIONES = poblacion.size()*poblacion[0].first.size() * prob_mut;
 
 	std::vector<int> contador (clusters.size(), 0);
 
@@ -932,23 +950,27 @@ void PAR::operador_mutacion_uniforme(std::vector<std::vector<int>> & poblacion ,
 		elemento_poblacion = RandPositiveInt(poblacion.size());
 		contador = std::vector<int>(clusters.size(), 0);
 
-		for (auto it = poblacion[elemento].begin(); it != poblacion[elemento].end(); ++it){
+		for (auto it = poblacion[elemento_poblacion].first.begin(); it != poblacion[elemento_poblacion].first.end(); ++it){
 			contador[(*it)]++;
 		}
 
 		do {
-			gen = RandPositiveInt(poblacion[elemento_poblacion].size());
+			gen = RandPositiveInt(poblacion[elemento_poblacion].first.size());
 
 			// mientras que el tam del cluster del elemento inicial - 1 sea > 0
 			// es decir, que si movemos ese elemento no se quede el cluster vacio
-		} while (contador[poblacion[elemento_poblacion][gen]] - 1 > 0);
+		} while (contador[poblacion[elemento_poblacion].first[gen]] - 1 > 0);
 
 
 		destino = RandPositiveInt(clusters.size());
 
-		contador[poblacion[elemento_poblacion][gen]]--;
-		poblacion[elemento_poblacion][gen] = destino;
+		contador[poblacion[elemento_poblacion].first[gen]]--;
+		poblacion[elemento_poblacion].first[gen] = destino;
 		contador[destino]++;
+
+		clusters = solucion_to_clusters(poblacion[elemento_poblacion].first);
+		calcular_desviacion_general();
+		poblacion[elemento_poblacion].second = get_desviacion_general() + (calcular_infactibilidad() * get_lambda());
 
 	}
 
@@ -998,7 +1020,7 @@ std::vector<int> PAR::clusters_to_solucion(const std::vector<PAR::Cluster> & clu
 }
 
 
-std::vector<PAR::Cluster> PAR::solucion_to_clusters(const std::vector<int> & sol) const{
+std::vector<PAR::Cluster> PAR::solucion_to_clusters(const std::vector<int> & sol){
 
 	std::vector<PAR::Cluster> devolver;
 
