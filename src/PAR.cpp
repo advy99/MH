@@ -519,7 +519,7 @@ std::vector<PAR::Cluster> PAR::generar_solucion_aleatoria(){
 
 	std::vector<PAR::Cluster> sol;
 
-	for (int i = 0; i < clusters.size(); i++){
+	for (unsigned i = 0; i < clusters.size(); i++){
 			sol.push_back( Cluster((*this)) );
 		sol[i].limpiar();
 	}
@@ -665,7 +665,7 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmo_AGG(const int evaluacio
 
 	poblacion.resize(p.size());
 
-	for (int i = 0; i < poblacion.size(); i++){
+	for (unsigned i = 0; i < poblacion.size(); i++){
 		poblacion[i].first = p[i];
 		clusters = solucion_to_clusters(poblacion[i].first);
 		calcular_desviacion_general();
@@ -696,7 +696,6 @@ std::vector<std::pair<std::vector<int>, double>> PAR::seleccion_AGG(const std::v
 
 
 	while (poblacion_intermedia.size() != poblacion.size()){
-		double valoracion_c1, valoracion_c2;
 		int primer_candidato = RandPositiveInt(poblacion.size());
 		int segundo_candidato;
 
@@ -755,7 +754,7 @@ std::vector<std::pair<std::vector<int>, double>> PAR::operador_cruce_uniforme(co
 
 		cruce.resize(poblacion[indice].first.size());
 
-		for (int j = 0; j < poblacion[indice].first.size(); j++){
+		for (unsigned j = 0; j < poblacion[indice].first.size(); j++){
 			auto pos = std::find(valores.begin(), valores.end(), j);
 
 			// rellenamos el hijo 1
@@ -780,7 +779,7 @@ std::vector<std::pair<std::vector<int>, double>> PAR::operador_cruce_uniforme(co
 	}
 
 	// copiamos resto de poblacion no cruzada
-	for (int i = NUM_CRUCES*2; i < poblacion.size(); i++){
+	for (unsigned i = NUM_CRUCES*2; i < poblacion.size(); i++){
 		poblacion_intermedia.push_back(poblacion[i]);
 	}
 
@@ -859,7 +858,7 @@ std::vector<std::pair<std::vector<int>, double>> PAR::operador_cruce_seg_fijo(co
 		}
 
 
-		while (valores.size() < (rango_fijo_hight-rango_fijo_low)/2){
+		while (valores.size() < (unsigned) (rango_fijo_hight-rango_fijo_low)/2){
 			int valor = Randint(rango_fijo_low, rango_fijo_hight);
 
 			auto pos = std::find(valores.begin(), valores.end(), valor);
@@ -868,7 +867,7 @@ std::vector<std::pair<std::vector<int>, double>> PAR::operador_cruce_seg_fijo(co
 			}
 		}
 
-		for (int j = 0; j < poblacion[indice].first.size(); j++){
+		for (unsigned j = 0; j < poblacion[indice].first.size(); j++){
 			auto pos = std::find(valores.begin(), valores.end(), j);
 
 			// rellenamos el hijo 1
@@ -895,7 +894,7 @@ std::vector<std::pair<std::vector<int>, double>> PAR::operador_cruce_seg_fijo(co
 	}
 
 	// copiamos resto de poblacion no cruzada
-	for (int i = NUM_CRUCES*2; i < poblacion.size(); i++){
+	for (unsigned i = NUM_CRUCES*2; i < poblacion.size(); i++){
 		poblacion_intermedia.push_back(poblacion[i]);
 	}
 
@@ -913,7 +912,7 @@ void PAR::reparar_cruce(std::vector<int> & reparado){
 	}
 
 
-	for (int i = 0; i < contador.size(); i++){
+	for (unsigned i = 0; i < contador.size(); i++){
 		// si tengo un cluster vacio
 		if (contador[i] == 0){
 			// de todos los elementos, saco uno aleatorio
@@ -1024,11 +1023,11 @@ std::vector<PAR::Cluster> PAR::solucion_to_clusters(const std::vector<int> & sol
 
 	std::vector<PAR::Cluster> devolver;
 
-	for (int i = 0; i < clusters.size(); i++){
+	for (unsigned i = 0; i < clusters.size(); i++){
 		devolver.push_back( Cluster((*this)) );
 	}
 
-	for (int i = 0; i < sol.size(); i++){
+	for (unsigned i = 0; i < sol.size(); i++){
 		devolver[sol[i]].add_elemento(i);
 	}
 
