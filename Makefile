@@ -6,7 +6,7 @@ OBJ     = $(HOME)/obj
 LIB     = $(HOME)/lib
 DATOS	  = $(HOME)/datos
 
-FLAGS = --std=c++17 -Og -g -Wall
+FLAGS = --std=c++17 -O3
 
 all: $(BIN)/practica1
 

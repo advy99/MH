@@ -60,8 +60,8 @@ class PAR{
 		void calcular_desviacion_general();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_greedy();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_BL(const std::vector<Cluster> & ini);
-		std::pair<std::vector<PAR::Cluster>,int> algoritmo_AGG(const int evaluaciones_max,\
-			 																	 const int tam_pob_ini,\
+		std::pair<std::vector<PAR::Cluster>,int> algoritmo_AGG(const unsigned evaluaciones_max,\
+			 																	 const unsigned tam_pob_ini,\
 																				 const float prob_mutacion, \
 																				 const float prob_cruce);
 
@@ -93,15 +93,15 @@ class PAR{
 		void leer_restricciones(const std::string fichero);
 
 		std::vector<std::pair<std::vector<int>, double>> seleccion_AGG(const std::vector<std::pair<std::vector<int>, double>> & poblacion);
-		std::vector<std::pair<std::vector<int>, double>> operador_cruce_uniforme(const std::vector<std::pair<std::vector<int>, double>> & poblacion,\
-			  																	const double prob_cruce);
+		unsigned operador_cruce_uniforme(std::vector<std::pair<std::vector<int>, double>> & poblacion,\
+			  								  const double prob_cruce);
 
-		std::vector<std::pair<std::vector<int>, double>> operador_cruce_seg_fijo(const std::vector<std::pair<std::vector<int>, double>> & poblacion,\
-			  																	const double prob_cruce);
+		unsigned operador_cruce_seg_fijo(std::vector<std::pair<std::vector<int>, double>> & poblacion,\
+			  								  const double prob_cruce);
 
 		void reparar_cruce(std::vector<int> & reparado);
 
-		void operador_mutacion_uniforme(std::vector<std::pair<std::vector<int>, double>> & poblacion, const double prob_mut);
+		unsigned operador_mutacion_uniforme(std::vector<std::pair<std::vector<int>, double>> & poblacion, const double prob_mut);
 
 		static const int TOPE_BL = 100000;
 

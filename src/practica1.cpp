@@ -6,59 +6,33 @@
 
 #include "timer.h"
 
-void ejecutar_PAR_greedy(const std::string datos, const std::string restricciones,
-	               		 const int clusters, const unsigned seed ){
+void ejecutar_PAR(const std::string datos, const std::string restricciones,
+	               const int clusters, const unsigned seed, const std::string alg){
 
 	PAR par(datos, restricciones, clusters);
 
 
 	std::pair<std::vector<PAR::Cluster>,int> solucion;
 
-	std::cout << std::endl << "Solución Greedy para " << datos << " con restricciones de " << restricciones << " con semilla " << seed << std::endl << std::endl << std::flush;
+	std::cout << std::endl << "Solución " << alg << " para " << datos << " con restricciones de " << restricciones << " con semilla " << seed << std::endl << std::endl << std::flush;
 
 	std::fstream fichero;
 
-	std::string path = restricciones + "_" + std::to_string(seed)  + "_GREEDY.out";
+	std::string path = restricciones + "_" + std::to_string(seed)  + "_" + alg +  ".out";
 
 	fichero.open (path, std::fstream::out);
 
 	double tiempo = 0.0d;
 
 	start_timers();
-	solucion = par.algoritmo_greedy();
-	tiempo = elapsed_time();
-
-	if (solucion.first.size() != 0){
-		fichero << "Tiempo:" << std::endl << tiempo << std::endl << std::endl;
-		fichero << par;
-		std::cout << par;
+	if (alg == "BL"){
+		solucion = par.algoritmo_BL(par.generar_solucion_aleatoria());
+		//solucion = par.algoritmo_BL(par.algoritmo_greedy().first)
+	} else if (alg == "GREEDY") {
+		solucion = par.algoritmo_greedy();
+	} else if (alg == "AGG"){
+		solucion = par.algoritmo_AGG(100000, 50, 0.001, 0.7 );
 	}
-
-
-}
-
-
-void ejecutar_PAR_BL(const std::string datos, const std::string restricciones,
-	               		 const int clusters, const unsigned seed){
-
-	PAR par(datos, restricciones, clusters);
-
-
-	std::pair<std::vector<PAR::Cluster>,int> solucion;
-
-	std::cout << std::endl << "Solución BL para " << datos << " con restricciones de " << restricciones << " con semilla " << seed << std::endl << std::endl << std::flush;
-
-	std::fstream fichero;
-
-	std::string path = restricciones + "_" + std::to_string(seed)  + "_BL.out";
-
-	fichero.open (path, std::fstream::out);
-
-	double tiempo = 0.0d;
-
-	start_timers();
-	solucion = par.algoritmo_BL(par.generar_solucion_aleatoria());
-	//solucion = par.algoritmo_BL(par.algoritmo_greedy().first);
 	tiempo = elapsed_time();
 
 	if (solucion.first.size() != 0){
@@ -75,8 +49,6 @@ void ejecutar_PAR_BL(const std::string datos, const std::string restricciones,
 int main(int argc, char ** argv){
 
 
-
-	int ejecuciones = 0;
 
 	if (argc < 3){
 		std::cerr << "ERROR: Faltan argumentos:" << std::endl
@@ -95,7 +67,11 @@ int main(int argc, char ** argv){
 
 	Set_random( semilla );
 
-	ejecutar_PAR_BL(datos, restricciones, clus, semilla);
+	ejecutar_PAR(datos, restricciones, clus, semilla, "BL");
+
+	Set_random( semilla );
+
+	ejecutar_PAR(datos, restricciones, clus, semilla, "AGG");
 
 
 
