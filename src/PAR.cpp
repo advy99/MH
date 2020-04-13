@@ -664,7 +664,6 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmo_AGG(const unsigned eval
 	std::vector<std::pair<std::vector<int>, double>> poblacion;
 	std::vector<std::pair<std::vector<int>, double>> poblacion_anterior;
 
-	int mejor = 0;
 
 	poblacion.resize(p.size());
 
@@ -676,6 +675,8 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmo_AGG(const unsigned eval
 	}
 
 	poblacion_anterior = poblacion;
+	std::pair<std::vector<int>, double> mejor = poblacion[0];
+
 
 	unsigned evaluaciones = 0;
 
@@ -695,16 +696,17 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmo_AGG(const unsigned eval
 
 		poblacion_anterior = poblacion;
 
-
-	}
-
-	for (unsigned i = 0; i < poblacion.size(); i++){
-		if (poblacion[i].second < poblacion[mejor].second){
-			mejor = i;
+		for (unsigned i = 0; i < poblacion.size(); i++){
+			if (poblacion[i].second < mejor.second){
+				mejor = poblacion[i];
+			}
 		}
+
 	}
 
-	clusters = solucion_to_clusters(poblacion[mejor].first);
+
+
+	clusters = solucion_to_clusters(mejor.first);
 	calcular_desviacion_general();
 
 	return std::make_pair(clusters, calcular_infactibilidad());
