@@ -692,7 +692,7 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_P2(const unsigned eval
 
 		if (tipo_cruce == operador_cruce::SEGMENTO_FIJO){
 			evaluaciones += operador_cruce_seg_fijo(poblacion, prob_cruce);
-		} else if {
+		} else {
 			evaluaciones += operador_cruce_uniforme(poblacion, prob_cruce);
 		}
 
