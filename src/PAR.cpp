@@ -5,6 +5,7 @@
 #include <iostream>
 #include <algorithm>
 #include <cstdlib>
+#include <iterator>
 #include <ctime>
 #include "random.h"
 #include <cmath>
@@ -662,7 +663,8 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_P2(const unsigned eval
 																				 const unsigned tam_pob_ini,
 																				 const float prob_mutacion,
 																				 const float prob_cruce,
-																				 const operador_cruce tipo_cruce){
+																				 const operador_cruce tipo_cruce,
+																			 	 const bool elitismo){
 	std::vector<std::vector<int>> p = generar_poblacion_inicial(tam_pob_ini);
 
 	std::vector<std::pair<std::vector<int>, double>> poblacion;
@@ -680,6 +682,15 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_P2(const unsigned eval
 
 	poblacion_anterior = poblacion;
 	std::pair<std::vector<int>, double> mejor = poblacion[0];
+
+	int indice_peor = 0;
+
+	for (unsigned i = 0; i < poblacion.size(); i++){
+		if (poblacion[i].second < mejor.second){
+			mejor = poblacion[i];
+		}
+	}
+
 
 
 	unsigned evaluaciones = 0;
@@ -702,13 +713,37 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_P2(const unsigned eval
 
 		//std::cout << evaluaciones << std::endl;
 
-		poblacion_anterior = poblacion;
+		if (elitismo){
+			// miramos si el mejor de la anterior sigue estando
+			auto pos_mejor = find(poblacion.begin(), poblacion.end(), mejor);
+
+			// si no esta lo añadimos
+			if (pos_mejor == poblacion.end()){
+				poblacion.push_back(mejor);
+
+				// buscamos el peor de la nueva
+				for (unsigned i = 0; i < poblacion.size(); i++){
+
+					if (poblacion[i].second > poblacion[indice_peor].second){
+						indice_peor = i;
+					}
+				}
+
+				// y lo eliminamos
+				auto it = poblacion.begin();
+				std::advance(it, indice_peor);
+				poblacion.erase(it);
+			}
+
+		}
 
 		for (unsigned i = 0; i < poblacion.size(); i++){
 			if (poblacion[i].second < mejor.second){
 				mejor = poblacion[i];
 			}
 		}
+
+		poblacion_anterior = poblacion;
 
 	}
 

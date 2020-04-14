@@ -67,7 +67,8 @@ class PAR{
 			 																	 const unsigned tam_pob_ini,\
 																				 const float prob_mutacion, \
 																				 const float prob_cruce,
-																			 	 const operador_cruce tipo_cruce);
+																			 	 const operador_cruce tipo_cruce,
+																			 	 const bool elitismo = true);
 
 		int calcular_infactibilidad() const;
 		std::vector<Cluster> generar_solucion_aleatoria();
