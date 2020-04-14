@@ -8,6 +8,9 @@
 #include <ostream>
 #include <list>
 
+
+enum class operador_cruce {SEGMENTO_FIJO, UNIFORME};
+
 class PAR{
 
 	public:
@@ -60,10 +63,11 @@ class PAR{
 		void calcular_desviacion_general();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_greedy();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_BL(const std::vector<Cluster> & ini);
-		std::pair<std::vector<PAR::Cluster>,int> algoritmo_AGG(const unsigned evaluaciones_max,\
+		std::pair<std::vector<PAR::Cluster>,int> algoritmos_P2(const unsigned evaluaciones_max,\
 			 																	 const unsigned tam_pob_ini,\
 																				 const float prob_mutacion, \
-																				 const float prob_cruce);
+																				 const float prob_cruce,
+																			 	 const operador_cruce tipo_cruce);
 
 		int calcular_infactibilidad() const;
 		std::vector<Cluster> generar_solucion_aleatoria();

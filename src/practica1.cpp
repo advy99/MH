@@ -24,15 +24,22 @@ void ejecutar_PAR(const std::string datos, const std::string restricciones,
 
 	double tiempo = 0.0d;
 
+	unsigned evaluaciones = 100000;
+	unsigned tam_pob_ini = 50;
+
 	start_timers();
 	if (alg == "BL"){
 		solucion = par.algoritmo_BL(par.generar_solucion_aleatoria());
 		//solucion = par.algoritmo_BL(par.algoritmo_greedy().first)
 	} else if (alg == "GREEDY") {
 		solucion = par.algoritmo_greedy();
-	} else if (alg == "AGG"){
-		solucion = par.algoritmo_AGG(100000, 50, 0.001, 0.7 );
+	} else if (alg == "AGG-SF"){
+		solucion = par.algoritmos_P2(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::SEGMENTO_FIJO );
+	} else if (alg == "AGG-UN"){
+		solucion = par.algoritmos_P2(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::UNIFORME );
 	}
+
+	
 	tiempo = elapsed_time();
 
 	if (solucion.first.size() != 0){
@@ -71,7 +78,11 @@ int main(int argc, char ** argv){
 
 	Set_random( semilla );
 
-	ejecutar_PAR(datos, restricciones, clus, semilla, "AGG");
+	ejecutar_PAR(datos, restricciones, clus, semilla, "AGG-UN");
+
+	Set_random( semilla );
+
+	ejecutar_PAR(datos, restricciones, clus, semilla, "AGG-SF");
 
 
 

@@ -658,7 +658,11 @@ PRACTICA 2
 
 
 
-std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmo_AGG(const unsigned evaluaciones_max, const unsigned tam_pob_ini, const float prob_mutacion, const float prob_cruce){
+std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_P2(const unsigned evaluaciones_max,
+																				 const unsigned tam_pob_ini,
+																				 const float prob_mutacion,
+																				 const float prob_cruce,
+																				 const operador_cruce tipo_cruce){
 	std::vector<std::vector<int>> p = generar_poblacion_inicial(tam_pob_ini);
 
 	std::vector<std::pair<std::vector<int>, double>> poblacion;
@@ -686,7 +690,11 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmo_AGG(const unsigned eval
 
 		//std::cout << evaluaciones << std::endl;
 
-		evaluaciones += operador_cruce_uniforme(poblacion, prob_cruce);
+		if (tipo_cruce == operador_cruce::SEGMENTO_FIJO){
+			evaluaciones += operador_cruce_seg_fijo(poblacion, prob_cruce);
+		} else if {
+			evaluaciones += operador_cruce_uniforme(poblacion, prob_cruce);
+		}
 
 		//std::cout << evaluaciones << std::endl;
 
