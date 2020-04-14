@@ -659,11 +659,12 @@ PRACTICA 2
 
 
 
-std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_P2(const unsigned evaluaciones_max,
+std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned evaluaciones_max,
 																				 const unsigned tam_pob_ini,
 																				 const float prob_mutacion,
 																				 const float prob_cruce,
 																				 const operador_cruce tipo_cruce,
+																				 const tipo_generacion tipo_generaciones,
 																			 	 const bool elitismo){
 	std::vector<std::vector<int>> p = generar_poblacion_inicial(tam_pob_ini);
 
@@ -697,7 +698,13 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_P2(const unsigned eval
 
 	while (evaluaciones < evaluaciones_max){
 
-		poblacion = seleccion_AGG(poblacion_anterior);
+		if (tipo_generaciones == tipo_generacion::ESTACIONARIO){
+			poblacion = seleccion_AGG(poblacion_anterior);
+		} else {
+			// generacional por defecto
+			poblacion = seleccion_AGE(poblacion_anterior);
+		}
+
 
 		//std::cout << evaluaciones << std::endl;
 
@@ -712,6 +719,9 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_P2(const unsigned eval
 		evaluaciones += operador_mutacion_uniforme(poblacion, prob_mutacion);
 
 		//std::cout << evaluaciones << std::endl;
+
+
+		// reemplazamiento de la poblacion
 
 		if (elitismo){
 			// miramos si el mejor de la anterior sigue estando
@@ -1136,6 +1146,32 @@ std::vector<PAR::Cluster> PAR::solucion_to_clusters(const std::vector<int> & sol
 
 	return devolver;
 
+}
+
+
+std::vector<std::pair<std::vector<int>, double>> PAR::seleccion_AGE(const std::vector<std::pair<std::vector<int>, double>> & poblacion) {
+	std::vector<std::pair<std::vector<int>, double>> poblacion_intermedia;
+
+
+	// en el estacionario solo seleccionamos dos
+	while (poblacion_intermedia.size() < 2) {
+		int primer_candidato = RandPositiveInt(poblacion.size());
+		int segundo_candidato;
+
+		do {
+			segundo_candidato = RandPositiveInt(poblacion.size());
+		} while (segundo_candidato == primer_candidato);
+
+
+		if (poblacion[primer_candidato].second > poblacion[segundo_candidato].second){
+			poblacion_intermedia.push_back(poblacion[segundo_candidato]);
+		} else {
+			poblacion_intermedia.push_back(poblacion[primer_candidato]);
+		}
+
+	}
+
+	return poblacion_intermedia;
 }
 
 

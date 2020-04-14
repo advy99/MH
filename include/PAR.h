@@ -10,6 +10,7 @@
 
 
 enum class operador_cruce {SEGMENTO_FIJO, UNIFORME};
+enum class tipo_generacion {GENERACIONAL, ESTACIONARIO};
 
 class PAR{
 
@@ -63,11 +64,12 @@ class PAR{
 		void calcular_desviacion_general();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_greedy();
 		std::pair<std::vector<PAR::Cluster>,int> algoritmo_BL(const std::vector<Cluster> & ini);
-		std::pair<std::vector<PAR::Cluster>,int> algoritmos_P2(const unsigned evaluaciones_max,\
+		std::pair<std::vector<PAR::Cluster>,int> algoritmos_AG(const unsigned evaluaciones_max,\
 			 																	 const unsigned tam_pob_ini,\
 																				 const float prob_mutacion, \
 																				 const float prob_cruce,
 																			 	 const operador_cruce tipo_cruce,
+																				 const tipo_generacion tipo_gen,
 																			 	 const bool elitismo = true);
 
 		int calcular_infactibilidad() const;
@@ -98,6 +100,8 @@ class PAR{
 		void leer_restricciones(const std::string fichero);
 
 		std::vector<std::pair<std::vector<int>, double>> seleccion_AGG(const std::vector<std::pair<std::vector<int>, double>> & poblacion);
+		std::vector<std::pair<std::vector<int>, double>> seleccion_AGE(const std::vector<std::pair<std::vector<int>, double>> & poblacion);
+
 		unsigned operador_cruce_uniforme(std::vector<std::pair<std::vector<int>, double>> & poblacion,\
 			  								  const double prob_cruce);
 

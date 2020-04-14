@@ -34,12 +34,12 @@ void ejecutar_PAR(const std::string datos, const std::string restricciones,
 	} else if (alg == "GREEDY") {
 		solucion = par.algoritmo_greedy();
 	} else if (alg == "AGG-SF"){
-		solucion = par.algoritmos_P2(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::SEGMENTO_FIJO );
+		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::SEGMENTO_FIJO, tipo_generacion::GENERACIONAL);
 	} else if (alg == "AGG-UN"){
-		solucion = par.algoritmos_P2(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::UNIFORME );
+		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::UNIFORME, tipo_generacion::GENERACIONAL );
 	}
 
-	
+
 	tiempo = elapsed_time();
 
 	if (solucion.first.size() != 0){
