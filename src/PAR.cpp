@@ -723,41 +723,84 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 
 		// reemplazamiento de la poblacion
 
-		if (elitismo){
-			// miramos si el mejor de la anterior sigue estando
-			auto pos_mejor = find(poblacion.begin(), poblacion.end(), mejor);
+		if (tipo_generaciones == tipo_generacion::GENERACIONAL){
+			if (elitismo){
+				// miramos si el mejor de la anterior sigue estando
+				auto pos_mejor = find(poblacion.begin(), poblacion.end(), mejor);
 
-			// si no esta lo añadimos
-			if (pos_mejor == poblacion.end()){
-				poblacion.push_back(mejor);
+				// si no esta lo añadimos
+				if (pos_mejor == poblacion.end()){
+					poblacion.push_back(mejor);
 
-				// buscamos el peor de la nueva
-				for (unsigned i = 0; i < poblacion.size(); i++){
+					// buscamos el peor de la nueva
+					for (unsigned i = 0; i < poblacion.size(); i++){
 
-					if (poblacion[i].second > poblacion[indice_peor].second){
-						indice_peor = i;
+						if (poblacion[i].second > poblacion[indice_peor].second){
+							indice_peor = i;
+						}
 					}
+
+					// y lo eliminamos
+					auto it = poblacion.begin();
+					std::advance(it, indice_peor);
+					poblacion.erase(it);
 				}
 
-				// y lo eliminamos
-				auto it = poblacion.begin();
-				std::advance(it, indice_peor);
-				poblacion.erase(it);
+			}
+
+			for (unsigned i = 0; i < poblacion.size(); i++){
+				if (poblacion[i].second < mejor.second){
+					mejor = poblacion[i];
+				}
+			}
+
+			poblacion_anterior = poblacion;
+
+		} else if (tipo_generaciones == tipo_generacion::ESTACIONARIO){
+			int indice_peor = 0, indice_segundo_peor = 1;
+
+			if (poblacion[0].second > poblacion[1].second){
+				poblacion.push_back(poblacion[0]);
+				poblacion.erase(poblacion.begin());
+			}
+
+			for (unsigned i = 0; i < poblacion.size(); i++){
+				if (poblacion[i].second > poblacion_anterior[indice_peor].second){
+					indice_peor = i;
+				}
+
+				if (poblacion[i].second > poblacion_anterior[indice_segundo_peor].second &&
+					 indice_segundo_peor != indice_peor){
+					indice_segundo_peor = i;
+				}
+			}
+
+
+
+			for (unsigned i = 0; i < poblacion.size(); i++){
+				if (indice_peor != -1 && poblacion[i].second < poblacion_anterior[indice_peor].second){
+					auto it = poblacion_anterior.begin();
+					std::advance(it, indice_peor);
+
+					poblacion_anterior.erase(it);
+					poblacion_anterior.push_back(poblacion[i]);
+
+					indice_peor = -1;
+				} else if (indice_segundo_peor != -1 && poblacion[i].second < poblacion_anterior[indice_peor].second){
+					auto it = poblacion_anterior.begin();
+					std::advance(it, indice_segundo_peor);
+
+					poblacion_anterior.erase(it);
+					poblacion_anterior.push_back(poblacion[i]);
+
+					indice_segundo_peor = -1;
+				}
+
 			}
 
 		}
-
-		for (unsigned i = 0; i < poblacion.size(); i++){
-			if (poblacion[i].second < mejor.second){
-				mejor = poblacion[i];
-			}
-		}
-
-		poblacion_anterior = poblacion;
 
 	}
-
-
 
 	clusters = solucion_to_clusters(mejor.first);
 	calcular_desviacion_general();

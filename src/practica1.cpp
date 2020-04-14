@@ -37,6 +37,10 @@ void ejecutar_PAR(const std::string datos, const std::string restricciones,
 		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::SEGMENTO_FIJO, tipo_generacion::GENERACIONAL);
 	} else if (alg == "AGG-UN"){
 		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::UNIFORME, tipo_generacion::GENERACIONAL );
+	} else if (alg == "AGE-SF"){
+		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 1, operador_cruce::SEGMENTO_FIJO, tipo_generacion::ESTACIONARIO);
+	} else if (alg == "AGE-UN"){
+		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 1, operador_cruce::UNIFORME, tipo_generacion::ESTACIONARIO );
 	}
 
 
