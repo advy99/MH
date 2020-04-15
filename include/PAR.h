@@ -112,6 +112,10 @@ class PAR{
 
 		unsigned operador_mutacion_uniforme(std::vector<std::pair<std::vector<int>, double>> & poblacion, const double prob_mut);
 
+		std::vector<int> algoritmo_BL_suave(const std::vector<int> & sol_ini,
+			 											const unsigned fallos_permitidos);
+
+
 		static const int TOPE_BL = 100000;
 
 

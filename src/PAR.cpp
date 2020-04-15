@@ -692,21 +692,23 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 		}
 	}
 
+	//std::fstream fic;
+	//fic.open ("l1.txt", std::fstream::out | std::fstream::app);
+	//fic << std::endl << std::endl;
 
-
+	//unsigned generacion = 0;
 	unsigned evaluaciones = 0;
 
 	while (evaluaciones < evaluaciones_max){
 
 		if (tipo_generaciones == tipo_generacion::ESTACIONARIO){
-			poblacion = seleccion_AGG(poblacion_anterior);
+			poblacion = seleccion_AGE(poblacion_anterior);
 		} else {
 			// generacional por defecto
-			poblacion = seleccion_AGE(poblacion_anterior);
+			poblacion = seleccion_AGG(poblacion_anterior);
 		}
 
 
-		//std::cout << evaluaciones << std::endl;
 
 		if (tipo_cruce == operador_cruce::SEGMENTO_FIJO){
 			evaluaciones += operador_cruce_seg_fijo(poblacion, prob_cruce);
@@ -764,17 +766,16 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 				poblacion.erase(poblacion.begin());
 			}
 
-			for (unsigned i = 0; i < poblacion.size(); i++){
-				if (poblacion[i].second > poblacion_anterior[indice_peor].second){
+			for (unsigned i = 0; i < poblacion_anterior.size(); i++){
+				if (poblacion_anterior[i].second > poblacion_anterior[indice_peor].second){
 					indice_peor = i;
 				}
 
-				if (poblacion[i].second > poblacion_anterior[indice_segundo_peor].second &&
+				if (poblacion_anterior[i].second > poblacion_anterior[indice_segundo_peor].second &&
 					 indice_segundo_peor != indice_peor){
 					indice_segundo_peor = i;
 				}
 			}
-
 
 
 			for (unsigned i = 0; i < poblacion.size(); i++){
@@ -786,7 +787,7 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 					poblacion_anterior.push_back(poblacion[i]);
 
 					indice_peor = -1;
-				} else if (indice_segundo_peor != -1 && poblacion[i].second < poblacion_anterior[indice_peor].second){
+				} else if (indice_segundo_peor != -1 && poblacion[i].second < poblacion_anterior[indice_segundo_peor].second){
 					auto it = poblacion_anterior.begin();
 					std::advance(it, indice_segundo_peor);
 
@@ -798,8 +799,18 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 
 			}
 
+
+			for (unsigned i = 0; i < poblacion_anterior.size(); i++){
+				if (poblacion_anterior[i].second < mejor.second){
+					mejor = poblacion_anterior[i];
+				}
+			}
+
 		}
 
+		//fic << generacion << "\t" << mejor.second << std::endl;
+
+		//generacion++;
 	}
 
 	clusters = solucion_to_clusters(mejor.first);
@@ -1096,6 +1107,8 @@ unsigned PAR::operador_mutacion_uniforme(std::vector<std::pair<std::vector<int>,
 	int gen;
 	int destino;
 
+	if (NUM_MUTACIONES ==0) {std::cout << "adfdsafsd" << std::endl;}
+
 	for (int i = 0; i < NUM_MUTACIONES; i++){
 		elemento_poblacion = RandPositiveInt(poblacion.size());
 		contador = std::vector<int>(clusters.size(), 0);
@@ -1217,6 +1230,46 @@ std::vector<std::pair<std::vector<int>, double>> PAR::seleccion_AGE(const std::v
 	return poblacion_intermedia;
 }
 
+
+std::vector<int> PAR::algoritmo_BL_suave(const std::vector<int> & sol_ini,
+	 												  const unsigned fallos_permitidos){
+
+	std::vector<int> a_devolver(sol_ini.size());
+
+	std::vector<int> indices;
+
+	for (unsigned i = 0; i < sol_ini.size(); i++){
+		indices.push_back(i);
+	}
+
+	std::random_shuffle(indices.begin(), indices.end(), RandPositiveInt);
+
+	unsigned fallos = 0;
+	bool mejora = true;
+	unsigned i = 0;
+
+	clusters = solucion_to_clusters(sol_ini);
+	calcular_desviacion_general();
+
+	double valoracion = get_desviacion_general() + (calcular_infactibilidad() * get_lambda());;
+
+	while ( (mejora || fallos < fallos_permitidos) && i < sol_ini.size()){
+		mejora = false;
+
+		for (unsigned i = 0; i < get_num_clusters(); i++){
+
+		}
+
+
+		if (!mejora){
+			fallos++;
+		}
+
+
+		i++;
+	}
+
+}
 
 
 

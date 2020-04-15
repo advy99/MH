@@ -6,10 +6,9 @@
 
 #include "timer.h"
 
-void ejecutar_PAR(const std::string datos, const std::string restricciones,
+void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricciones,
 	               const int clusters, const unsigned seed, const std::string alg){
 
-	PAR par(datos, restricciones, clusters);
 
 
 	std::pair<std::vector<PAR::Cluster>,int> solucion;
@@ -72,21 +71,33 @@ int main(int argc, char ** argv){
 	int clus = unsigned(atoi(argv[3]));
 	int semilla = unsigned(atoi(argv[4]));
 
+
+	PAR par(datos, restricciones, clus);
+
+
 	//Set_random( semilla );
 
 	//ejecutar_PAR_greedy(datos, restricciones, clus, semilla);
 
 	Set_random( semilla );
 
-	ejecutar_PAR(datos, restricciones, clus, semilla, "BL");
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "BL");
 
 	Set_random( semilla );
 
-	ejecutar_PAR(datos, restricciones, clus, semilla, "AGG-UN");
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGG-UN");
 
 	Set_random( semilla );
 
-	ejecutar_PAR(datos, restricciones, clus, semilla, "AGG-SF");
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGG-SF");
+
+	Set_random( semilla );
+
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGE-UN");
+
+	Set_random( semilla );
+
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGE-SF");
 
 
 
