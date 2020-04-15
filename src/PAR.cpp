@@ -718,7 +718,7 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 
 		//std::cout << evaluaciones << std::endl;
 
-		evaluaciones += operador_mutacion_uniforme(poblacion, prob_mutacion);
+		evaluaciones += operador_mutacion_uniforme(poblacion, prob_mutacion, tipo_generaciones);
 
 		//std::cout << evaluaciones << std::endl;
 
@@ -1095,9 +1095,10 @@ void PAR::reparar_cruce(std::vector<int> & reparado){
 
 
 
-unsigned PAR::operador_mutacion_uniforme(std::vector<std::pair<std::vector<int>, double>> & poblacion , const double prob_mut){
+unsigned PAR::operador_mutacion_uniforme(std::vector<std::pair<std::vector<int>, double>> & poblacion ,
+	 												  const double prob_mut,
+												  	  const tipo_generacion tipo_g){
 
-	const int NUM_MUTACIONES = poblacion.size()*poblacion[0].first.size() * prob_mut;
 
 	std::vector<int> contador (clusters.size(), 0);
 
@@ -1106,8 +1107,26 @@ unsigned PAR::operador_mutacion_uniforme(std::vector<std::pair<std::vector<int>,
 	int elemento_poblacion;
 	int gen;
 	int destino;
+	int mut = 0;
 
-	if (NUM_MUTACIONES ==0) {std::cout << "adfdsafsd" << std::endl;}
+	// si es en estacionario, NUM_MUTACIONES = 0, y vamos a probar a lanzarlo con un aleatorio
+	// sugerencia por oscar en el foro de prado
+	if (tipo_g == tipo_generacion::ESTACIONARIO){
+		for (unsigned i = 0; i < poblacion.size(); i++){
+			float aleatorio = Rand();
+
+			if (aleatorio < prob_mut * poblacion[0].first.size()){
+				mut++;
+			}
+		}
+
+	} else {
+		mut = poblacion.size()*poblacion[0].first.size() * prob_mut;
+	}
+
+	const int NUM_MUTACIONES = mut;
+
+
 
 	for (int i = 0; i < NUM_MUTACIONES; i++){
 		elemento_poblacion = RandPositiveInt(poblacion.size());
@@ -1222,7 +1241,9 @@ std::vector<std::pair<std::vector<int>, double>> PAR::seleccion_AGE(const std::v
 		if (poblacion[primer_candidato].second > poblacion[segundo_candidato].second){
 			poblacion_intermedia.push_back(poblacion[segundo_candidato]);
 		} else {
+			//std::cout << primer_candidato << " " << poblacion.size() <<std::endl << std::flush;
 			poblacion_intermedia.push_back(poblacion[primer_candidato]);
+
 		}
 
 	}

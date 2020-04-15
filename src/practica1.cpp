@@ -49,7 +49,7 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 		fichero << "Tiempo:" << std::endl << tiempo << std::endl << std::endl;
 		fichero << par;
 
-		std::cout << par;
+		//std::cout << par;
 	}
 
 
@@ -98,7 +98,6 @@ int main(int argc, char ** argv){
 	Set_random( semilla );
 
 	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGE-SF");
-
 
 
 	return 0;
