@@ -114,8 +114,8 @@ class PAR{
 	 												   const double prob_mut,
 												  	   const tipo_generacion tipo_g);
 
-		std::vector<int> algoritmo_BL_suave(const std::vector<int> & sol_ini,
-			 											const unsigned fallos_permitidos);
+		int algoritmo_BL_suave(std::vector<int> & sol_ini,
+			 						  const unsigned fallos_permitidos);
 
 
 		static const int TOPE_BL = 100000;

@@ -1252,15 +1252,17 @@ std::vector<std::pair<std::vector<int>, double>> PAR::seleccion_AGE(const std::v
 }
 
 
-std::vector<int> PAR::algoritmo_BL_suave(const std::vector<int> & sol_ini,
-	 												  const unsigned fallos_permitidos){
+int PAR::algoritmo_BL_suave(std::vector<int> & sol_ini,
+	 								 const unsigned fallos_permitidos){
 
 	std::vector<int> a_devolver(sol_ini.size());
 
 	std::vector<int> indices;
+	std::vector<int> contador(clusters.size(), 0);
 
 	for (unsigned i = 0; i < sol_ini.size(); i++){
 		indices.push_back(i);
+		contador[sol_ini[i]]++;
 	}
 
 	std::random_shuffle(indices.begin(), indices.end(), RandPositiveInt);
@@ -1268,27 +1270,58 @@ std::vector<int> PAR::algoritmo_BL_suave(const std::vector<int> & sol_ini,
 	unsigned fallos = 0;
 	bool mejora = true;
 	unsigned i = 0;
+	unsigned evaluaciones = 0;
 
 	clusters = solucion_to_clusters(sol_ini);
 	calcular_desviacion_general();
 
-	double valoracion = get_desviacion_general() + (calcular_infactibilidad() * get_lambda());;
+	std::vector<int> sol_intermedia = sol_ini;
+
+	double valoracion = get_desviacion_general() + (calcular_infactibilidad() * get_lambda());
+	evaluaciones++;
+
+	int mejor_cluster = -1;
+	double val_mejor_cluster = valoracion;
 
 	while ( (mejora || fallos < fallos_permitidos) && i < sol_ini.size()){
 		mejora = false;
+		mejor_cluster = -1;
 
-		for (unsigned i = 0; i < get_num_clusters(); i++){
+		val_mejor_cluster = valoracion;
 
+		for (int j = 0; j < get_num_clusters(); j++){
+			if (sol_ini[i] != j){
+				sol_intermedia[i] = j;
+
+				clusters = solucion_to_clusters(sol_intermedia);
+				calcular_desviacion_general();
+
+				valoracion = get_desviacion_general() + (calcular_infactibilidad() * get_lambda());
+				evaluaciones++;
+
+				if (valoracion < val_mejor_cluster && contador[sol_ini[i]] - 1 > 0){
+					mejor_cluster = j;
+					val_mejor_cluster = valoracion;
+					mejora = true;
+				}
+			}
 		}
 
 
 		if (!mejora){
 			fallos++;
+		} else {
+			contador[sol_ini[i]]--;
+			sol_ini[i] = mejor_cluster;
+			valoracion = val_mejor_cluster;
+			contador[mejor_cluster]++;
 		}
 
 
 		i++;
 	}
+
+	return evaluaciones;
 
 }
 
