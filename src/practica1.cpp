@@ -92,6 +92,20 @@ int main(int argc, char ** argv){
 
 	ejecutar_PAR(par, datos, restricciones, clus, semilla, "BL");
 
+
+	Set_random( semilla );
+
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-10-1");
+
+	Set_random( semilla );
+
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-10-0_1");
+
+	Set_random( semilla );
+
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-10-0_1mej");
+
+	/*
 	Set_random( semilla );
 
 	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGG-UN");
@@ -106,19 +120,8 @@ int main(int argc, char ** argv){
 
 	Set_random( semilla );
 
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGE-SF");
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGE-SF");*/
 
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-10-1");
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-10-0_1");
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-10-0_1mej");
 
 
 	return 0;
