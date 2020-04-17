@@ -1277,7 +1277,11 @@ int PAR::algoritmo_BL_suave(std::vector<int> & sol_ini,
 
 	std::vector<int> sol_intermedia = sol_ini;
 
-	double valoracion = get_desviacion_general() + (calcular_infactibilidad() * get_lambda());
+	int infac = calcular_infactibilidad();
+	int infac_inter = infac;
+	int mejor_infac;
+
+	double valoracion = get_desviacion_general() + (infac * get_lambda());
 	evaluaciones++;
 
 	int mejor_cluster = -1;
@@ -1286,22 +1290,29 @@ int PAR::algoritmo_BL_suave(std::vector<int> & sol_ini,
 	while ( (mejora || fallos < fallos_permitidos) && i < sol_ini.size()){
 		mejora = false;
 		mejor_cluster = -1;
+		infac_inter = infac;
 
 		val_mejor_cluster = valoracion;
 
 		for (int j = 0; j < get_num_clusters(); j++){
 			if (sol_ini[i] != j){
+				infac_inter = infac;
 				sol_intermedia[i] = j;
 
 				clusters = solucion_to_clusters(sol_intermedia);
-				calcular_desviacion_general();
 
-				valoracion = get_desviacion_general() + (calcular_infactibilidad() * get_lambda());
+				clusters[j].delete_elemento(i);
+				infac_inter -= cumple_restricciones( i, sol_ini[i] );
+				infac_inter += cumple_restricciones( i, j );
+				clusters[j].add_elemento(i);
+
+				valoracion = get_desviacion_general() + (infac_inter * get_lambda());
 				evaluaciones++;
 
 				if (valoracion < val_mejor_cluster && contador[sol_ini[i]] - 1 > 0){
 					mejor_cluster = j;
 					val_mejor_cluster = valoracion;
+					mejor_infac = infac_inter;
 					mejora = true;
 				}
 			}
@@ -1314,6 +1325,7 @@ int PAR::algoritmo_BL_suave(std::vector<int> & sol_ini,
 			contador[sol_ini[i]]--;
 			sol_ini[i] = mejor_cluster;
 			valoracion = val_mejor_cluster;
+			infact = mejor_infac;
 			contador[mejor_cluster]++;
 		}
 
