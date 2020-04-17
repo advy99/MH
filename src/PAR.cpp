@@ -696,7 +696,7 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 	//fic.open ("l1.txt", std::fstream::out | std::fstream::app);
 	//fic << std::endl << std::endl;
 
-	//unsigned generacion = 0;
+	unsigned generacion = 0;
 	unsigned evaluaciones = 0;
 
 	while (evaluaciones < evaluaciones_max){
@@ -725,7 +725,7 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 
 		// reemplazamiento de la poblacion
 
-		if (tipo_generaciones == tipo_generacion::GENERACIONAL){
+		if (tipo_generaciones != tipo_generacion::ESTACIONARIO){
 			if (elitismo){
 				// miramos si el mejor de la anterior sigue estando
 				auto pos_mejor = find(poblacion.begin(), poblacion.end(), mejor);
@@ -750,15 +750,9 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 
 			}
 
-			for (unsigned i = 0; i < poblacion.size(); i++){
-				if (poblacion[i].second < mejor.second){
-					mejor = poblacion[i];
-				}
-			}
-
 			poblacion_anterior = poblacion;
 
-		} else if (tipo_generaciones == tipo_generacion::ESTACIONARIO){
+		} else {
 			int indice_peor = 0, indice_segundo_peor = 1;
 
 			if (poblacion[0].second > poblacion[1].second){
@@ -800,17 +794,52 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 			}
 
 
-			for (unsigned i = 0; i < poblacion_anterior.size(); i++){
-				if (poblacion_anterior[i].second < mejor.second){
-					mejor = poblacion_anterior[i];
-				}
-			}
 
+
+		}
+
+		if (generacion % 10 == 0){
+			if (tipo_generaciones == tipo_generacion::MEMETICO_1){
+				for (unsigned i = 0; i < poblacion_anterior.size(); i++){
+					evaluaciones += algoritmo_BL_suave(poblacion_anterior[i].first, 0.1*poblacion_anterior[i].first.size());
+				}
+			} else if (tipo_generaciones == tipo_generacion::MEMETICO_0_1){
+				// volvemos a aplicar la esperanza matemática
+				const unsigned NUM_BL_SUAVE = 0.1 * poblacion_anterior.size();
+
+				for (unsigned i = 0; i < NUM_BL_SUAVE; i++){
+					evaluaciones += algoritmo_BL_suave(poblacion_anterior[i].first, 0.1*poblacion_anterior[i].first.size());
+				}
+			} else if (tipo_generaciones == tipo_generacion::MEMETICO_0_1_MEJ){
+				const unsigned NUM_MEJORES = 0.1 * poblacion_anterior.size();
+				std::set<int> indices_mejores;
+				for (unsigned i = 0; i < NUM_MEJORES; i++){
+					int indice_mejor = 0;
+					for (unsigned j = 0; j < poblacion_anterior.size(); j++){
+						if (poblacion_anterior[indice_mejor].second > poblacion_anterior[j].second &&
+							 indices_mejores.find(j) == indices_mejores.end() ){
+							indice_mejor = j;
+						}
+					}
+					indices_mejores.insert(indice_mejor);
+				}
+
+				for (auto it = indices_mejores.begin(); it != indices_mejores.end(); ++it){
+					evaluaciones += algoritmo_BL_suave(poblacion_anterior[(*it)].first, 0.1*poblacion_anterior[(*it)].first.size());
+				}
+
+			}
+		}
+
+		for (unsigned i = 0; i < poblacion_anterior.size(); i++){
+			if (poblacion_anterior[i].second < mejor.second){
+				mejor = poblacion_anterior[i];
+			}
 		}
 
 		//fic << generacion << "\t" << mejor.second << std::endl;
 
-		//generacion++;
+		generacion++;
 	}
 
 	clusters = solucion_to_clusters(mejor.first);
@@ -1325,7 +1354,7 @@ int PAR::algoritmo_BL_suave(std::vector<int> & sol_ini,
 			contador[sol_ini[i]]--;
 			sol_ini[i] = mejor_cluster;
 			valoracion = val_mejor_cluster;
-			infact = mejor_infac;
+			infac = mejor_infac;
 			contador[mejor_cluster]++;
 		}
 

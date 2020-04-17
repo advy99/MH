@@ -10,7 +10,7 @@
 
 
 enum class operador_cruce {SEGMENTO_FIJO, UNIFORME};
-enum class tipo_generacion {GENERACIONAL, ESTACIONARIO};
+enum class tipo_generacion {GENERACIONAL, ESTACIONARIO, MEMETICO_1, MEMETICO_0_1, MEMETICO_0_1_MEJ};
 
 class PAR{
 

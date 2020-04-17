@@ -40,6 +40,15 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 1, operador_cruce::SEGMENTO_FIJO, tipo_generacion::ESTACIONARIO);
 	} else if (alg == "AGE-UN"){
 		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 1, operador_cruce::UNIFORME, tipo_generacion::ESTACIONARIO );
+	} else if (alg == "AM-10-1"){
+		tam_pob_ini = 10;
+		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::UNIFORME, tipo_generacion::MEMETICO_1 );
+	} else if (alg == "AM-10-0_1"){
+		tam_pob_ini = 10;
+		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::UNIFORME, tipo_generacion::MEMETICO_0_1 );
+	} else if (alg == "AM-10-0_1mej"){
+		tam_pob_ini = 10;
+		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::UNIFORME, tipo_generacion::MEMETICO_0_1_MEJ );
 	}
 
 
@@ -98,6 +107,18 @@ int main(int argc, char ** argv){
 	Set_random( semilla );
 
 	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGE-SF");
+
+	Set_random( semilla );
+
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-10-1");
+
+	Set_random( semilla );
+
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-10-0_1");
+
+	Set_random( semilla );
+
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-10-0_1mej");
 
 
 	return 0;
