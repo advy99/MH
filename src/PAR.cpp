@@ -49,7 +49,7 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 		}
 	}
 
-	std::cout << "Mayor distancia " << mayor_distancia << std::endl;
+	//std::cout << "Mayor distancia " << mayor_distancia << std::endl;
 	LAMBDA = get_mayor_distancia() / (restricciones.size()/2.0);
 
 
