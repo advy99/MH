@@ -81,7 +81,7 @@ int main(int argc, char ** argv){
 	int semilla = unsigned(atoi(argv[4]));
 
 
-	PAR par(datos, restricciones, clus);
+	PAR par(datos, restricciones, clus, std::to_string(semilla));
 
 
 	//Set_random( semilla );
@@ -105,7 +105,7 @@ int main(int argc, char ** argv){
 
 	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-10-0_1mej");
 
-	/*
+	
 	Set_random( semilla );
 
 	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGG-UN");
@@ -120,7 +120,7 @@ int main(int argc, char ** argv){
 
 	Set_random( semilla );
 
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGE-SF");*/
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGE-SF");
 
 
 
