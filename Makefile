@@ -1,10 +1,11 @@
-HOME    = .
-BIN     = $(HOME)/bin
-INCLUDE = $(HOME)/include
-SRC     = $(HOME)/src
-OBJ     = $(HOME)/obj
-LIB     = $(HOME)/lib
-DATOS	  = $(HOME)/datos
+HOME     = .
+BIN      = $(HOME)/bin
+INCLUDE  = $(HOME)/include
+SRC      = $(HOME)/src
+OBJ      = $(HOME)/obj
+LIB      = $(HOME)/lib
+DATOS	   = $(HOME)/datos
+GRAFICAS = $(HOME)/graficas/datos
 
 FLAGS = --std=c++17 -O3 -Wall
 
@@ -34,5 +35,6 @@ clean:
 	-rm $(OBJ)/*.o
 	-rm $(BIN)/*
 
-limpiar-datos:
+limpiar-salida:
 	-rm $(DATOS)/*.out
+	-rm $(GRAFICAS)/*.out
