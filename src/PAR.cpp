@@ -1346,6 +1346,8 @@ int PAR::algoritmo_BL_suave(std::pair<std::vector<int>, double> & sol_ini,
 				sol_intermedia.first[i] = j;
 
 				clusters = solucion_to_clusters(sol_intermedia.first);
+				calcular_desviacion_general();
+
 				sol_intermedia.second = get_desviacion_general() + (calcular_infactibilidad() * get_lambda());
 				evaluaciones++;
 
