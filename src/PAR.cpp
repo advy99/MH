@@ -694,7 +694,7 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 	}
 
 	std::fstream fic;
-	fic.open (fichero, std::fstream::out | std::fstream::app);
+	fic.open (fichero, std::fstream::out);
 	//fic << std::endl << std::endl;
 
 	std::vector<std::vector<int>> p = generar_poblacion_inicial(tam_pob_ini);
