@@ -76,6 +76,8 @@ class PAR{
 		std::vector<Cluster> generar_solucion_aleatoria();
 		friend std::ostream & operator << (std::ostream & flujo, const PAR & par);
 
+		std::string NOM_DATOS;
+		std::string NOM_RESTRICCIONES;
 
 
 	private:
@@ -114,7 +116,7 @@ class PAR{
 	 												   const double prob_mut,
 												  	   const tipo_generacion tipo_g);
 
-		int algoritmo_BL_suave(std::vector<int> & sol_ini,
+		int algoritmo_BL_suave(std::pair<std::vector<int>, double> & sol_ini,
 			 						  const unsigned fallos_permitidos);
 
 

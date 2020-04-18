@@ -20,7 +20,7 @@ Clase PAR
 */
 
 PAR::PAR(const std::string fichero_datos, const std::string fichero_restricciones,
-	 		const int n_clusters){
+	 		const int n_clusters):NOM_DATOS(fichero_datos), NOM_RESTRICCIONES(fichero_restricciones){
 
 	leer_datos(fichero_datos);
 	leer_restricciones(fichero_restricciones);
@@ -666,6 +666,35 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 																				 const operador_cruce tipo_cruce,
 																				 const tipo_generacion tipo_generaciones,
 																			 	 const bool elitismo){
+
+
+
+	std::string fichero = "graficas/";
+
+	fichero += NOM_RESTRICCIONES;
+
+	if (tipo_generaciones == tipo_generacion::GENERACIONAL){
+		fichero += "_AGG";
+	} else if (tipo_generaciones == tipo_generacion::ESTACIONARIO){
+		fichero += "_AGE";
+	} else if (tipo_generaciones == tipo_generacion::MEMETICO_1){
+		fichero += "_AM-1";
+	} else if (tipo_generaciones == tipo_generacion::MEMETICO_0_1){
+		fichero += "_AM-0_1";
+	} else if (tipo_generaciones == tipo_generacion::MEMETICO_0_1_MEJ){
+		fichero += "_AM-0_1mej";
+	}
+
+	if (tipo_cruce == operador_cruce::SEGMENTO_FIJO){
+		fichero += "_SF.out";
+	} else {
+		fichero += "_UN.out";
+	}
+
+	std::fstream fic;
+	fic.open (fichero, std::fstream::out | std::fstream::app);
+	//fic << std::endl << std::endl;
+
 	std::vector<std::vector<int>> p = generar_poblacion_inicial(tam_pob_ini);
 
 	std::vector<std::pair<std::vector<int>, double>> poblacion;
@@ -691,10 +720,6 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 			mejor = poblacion[i];
 		}
 	}
-
-	//std::fstream fic;
-	//fic.open ("l1.txt", std::fstream::out | std::fstream::app);
-	//fic << std::endl << std::endl;
 
 	unsigned generacion = 0;
 	unsigned evaluaciones = 0;
@@ -801,14 +826,14 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 		if (generacion % 10 == 0){
 			if (tipo_generaciones == tipo_generacion::MEMETICO_1){
 				for (unsigned i = 0; i < poblacion_anterior.size(); i++){
-					evaluaciones += algoritmo_BL_suave(poblacion_anterior[i].first, 0.1*poblacion_anterior[i].first.size());
+					evaluaciones += algoritmo_BL_suave(poblacion_anterior[i], 0.1*poblacion_anterior[i].first.size());
 				}
 			} else if (tipo_generaciones == tipo_generacion::MEMETICO_0_1){
 				// volvemos a aplicar la esperanza matemática
 				const unsigned NUM_BL_SUAVE = 0.1 * poblacion_anterior.size();
 
 				for (unsigned i = 0; i < NUM_BL_SUAVE; i++){
-					evaluaciones += algoritmo_BL_suave(poblacion_anterior[i].first, 0.1*poblacion_anterior[i].first.size());
+					evaluaciones += algoritmo_BL_suave(poblacion_anterior[i], 0.1*poblacion_anterior[i].first.size());
 				}
 			} else if (tipo_generaciones == tipo_generacion::MEMETICO_0_1_MEJ){
 				const unsigned NUM_MEJORES = 0.1 * poblacion_anterior.size();
@@ -825,7 +850,7 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 				}
 
 				for (auto it = indices_mejores.begin(); it != indices_mejores.end(); ++it){
-					evaluaciones += algoritmo_BL_suave(poblacion_anterior[(*it)].first, 0.1*poblacion_anterior[(*it)].first.size());
+					evaluaciones += algoritmo_BL_suave(poblacion_anterior[(*it)], 0.1*poblacion_anterior[(*it)].first.size());
 				}
 
 			}
@@ -837,7 +862,7 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 			}
 		}
 
-		//fic << generacion << "\t" << mejor.second << std::endl;
+		fic << generacion << "\t" << mejor.second << std::endl;
 
 		generacion++;
 	}
@@ -1281,17 +1306,15 @@ std::vector<std::pair<std::vector<int>, double>> PAR::seleccion_AGE(const std::v
 }
 
 
-int PAR::algoritmo_BL_suave(std::vector<int> & sol_ini,
+int PAR::algoritmo_BL_suave(std::pair<std::vector<int>, double> & sol_ini,
 	 								 const unsigned fallos_permitidos){
-
-	std::vector<int> a_devolver(sol_ini.size());
 
 	std::vector<int> indices;
 	std::vector<int> contador(clusters.size(), 0);
 
-	for (unsigned i = 0; i < sol_ini.size(); i++){
+	for (unsigned i = 0; i < sol_ini.first.size(); i++){
 		indices.push_back(i);
-		contador[sol_ini[i]]++;
+		contador[sol_ini.first[i]]++;
 	}
 
 	std::random_shuffle(indices.begin(), indices.end(), RandPositiveInt);
@@ -1301,66 +1324,54 @@ int PAR::algoritmo_BL_suave(std::vector<int> & sol_ini,
 	unsigned i = 0;
 	unsigned evaluaciones = 0;
 
-	clusters = solucion_to_clusters(sol_ini);
+	clusters = solucion_to_clusters(sol_ini.first);
 	calcular_desviacion_general();
 
-	std::vector<int> sol_intermedia = sol_ini;
-
-	int infac = calcular_infactibilidad();
-	int infac_inter = infac;
-	int mejor_infac;
-
-	double valoracion = get_desviacion_general() + (infac * get_lambda());
-	evaluaciones++;
+	std::pair<std::vector<int>, double> sol_intermedia = sol_ini;
 
 	int mejor_cluster = -1;
-	double val_mejor_cluster = valoracion;
+	double val_mejor_cluster = sol_ini.second;
 
-	while ( (mejora || fallos < fallos_permitidos) && i < sol_ini.size()){
+	while ( (mejora || fallos < fallos_permitidos) && i < sol_ini.first.size()){
 		mejora = false;
 		mejor_cluster = -1;
-		infac_inter = infac;
 
-		val_mejor_cluster = valoracion;
+		val_mejor_cluster = sol_ini.second;
+		sol_intermedia = sol_ini;
 
 		for (int j = 0; j < get_num_clusters(); j++){
-			if (sol_ini[i] != j){
-				infac_inter = infac;
-				sol_intermedia[i] = j;
+			if (sol_ini.first[i] != j){
+				sol_intermedia.first[i] = j;
 
-				clusters = solucion_to_clusters(sol_intermedia);
-
-				clusters[j].delete_elemento(i);
-				infac_inter -= cumple_restricciones( i, sol_ini[i] );
-				infac_inter += cumple_restricciones( i, j );
-				clusters[j].add_elemento(i);
-
-				valoracion = get_desviacion_general() + (infac_inter * get_lambda());
+				clusters = solucion_to_clusters(sol_intermedia.first);
+				sol_intermedia.second = get_desviacion_general() + (calcular_infactibilidad() * get_lambda());
 				evaluaciones++;
 
-				if (valoracion < val_mejor_cluster && contador[sol_ini[i]] - 1 > 0){
+				if (sol_intermedia.second < val_mejor_cluster && contador[sol_ini.first[i]] - 1 > 0){
 					mejor_cluster = j;
-					val_mejor_cluster = valoracion;
-					mejor_infac = infac_inter;
+					val_mejor_cluster = sol_intermedia.second;
 					mejora = true;
 				}
 			}
 		}
 
-
 		if (!mejora){
 			fallos++;
 		} else {
-			contador[sol_ini[i]]--;
-			sol_ini[i] = mejor_cluster;
-			valoracion = val_mejor_cluster;
-			infac = mejor_infac;
+			std::cout << "Antes: " << sol_ini.second << std::endl;
+			contador[sol_ini.first[i]]--;
+			sol_ini.first[i] = mejor_cluster;
+			sol_ini.second = val_mejor_cluster;
 			contador[mejor_cluster]++;
+			std::cout << "Despues: " << sol_ini.second << std::endl;
 		}
-
 
 		i++;
 	}
+
+	std::cout << "ACABAMOS CON: " << sol_ini.second << std::endl;
+	std::cout << std::endl << std::endl << std::endl;
+
 
 	return evaluaciones;
 
