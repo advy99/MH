@@ -1226,14 +1226,21 @@ unsigned PAR::operador_mutacion_uniforme(std::vector<std::pair<std::vector<int>,
 
 
 
-std::vector<std::vector<int>> PAR::generar_poblacion_inicial(const int tam_pob_ini){
+std::vector<std::vector<int>> PAR::generar_poblacion_inicial(const unsigned tam_pob_ini){
 	std::vector<std::vector<int>> poblacion;
 
-	for (int i = 0; i < tam_pob_ini; i++){
+	/*
+	for (int i = 0; i < tam_pob_ini/5; i++){
 		// generamos una población aleatoria, la pasamos a la representacion usada
 		// en los algoritmos geneticos, y la introducimos en la matriz de poblacion
+		poblacion.push_back(clusters_to_solucion(algoritmo_BL(generar_solucion_aleatoria()).first));
+	}*/
+
+	while (poblacion.size() < tam_pob_ini){
 		poblacion.push_back(clusters_to_solucion(generar_solucion_aleatoria()));
 	}
+
+	std::cout << poblacion.size() << std::endl;
 
 	return poblacion;
 }

@@ -97,7 +97,7 @@ class PAR{
 
 		std::vector<int> clusters_to_solucion(const std::vector<PAR::Cluster> & clusters_ini) const;
 		std::vector<PAR::Cluster> solucion_to_clusters(const std::vector<int> & sol);
-		std::vector<std::vector<int>> generar_poblacion_inicial(const int tam_pob_ini);
+		std::vector<std::vector<int>> generar_poblacion_inicial(const unsigned tam_pob_ini);
 		int cumple_restricciones(const int elemento, const int num_cluster);
 		void leer_datos(const std::string fichero);
 		void leer_restricciones(const std::string fichero);
