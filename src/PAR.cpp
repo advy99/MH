@@ -20,7 +20,8 @@ Clase PAR
 */
 
 PAR::PAR(const std::string fichero_datos, const std::string fichero_restricciones,
-	 		const int n_clusters):NOM_DATOS(fichero_datos), NOM_RESTRICCIONES(fichero_restricciones){
+	 		const int n_clusters, const std::string semilla):NOM_DATOS(fichero_datos), NOM_RESTRICCIONES(fichero_restricciones)
+			, SEMILLA(semilla){
 
 	leer_datos(fichero_datos);
 	leer_restricciones(fichero_restricciones);
@@ -672,6 +673,7 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 	std::string fichero = "graficas/";
 
 	fichero += NOM_RESTRICCIONES;
+	fichero += "_" + SEMILLA;
 
 	if (tipo_generaciones == tipo_generacion::GENERACIONAL){
 		fichero += "_AGG";
@@ -1358,19 +1360,19 @@ int PAR::algoritmo_BL_suave(std::pair<std::vector<int>, double> & sol_ini,
 		if (!mejora){
 			fallos++;
 		} else {
-			std::cout << "Antes: " << sol_ini.second << std::endl;
+			//std::cout << "Antes: " << sol_ini.second << std::endl;
 			contador[sol_ini.first[i]]--;
 			sol_ini.first[i] = mejor_cluster;
 			sol_ini.second = val_mejor_cluster;
 			contador[mejor_cluster]++;
-			std::cout << "Despues: " << sol_ini.second << std::endl;
+			//std::cout << "Despues: " << sol_ini.second << std::endl;
 		}
 
 		i++;
 	}
 
-	std::cout << "ACABAMOS CON: " << sol_ini.second << std::endl;
-	std::cout << std::endl << std::endl << std::endl;
+	//std::cout << "ACABAMOS CON: " << sol_ini.second << std::endl;
+	//::cout << std::endl << std::endl << std::endl;
 
 
 	return evaluaciones;

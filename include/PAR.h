@@ -50,7 +50,7 @@ class PAR{
 
 
 		PAR(const std::string fichero_datos, const std::string fichero_restricciones,
-			 const int num_clusters);
+			 const int num_clusters, const std::string semilla);
 
 
 		int get_num_clusters() const;
@@ -78,6 +78,7 @@ class PAR{
 
 		std::string NOM_DATOS;
 		std::string NOM_RESTRICCIONES;
+		std::string SEMILLA;
 
 
 	private:
