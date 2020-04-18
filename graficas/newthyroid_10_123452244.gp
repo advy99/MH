@@ -1,6 +1,8 @@
 set title "Avance de la mejor solución encontrada en newthyroid con un 10% de restricciones tras las generaciones"
 set xlabel "Número de generación"
 set ylabel "Valor de la función objetivo"
+set ytics 100
+set grid
 plot "datos/newthyroid_set_const_10.const_123452244_AM-1_UN.out" with lines title "AM-1 semilla 123452244",\
 	  "datos/newthyroid_set_const_10.const_123452244_AM-0_1_UN.out" with lines title "AM-0.1 semilla 123452244",\
 	  "datos/newthyroid_set_const_10.const_123452244_AM-0_1mej_UN.out" with lines title "AM-0.1mej semilla 123452244",\
