@@ -1136,7 +1136,7 @@ void PAR::reparar_cruce(std::vector<int> & reparado){
 			do {
 				elemento_aleatorio = RandPositiveInt(reparado.size());
 				// hasta que encuentre un cluster que quitando un elemento no se quede vacio
-			} while (contador[reparado[elemento_aleatorio]] - 1 > 0 );
+			} while (contador[reparado[elemento_aleatorio]] - 1 == 0 );
 
 			contador[reparado[elemento_aleatorio]]--;
 			reparado[elemento_aleatorio] = i;
