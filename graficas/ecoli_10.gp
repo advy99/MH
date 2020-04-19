@@ -15,7 +15,8 @@ do for[i in semillas] {
 	"datos/ecoli_set_const_10.const_".i."_AGG_UN.out" with lines title "AGG-UN semilla ".i, \
 	"datos/ecoli_set_const_10.const_".i."_AGG_SF.out" with lines title "AGG-SF semilla ".i, \
 	"datos/ecoli_set_const_10.const_".i."_AGE_UN.out" with lines title "AGE-UN semilla ".i, \
-	"datos/ecoli_set_const_10.const_".i."_AGE_SF.out" with lines title "AGE-SF semilla ".i
+	"datos/ecoli_set_const_10.const_".i."_AGE_SF.out" with lines title "AGE-SF semilla ".i, \
+	"datos/ecoli_set_const_10.const_".i."_BL.out" with lines title "BL semilla ".i,
 
 	pause mouse any
 }
