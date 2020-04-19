@@ -1220,12 +1220,6 @@ unsigned PAR::operador_mutacion_uniforme(std::vector<std::pair<std::vector<int>,
 }
 
 
-
-
-
-
-
-
 std::vector<std::vector<int>> PAR::generar_poblacion_inicial(const unsigned tam_pob_ini){
 	std::vector<std::vector<int>> poblacion;
 
@@ -1239,8 +1233,6 @@ std::vector<std::vector<int>> PAR::generar_poblacion_inicial(const unsigned tam_
 	while (poblacion.size() < tam_pob_ini){
 		poblacion.push_back(clusters_to_solucion(generar_solucion_aleatoria()));
 	}
-
-	std::cout << poblacion.size() << std::endl;
 
 	return poblacion;
 }

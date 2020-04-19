@@ -106,10 +106,10 @@ class PAR{
 		std::vector<std::pair<std::vector<int>, double>> seleccion_AGE(const std::vector<std::pair<std::vector<int>, double>> & poblacion);
 
 		unsigned operador_cruce_uniforme(std::vector<std::pair<std::vector<int>, double>> & poblacion,\
-			  								  const double prob_cruce);
+			  								  		const double prob_cruce);
 
 		unsigned operador_cruce_seg_fijo(std::vector<std::pair<std::vector<int>, double>> & poblacion,\
-			  								  const double prob_cruce);
+			  								  		const double prob_cruce);
 
 		void reparar_cruce(std::vector<int> & reparado);
 
