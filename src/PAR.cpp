@@ -415,6 +415,17 @@ void PAR::calcular_desviacion_general(){
 
 std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(const std::vector<Cluster> & ini){
 
+
+	std::string fichero = "graficas/";
+
+	fichero += NOM_RESTRICCIONES;
+	fichero += "_" + SEMILLA;
+	fichero += "_BL.out";
+
+	std::fstream fic;
+	fic.open (fichero, std::fstream::out);
+
+
 	clusters = ini;
 
 	calcular_desviacion_general();
@@ -485,6 +496,7 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(const std::vector<Clu
 
 						f_objetivo = n_f_objetivo;
 						infac = n_infac;
+						fic << evaluaciones << "\t" << f_objetivo << std::endl;
 						//sol = clusters;
 						he_encontrado_mejor = true;
 					} else {
