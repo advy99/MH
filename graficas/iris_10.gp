@@ -1,5 +1,5 @@
 set title "Iris con un 10% de restricciones"
-set xlabel "Número de generación"
+set xlabel "Número de generación (evaluación en caso de BL)"
 set ylabel "Valor de la función objetivo"
 set grid
 
