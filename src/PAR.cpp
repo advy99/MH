@@ -979,7 +979,7 @@ unsigned PAR::operador_cruce_uniforme(std::vector<std::pair<std::vector<int>, do
 		clusters = solucion_to_clusters(cruce);
 		calcular_desviacion_general();
 
-		std::pair<std::vector<int>, double> cruzado (cruce, get_desviacion_general() + (calcular_infactibilidad() * get_lambda()));
+		std::pair<std::vector<int>, double> cruzado (cruce, funcion_objetivo());
 		evaluaciones++;
 
 		poblacion.push_back(cruzado);
@@ -1116,7 +1116,7 @@ unsigned PAR::operador_cruce_seg_fijo(std::vector<std::pair<std::vector<int>, do
 		clusters = solucion_to_clusters(cruce);
 		calcular_desviacion_general();
 
-		std::pair<std::vector<int>, double> cruzado (cruce, get_desviacion_general() + (calcular_infactibilidad() * get_lambda()));
+		std::pair<std::vector<int>, double> cruzado (cruce, funcion_objetivo());
 		evaluaciones++;
 
 		poblacion.push_back(cruzado);
@@ -1233,7 +1233,7 @@ unsigned PAR::operador_mutacion_uniforme(std::vector<std::pair<std::vector<int>,
 
 		clusters = solucion_to_clusters(poblacion[elemento_poblacion].first);
 		calcular_desviacion_general();
-		poblacion[elemento_poblacion].second = get_desviacion_general() + (calcular_infactibilidad() * get_lambda());
+		poblacion[elemento_poblacion].second = funcion_objetivo();
 		evaluaciones++;
 
 	}
@@ -1364,16 +1364,16 @@ int PAR::algoritmo_BL_suave(std::pair<std::vector<int>, double> & sol_ini,
 		sol_intermedia = sol_ini;
 
 		for (int j = 0; j < get_num_clusters(); j++){
-			if (sol_ini.first[i] != j){
-				sol_intermedia.first[i] = j;
+			if (sol_ini.first[indices[i]] != j && contador[sol_ini.first[indices[i]]] - 1 > 0){
+				sol_intermedia.first[indices[i]] = j;
 
 				clusters = solucion_to_clusters(sol_intermedia.first);
 				calcular_desviacion_general();
 
-				sol_intermedia.second = get_desviacion_general() + (calcular_infactibilidad() * get_lambda());
+				sol_intermedia.second = funcion_objetivo();
 				evaluaciones++;
 
-				if (sol_intermedia.second < val_mejor_cluster && contador[sol_ini.first[i]] - 1 > 0){
+				if (sol_intermedia.second < val_mejor_cluster){
 					mejor_cluster = j;
 					val_mejor_cluster = sol_intermedia.second;
 					mejora = true;
@@ -1384,8 +1384,8 @@ int PAR::algoritmo_BL_suave(std::pair<std::vector<int>, double> & sol_ini,
 		if (!mejora){
 			fallos++;
 		} else {
-			contador[sol_ini.first[i]]--;
-			sol_ini.first[i] = mejor_cluster;
+			contador[sol_ini.first[indices[i]]]--;
+			sol_ini.first[indices[i]] = mejor_cluster;
 			sol_ini.second = val_mejor_cluster;
 			contador[mejor_cluster]++;
 		}
@@ -1402,7 +1402,9 @@ int PAR::algoritmo_BL_suave(std::pair<std::vector<int>, double> & sol_ini,
 
 
 
-
+double PAR::funcion_objetivo() const {
+	return (get_desviacion_general() + (calcular_infactibilidad() * get_lambda()));
+}
 
 
 

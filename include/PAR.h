@@ -92,6 +92,7 @@ class PAR{
 		double mayor_distancia;
 		double LAMBDA;
 
+		double funcion_objetivo() const;
 		double distancia_puntos(const std::vector<double> & p1,
 									 	const std::vector<double> & p2) const;
 
