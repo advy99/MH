@@ -222,6 +222,7 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_greedy(){
 
 	bool hay_cambios = false;
 	std::vector<bool> cambios(clusters.size(), false);
+	std::vector<bool> cambios_anterior = cambios;
 
 	int num_cluster;
 
@@ -261,6 +262,9 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_greedy(){
 		for (unsigned i = 0; i < cambios.size(); i++){
 			hay_cambios = hay_cambios || cambios[i];
 		}
+
+		hay_cambios = cambios != cambios_anterior;
+		cambios_anterior = cambios;
 
 	} while(hay_cambios);
 
@@ -509,8 +513,6 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(const std::vector<Clu
 				}
 			}
 		}
-
-
 
 		// si no tengo mejor vecino o llego al tope
 	} while (he_encontrado_mejor && evaluaciones < TOPE_BL);
@@ -1030,8 +1032,17 @@ unsigned PAR::operador_cruce_seg_fijo(std::vector<std::pair<std::vector<int>, do
 	// selección, por lo que cruzamos los NUM_CRUCES primeros, el i con el i+1 y ya
 	// por eso vamos hasta NUM_CRUCES*2, y  sumamos +2 cada iteracion
 	// por  cada cruce tenemos que generar dos hijos, así que ejecutamos NUM_CRUCES*2
-	int indice = 0;
+	int indice_p1 = 0;
+	int indice_p2 = 1;
 	for (int i = 0; i < NUM_CRUCES*2; i++ ){
+
+		indice_p1 = 0;
+		indice_p2 = 1;
+
+		if (poblacion[indice_p2].second < poblacion[indice_p1].second){
+			indice_p1 = 1;
+			indice_p2 = 0;
+		}
 
 		/* el indice se mantiene siempre a 0, vamos a ir eliminando de la poblacion
 		if (i % 2 == 0){
@@ -1046,26 +1057,26 @@ unsigned PAR::operador_cruce_seg_fijo(std::vector<std::pair<std::vector<int>, do
 		tam_segmento = RandPositiveInt(poblacion[i].first.size());
 		ini_segmento = RandPositiveInt(poblacion[i].first.size());
 
-		fin_segmento = (ini_segmento + tam_segmento + 1) % poblacion[indice].first.size();
+		fin_segmento = (ini_segmento + tam_segmento + 1) % poblacion[indice_p1].first.size();
 
 		cruce = std::vector<int>(poblacion[i].first.size(), -1);
 
 		int j = ini_segmento;
 		// copiamos del padre 1 el segmento [ini_segmento, ini_segmento+tam_segmento]
 		while (j <= ini_segmento+tam_segmento){
-			cruce[j%poblacion[indice].first.size()] = poblacion[indice].first[j%poblacion[indice].first.size()];
+			cruce[j%poblacion[indice_p1].first.size()] = poblacion[indice_p1].first[j%poblacion[indice_p1].first.size()];
 			j++;
 		}
 
 		rango_fijo_low = fin_segmento;
 
 		if (fin_segmento > ini_segmento){
-			// el segmento fijo hay que escogerlo entre fin_segmento y (poblacion[indice].fist.size() + ini_segmento) %  poblacion[indice].fist.size()
+			// el segmento fijo hay que escogerlo entre fin_segmento y (poblacion[indice_p1].fist.size() + ini_segmento) %  poblacion[indice_p1].fist.size()
 			//[ , , , , , , ]
 			//   ^       ^
 			//   |       |
 			// ini      fin
-			rango_fijo_hight = poblacion[indice].first.size() + ini_segmento; // el modulo lo aplicamos despues, así es más facil para sacar el aleatorio
+			rango_fijo_hight = poblacion[indice_p1].first.size() + ini_segmento; // el modulo lo aplicamos despues, así es más facil para sacar el aleatorio
 
 		} else {
 			// el segmento fijo hay que escogerlo entre fin_segmento y ini_segmento
@@ -1082,20 +1093,20 @@ unsigned PAR::operador_cruce_seg_fijo(std::vector<std::pair<std::vector<int>, do
 
 			auto pos = std::find(valores.begin(), valores.end(), valor);
 			if (pos == valores.end()){
-				valores.push_back(valor % poblacion[indice].first.size());
+				valores.push_back(valor % poblacion[indice_p1].first.size());
 			}
 		}
 
-		for (unsigned j = 0; j < poblacion[indice].first.size(); j++){
+		for (unsigned j = 0; j < poblacion[indice_p1].first.size(); j++){
 			auto pos = std::find(valores.begin(), valores.end(), j);
 
 			// rellenamos el hijo 1
 			// esta entre los seleccionados aleatoriamente, lo cogemos del padre 1
 			if (pos != valores.end()){
-				cruce[j] = poblacion[indice].first[j];
+				cruce[j] = poblacion[indice_p1].first[j];
 			} else {
 				// si no está lo cogemos del padre 2
-				cruce[j] = poblacion[indice+1].first[j];
+				cruce[j] = poblacion[indice_p2].first[j];
 			}
 		}
 
@@ -1373,12 +1384,10 @@ int PAR::algoritmo_BL_suave(std::pair<std::vector<int>, double> & sol_ini,
 		if (!mejora){
 			fallos++;
 		} else {
-			//std::cout << "Antes: " << sol_ini.second << std::endl;
 			contador[sol_ini.first[i]]--;
 			sol_ini.first[i] = mejor_cluster;
 			sol_ini.second = val_mejor_cluster;
 			contador[mejor_cluster]++;
-			//std::cout << "Despues: " << sol_ini.second << std::endl;
 		}
 
 		i++;
@@ -1386,7 +1395,6 @@ int PAR::algoritmo_BL_suave(std::pair<std::vector<int>, double> & sol_ini,
 
 	//std::cout << "ACABAMOS CON: " << sol_ini.second << std::endl;
 	//::cout << std::endl << std::endl << std::endl;
-
 
 	return evaluaciones;
 
