@@ -15,7 +15,10 @@ do for[i in semillas] {
 	"datos/rand_set_const_20.const_".i."_AGG_SF.out" with lines title "AGG-SF semilla ".i, \
 	"datos/rand_set_const_20.const_".i."_AGE_UN.out" with lines title "AGE-UN semilla ".i, \
 	"datos/rand_set_const_20.const_".i."_AGE_SF.out" with lines title "AGE-SF semilla ".i, \
-	"datos/rand_set_const_20.const_".i."_BL.out" with lines title "BL semilla ".i,
+	"datos/rand_set_const_20.const_".i."_BL.out" with lines title "BL semilla ".i, \
+	"datos/rand_set_const_20.const_".i."_AM-BL-1_UN.out" with lines title "AM-BL-1 semilla ".i,\
+	"datos/rand_set_const_20.const_".i."_AM-BL-0_1_UN.out" with lines title "AM-BL-0.1 semilla ".i, \
+	"datos/rand_set_const_20.const_".i."_AM-BL-0_1mej_UN.out" with lines title "AM-BL-0.1mej semilla ".i
 
 	pause mouse any
 }
