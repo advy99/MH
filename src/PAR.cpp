@@ -178,7 +178,7 @@ double PAR::get_desviacion_general() const{
 
 
 
-std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_greedy(){
+std::pair<std::vector<PAR::Cluster>,double> PAR::algoritmo_greedy(){
 
 
 	// inicialización de indices aleatorios
@@ -274,7 +274,7 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_greedy(){
 	calcular_desviacion_general();
 
 
-	return std::make_pair(clusters, calcular_infactibilidad());
+	return std::make_pair(clusters, funcion_objetivo());
 
 }
 
@@ -417,7 +417,8 @@ void PAR::calcular_desviacion_general(){
 
 
 
-std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(const std::vector<Cluster> & ini){
+std::pair<std::vector<PAR::Cluster>,double> PAR::algoritmo_BL(const std::vector<Cluster> & ini, int & TOPE_BL, const bool salida){
+
 
 
 	std::string fichero = "graficas/";
@@ -427,8 +428,9 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(const std::vector<Clu
 	fichero += "_BL.out";
 
 	std::fstream fic;
-	fic.open (fichero, std::fstream::out);
-
+	if (salida){
+		fic.open (fichero, std::fstream::out);
+	}
 
 	clusters = ini;
 
@@ -496,11 +498,14 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(const std::vector<Clu
 
 					evaluaciones++;
 
+					if (salida){
+						fic << evaluaciones << "\t" << f_objetivo << std::endl;
+					}
 					if ( n_f_objetivo < f_objetivo ){
 
 						f_objetivo = n_f_objetivo;
 						infac = n_infac;
-						fic << evaluaciones << "\t" << f_objetivo << std::endl;
+
 						//sol = clusters;
 						he_encontrado_mejor = true;
 					} else {
@@ -519,9 +524,12 @@ std::pair<std::vector<PAR::Cluster>,int> PAR::algoritmo_BL(const std::vector<Clu
 
 	//clusters = sol;
 
+	// establecemos TOPE_BL a las evaluacinoes realizadas, para devolverlas por parametro
+	TOPE_BL = evaluaciones;
+
 	calcular_desviacion_general();
 
-	return std::make_pair(clusters, calcular_infactibilidad());
+	return std::make_pair(clusters, funcion_objetivo());
 
 
 }
@@ -674,7 +682,7 @@ PRACTICA 2
 
 
 
-std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned evaluaciones_max,
+std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmos_AG(const unsigned evaluaciones_max,
 																				 const unsigned tam_pob_ini,
 																				 const float prob_mutacion,
 																				 const float prob_cruce,
@@ -689,6 +697,8 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 	fichero += NOM_RESTRICCIONES;
 	fichero += "_" + SEMILLA;
 
+	int evaluaciones_BL_normal = 100000;
+
 	if (tipo_generaciones == tipo_generacion::GENERACIONAL){
 		fichero += "_AGG";
 	} else if (tipo_generaciones == tipo_generacion::ESTACIONARIO){
@@ -699,6 +709,12 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 		fichero += "_AM-0_1";
 	} else if (tipo_generaciones == tipo_generacion::MEMETICO_0_1_MEJ){
 		fichero += "_AM-0_1mej";
+	}  else if (tipo_generaciones == tipo_generacion::MEMETICO_BL_1){
+		fichero += "_AM-BL-1";
+	} else if (tipo_generaciones == tipo_generacion::MEMETICO_BL_0_1){
+		fichero += "_AM-BL-0_1";
+	} else if (tipo_generaciones == tipo_generacion::MEMETICO_BL_0_1_MEJ){
+		fichero += "_AM-BL-0_1mej";
 	}
 
 	if (tipo_cruce == operador_cruce::SEGMENTO_FIJO){
@@ -839,19 +855,40 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 
 		}
 
-		if (generacion % 10 == 0){
-			if (tipo_generaciones == tipo_generacion::MEMETICO_1){
-				for (unsigned i = 0; i < poblacion_anterior.size(); i++){
-					evaluaciones += algoritmo_BL_suave(poblacion_anterior[i], 0.1*poblacion_anterior[i].first.size());
+		if (generacion % poblacion_anterior.size() == 0){
+			evaluaciones_BL_normal = 100000;
+			if (tipo_generaciones == tipo_generacion::MEMETICO_1 || tipo_generaciones == tipo_generacion::MEMETICO_BL_1 ){
+				if (tipo_generaciones == tipo_generacion::MEMETICO_1){
+					for (unsigned i = 0; i < poblacion_anterior.size(); i++){
+						evaluaciones += algoritmo_BL_suave(poblacion_anterior[i], 0.1*poblacion_anterior[i].first.size());
+					}
+				} else {
+					for (unsigned i = 0; i < poblacion_anterior.size(); i++){
+						auto sol_BL = algoritmo_BL(solucion_to_clusters(poblacion_anterior[i].first), evaluaciones_BL_normal);
+						poblacion_anterior[i].first = clusters_to_solucion(sol_BL.first);
+						poblacion_anterior[i].second = sol_BL.second;
+						evaluaciones += evaluaciones_BL_normal;
+					}
 				}
-			} else if (tipo_generaciones == tipo_generacion::MEMETICO_0_1){
-				// volvemos a aplicar la esperanza matemática
-				const unsigned NUM_BL_SUAVE = 0.1 * poblacion_anterior.size();
 
-				for (unsigned i = 0; i < NUM_BL_SUAVE; i++){
-					evaluaciones += algoritmo_BL_suave(poblacion_anterior[i], 0.1*poblacion_anterior[i].first.size());
+			} else if (tipo_generaciones == tipo_generacion::MEMETICO_0_1 || tipo_generaciones == tipo_generacion::MEMETICO_BL_0_1){
+				// volvemos a aplicar la esperanza matemática
+				const unsigned NUM_BL = 0.1 * poblacion_anterior.size();
+
+				if (tipo_generaciones == tipo_generacion::MEMETICO_0_1){
+					for (unsigned i = 0; i < NUM_BL; i++){
+						evaluaciones += algoritmo_BL_suave(poblacion_anterior[i], 0.1*poblacion_anterior[i].first.size());
+					}
+				} else {
+					for (unsigned i = 0; i < NUM_BL; i++){
+						auto sol_BL = algoritmo_BL(solucion_to_clusters(poblacion_anterior[i].first), evaluaciones_BL_normal);
+						poblacion_anterior[i].first = clusters_to_solucion(sol_BL.first);
+						poblacion_anterior[i].second = sol_BL.second;
+						evaluaciones += evaluaciones_BL_normal;
+					}
 				}
-			} else if (tipo_generaciones == tipo_generacion::MEMETICO_0_1_MEJ){
+
+			} else if (tipo_generaciones == tipo_generacion::MEMETICO_0_1_MEJ || tipo_generaciones == tipo_generacion::MEMETICO_BL_0_1_MEJ){
 				const unsigned NUM_MEJORES = 0.1 * poblacion_anterior.size();
 				std::set<int> indices_mejores;
 				for (unsigned i = 0; i < NUM_MEJORES; i++){
@@ -865,9 +902,20 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 					indices_mejores.insert(indice_mejor);
 				}
 
-				for (auto it = indices_mejores.begin(); it != indices_mejores.end(); ++it){
-					evaluaciones += algoritmo_BL_suave(poblacion_anterior[(*it)], 0.1*poblacion_anterior[(*it)].first.size());
+
+				if (tipo_generaciones == tipo_generacion::MEMETICO_0_1_MEJ){
+					for (auto it = indices_mejores.begin(); it != indices_mejores.end(); ++it){
+						evaluaciones += algoritmo_BL_suave(poblacion_anterior[(*it)], 0.1*poblacion_anterior[(*it)].first.size());
+					}
+				} else {
+					for (auto it = indices_mejores.begin(); it != indices_mejores.end(); ++it){
+						auto sol_BL = algoritmo_BL(solucion_to_clusters(poblacion_anterior[(*it)].first), evaluaciones_BL_normal);
+						poblacion_anterior[(*it)].first = clusters_to_solucion(sol_BL.first);
+						poblacion_anterior[(*it)].second = sol_BL.second;
+						evaluaciones += evaluaciones_BL_normal;
+					}
 				}
+
 
 			}
 		}
@@ -886,7 +934,7 @@ std::pair<std::vector<PAR::Cluster>, int> PAR::algoritmos_AG(const unsigned eval
 	clusters = solucion_to_clusters(mejor.first);
 	calcular_desviacion_general();
 
-	return std::make_pair(clusters, calcular_infactibilidad());
+	return std::make_pair(clusters, funcion_objetivo());
 
 }
 

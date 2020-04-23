@@ -10,7 +10,7 @@
 
 
 enum class operador_cruce {SEGMENTO_FIJO, UNIFORME};
-enum class tipo_generacion {GENERACIONAL, ESTACIONARIO, MEMETICO_1, MEMETICO_0_1, MEMETICO_0_1_MEJ};
+enum class tipo_generacion {GENERACIONAL, ESTACIONARIO, MEMETICO_1, MEMETICO_0_1, MEMETICO_0_1_MEJ, MEMETICO_BL_1, MEMETICO_BL_0_1, MEMETICO_BL_0_1_MEJ};
 
 class PAR{
 
@@ -62,9 +62,9 @@ class PAR{
 
 		int buscar_elemento(const int elemento) const;
 		void calcular_desviacion_general();
-		std::pair<std::vector<PAR::Cluster>,int> algoritmo_greedy();
-		std::pair<std::vector<PAR::Cluster>,int> algoritmo_BL(const std::vector<Cluster> & ini);
-		std::pair<std::vector<PAR::Cluster>,int> algoritmos_AG(const unsigned evaluaciones_max,\
+		std::pair<std::vector<PAR::Cluster>,double> algoritmo_greedy();
+		std::pair<std::vector<PAR::Cluster>,double> algoritmo_BL(const std::vector<Cluster> & ini, int & TOPE_BL, const bool salida = false);
+		std::pair<std::vector<PAR::Cluster>,double> algoritmos_AG(const unsigned evaluaciones_max,\
 			 																	 const unsigned tam_pob_ini,\
 																				 const float prob_mutacion, \
 																				 const float prob_cruce,
@@ -122,7 +122,7 @@ class PAR{
 			 						  const unsigned fallos_permitidos);
 
 
-		static const int TOPE_BL = 100000;
+		//static const int TOPE_BL = 100000;
 
 
 
