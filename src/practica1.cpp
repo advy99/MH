@@ -11,7 +11,7 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 
 
 
-	std::pair<std::vector<PAR::Cluster>,int> solucion;
+	std::pair<std::vector<PAR::Cluster>,double> solucion;
 
 	std::cout << std::endl << "Solución " << alg << " para " << datos << " con restricciones de " << restricciones << " con semilla " << seed << std::endl << std::endl << std::flush;
 
@@ -28,7 +28,8 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 
 	start_timers();
 	if (alg == "BL"){
-		solucion = par.algoritmo_BL(par.generar_solucion_aleatoria());
+		int eval_BL = 100000;
+		solucion = par.algoritmo_BL(par.generar_solucion_aleatoria(), eval_BL, true);
 		//solucion = par.algoritmo_BL(par.algoritmo_greedy().first)
 	} else if (alg == "GREEDY") {
 		solucion = par.algoritmo_greedy();
@@ -49,6 +50,18 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 	} else if (alg == "AM-10-0_1mej"){
 		tam_pob_ini = 10;
 		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::UNIFORME, tipo_generacion::MEMETICO_0_1_MEJ );
+	} else if (alg == "AM-BL-10-1"){
+		evaluaciones = 500000;
+		tam_pob_ini = 50;
+		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::UNIFORME, tipo_generacion::MEMETICO_BL_1 );
+	} else if (alg == "AM-BL-10-0_1"){
+		evaluaciones = 500000;
+		tam_pob_ini = 50;
+		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::UNIFORME, tipo_generacion::MEMETICO_BL_0_1 );
+	} else if (alg == "AM-BL-10-0_1mej"){
+		tam_pob_ini = 50;
+		evaluaciones = 500000;
+		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::UNIFORME, tipo_generacion::MEMETICO_BL_0_1_MEJ );
 	}
 
 
@@ -83,15 +96,15 @@ int main(int argc, char ** argv){
 
 	PAR par(datos, restricciones, clus, std::to_string(semilla));
 
+	/*
+	Set_random( semilla );
 
-	//Set_random( semilla );
-
-	//ejecutar_PAR_greedy(datos, restricciones, clus, semilla);
-
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "GREEDY");
+	*/
 	Set_random( semilla );
 
 	ejecutar_PAR(par, datos, restricciones, clus, semilla, "BL");
-
+/*
 
 	Set_random( semilla );
 
@@ -105,7 +118,7 @@ int main(int argc, char ** argv){
 
 	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-10-0_1mej");
 
-	
+
 	Set_random( semilla );
 
 	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGG-UN");
@@ -122,6 +135,18 @@ int main(int argc, char ** argv){
 
 	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGE-SF");
 
+*/
+	Set_random( semilla );
+
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-BL-10-1");
+
+	Set_random( semilla );
+
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-BL-10-0_1");
+
+	Set_random( semilla );
+
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-BL-10-0_1mej");
 
 
 	return 0;
