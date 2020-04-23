@@ -447,6 +447,8 @@ De esta forma, que \texttt{solucion\_enteros[i]} nos dice el cluster donde se en
 
 
 
+Como hemos comentado, cuando queramos aplicar una operación que sea costosa sobre una representación, pero simple sobre otra, simplemente cambiaremos de una a otra usando estas funciones.
+
 \newpage
 
 \subsection{Calcular \textit{Infeasibility} parcial.}
@@ -475,6 +477,11 @@ return incumplidas
 	
 	
 \end{lstlisting}
+
+
+Esta factorización nos servirá para el algoritmo greedy y el algoritmo de búsqueda local, sin embargo no nos servirá con los nuevos algoritmos de la práctica 2, ya que al modificar una solución, esta será totalmente distinta por lo que tendremos que reevaluarla de nuevo.
+
+\newpage
 
 \subsection{Función objetivo.}
 
@@ -583,7 +590,6 @@ La exploración del entorno se realizará de forma aleatoria, cada iteración (n
 
 El algoritmo de búsqueda local se basará en generar una solución aleatoria, a partir de esa solución aleatoria generar vecinos, evaluarlos hasta que encuentre un mejor vecino, en cuanto encuentre un mejor vecino moverse a este, y parar en caso de que en todo el vecindario no encuentre un mejor vecino o se llegue al límite de evaluaciones, en nuestro caso 100.000.
 
-\newpage
 
 Con las distintas operaciones podemos codificar el algoritmo de la siguiente forma:
 
@@ -606,7 +612,6 @@ do:
 	encontrado_mejor = false
 	reordenar_aleatoriamente(indices)
 	reordenar_aleatoriamente(indices_clusters)
-	
 	Para cada elemento i de indices Y !encontrado_mejor
 		Para cada elemento j del indices_clusters Y !encontrado_mejor
 			antiguo_cluster = buscar_elemento(i)
@@ -616,7 +621,6 @@ do:
 				infac_vecino += incumple_restricciones(i, j)
 				clusters[j].añadir_elemento(i)
 				calcular_desviacion_general()
-				
 				f_objetivo_vecino = get_desviacion_general() + (infac_vecino * LAMBDA)
 				evaluaciones++				
 				
@@ -637,6 +641,41 @@ while evaluaciones < TOPE_BL Y encontrado_mejor
 Como consideraciones a este algoritmo, vemos como por el operador de vecino es posible que nos estanquemos en mínimos locales de los que no seamos capaces de salir, siendo este el principal problema del algoritmo de búsqueda local.
 
 También mencionar que el escoger la función objetivo puede hacer variar la solución de una forma bastante importante dependiendo del peso que le demos a incumplir las restricciones, como veremos más adelante en los análisis de los resultados y experimentos, ya que de la función objetivo dependerá la penalización por incumplir restricciones por lo que modificando esta función podremos escoger entre mejorar la desviación general o no permitir que se incumplan restricciones.
+
+\newpage
+
+\subsection{Algoritmos evolutivos basados en poblaciones.}
+
+\subsubsection{Introducción a los algoritmos evolutivos.}
+
+Los algoritmos evolutivos basados en poblaciones, como hemos visto en teoría, son algoritmos que se basan en tener un trabajar con un conjunto de soluciones al que llamaremos población, con el objetivo de aplicar distintos operadores para mejorar estas soluciones de la población. A cada una de las soluciones de la población la llamaremos cromosoma, es decir, una población está formada por cromosomas.
+
+De forma similar, como hemos comentado en la nueva representación, la \textbf{representación usada en la práctica 1} (búsqueda local y el algoritmo greedy) \textbf{no nos servirá aquí}, ya que las operaciones que vamos a aplicar a los cromosomas no se pueden aplicar ya que, como explicaremos más adelante, no sería viable obtener la información ni una forma de aplicar estos cambios. Con la nueva representación, usando un vector de enteros en el que el elemento N se representa con la posición N del vector, podemos hablar de genes, que serán los elementos de la solución, los elementos que conforman a un cromosoma.
+
+Como resumen, en un algoritmo evolutivo encontraremos los siguientes elementos:
+
+\begin{enumerate}
+	\item \textbf{Gen}: Representación de un elemento de una solución. En la representación un elemento tendrá asociado el cluster al que pertenece.
+	\item \textbf{Cromosoma}: Representación de una solución, compuesto por genes.
+	\item \textbf{Población}: Representación de un conjunto de cromosomas, es decir, conjunto de soluciones.
+\end{enumerate}
+
+El objetivo de esta práctica será ver como con una población, haciendo que los distintos cromosomas interactúen, conseguiremos explorar el espacio de búsqueda, obteniendo soluciones diversas, a la vez que intentaremos que las interacciones entre los cromosomas nos lleven a mejores soluciones intentando seguir el modelo evolutivo, en el que a partir de los cromosomas obtendremos sus hijos, que contendrán información de ambos padres, lo que hará que las nuevas soluciones intenten tomar la mejor parte de ambos a la vez que obtendremos soluciones diversas, evitando los problemas de la búsqueda local, cuyo problema era estancarse en mínimos locales, estos problemas los evitaremos ya que la exploración es mayor como comentaremos más adelante.
+
+
+\subsubsection{Esquema de los algoritmos evolutivos.}
+
+En esta práctica se nos pide implementar dos tipos de algoritmos:
+
+\begin{itemize}
+	\item {Algoritmos Genéticos.}
+	\item {Algoritmos Meméticos.}
+\end{itemize}
+
+De los cuales vamos a implementar distintas versiones que explicaremos más adelante, sin embargo todos los algoritmos y variaciones seguirán el mismo esquema general de evolución (cada uno tendrá distintas modificaciones, que explicaremos en el desarrollo especifico de cada uno).
+
+
+
 
 \section{Algoritmo de comparación.}
 
@@ -769,7 +808,7 @@ Cada ejecución del programa lanzará todos los algoritmos explicados en esa mis
 También cabe destacar que en la ruta del fichero de datos se creará un fichero con la extensión \texttt{.out} con la salida y solución del PAR, este fichero contendrá en su nombre la semilla con la que se ha ejecutado, el algoritmo y el conjunto de datos usado.
 
 
-
+\newpage
 
 \section{Experimentos y análisis de resultados.}
 
@@ -787,15 +826,9 @@ En nuestro caso, para el problema del PAR trabajaremos sobre tres conjuntos de d
 
 Destacar que en nuestro problema las restricciones tendrán un papel muy importante, ya que los conjuntos de datos son muy distintos y estas restricciones son un añadido no original del problema, podría darse el caso de que dos elementos que en principio son de la misma clase estén separados por las restricciones, en caso de tener muy en cuenta las restricciones en nuestra función objetivo, o viceversa, es decir, que realice la asignación de clases sin tener en cuenta las restricciones si a estas no se les da la suficiente importancia.
 
-\newpage
-
 
 
 \subsubsection{Semillas escogidas.}
-
-Uno de los problemas que encontré en el desarrollo de la práctica (comentado con los profesores) es que a veces el algoritmo Greedy ciclaba indefinidamente, ya que pasaba por una serie de soluciones y volvía a las mismas.
-
-La forma de solucionar esto (que pasaba rara vez, pero ocurría) es buscar semillas que no ciclen ya que la secuencia de aleatorios generadas por esta asignaba los elementos que producían el ciclo a distintos clusters.
 
 Las semillas que voy a usar son:
 
@@ -807,456 +840,17 @@ Las semillas que voy a usar son:
 	\item {3939021}
 \end{itemize}
 
-Estas semillas las he obtenido a base de prueba-error y comprobar que no ciclaban.
-
 \newpage
 
 \subsection{Resultados obtenidos.}
 
-A continuación mostraré las tablas dadas por los profesores de la asignatura como plantilla. En las tablas de las ejecuciones explicaré el comportamiento de los algoritmos con respecto a los conjuntos de datos, mientras que en la comparación global en la sección de análisis de resultados compararé los distintos algoritmos.
-
-Recordar que las distancias no son las reales ya que al calcularlas no se les ha aplicado la raíz cuadrada al ser una operación muy costosa que en realidad no influye a la hora de compararlas, es decir, una distancia sigue siendo mayor a otra tanto si aplicamos la raíz cuadrada a ambas como si no.
-
-\subsubsection{10\% de restricciones.}
-
-\begin{table}[H]
-\small
-
-\begin{adjustwidth}{-1cm}{-1cm}%
-
-\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-\multicolumn{13}{|c|}{\textbf{Ejecuciones BL con un 10\% de restricciones}}                                                                                                                                                                                                                                                                                                                                            \\ \hline
-\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
-\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
-123452244                                               & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1009,81                      & 34,00                          & 1147,55                   & 1,31                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-9398429                                                 & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 998,07                       & 30,00                          & 1119,60                   & 1,09                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-12321                                                   & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1005,33                      & 36,00                          & 1151,17                   & 1,05                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-213566                                                  & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1025,31                      & 41,00                          & 1191,41                   & 0,93                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-3939021                                                 & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1038,06                      & 31,00                          & 1163,65                   & 1,01                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-\textbf{Media}                                          & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1015,32                      & 34,40                          & 1154,68                   & 1,08                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-\end{tabular}
-
-\end{adjustwidth}
-
-\end{table}	
-
-
-% Please add the following required packages to your document preamble:
-% \usepackage{multirow}
-\begin{table}[H]
-
-\small
-
-\begin{adjustwidth}{-1cm}{-1cm}%
-
-\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-\multicolumn{13}{|c|}{\textbf{Ejecuciones Greedy con un 10\% de restricciones}}                                                                                                                                                                                                                                                                                                                                        \\ \hline
-\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
-\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
-123452244                                               & 0,60                         & 7,00                           & 0,91                      & 0,02                   & 1596,56                      & 408,00                         & 3249,44                   & 0,23                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-9398429                                                 & 0,60                         & 47,00                          & 2,71                      & 0,01                   & 1584,45                      & 256,00                         & 2621,55                   & 0,29                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-12321                                                   & 0,60                         & 30,00                          & 1,95                      & 0,01                   & 1613,80                      & 172,00                         & 2310,60                   & 0,48                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-213566                                                  & 0,60                         & 0,00                           & 0,60                      & 0,01                   & 1584,23                      & 95,00                          & 1969,09                   & 0,28                   & 0,85                         & 0,00                           & 0,85                      & 0,00                   \\ \hline
-3939021                                                 & 0,60                         & 7,00                           & 0,91                      & 0,01                   & 1722,98                      & 195,00                         & 2512,96                   & 0,38                   & 0,85                         & 0,00                           & 0,85                      & 0,00                   \\ \hline
-\textbf{Media}                                          & 0,60                         & 18,20                          & 1,42                      & 0,01                   & 1620,40                      & 225,20                         & 2532,73                   & 0,33                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-\end{tabular}
-
-\end{adjustwidth}
-
-\end{table}
-
-
-Vemos como efectivamente, con lo comentado anteriormente, tanto Iris como Rand obtienen un valor muy bueno, que como podemos comprobar en la asignación de elementos en los ficheros de salida del programa, son las asignaciones óptimas para el problema de asignación clásico, sin embargo Ecoli, que si tiene aleatoriedad en su fichero de restricciones si necesita incumplir restricciones para realizar las asignaciones, llegando a veces a dejar clusters con un único elemento como podemos observar en los ficheros de salida del programa, ya que por las restricciones no es capaz de formar un cluster completo sin aumentar la función objetivo.
-
-Con respecto a la tabla de BL podemos observar que tanto para Iris como para Rand llegamos a la misma solución independientemente de la semilla utilizada, lo que nos indica que en esos puntos existe un mínimo para ese conjunto de datos, aunque utilizando búsqueda local nunca podemos asegurar que ese mínimo sea el optimo. Ecoli sin embargo si tenemos más variedad de soluciones, viendo un equilibro entre la desviación general y la tasa de infactibilidad entre los valores 998 y 1040 y valores entre 30 y 40, respectivamente. Esto nos hace entender mejor como trabaja la función objetivo, ya que intenta equilibrar estos dos valores para intentar minimizar ambos, seguiré comentado esto en la sección de experimentos.
-
-Con respecto a la tabla del algoritmo Greedy vemos como esta vez en Iris, aunque mantiene la desviación general al mismo nivel que búsqueda local, no es capaz de mantener una baja infactibilidad por lo ya comentado de la gestión de restricciones. En Rand este algoritmo si es capaz de llegar a la misma solución que BL, seguramente por lo comentado del fichero de restricciones. De cara a Ecoli podemos ver que tanto la desviación general como la infactibilidad es mucho más inestable, ya que depende de la \"suerte\" que tenga el algoritmo con la semilla aleatoria y el orden de los elementos, para que estos no generen grandes tasas de incumplimiento de restricciones y permita agrupar a los elementos de una forma más coherente.
-
-\subsubsection{20\% de restricciones.}
-
-\begin{table}[H]
-
-\small
-
-\begin{adjustwidth}{-1cm}{-1cm}%
-
-
-\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-\multicolumn{13}{|c|}{\textbf{Ejecuciones BL con un 20\% de restricciones}}                                                                                                                                                                                                                                                                                                                                            \\ \hline
-\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
-\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
-123452244                                               & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1003,50                      & 77,00                          & 1159,47                   & 1,52                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-9398429                                                 & 0,60                         & 0,00                           & 0,60                      & 0,05                   & 1034,73                      & 85,00                          & 1206,90                   & 1,17                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-12321                                                   & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 975,78                       & 87,00                          & 1152,01                   & 1,26                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-213566                                                  & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1020,51                      & 99,00                          & 1221,04                   & 1,12                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-3939021                                                 & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 982,74                       & 118,00                         & 1221,76                   & 1,38                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-\textbf{Media}                                          & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1003,45                      & 93,20                          & 1192,24                   & 1,29                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-\end{tabular}
-\end{adjustwidth}
-
-\end{table}
-
-
-
-
-\begin{table}[H]
-\small
-
-\begin{adjustwidth}{-1cm}{-1cm}%
-
-\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-\multicolumn{13}{|c|}{\textbf{Ejecuciones Greedy con un 20\% de restricciones}}                                                                                                                                                                                                                                                                                                                                        \\ \hline
-\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
-\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
-123452244                                               & 0,87                         & 69,00                          & 2,42                      & 0,01                   & 1491,53                      & 307,00                         & 2113,39                   & 0,20                   & 0,85                         & 0,00                           & 0,85                      & 0,00                   \\ \hline
-9398429                                                 & 0,59                         & 17,00                          & 0,97                      & 0,01                   & 1676,16                      & 282,00                         & 2247,38                   & 0,11                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-12321                                                   & 0,60                         & 0,00                           & 0,60                      & 0,01                   & 1440,98                      & 108,00                         & 1659,74                   & 0,53                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-213566                                                  & 0,60                         & 52,00                          & 1,77                      & 0,01                   & 1551,01                      & 215,00                         & 1986,51                   & 0,17                   & 0,85                         & 0,00                           & 0,85                      & 0,00                   \\ \hline
-3939021                                                 & 0,59                         & 17,00                          & 0,98                      & 0,01                   & 1470,86                      & 191,00                         & 1857,75                   & 0,27                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-\textbf{Media}                                          & 0,65                         & 31,00                          & 1,35                      & 0,01                   & 1526,11                      & 220,60                         & 1972,95                   & 0,25                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-\end{tabular}
-
-\end{adjustwidth}
-
-\end{table}
-
-En general, podemos ver que se mantiene lo dicho con un 10\% de restricciones, a continuación comentaré los cambios más remarcables.
-
-En búsqueda local vemos como se repite la situación, tanto en Iris como en Rand el aumento de restricciones no impide volver a tener la misma solución que con un 10\% de restricciones, ya que estos ficheros tienen la misma disposición de las restricciones. De nuevo, en el caso de Ecoli ocurre la misma situación, vemos como mantiene cierto equilibro gracias a la forma de la función objetivo, sin embargo se ve obligado a incumplir más restricciones por el aumento del porcentaje.
-
-En el caso de greedy para Rand vuelve a ocurrir lo mismo, mientras que para Iris si existen ciertos cambios, vemos como es capaz de mejorar el valor de algunas desviaciones generales, pero esto es debido a que por las restricciones decide dejar clusters un poco más vacios, acercando los elementos que están dentro, eso sí, aumentando la tasa de restricciones incumplidas.
 
 \newpage
 
 
 \subsection{Análisis de resultados.	}
 
-A continuación podemos ver la media de las distintas ejecuciones, tanto para un 10\% de restricciones como para un 20\%:
-
-
-
-\begin{table}[H]
-\small
-\begin{adjustwidth}{-1cm}{-1cm}%
-
-
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-\multicolumn{13}{|c|}{\textbf{Resultados globales en el PAR con 10\% de restricciones}}                                                                                                                                                                                                                                                                                                              \\ \hline
-\multirow{2}{*}{\textbf{Algoritmo}}   & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
-                                      & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
-\multicolumn{1}{|l|}{\textbf{Greedy}} & 0,60                         & 18,20                          & 1,42                      & 0,01                   & 1620,40                      & 225,20                         & 2532,73                   & 0,33                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-\multicolumn{1}{|l|}{\textbf{BL}}     & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1015,32                      & 34,40                          & 1154,68                   & 1,08                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-\end{tabular}
-
-\end{adjustwidth}
-\end{table}
-
-
-
-
-\begin{table}[H]
-\small
-\begin{adjustwidth}{-1cm}{-1cm}%
-
-
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-\multicolumn{13}{|c|}{\textbf{Resultados globales en el PAR con 20\% de restricciones}}                                                                                                                                                                                                                                                                                                              \\ \hline
-\multirow{2}{*}{\textbf{Algoritmo}}   & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
-                                      & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
-\multicolumn{1}{|l|}{\textbf{Greedy}} & 0,65                         & 31,00                          & 1,35                      & 0,01                   & 1526,11                      & 220,60                         & 1972,95                   & 0,25                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-\multicolumn{1}{|l|}{\textbf{BL}}     & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1003,45                      & 93,20                          & 1192,24                   & 1,29                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-\end{tabular}
-
-\end{adjustwidth}
-\end{table}
-
-
-En este resumen en el que vemos las medias de las distintas ejecuciones para los distintos algoritmos, tanto con un 10\% de restricciones como con un 20\% de restricciones.
-
-Podemos observar como el algoritmo de búsqueda local se comporta bastante mejor que el algoritmo greedy, tanto en minimizar la desviación general como en minimizar el número de restricciones incumplidas. Esto se da por lo ya comentado para el algoritmo greedy sobre el aumento de restricciones incumplidas, que es incapaz de volver atrás al colocar un elemento y tampoco tiene en cuenta los elementos que introducirá en los clusters.
-
-Este problema no lo observamos en el algoritmo de búsqueda local, ya que la evaluación y selección del vecino penaliza el incumplir restricciones y siempre trabajamos con el total de restricciones incumplidas, no con el de una solución parcial como en el algoritmo greedy.
-
-Con respecto al tiempo, el algoritmo de búsqueda local es considerablemente más lento, en todos los casos, aunque sus tiempos de ejecución siguen dentro de lo razonable, dando resultados prácticamente inmediatos, aunque en peor tiempo que Greedy. Esto no quita que aunque sea un poco más lento, esto apenas es apreciable ya que todos los tiempos están por debajo de los 1,3 segundos, y aun así el valor de la función objetivo es mucho más bajo en búsqueda local.
-
-Como tanto la desviación general como en la infactibilidad conseguimos mejores resultados con búsqueda local, la agregación total es menor, por lo que consideramos mejores las soluciones tanto con un 10 como con un 20 por ciento de restricciones. La única excepción es para el conjunto de datos Rand, ya que obtenemos la misma solución con greedy y con BL, pero el tiempo de greedy es menor, por lo que podemos considerar en este caso greedy como un mejor algoritmo.
-
-También comentar que el hecho de factorizar los algoritmos ha permitido ejecutarlos en un tiempo más que razonable (unos 20 segundos para las 30 ejecuciones), mientras que sin factorizar llegaba a tardar unos 15 minutos para las 30 ejecuciones del algoritmo.
-
-
-\newpage
-
 \subsection{Otros experimentos realizados.}
 
-\subsubsection{Modificación de la función objetivo}
-
-Hemos visto que pasaría con la siguiente función objetivo:
-
-$$ \lambda = \frac{D_{max}}{NumRestricciones} $$ 
-
-$$ f = C + (\textit{Infeasibility} * \lambda) $$ 
-
-Sin embargo, he probado a modificar el valor de $\lambda$, de forma que la penalización por incumplir restricciones sea mucho mayor para intentar minimizar lo máximo posible la tasa de \textit{infeasibility}:
-
-
-$$ \lambda = \frac{D_{max}^2}{NumRestricciones} $$ 
-
-$$ f = C + (\textit{Infeasibility} * \lambda) $$ 
-
-
-
-Con esto hemos obteniendo los siguientes resultados:
-
-\begin{table}[H]
-\small
-
-\begin{adjustwidth}{-1.2cm}{-1.2cm}%
-
-\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-\multicolumn{13}{|c|}{\textbf{Ejecuciones BL con un 10\% de restricciones penalizando restricciones}}                                                                                                                                                                                                                                                                                                                  \\ \hline
-\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
-\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
-123452244                                               & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1657,33                      & 36,00                          & 3326859,89                & 1,34                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-9398429                                                 & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1491,50                      & 21,00                          & 1941192,99                & 1,67                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-12321                                                   & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1423,07                      & 1,00                           & 93789,81                  & 1,51                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-213566                                                  & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1547,14                      & 9,00                           & 832847,78                 & 1,22                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-3939021                                                 & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1533,86                      & 12,00                          & 1109934,71                & 1,27                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-\textbf{Media}                                          & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1530,58                      & 15,80                          & 1460925,04                & 1,40                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-\end{tabular}
-
-\end{adjustwidth}
-
-\end{table}
-
-\begin{table}[H]
-\small
-
-\begin{adjustwidth}{-1.2cm}{-1.2cm}%
-
-\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-\multicolumn{13}{|c|}{\textbf{Ejecuciones BL con un 20\% de restricciones penalizando restricciones}}                                                                                                                                                                                                                                                                                                                  \\ \hline
-\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
-\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
-123452244                                               & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1273,62                      & 0,00                           & 1273,62                   & 1,52                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-9398429                                                 & 0,60                         & 0,00                           & 0,60                      & 0,05                   & 1093,38                      & 0,00                           & 1093,38                   & 1,60                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-12321                                                   & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1093,38                      & 0,00                           & 1093,38                   & 1,67                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-213566                                                  & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1274,84                      & 0,00                           & 1274,84                   & 2,03                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-3939021                                                 & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1274,84                      & 0,00                           & 1274,84                   & 1,46                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-\textbf{Media}                                          & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1202,01                      & 0,00                           & 1202,01                   & 1,66                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-\end{tabular}
-\end{adjustwidth}
-
-\end{table}
-
-\newpage
-
-También he probado el caso contrario, es decir, apenas penalizar el incumplir las restricciones: 
-
-$$ \lambda = \frac{D_{max}}{NumRestricciones^2} $$ 
-
-$$ f = C + (\textit{Infeasibility} * \lambda) $$ 
-
-Obteniendo los siguientes resultados:
-
-
-\begin{table}[H]
-\small
-
-\begin{adjustwidth}{-1cm}{-1cm}%
-
-\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-\multicolumn{13}{|c|}{\textbf{Ejecuciones BL con un 10\% de restricciones NO penalizando restricciones}}                                                                                                                                                                                                                                                                                                               \\ \hline
-\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
-\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
-123452244                                               & 0,52                         & 139,00                         & 0,53                      & 0,04                   & 303,78                       & 4080,00                        & 303,82                    & 1,38                   & 0,84                         & 11,00                          & 0,84                      & 0,03                   \\ \hline
-9398429                                                 & 0,52                         & 182,00                         & 0,52                      & 0,04                   & 303,67                       & 4050,00                        & 303,71                    & 1,66                   & 0,84                         & 11,00                          & 0,84                      & 0,03                   \\ \hline
-12321                                                   & 0,52                         & 182,00                         & 0,52                      & 0,06                   & 303,77                       & 4033,00                        & 303,81                    & 1,63                   & 0,84                         & 11,00                          & 0,84                      & 0,03                   \\ \hline
-213566                                                  & 0,52                         & 139,00                         & 0,53                      & 0,05                   & 302,82                       & 4045,00                        & 302,86                    & 1,58                   & 0,84                         & 11,00                          & 0,84                      & 0,03                   \\ \hline
-3939021                                                 & 0,52                         & 139,00                         & 0,53                      & 0,04                   & 303,26                       & 4082,00                        & 303,30                    & 1,84                   & 0,84                         & 11,00                          & 0,84                      & 0,03                   \\ \hline
-\textbf{Media}                                          & 0,52                         & 156,20                         & 0,53                      & 0,05                   & 303,46                       & 4058,00                        & 303,50                    & 1,62                   & 0,84                         & 11,00                          & 0,84                      & 0,03                   \\ \hline
-\end{tabular}
-\end{adjustwidth}
-
-\end{table}
-
-
-\begin{table}[H]
-\small
-
-\begin{adjustwidth}{-1cm}{-1cm}%
-
-\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-\multicolumn{13}{|c|}{\textbf{Ejecuciones BL con un 20\% de restricciones NO penalizando restricciones}}                                                                                                                                                                                                                                                                                                               \\ \hline
-\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
-\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
-123452244                                               & 0,52                         & 374,00                         & 0,52                      & 0,07                   & 303,82                       & 8107,00                        & 303,90                    & 2,12                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
-9398429                                                 & 0,52                         & 374,00                         & 0,52                      & 0,04                   & 303,69                       & 8125,00                        & 303,77                    & 1,93                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
-12321                                                   & 0,52                         & 374,00                         & 0,52                      & 0,05                   & 303,56                       & 8133,00                        & 303,64                    & 2,02                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
-213566                                                  & 0,52                         & 257,00                         & 0,52                      & 0,06                   & 302,83                       & 8134,00                        & 302,91                    & 2,34                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
-3939021                                                 & 0,52                         & 257,00                         & 0,52                      & 0,05                   & 303,52                       & 8191,00                        & 303,60                    & 2,77                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
-\textbf{Media}                                          & 0,52                         & 327,20                         & 0,52                      & 0,05                   & 303,48                       & 8138,00                        & 303,56                    & 2,24                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
-\end{tabular}
-\end{adjustwidth}
-
-\end{table}
-
-\newpage
-
-Comentaré el resumen de ambas tablas:
-
-\begin{table}[H]
-\small
-\begin{adjustwidth}{-2cm}{-2cm}%
-
-
-\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-\multicolumn{13}{|c|}{\textbf{Resultados globales con un 10\% de restricciones}}                                                                                                                                                                                                                                                                                                                                       \\ \hline
-\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
-\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
-Greedy                                                  & 0,60                         & 18,20                          & 1,42                      & 0,01                   & 1620,40                      & 225,20                         & 2532,73                   & 0,33                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-BL                                                      & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1015,32                      & 34,40                          & 1154,68                   & 1,08                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-BL\_Cumple\_rest                                        & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1530,58                      & 15,80                          & 1460925,04                & 1,40                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-BL\_incumple\_rest                                      & 0,52                         & 156,20                         & 0,53                      & 0,05                   & 303,46                       & 4058,00                        & 303,50                    & 1,62                   & 0,84                         & 11,00                          & 0,84                      & 0,03                  \\ \hline
-\end{tabular}
-
-\end{adjustwidth}
-\end{table}
-
-
-\begin{table}[H]
-\small
-\begin{adjustwidth}{-1.9cm}{-1.9cm}%
-
-
-\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-\multicolumn{13}{|c|}{\textbf{Resultados globales con un 20\% de restricciones}}                                                                                                                                                                                                                                                                                                                                       \\ \hline
-\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
-\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
-Greedy                                                  & 0,65                         & 31,00                          & 1,35                      & 0,01                   & 1526,11                      & 220,60                         & 1972,95                   & 0,25                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-BL                                                      & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1003,45                      & 93,20                          & 1192,24                   & 1,29                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-BL\_Cumple\_rest                                        & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1202,01                      & 0,00                           & 1202,01                   & 1,66                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-BL\_incumple\_rest                                      & 0,52                         & 327,20                         & 0,52                      & 0,05                   & 303,48                       & 8138,00                        & 303,56                    & 2,24                   & 0,84                         & 18,00                          & 0,84                      & 0,03               \\ \hline   
-\end{tabular}
-
-\end{adjustwidth}
-\end{table}
-
-En esta tabla podemos ver claramente como funciona las modificaciones realizadas a la función objetivo.
-
-Para la primera modificación vemos como intenta minimizar el número de restricciones a incumplir, cosa que consigue con un 20\% de restricciones, y reduce a la mitad la infactibilidad en un 10\% de restricciones en Ecoli (tanto Rand como Iris ya tenían infactibilidad 0, así que no hay diferencias), sin embargo, esta modificación de la función objetivo hace que una sola restricción penalice de forma muy grande, sumado a que la distancia en los elementos en Ecoli es bastante grande. Este algoritmo sería una buena opción si intentamos tratar las restricciones como unas restricciones más fuertes del problema, por ejemplo en el caso de que tengamos un limite superior de restricciones a incumplir. 
-
-
-Para la segunda modificación, como cabía esperar, la desviación general se reduce de una forma muy grande, mientras que las restricciones son incumplidas de forma sistemática. Como la penalización es muy baja, apenas se nota en el agregado. En este caso basicamente estamos resolviendo el problema de agrupación clásico, sin restricciones, al no tenerlas en cuenta.
-
-\newpage
-
-\subsubsection{Búsqueda local: usar como solución inicial la solución del algoritmo greedy}
-
-Para realizar este apartado he realizado una pequeña modificación en mi código, ahora el algoritmo de búsqueda local recibe un parámetro, la solución inicial. Por defecto este parámetro será la solución aleatoria, mientras que para este experimento ejecutaremos el algoritmo greedy, y le pasaremos la solución obtenida al algoritmo de búsqueda local.
-
-A continuación vemos los resultados obtenidos:
-
-\begin{table}[H]
-\small
-\begin{adjustwidth}{-1cm}{-1cm}%
-
-\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-\multicolumn{13}{|c|}{\textbf{Ejecuciones BL con un 10\% de restricciones, solución inicial: Greedy}}                                                                                                                                                                                                                                                                                                                  \\ \hline
-\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
-\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
-123452244                                               & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1009,08                      & 21,00                          & 1009,08                   & 1,46                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-9398429                                                 & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1004,24                      & 25,00                          & 1004,24                   & 1,25                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-12321                                                   & 0,60                         & 0,00                           & 0,60                      & 0,06                   & 1008,26                      & 18,00                          & 1008,26                   & 1,98                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-213566                                                  & 0,60                         & 0,00                           & 0,60                      & 0,05                   & 1000,74                      & 21,00                          & 1000,74                   & 1,76                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-3939021                                                 & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1004,37                      & 29,00                          & 1004,37                   & 1,80                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-\textbf{Media}                                          & 0,60                         & 0,00                           & 0,60                      & 0,05                   & 1005,34                      & 22,80                          & 1005,34                   & 1,65                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-\end{tabular}
-
-\end{adjustwidth}
-
-\end{table}
-
-\begin{table}[H]
-\small
-\begin{adjustwidth}{-1cm}{-1cm}%
-
-\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-\multicolumn{13}{|c|}{\textbf{Ejecuciones BL con un 20\% de restricciones, solución inicial: Greedy}}                                                                                                                                                                                                                                                                                                                  \\ \hline
-\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
-\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
-123452244                                               & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 988,42                       & 79,00                          & 1148,44                   & 0,97                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
-9398429                                                 & 0,60                         & 0,00                           & 0,60                      & 0,02                   & 983,47                       & 96,00                          & 1177,92                   & 0,94                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
-12321                                                   & 0,60                         & 0,00                           & 0,60                      & 0,01                   & 965,21                       & 46,00                          & 1058,39                   & 1,34                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
-213566                                                  & 0,60                         & 0,00                           & 0,60                      & 0,02                   & 976,40                       & 70,00                          & 1118,19                   & 0,65                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
-3939021                                                 & 0,60                         & 0,00                           & 0,60                      & 0,01                   & 1003,25                      & 56,00                          & 1116,69                   & 0,84                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
-\textbf{Media}                                          & 0,60                         & 0,00                           & 0,60                      & 0,02                   & 983,35                       & 69,40                          & 1123,93                   & 0,95                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
-\end{tabular}
-
-\end{adjustwidth}
-
-\end{table}
-
-\newpage
-Voy a comparar con los otros algoritmos con las tablas globales:
-
-\begin{table}[H]
-\small
-\begin{adjustwidth}{-2cm}{-2cm}%
-
-
-\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-\multicolumn{13}{|c|}{\textbf{Ejecuciones BL con un 10\% de restricciones, solución inicial: Greedy}}                                                                                                                                                                                                                                                                                                                  \\ \hline
-\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
-\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
-Greedy                                                  & 0,60                         & 18,20                          & 1,42                      & 0,01                   & 1620,40                      & 225,20                         & 2532,73                   & 0,33                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-BL                                                      & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1015,32                      & 34,40                          & 1154,68                   & 1,08                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-BL\_Cumple\_rest                                        & 0,60                         & 0,00                           & 0,60                      & 0,03                   & 1530,58                      & 15,80                          & 1460925,04                & 1,40                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-BL\_incumple\_rest                                      & 0,52                         & 156,20                         & 0,53                      & 0,05                   & 303,46                       & 4058,00                        & 303,50                    & 1,62                   & 0,84                         & 11,00                          & 0,84                      & 0,03                   \\ \hline
-BL\_inicio\_Greedy                                      & 0,60                         & 0,00                           & 0,60                      & 0,05                   & 1005,34                      & 22,80                          & 1005,34                   & 1,65                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-\end{tabular}
-\end{adjustwidth}
-\end{table}
-
-
-\begin{table}[H]
-\small
-\begin{adjustwidth}{-1.9cm}{-1.9cm}%
-
-
-\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-\multicolumn{13}{|c|}{\textbf{Ejecuciones BL con un 10\% de restricciones, solución inicial: Greedy}}                                                                                                                                                                                                                                                                                                                  \\ \hline
-\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Semilla}}} & \multicolumn{4}{c|}{Iris}                                                                                          & \multicolumn{4}{c|}{Ecoli}                                                                                         & \multicolumn{4}{c|}{Rand}                                                                                          \\ \cline{2-13} 
-\multicolumn{1}{|c|}{}                                  & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{Tasa\_C} & \multicolumn{1}{l|}{Tasa\_inf} & \multicolumn{1}{l|}{Agr.} & \multicolumn{1}{l|}{T} \\ \hline
-Greedy                                                  & 0,65                         & 31,00                          & 1,35                      & 0,01                   & 1526,11                      & 220,60                         & 1972,95                   & 0,25                   & 0,85                         & 0,00                           & 0,85                      & 0,01                   \\ \hline
-BL                                                      & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1003,45                      & 93,20                          & 1192,24                   & 1,29                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-BL\_Cumple\_rest                                        & 0,60                         & 0,00                           & 0,60                      & 0,04                   & 1202,01                      & 0,00                           & 1202,01                   & 1,66                   & 0,85                         & 0,00                           & 0,85                      & 0,03                   \\ \hline
-BL\_incumple\_rest                                      & 0,52                         & 327,20                         & 0,52                      & 0,05                   & 303,48                       & 8138,00                        & 303,56                    & 2,24                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
-BL\_inicio\_Greedy                                      & 0,60                         & 0,00                           & 0,60                      & 0,02                   & 983,35                       & 69,40                          & 1123,93                   & 0,95                   & 0,84                         & 18,00                          & 0,84                      & 0,03                   \\ \hline
-\end{tabular}
-
-\end{adjustwidth}
-\end{table}
-
-En este caso vemos como este algoritmo mantiene la función objetivo, y además mejora los resultados obtenidos con la búsqueda local con arranque aleatorio y con el algoritmo greedy. Esto se debe a que el algoritmo greedy nos generará una solución inicial intentando reducir la desviación general y las restricciones, y a partir de ahí encontraremos el mínimo del entorno gracias a la búsqueda local. Por así decirlo, con el uso de los dos algoritmos a la vez hemos conseguido paliar uno de los problemas de la búsqueda local, que el punto inicial puede ser muy malo, lo que podría llevar a quedarnos en un mínimo local con una mala solución.
-
-De esta forma el algoritmo greedy nos servirá para escoger un punto de inicio que el propio greedy considere bueno, y a partir de ahí buscar su mínimo.
-
-Vemos como en todos los conjuntos de datos obtenemos mejor función objetivo, por lo que podemos considerar esta opción como la mejor  de entre los algoritmos vistos hasta este momento.
 
 \end{document}
