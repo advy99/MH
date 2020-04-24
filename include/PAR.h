@@ -103,8 +103,7 @@ class PAR{
 		void leer_datos(const std::string fichero);
 		void leer_restricciones(const std::string fichero);
 
-		std::vector<std::pair<std::vector<int>, double>> seleccion_AGG(const std::vector<std::pair<std::vector<int>, double>> & poblacion);
-		std::vector<std::pair<std::vector<int>, double>> seleccion_AGE(const std::vector<std::pair<std::vector<int>, double>> & poblacion);
+		std::vector<std::pair<std::vector<int>, double>> seleccion_algoritmos_ev(const std::vector<std::pair<std::vector<int>, double>> & poblacion, const int tam);
 
 		unsigned operador_cruce_uniforme(std::vector<std::pair<std::vector<int>, double>> & poblacion,\
 			  								  		const double prob_cruce);

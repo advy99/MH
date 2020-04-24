@@ -759,10 +759,10 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmos_AG(const unsigned e
 	while (evaluaciones < evaluaciones_max){
 
 		if (tipo_generaciones == tipo_generacion::ESTACIONARIO){
-			poblacion = seleccion_AGE(poblacion_anterior);
+			poblacion = seleccion_algoritmos_ev(poblacion_anterior, 2);
 		} else {
 			// generacional por defecto
-			poblacion = seleccion_AGG(poblacion_anterior);
+			poblacion = seleccion_algoritmos_ev(poblacion_anterior, poblacion_anterior.size());
 		}
 
 
@@ -941,12 +941,12 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmos_AG(const unsigned e
 
 
 // operador de seleccion para el algoritmo generacional
-std::vector<std::pair<std::vector<int>, double>> PAR::seleccion_AGG(const std::vector<std::pair<std::vector<int>, double>> & poblacion){
+std::vector<std::pair<std::vector<int>, double>> PAR::seleccion_algoritmos_ev(const std::vector<std::pair<std::vector<int>, double>> & poblacion, const int tam){
 
 	std::vector<std::pair<std::vector<int>, double>> poblacion_intermedia;
 
 
-	while (poblacion_intermedia.size() != poblacion.size()){
+	while ((int)poblacion_intermedia.size() != tam){
 		int primer_candidato = RandPositiveInt(poblacion.size());
 		int segundo_candidato;
 
@@ -1349,33 +1349,6 @@ std::vector<PAR::Cluster> PAR::solucion_to_clusters(const std::vector<int> & sol
 
 }
 
-
-std::vector<std::pair<std::vector<int>, double>> PAR::seleccion_AGE(const std::vector<std::pair<std::vector<int>, double>> & poblacion) {
-	std::vector<std::pair<std::vector<int>, double>> poblacion_intermedia;
-
-
-	// en el estacionario solo seleccionamos dos
-	while (poblacion_intermedia.size() < 2) {
-		int primer_candidato = RandPositiveInt(poblacion.size());
-		int segundo_candidato;
-
-		do {
-			segundo_candidato = RandPositiveInt(poblacion.size());
-		} while (segundo_candidato == primer_candidato);
-
-
-		if (poblacion[primer_candidato].second > poblacion[segundo_candidato].second){
-			poblacion_intermedia.push_back(poblacion[segundo_candidato]);
-		} else {
-			//std::cout << primer_candidato << " " << poblacion.size() <<std::endl << std::flush;
-			poblacion_intermedia.push_back(poblacion[primer_candidato]);
-
-		}
-
-	}
-
-	return poblacion_intermedia;
-}
 
 
 int PAR::algoritmo_BL_suave(std::pair<std::vector<int>, double> & sol_ini,
