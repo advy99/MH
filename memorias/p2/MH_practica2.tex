@@ -674,7 +674,16 @@ En esta práctica se nos pide implementar dos tipos de algoritmos:
 
 De los cuales vamos a implementar distintas versiones que explicaremos más adelante, sin embargo todos los algoritmos y variaciones seguirán el mismo esquema general de evolución (cada uno tendrá distintas modificaciones, que explicaremos en el desarrollo especifico de cada uno).
 
+\newpage
 
+El esquema evolutivo consta de 4 pasos:
+
+\begin{enumerate}
+	\item \textbf{Selección}: A partir de la población actual, seleccionamos a los elementos que formarán parte del proceso evolutivo. Esta selección se suele aplicar usando una ruleta o como en nuestro caso, un torneo binario.
+	\item \textbf{Cruce}: Agruparemos los cromosomas de la población por parejas, y aplicando una probabilidad de cruce decidiremos si cruzar las parejas. Existen diversas formas de aplicar el cruce y más adelante explicaremos dos de las que utilizaremos.
+	\item \textbf{Mutación}: Tras aplicar el cruce existirá una pequeña probabilidad de que los genes que conforman los cromosomas muten, es decir, cambien de valor de forma aleatoria. Más adelante explicaremos un método para conseguir esto.
+	\item \textbf{Reemplazamiento}: Tras aplicar la selección, el cruce y la mutación, los cromosomas resultantes reemplazarán a la población anterior. Existen varías formas de aplicar el reemplazamiento, ligadas a la forma de realizar la selección y si se decide hacer con elitismo, es decir, mantener el mejor cromosoma de la población en la nueva población.
+\end{enumerate}
 
 
 \section{Algoritmo de comparación.}
