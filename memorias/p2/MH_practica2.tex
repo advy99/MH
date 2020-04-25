@@ -1091,6 +1091,8 @@ enum class operador_cruce {SEGMENTO_FIJO, UNIFORME};
 enum class tipo_generacion {GENERACIONAL, ESTACIONARIO, MEMETICO_1, MEMETICO_0_1, MEMETICO_0_1_MEJ};
 \end{lstlisting}
 
+\newpage
+
 La implementación es la siguiente:
 
 \begin{lstlisting}
@@ -1102,7 +1104,104 @@ Recibe: Evaluaciones máximas evaluaciones_max,
 		Tipo de cruce tipo_cruce,
 		Tipo de generacion tipo_gen,
 		Si existe elitismo elitismo = true
+	
+	p = generar_poblacion_inicial(tam_pob_ini)
+	poblacion = vector de parejas <cromosoma, valoracion> vacio
+	
+	Para cada elemento i de p:
+		cargar solucion i a los clusters
+		poblacion.añadir( i, funcion_objetivo() )
+		
+	poblacion_anterior = poblacion
+	mejor = poblacion[0]
+	
+	Para cada elemento i de poblacion:
+		Si i.valoracion < mejor.valoracion
+			mejor = i		
+	evaluaciones = 0
+	Mientras evaluaciones < evaluaciones_max:
+		// aplicamos la seleccion
+		Si tipo_gen == ESTACIONARIO
+			poblacion = seleccion_algoritmos_ev(poblacion_anterior, 2)
+		Si no
+			poblacion = seleccion_algoritmos_ev(poblacion_anterior, poblacion_anterior.size())		
+			
+		Si tipo_cruce == SEGMENTO_FIJO
+			evaluaciones += operador_cruce_seg_fijo(poblacion, prob_cruce)
+		Si no 
+			evaluaciones += operador_cruce_uniforme(poblacion, prob_cruce)		
+			
+		evaluaciones += operador_mutacion_uniforme(poblacion, prob_mutacion, tipo_generacion)
+		Si tipo_gen != ESTACIONARIO:
+			// si tenemos elitismo, buscamos si esta el mejor, si no está el mejor
+			// buscamos el peor e introducimos el mejor de la poblacion anterior
+			Si elitismo:
+				pos_mejor = poblacion.find(mejor)
+				
+				// si no está
+				Si pos_mejor == poblacion.end():
+					Buscamos el peor elemento
+					poblacion.borrar(peor_elemento)
+					poblacion.añadir(mejor)			
+			poblacion_anterior = poblacion
+		Si no
+			Buscamos los dos peores elementos peor_1 y peor_2 donde peor_1 es el peor de todos en la poblacion anterior
+			//sabemos que la poblacion tiene dos elementos
+			Mejor 1 es el mejor de poblacion
+			Mejor 2 es el segundo mejor de la poblacion 2
+			
+			// basicamente sustituir los dos mejores por los dos peores en orden
+			Si mejor_2 es mejor que peor 1:
+				sustituir peor_1 por mejor_2 en poblacion_anterior
+				sustituir peor_2 por mejor_1 en poblacion_anterior
+			Si no:
+				Si mejor_2 es mejor que peor_2:
+					sustituir mejor_2 por peor_2 en poblacion_anterior
+				Si no
+					Si mejor_1 es mejor que peor 1:
+						sustituir mejor_1 por peor_1 en poblacion_anterior		
+					Si no
+						Si mejor_1 es mejor que peor 2:
+							sustituir mejor_1 por peor_2 en poblacion_anterior		
+						
+		// en caso de que sea memetico aplicamos la BLS
+		// el guión de prácticas nos dice que el número de fallos permitidos es
+		// 0.1 * tamaño de la solucion
+		Si generacion % poblacion_anterior.size() == 0:
+			Si tipo_gen == MEMETICO_1:
+				Para todos los elementos i de poblacion_anterior:
+					evaluaciones += algoritmo_BL_suave(i, 0.1*i.solucion.size())
+			Si tipo_gen == MEMETICO_0_1
+				// aplicamos esperanza matemática
+				num_bl = 0.1 * poblacion_anterior,size()
+				Para i = 0 hasta num_bl:
+					evaluaciones += algoritmo_BL_suave(i, 0.1*i.solucion.size())
+			Si tipo_gen == MEMETICO_0.1_MEJ
+				num_bl = 0.1 * poblacion_anterior,size()
+				Buscamos los num_bl mejores cromosomas y los almacenamos en un  set de indices
+				Para todos los elementos i del set de indices:
+					evaluaciones += algoritmo_BL_suave(poblacion_anterior[i], 0.1*poblacion_anterior[i].solucion.size())
+		
+			
+		Para cada elemento i de poblacion:
+			Si i.valoracion < mejor.valoracion
+				mejor = i
+
+		generacion++
+		
+	cargar solucion en clusters
+	
+	Devolver {solucion, funcion_objetivo()}
+
+	
+		
 \end{lstlisting}
+
+Notar que en mi implementación la evaluación de la población inicial no eleva el contador de evaluaciones ya que lo he contado como inicialización del algoritmo, aun así la variación sería unas 50 evaluaciones a lo sumo que no harían variar la ejecución. Además, aunque superemos el límite de evaluaciones nos aseguramos de finalizar un ciclo del esquema de evolución y no dejar una población intermedia sin finalizar.
+
+Con esta implementación podemos ejecutar todos los algoritmos desde este método de nuestro problema, de esta forma también estamos reflejando que en realidad los algoritmos evolutivos son una cantidad enorme de algoritmos, que existen infinidad de variaciones, ajustes, etc, pero sin embargo la idea es la misma y siempre bajo el mismo esquema de evolución.
+
+\newpage
 
 \section{Algoritmo de comparación.}
 
