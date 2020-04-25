@@ -773,10 +773,10 @@ Recibe un cromosoma solucion
 				elemento = aleatorio(0, solucion.size()) 
 			Mientras contador[solucion[elemento]] - 1 == 0
 				
+			// cambiamos el elemento aleatorio al cluster vacio
 			contador[solucion[elemento]]--;
 			solucion[elemento] = i
 			contador[i]++		
-			
 \end{lstlisting}
 
 \subsubsection{Operador de cruce uniforme.}
