@@ -685,7 +685,61 @@ El esquema evolutivo consta de 4 pasos:
 	\item \textbf{Reemplazamiento}: Tras aplicar la selección, el cruce y la mutación, los cromosomas resultantes reemplazarán a la población anterior. Existen varías formas de aplicar el reemplazamiento, ligadas a la forma de realizar la selección y si se decide hacer con elitismo, es decir, mantener el mejor cromosoma de la población en la nueva población.
 \end{enumerate}
 
+Para realizar este esquema de evolución necesitamos distintos operadores, que pasaré a explicar en las siguientes secciones.
+
+\subsubsection{Algoritmos evolutivos a implementar.}
+
+En esta práctica vamos a implementar tres algoritmos (sin contar las variaciones de cruce):
+
+\begin{enumerate}
+	\item Algoritmos Genéticos Generacionales: Estos algoritmos se basarán totalmente en el esquema de evolución antes comentado, y cada población seleccionada, cruzada y mutada sustituirá por completo a la generación actual.
+	\item Algoritmos Genéticos Estacionarios: Estos algoritmos también se basarán totalmente en el esquema de evolución, sin embargo, la población seleccionada será de únicamente dos elementos, por lo que en cada generación, gran parte de la población se mantendrá y solo cambiarán dos cromosomas.
+	\item Algoritmos Meméticos: Estos algoritmos no se basan totalmente en el esquema de evolución, lo combinaran con al búsqueda local, aplicándola cada cierto tiempo sobre todos o parte de los cromosomas, de forma que usará la exploración de los algoritmos genéticos para buscar nuevas zonas del espacio con la explotación de la búsqueda local para encontrar los mínimos de dichas zonas del espacio.
+\end{enumerate}
+
+Como hemos comentado, los algoritmos genéticos son algoritmos que favorecerán la exploración, por lo que nos permitirán explorar en zonas donde los mínimos sean distintos, pero por el contrario no favorecerán tanto la explotación, por lo que, en teoría, les costará más encontrar el mínimo. El objetivo de está práctica es estudiar si esto ocurre y de que forma controlar el comportamiento de los algoritmos aplicando los distintos operadores.
+
+\subsubsection{Representación para implementar estos algoritmos}
+
+Como hemos comentado en la sección 2, la implementación de la práctica 1 no nos funcionará para aplicar los operadores.
+
+En esta práctica usaremos la nueva representación, pero además, adelantando la condición de parada de los algoritmos, el número de evaluaciones será muy importante, por lo que al almacenar una población almacenaremos con cada cromosoma su valor de la función objetivo, y no tener que perder una evaluación cada vez que queramos conocerlo, haciendo que solo evaluemos cuando sea apliquemos los operadores que modifiquen un cromosoma.
+
 \subsubsection{Operador de selección.}
+
+Este operador se encargará de realizar la selección de la población sobre la que aplicar los cruces y mutaciones. En esta práctica usaremos como operador de selección un torneo binario, es decir, sacaremos dos cromosomas aleatorios, y escogeremos el de mejor función objetivo (en nuestro caso, como queremos minimizar, el de menor función objetivo), cabe destacar que usando este método el cromosoma de peor calidad nunca se escogerá, ya que siempre perderá el torneo, y además es posible que aparezcan más de una copia del mismo cromosoma, haciendo que el mejor cromosoma al ganar siempre el torneo aparecerá con mayor frecuencia, consiguiendo con esto que se seleccione a los mejores cromosomas de la población. Este operador tendrá una pequeña diferencia dependiendo del algoritmo a usar:
+
+\begin{itemize}
+	\item Algoritmos Genéticos Generacionales y Algoritmos Meméticos: La población intermedia seleccionada tendrá tantos cromosomas como la población inicial
+	\item Algoritmos Genéticos Estacionarios: La población intermedia seleccionada será únicamente de dos elementos.
+\end{itemize}
+
+Dicho esto observamos que el operador de selección será común para todos los algoritmos, únicamente variando el número de veces en las que aplicar el torneo binario. Con esto quedaría la siguiente implementación:
+
+\begin{lstlisting}
+Devuelve un vector de parejas <cromosoma, valoración> - recibe: vector de parejas <cromosoma, valoracion> pob_inicial, entero con el número de elementos a seleccionar tam
+
+	pob_seleccionada = vector de parejas <cromosoma, valoracion> vacio
+	
+	Mientras pob_seleccionada.size() < tam:
+		primer_candidato = aleatorio (0, pob_ini.size())
+		
+		// evitamos hacer el torneo entre un elemento y si mismo
+		Hacer:
+				segundo_candidato =  aleatorio (0, pob_ini.size())
+		Mientas segundo_candidato == primer_candidato;
+		
+		Si pob_ini[primer_candidato].valoracion > poblacion[segunda_candidato].valoracion:
+			//buscamos minimizar, si el primer candidato tiene valoracion mayor, el mejor es el segundo
+			pob_seleccionada.añadir (pob_ini[segundo_candidato])
+		Si no:
+			pob_seleccionada.añadir(pob_ini[primer_candidato])
+
+
+	Devolver pob_seleccionada
+\end{lstlisting}
+
+De esta forma conseguiremos seleccionar la población que formará parte del cruce y mutación.
 
 \subsubsection{Operador de cruce uniforme.}
 
