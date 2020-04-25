@@ -47,8 +47,10 @@
 \definecolor{listing-comment}{HTML}{8E8E8E}
 \definecolor{listing-javadoc-comment}{HTML}{006CA9}
 
+\lstset{language=C++}
+
 \lstdefinestyle{eisvogel_listing_style}{
-  language = C,
+%  language = C,
 %$if(listings-disable-line-numbers)$
 %  xleftmargin      = 0.6em,
 %  framexleftmargin = 0.4em,
@@ -515,6 +517,8 @@ Teniendo ya Lambda calculado al ser un valor que conocemos desde el inicio del p
 
 \section{Métodos de resolución del problema.}
 
+A continuación explicaré los distintos métodos de resolución del problema vistos en teoría y prácticas. Los siguientes pseudocógidos no tienen en cuenta variables de salida para recabar datos de trazas o salidas de la ejecución.
+
 \subsection{Algoritmo de Búsqueda Local.}
 
 Este algoritmo se basa en partir de una solución inicial aleatoria, a partir de esa solución explorar una solución vecina, y si esta solución vecina es mejor que la actual, moverse a dicha solución.
@@ -845,13 +849,157 @@ No devolvemos la nueva población ya que al ser una referencia se va modificando
 
 \subsubsection{Operador de cruce de segmento fijo.}
 
+Esta será la otra forma de aplicar un cruce. Los parámetros de entrada y la forma de organizar las parejas es la misma que en el operador de cruce uniforme.
+
+Este operador obtendrá de forma aleatoria dos valores, uno será el inicio del segmento y otro el tamaño del segmento, este operador al generar un hijo copiará dicho segmento de un padre, y el resto de elementos se repartirán entre los dos padres de forma uniforme, tal como vimos en el cruce uniforme. Como vemos este método favorece al padre del que escojamos el segmento ya que pasará más información al hijo que el otro padre, por lo que tenemos dos opciones:
+
+\begin{enumerate}
+	\item Seleccionar al padre de mejor función objetivo: Favorecemos la explotación, al intentar mantener la información de una buena solución.
+	\item Seleccionar al padre de peor función objetivo: Favorecemos la exploración ya que la solución tardará más en converger.
+\end{enumerate}
+ 
+Este operador recibirá por referencia la población y la probabilidad de cruce, y devolverá el número de evaluaciones realizadas. En este operador usaremos las herramientas explicadas en el cambio de representación, ya que evaluar la solución es mucho más fácil con la representación de la práctica 1.
+ 
+La implementación sería la siguiente:
+
+\begin{lstlisting}
+Devuelve el número de evaluaciones - Recibe un vector de parejas <cromosoma, valoracion> pob y una probabilidad de cruce p_cruce
+
+	NUM_PAREJAS = pob.size()/2
+	// aplicamos la esperanza matemática
+	NUM_CRUCES = NUM_PAREJAS * p_cruce
+	
+	evaluaciones = 0
+	
+	indice_p1 = 0
+	indice_p2 = 0
+	
+	// hacemos el doble de cruces ya que cada pareja tiene que generar dos hijos	
+	Para i = 0 hasta NUM_CRUCES*2; salto para i = +1:
+	
+		indice_p1 = 0
+		indice_p2 = 1	
+	
+		Si pob[indice_p2].valoracion	< pob[indice_p1].valoracion:
+			indice_p1 = 1
+			indice_p1 = 0
+	
+	
+		tam_segmento = aleatorio(0, pob[i].cromosoma.size())
+		ini_segmento = aleatorio(0, pob[i].cromosoma.size())
+		
+		fin_segmento = (ini_segmento + tam_segmento + 1
+	
+		cruce = nuevo vector de tamaño pob[indice].cromosoma.size()
+	
+		// copiamos el segmento fijo
+		Para j = ini_segmento; j <= ini_segmento + tam_segmento:
+			cruce[j%pob[indice_p1].cromosoma.size()] = pob[indice_p1].cromosoma[j%pob[indice_p1].cromosoma.size()]
+	
+		rango_fijo_low = fin_segmento;
+
+		Si fin_segmento >=pob[indice_p1].cromosoma.size()
+			rango_fijo_low = (fin_segmento % pob[indice_p1].cromosoma.size());
+			rango_fijo_hight = ini_segmento;
+		Si no
+			rango_fijo_low = fin_segmento;
+			rango_fijo_hight = pob[indice_p1].cromosoma.size() + ini_segmento;
+
+		valores.clear();
+		valores = {}
+
+		// hasta que no generemos la mitad de indices del cromosoma		
+		Mientras valores.size() < (rango_fijo_hight-rango_fijo_low)/2:
+			valor = aleatorio(rango_fijo_low, rango_fijo_hight)
+			
+			// si el valor no esta lo añadimos
+			Si valores.find(valor ) == valores.end() 
+				valores.añadir(valor % pob[indice_p1].cromosoma.size())
+		
+		Desde j = rango_fijo_low hasta rango_fijo_hight:
+			val = j  % pob[indice_p1].cromosoma.size()
+			Si v esta en valores:
+				cruce[v] = pob[indice].cromosoma[v]
+			Si no:
+				cruce[v] = pob[indice+1].cromosoma[v]
+				
+		reparar_cruce(cruce)
+		
+		Cargar solucion en clusters con solucion_to_clusters(cruce)
+		
+		hijo = {cruce, funcion_objetivo(cruce)}
+		evaluaciones++
+		
+		pob.añadir(hijo)
+		
+		// como siempre cruzamos los dos primeros, cuando estamos en i = 1, ya hemos
+		// generado y añadido al final los dos hijos de i = 0 e  i = 1, luego borramos los
+		// dos primeros elementos de la población
+		Si (i % 2 == 1 ):
+			pob.erase(pob.begin())
+			pob.erase(pob.begin())
+					
+
+	Devolver evaluaciones;
+
+\end{lstlisting}
+
+No devolvemos la nueva población ya que al ser una referencia se va modificando mientras se ejecuta el algoritmo.
+
+
 \subsubsection{Operador de mutación uniforme.}
 
-\subsubsection{Algoritmos Genéticos Generacionales.}
+Este operador se encargará de realizar las mutaciones en los cromosomas. Una mutación consiste en alterar el valor de un gen por otro al azar, esto ocurrirá con cierta probabilidad de mutación dada.
 
-\subsubsection{Algoritmos Genéticos Estacionarios.}
+De nuevo aplicaremos la esperanza matemática para decidir cuantos genes mutan, sin embargo no la podremos aplicar para decidir a que valor mutan. Otra cosa a tener en cuenta es que los valores de la probabilidad de mutación son muy bajos, luego no podremos aplicar la esperanza matemática de forma directa sobre el algoritmo genético estacionario.
 
-\subsubsection{Algoritmos Meméticos.}
+\begin{lstlisting}
+Devuelve el número de evaluaciones - Recibe un vector de parejas <cromosoma, valoracion> pob, la probabilidad de mutación p_mut y el tipo de generacion tipo_generacion.
+
+	contador = vector de enteros de tamaño num_clusters
+	evaluaciones = 0
+	
+	// si es estacionario probamos sacando probabilidad y esperanza aplicada al cromosoma
+	// si no, aplicamos esperanza matemática
+	Si tipo_generacion == ESTACIONARIO:
+		Para cada elemento i de la poblacion:
+			aleatorio = aleatorio_float(0,1)
+			Si aleatorio < p_mut * i.cromosoma.size():
+				num_mutaciones++
+
+	Si no:
+		num_mutaciones = pob.size() * pob[0].cromosoma.size() * p_mut;
+		
+		
+		
+	Para i = 0 hasta num_mutaciones:
+		// obtenemos el cromosoma a mutar de forma aleatoria
+		indice_elemento = aleatorio (0, pob.size())
+		elemento_poblacion = pob[indice_elemento]
+		
+		contador.clear()
+		
+		Para j = 0 hasta elemento_poblacion.size():
+			contador[elemento_poblacion.cromosoma[j]]++
+			j++
+			
+		// seleccionamos el gen a mutar, teniendo en cuenta de que
+		// no genere solucion infactible
+		Hacer:
+			gen = aleatorio(0, elemento_poblacion.size())
+		Hasta contador[poblacion.cromosoma[gen] - 1 == 0]
+		
+		destino = aleatorio(0, num_clusters)
+		elemento_poblacion.cromosoma[gen] = destino
+		
+		solucion_to_clusters[elemento_poblacion.cromosoma]
+		elemento_poblacion.valoracion = funcion_objetivo()
+		evaluaciones++
+		i++
+	
+	devolver evaluaciones
+\end{lstlisting}
+
 
 \subsubsection{Implementación.}
 
