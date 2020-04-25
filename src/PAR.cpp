@@ -1105,7 +1105,7 @@ unsigned PAR::operador_cruce_seg_fijo(std::vector<std::pair<std::vector<int>, do
 		tam_segmento = RandPositiveInt(poblacion[i].first.size());
 		ini_segmento = RandPositiveInt(poblacion[i].first.size());
 
-		fin_segmento = (ini_segmento + tam_segmento + 1) % poblacion[indice_p1].first.size();
+		fin_segmento = ini_segmento + tam_segmento + 1;
 
 		cruce = std::vector<int>(poblacion[i].first.size(), -1);
 
@@ -1116,28 +1116,21 @@ unsigned PAR::operador_cruce_seg_fijo(std::vector<std::pair<std::vector<int>, do
 			j++;
 		}
 
-		rango_fijo_low = fin_segmento;
 
-		if (fin_segmento > ini_segmento){
-			// el segmento fijo hay que escogerlo entre fin_segmento y (poblacion[indice_p1].fist.size() + ini_segmento) %  poblacion[indice_p1].fist.size()
-			//[ , , , , , , ]
-			//   ^       ^
-			//   |       |
-			// ini      fin
-			rango_fijo_hight = poblacion[indice_p1].first.size() + ini_segmento; // el modulo lo aplicamos despues, así es más facil para sacar el aleatorio
+		if (fin_segmento >= (int) poblacion[indice_p1].first.size()){
+
+			rango_fijo_low = (fin_segmento % poblacion[indice_p1].first.size());
+			rango_fijo_hight = ini_segmento;
 
 		} else {
-			// el segmento fijo hay que escogerlo entre fin_segmento y ini_segmento
-			//[ , , , , , , ]
-			//   ^       ^
-			//   |       |
-			// fin      ini
-			rango_fijo_hight = ini_segmento;
+
+			rango_fijo_low = fin_segmento;
+			rango_fijo_hight = poblacion[indice_p1].first.size() + ini_segmento;
 		}
 
 		valores.clear();
 
-		while (valores.size() < (unsigned) (rango_fijo_hight-rango_fijo_low)/2){
+		while (valores.size() < (unsigned) (rango_fijo_hight-rango_fijo_low+1)/2){
 			int valor = Randint(rango_fijo_low, rango_fijo_hight);
 
 			auto pos = valores.find(valor);
@@ -1146,16 +1139,17 @@ unsigned PAR::operador_cruce_seg_fijo(std::vector<std::pair<std::vector<int>, do
 			}
 		}
 
-		for (unsigned j = 0; j < poblacion[indice_p1].first.size(); j++){
-			auto pos = valores.find(j);//std::find(valores.begin(), valores.end(), j);
+		for (int j = rango_fijo_low; j < rango_fijo_hight; j++){
+			int v = j  % poblacion[indice_p1].first.size();
+			auto pos = valores.find(v );//std::find(valores.begin(), valores.end(), j);
 
 			// rellenamos el hijo 1
 			// esta entre los seleccionados aleatoriamente, lo cogemos del padre 1
 			if (pos != valores.end()){
-				cruce[j] = poblacion[indice_p1].first[j];
+				cruce[v] = poblacion[indice_p1].first[v];
 			} else {
 				// si no está lo cogemos del padre 2
-				cruce[j] = poblacion[indice_p2].first[j];
+				cruce[v] = poblacion[indice_p2].first[v];
 			}
 		}
 
