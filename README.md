@@ -49,6 +49,7 @@ En nuestro caso `<dataset>` podrá ser:
 - Ecoli
 - Iris
 - Rand
+- Newthyroid
 
 ### Ficheros de restricciones
 
@@ -74,6 +75,12 @@ Donde cada elemento entre llaves significa:
 
 El programa creará un fichero por algoritmo usado, donde almacenará los resultados obtenidos con dicho algoritmo, conjunto de datos y restricciones y semilla.
 
+
+## Carpeta graficas
+
+En esta carpeta se almacenan scripts de gnuplot que generan gráficas con las distintas semillas, porcentajes y conjuntos de datos para poder comparar como se comportan los algoritmos genéticos y la búsqueda local.
+
+Dentro existe una carpeta llamada datos donde el programa almacenará los datos para gnuplot.
 
 ## Carpeta include
 
