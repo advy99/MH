@@ -717,6 +717,18 @@ Como hemos comentado en la sección 2, la implementación de la práctica 1 no n
 
 En esta práctica usaremos la nueva representación, pero además, adelantando la condición de parada de los algoritmos, el número de evaluaciones será muy importante, por lo que al almacenar una población almacenaremos con cada cromosoma su valor de la función objetivo, y no tener que perder una evaluación cada vez que queramos conocerlo, haciendo que solo evaluemos cuando sea apliquemos los operadores que modifiquen un cromosoma.
 
+\subsubsection{Generador población inicial.}
+
+Todos nuestros algoritmos evolutivos comenzarán con una población inicial aleatoria, luego este operador nos ayudará a generarla:
+
+\begin{lstlisting}
+Devuelve vector de soluciones - Recibe tamaño de la poblacion tam_pob
+	poblacion = vector de soluciones vacio
+	
+	Mientras poblacion.size() < tam_pob:
+		poblacion.añadir(clusters_to_solucion(generar_solucion_aleatoria));
+\end{lstlisting}
+
 \subsubsection{Operador de selección.}
 
 Este operador se encargará de realizar la selección de la población sobre la que aplicar los cruces y mutaciones. En esta práctica usaremos como operador de selección un torneo binario, es decir, sacaremos dos cromosomas aleatorios, y escogeremos el de mejor función objetivo (en nuestro caso, como queremos minimizar, el de menor función objetivo), cabe destacar que usando este método el cromosoma de peor calidad nunca se escogerá, ya que siempre perderá el torneo, y además es posible que aparezcan más de una copia del mismo cromosoma, haciendo que el mejor cromosoma al ganar siempre el torneo aparecerá con mayor frecuencia, consiguiendo con esto que se seleccione a los mejores cromosomas de la población. Este operador tendrá una pequeña diferencia dependiendo del algoritmo a usar:
