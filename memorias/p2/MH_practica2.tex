@@ -704,9 +704,9 @@ Para realizar este esquema de evolución necesitamos distintos operadores, que p
 En esta práctica vamos a implementar tres algoritmos (sin contar las variaciones de cruce):
 
 \begin{enumerate}
-	\item Algoritmos Genéticos Generacionales: Estos algoritmos se basarán totalmente en el esquema de evolución antes comentado, y cada población seleccionada, cruzada y mutada sustituirá por completo a la generación actual.
-	\item Algoritmos Genéticos Estacionarios: Estos algoritmos también se basarán totalmente en el esquema de evolución, sin embargo, la población seleccionada será de únicamente dos elementos, por lo que en cada generación, gran parte de la población se mantendrá y solo cambiarán dos cromosomas.
-	\item Algoritmos Meméticos: Estos algoritmos no se basan totalmente en el esquema de evolución, lo combinaran con al búsqueda local, aplicándola cada cierto tiempo sobre todos o parte de los cromosomas, de forma que usará la exploración de los algoritmos genéticos para buscar nuevas zonas del espacio con la explotación de la búsqueda local para encontrar los mínimos de dichas zonas del espacio.
+	\item Algoritmos Genéticos Generacionales: Estos algoritmos se basarán totalmente en el esquema de evolución antes comentado, y cada población seleccionada, cruzada y mutada sustituirá por completo a la generación actual. Ejecutaremos estos algoritmos con un tamaño de población de 50 cromosomas, una probabilidad de cruce de 0'7 y una probabilidad de mutación del 0'001. Existirán dos variaciones, usando dos operadores de cruce distintos.
+	\item Algoritmos Genéticos Estacionarios: Estos algoritmos también se basarán totalmente en el esquema de evolución, sin embargo, la población seleccionada será de únicamente dos elementos, por lo que en cada generación, gran parte de la población se mantendrá y solo cambiarán dos cromosomas. Ejecutaremos estos algoritmos con un tamaño de población de 50 cromosomas, una probabilidad de cruce de 1 y una probabilidad de mutación del 0'001. Existirán dos variaciones, usando dos operadores de cruce distintos.
+	\item Algoritmos Meméticos: Estos algoritmos no se basan totalmente en el esquema de evolución, lo combinaran con al búsqueda local, aplicándola cada cierto tiempo sobre todos o parte de los cromosomas, de forma que usará la exploración de los algoritmos genéticos para buscar nuevas zonas del espacio con la explotación de la búsqueda local para encontrar los mínimos de dichas zonas del espacio.  Ejecutaremos estos algoritmos con un tamaño de población de 10 cromosomas, una probabilidad de cruce de 1 y una probabilidad de mutación del 0'001. Existirán tres variaciones, aplicando la búsqueda local a todos los cromosomas, a un 10\% de ellos o al 10\% de los mejores cromosomas. Siempre aplicaremos la búsqueda local cada 10 generaciones.
 \end{enumerate}
 
 Como hemos comentado, los algoritmos genéticos son algoritmos que favorecerán la exploración, por lo que nos permitirán explorar en zonas donde los mínimos sean distintos, pero por el contrario no favorecerán tanto la explotación, por lo que, en teoría, les costará más encontrar el mínimo. El objetivo de está práctica es estudiar si esto ocurre y de que forma controlar el comportamiento de los algoritmos aplicando los distintos operadores.
@@ -1062,8 +1062,35 @@ Devuelve numero de evaluaciones - Recibe Pareja <solucion, valoracion> sol_ini, 
 
 \subsubsection{Implementación.}
 
+Como vemos, tenemos una serie de operadores que tenemos que aplicar a distintos algoritmos, e incluso hacer variaciones sobre cuales utilizar, etc, cuando realmente existen dos grandes diferencias:
+
+\begin{enumerate}
+	\item Los algoritmos genéticos generacionales se ejecutarán exactamente igual que los algoritmos genéticos estacionarios, solo que con una variación en el número de elementos a seleccionar.
+	\item Los algoritmos meméticos son iguales que los algoritmos genéticos, solo que aplicando una búsqueda local.
+\end{enumerate}
 
 
+Por estos motivos he decidido implementar todos los algoritmos en una única función, que dependiendo de los parámetros de entrada aplicará unos operadores u otros.
+
+Esto lo he conseguido definiendo los siguientes enumerados:
+
+\begin{lstlisting}
+enum class operador_cruce {SEGMENTO_FIJO, UNIFORME};
+enum class tipo_generacion {GENERACIONAL, ESTACIONARIO, MEMETICO_1, MEMETICO_0_1, MEMETICO_0_1_MEJ};
+\end{lstlisting}
+
+La implementación es la siguiente:
+
+\begin{lstlisting}
+Devuelve una pareja <solucion, valoracion>
+Recibe: Evaluaciones máximas evaluaciones_max, 
+		Tamaño de la poblacion inicial tam_pob_ini,
+		Probabilidad de mutación prob_mutacion,
+		Probabilidad de cruce prob_cruce, 
+		Tipo de cruce tipo_cruce,
+		Tipo de generacion tipo_gen,
+		Si existe elitismo elitismo = true
+\end{lstlisting}
 
 \section{Algoritmo de comparación.}
 
@@ -1156,14 +1183,14 @@ Para la implementación he desarrollado mis propias clases en C++, como adjunto 
 
 \begin{itemize}
 	\item Clase map para las restricciones.
-	\item Clase vector para los datos y centroides
-	\item Clase set para los elementos de los clusters
-	\item Clase pair para almacenar las parejas de restricciones, así como para operaciones auxiliares, como el uso en la función auxiliar del algoritmo greedy.
+	\item Clase vector para los datos y centroides.
+	\item Clase set para los elementos de los clusters.
+	\item Clase pair para almacenar las parejas de restricciones, así como para operaciones auxiliares, como el uso en la función auxiliar del algoritmo greedy o la población en algoritmos genéticos.
 \end{itemize}
 
-Además de estas clases de C++ y las implementadas por mi explicadas a lo largo de este guión también he usado las funciones de generación de números aleatorios dadas por los profesores añadiendo algunas funciones, como por ejemplo generar un número aleatorio entre 0 y un número dado, de forma que el número generado N cumpla que 0 <= N entre otras.
+Además de estas clases de C++ y las implementadas por mi explicadas a lo largo de este guión también he usado las funciones de generación de números aleatorios dadas por los profesores añadiendo algunas funciones, como por ejemplo generar un número aleatorio entre 0 y un número dado, de forma que el número generado N cumpla que 0 < N entre otras.
 
-También he utilizado las funciones dadas por los profesores de la asignatura para medir el tiempo.
+Para medir el tiempo de ejecución he utilizado las funciones dadas por los profesores de la asignatura.
 
 
 \subsection{Manual de uso.}
