@@ -683,12 +683,12 @@ PRACTICA 2
 
 
 std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmos_AG(const unsigned evaluaciones_max,
-																				 const unsigned tam_pob_ini,
-																				 const float prob_mutacion,
-																				 const float prob_cruce,
-																				 const operador_cruce tipo_cruce,
-																				 const tipo_generacion tipo_generaciones,
-																			 	 const bool elitismo){
+																			 	 	 const unsigned tam_pob_ini,
+																				  	 const float prob_mutacion,
+																				 	 const float prob_cruce,
+																				 	 const operador_cruce tipo_cruce,
+																				 	 const tipo_generacion tipo_generaciones,
+																			 	 	 const bool elitismo){
 
 
 
