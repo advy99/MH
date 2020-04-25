@@ -1000,8 +1000,70 @@ Devuelve el número de evaluaciones - Recibe un vector de parejas <cromosoma, va
 	devolver evaluaciones
 \end{lstlisting}
 
+\subsubsection{Búsqueda local suave.}
+
+Como hemos comentado, los algoritmos meméticos que vamos a implementar se basan en crear un algoritmo genético generacional y cada cierto número de generaciones aplicar una búsqueda local a los cromosomas. Esto presenta un problema y es que con el número de cromosomas con el que nos pide el guión de prácticas ejecutar es demasiado bajo, y aplicar la búsqueda local implementada en la práctica 1 haría que converja de forma muy rápida, por lo que vamos a aplicar una búsqueda local más suave, que solo recorrerá el cromosoma una vez y tendrá un límite de fallos permitidos.
+
+El algoritmo modificará por referencia la solución inicial dada.
+
+\begin{lstlisting}
+Devuelve numero de evaluaciones - Recibe Pareja <solucion, valoracion> sol_ini, número de fallos permitidos max_fallos
+
+	indices = vector vacio
+	contador = vector vacio de tamaño num_clusters
+	
+	// creamos un vector con los indices y contamos en que cluster están los elementos
+	Para i = 0 hasta sol_ini.solucion.size():
+		indices.añadir(i)
+		contador[sol_ini.solucion[i]]++
+		i++
+	
+	random_shuffle(indices)
+	
+	fallos = 0
+	mejora = true
+	i = 0
+	evaluaciones = 0
+	
+	
+	Mientras (mejora O fallos	 < max_fallos) Y i < sol_ini.solucion.size():
+		mejora = false
+		mejor_cluster = -1
+		val_mejor_cluster = sol_ini.valoracion
+		sol_intermedia = sol_ini
+		
+		Para j = 0 mientras j < num_clusters:
+			// si no voy a probar el cluster en el que esta ya, o si no genero
+			// una solucion infactible
+			Si sol_ini.solucion[indices[i]] != j Y contador[sol_ini.solucion[indices[i]] - 1 > 0]:
+				sol_intermedia.solucion[indices[i]] = j
+				cargar solucion con solucion_to_clusters(sol_intermedia.solucion)
+				sol_intermedia.valoracion = funcion_objetivo()
+				evaluaciones++
+				
+				Si sol_intermedia.valoracion < val_mejor_cluster:
+					mejor_cluster = j
+					val_mejor_cluster = sol_intermedia.valoracion
+					mejora = true
+					
+		
+		Si no hay mejora:
+			fallos++
+		Si no:
+			contador[sol_ini.solucion[indices[i]]]--
+			sol_ini.solucion[indices[i]] = mejor_cluster
+			sol_ini.valoracion = val_mejor_cluster
+			contador[mejor_cluster]++			
+		i++
+
+	Devolver evaluaciones
+\end{lstlisting}
+
 
 \subsubsection{Implementación.}
+
+
+
 
 \section{Algoritmo de comparación.}
 
