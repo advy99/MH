@@ -752,6 +752,32 @@ De esta forma conseguiremos seleccionar la población que formará parte del cru
 
 \subsubsection{Operador de reparación.}
 
+Uno de los problemas que tendremos es que cuando realicemos la operación de cruce es posible que se genere una solución infactible, esto lo vamos a solucionar aplicando un operador de reparación, que simplemente escoja un elemento de forma aleatoria y lo introduzca en el cluster vacío:
+
+\begin{lstlisting}
+Recibe un cromosoma solucion
+	contador = vector de tamaño num_clusters
+	
+	// tenemos un contador que será un vector, donde nos dirá cuantos elementos 
+	// hay en el cluster X si hacemos contador[X]
+	Para i = 0 hasta i < solucion.size(); i++
+		contador[solucion[i]]++
+		
+	Para i = 0; i < contador.size(); i++
+		Si contador[i] == 0:
+			// cluster vacio
+			elemento
+			Hacer:
+				// sacamos aleatorios hasta que escojamos uno que si lo quitamos
+				// de su cluster no deja un cluster vacio
+				elemento = aleatorio(0, solucion.size()) 
+			Mientras contador[solucion[elemento]] - 1 == 0
+				
+			contador[solucion[elemento]]--;
+			solucion[elemento] = i
+			contador[i]++		
+			
+\end{lstlisting}
 
 \subsubsection{Operador de cruce uniforme.}
 
