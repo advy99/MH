@@ -502,6 +502,14 @@ Nuestra función objetivo será:
 
 $$ f = C + (\textit{Infeasibility} * \lambda) $$ 
 
+Dicho esto podemos implementar la siguiente función:
+
+\begin{lstlisting}
+Devolvemos un double:
+	devolver desviacion_general + (calcular_infactibilidad() * get_lambda())
+\end{lstlisting}
+
+Teniendo ya Lambda calculado al ser un valor que conocemos desde el inicio del problema.
 
 \newpage
 
@@ -680,7 +688,7 @@ El esquema evolutivo consta de 4 pasos:
 
 \begin{enumerate}
 	\item \textbf{Selección}: A partir de la población actual, seleccionamos a los elementos que formarán parte del proceso evolutivo. Esta selección se suele aplicar usando una ruleta o como en nuestro caso, un torneo binario.
-	\item \textbf{Cruce}: Agruparemos los cromosomas de la población por parejas, y aplicando una probabilidad de cruce decidiremos si cruzar las parejas. Existen diversas formas de aplicar el cruce y más adelante explicaremos dos de las que utilizaremos.
+	\item \textbf{Cruce}: Agruparemos los cromosomas de la población por parejas, y aplicando una probabilidad de cruce decidiremos si cruzar las parejas. Existen diversas formas de aplicar el cruce y más adelante explicaremos dos de las que utilizaremos. Un cruce consiste en, dados dos cromosomas (soluciones) crear dos cromosomas hijos, cada uno de estos hijos estará compuesto por una mezcla de sus padres. La idea es dados dos padres que se comportan bien como solución generen hijos que al usar la información del primer padre sumada a la información del segundo, se comporten mejor.
 	\item \textbf{Mutación}: Tras aplicar el cruce existirá una pequeña probabilidad de que los genes que conforman los cromosomas muten, es decir, cambien de valor de forma aleatoria. Más adelante explicaremos un método para conseguir esto.
 	\item \textbf{Reemplazamiento}: Tras aplicar la selección, el cruce y la mutación, los cromosomas resultantes reemplazarán a la población anterior. Existen varías formas de aplicar el reemplazamiento, ligadas a la forma de realizar la selección y si se decide hacer con elitismo, es decir, mantener el mejor cromosoma de la población en la nueva población.
 \end{enumerate}
@@ -741,11 +749,75 @@ Devuelve un vector de parejas <cromosoma, valoración> - recibe: vector de parej
 
 De esta forma conseguiremos seleccionar la población que formará parte del cruce y mutación.
 
-\subsubsection{Operador de cruce uniforme.}
-
-\subsubsection{Operador de cruce de segmento fijo.}
 
 \subsubsection{Operador de reparación.}
+
+
+\subsubsection{Operador de cruce uniforme.}
+
+Esta será una de las dos formas de aplicar un cruce. Este operador recibirá una población y una probabilidad de cruce, y para evitar tener que generar una gran cantidad de números aleatorios aplicará la esperanza matemática para decidir si una pareja cruza o no. Las parejas de la población, al ya estar seleccionada de forma aleatoria, serán los indices pares con su siguiente indice, es decir, las parejas serán la \{0, 1\}, \{2, 3\}, etc.
+
+ Este operador obtendrá de forma aleatoria N/2 indices del cromosoma aleatorios y sin repetición siendo N el número de genes de los cromosomas, de forma que el hijo generado mantendrá la asignación del primer padre de los elementos obtenidos de forma aleatoria, mientras que la asignación de los otros elementos serán del segundo padre. Como vemos este operador de cruce no da prioridad a ninguno de los dos padres.
+ 
+Este operador recibirá por referencia la población y la probabilidad de cruce, y devolverá el número de evaluaciones realizadas. En este operador usaremos las herramientas explicadas en el cambio de representación, ya que evaluar la solución es mucho más fácil con la representación de la práctica 1.
+ 
+La implementación sería la siguiente:
+
+\begin{lstlisting}
+Devuelve el número de evaluaciones - Recibe un vector de parejas <cromosoma, valoracion> pob y una probabilidad de cruce p_cruce
+
+	NUM_PAREJAS = pob.size()/2
+	// aplicamos la esperanza matemática
+	NUM_CRUCES = NUM_PAREJAS * p_cruce
+	
+	evaluaciones = 0
+	
+	indice = 0
+	
+	// hacemos el doble de cruces ya que cada pareja tiene que generar dos hijos
+	Para i = 0 hasta NUM_CRUCES*2; salto para i = +1:
+		valores = {}
+
+		// hasta que no generemos la mitad de indices del cromosoma		
+		Mientras valores.size() < pob[indice].cromosoma.size()/2:
+			valor = aleatorio(0, pob[indice].cromosoma.size())
+			
+			// si el valor no esta lo añadimos
+			Si valores.find(valor ) == valores.end() 
+				valores.añadir(valor)
+				
+		cruce = nuevo vector de tamaño pob[indice].cromosoma.size()
+		
+		Desde j = 0 hasta pob[indice].cromosoma.size():
+			Si j esta en valores:
+				cruce[j] = pob[indice].cromosoma[j]
+			Si no:
+				cruce[j] = pob[indice+1].cromosoma[j]
+				
+		reparar_cruce(cruce)
+		
+		Cargar solucion en clusters con solucion_to_clusters(cruce)
+		
+		hijo = {cruce, funcion_objetivo(cruce)}
+		evaluaciones++
+		
+		pob.añadir(hijo)
+		
+		// como siempre cruzamos los dos primeros, cuando estamos en i = 1, ya hemos
+		// generado y añadido al final los dos hijos de i = 0 e  i = 1, luego borramos los
+		// dos primeros elementos de la población
+		Si (i % 2 == 1 ):
+			pob.erase(pob.begin())
+			pob.erase(pob.begin())
+					
+
+	Devolver evaluaciones;
+
+\end{lstlisting}
+
+No devolvemos la nueva población ya que al ser una referencia se va modificando mientras se ejecuta el algoritmo.
+
+\subsubsection{Operador de cruce de segmento fijo.}
 
 \subsubsection{Operador de mutación uniforme.}
 
