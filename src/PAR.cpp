@@ -974,7 +974,7 @@ unsigned PAR::operador_cruce_uniforme(std::vector<std::pair<std::vector<int>, do
 
 	unsigned evaluaciones = 0;
 
-	std::vector<int> valores;
+	std::set<int> valores;
 
 	//std::vector<std::pair<std::vector<int>, double>> poblacion_intermedia;
 	std::vector<int> cruce;
@@ -1001,16 +1001,16 @@ unsigned PAR::operador_cruce_uniforme(std::vector<std::pair<std::vector<int>, do
 		while (valores.size() < poblacion[indice].first.size()/2){
 			int valor = RandPositiveInt(poblacion[indice].first.size());
 
-			auto pos = std::find(valores.begin(), valores.end(), valor);
+			auto pos = valores.find(valor);//std::find(valores.begin(), valores.end(), valor);
 			if (pos == valores.end()){
-				valores.push_back(valor);
+				valores.insert(valor);
 			}
 		}
 
 		cruce.resize(poblacion[indice].first.size());
 
 		for (unsigned j = 0; j < poblacion[indice].first.size(); j++){
-			auto pos = std::find(valores.begin(), valores.end(), j);
+			auto pos = valores.find(j);
 
 			// rellenamos el hijo 1
 			// esta entre los seleccionados aleatoriamente, lo cogemos del padre 1
@@ -1063,7 +1063,7 @@ unsigned PAR::operador_cruce_seg_fijo(std::vector<std::pair<std::vector<int>, do
 	const int NUM_PAREJAS = poblacion.size()/2;
 	const int NUM_CRUCES = NUM_PAREJAS * prob_cruce;
 
-	std::vector<int> valores;
+	std::set<int> valores;
 
 	unsigned evaluaciones = 0;
 
@@ -1135,18 +1135,19 @@ unsigned PAR::operador_cruce_seg_fijo(std::vector<std::pair<std::vector<int>, do
 			rango_fijo_hight = ini_segmento;
 		}
 
+		valores.clear();
 
 		while (valores.size() < (unsigned) (rango_fijo_hight-rango_fijo_low)/2){
 			int valor = Randint(rango_fijo_low, rango_fijo_hight);
 
-			auto pos = std::find(valores.begin(), valores.end(), valor);
+			auto pos = valores.find(valor);
 			if (pos == valores.end()){
-				valores.push_back(valor % poblacion[indice_p1].first.size());
+				valores.insert(valor % poblacion[indice_p1].first.size());
 			}
 		}
 
 		for (unsigned j = 0; j < poblacion[indice_p1].first.size(); j++){
-			auto pos = std::find(valores.begin(), valores.end(), j);
+			auto pos = valores.find(j);//std::find(valores.begin(), valores.end(), j);
 
 			// rellenamos el hijo 1
 			// esta entre los seleccionados aleatoriamente, lo cogemos del padre 1
