@@ -1370,9 +1370,547 @@ Las semillas que voy a usar son:
 
 \subsection{Resultados obtenidos.}
 
+Estas son las tablas con los resultados de las distintas semillas:
+
+\subsubsection{AGG con operador de cruce uniforme.}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AGG-UN en el PAR con 10\% de restricciones}}                                                                                                   \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 35,2706    & 1142,03                   & 65                          & 1405,36                & 268,878    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 37,548     & 1107,2                    & 76                          & 1415,09                & 265,308    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 31,2654    & 1193,6                    & 123                         & 1691,89                & 146,331    \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 32,6679    & 1097,62                   & 62                          & 1348,79                & 152,271    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 32,784     & 1166,27                   & 102                         & 1579,49                & 155,038    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 33,90718   & 1141,344                  & 85,6                        & 1488,124               & 197,5652   \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AGG-UN en el PAR con 10\% de restricciones}}                                                                                                   \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 36,1749    & 288,636                   & 6                           & 307,093                & 73,114     \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 37,1932    & 301,551                   & 86                          & 566,1                  & 69,8764    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 32,1782    & 288,636                   & 6                           & 307,093                & 72,5568    \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 30,2733    & 288,636                   & 6                           & 307,093                & 67,1617    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 30,2733    & 288,636                   & 6                           & 307,093                & 66,7465    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 32,4795    & 291,219                   & 22                          & 358,8944               & 69,89108   \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AGG-UN en el PAR con 20\% de restricciones}}                                                                                                   \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 65,2196    & 1016,71                   & 146                         & 1312,44                & 452,349    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 63,107     & 1052,33                   & 89                          & 1232,61                & 438,982    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 58,3115    & 1091,82                   & 63                          & 1219,43                & 246,659    \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 60,5067    & 986,45                    & 96                          & 1180,91                & 246,645    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 54,3243    & 1019,08                   & 102                         & 1225,69                & 250,075    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 60,29382   & 1033,278                  & 99,2                        & 1234,216               & 326,942    \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AGG-UN en el PAR con 20\% de restricciones}}                                                                                                   \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 63,3179    & 313,299                   & 0                           & 313,299                & 125,794    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 65,7837    & 313,299                   & 0                           & 313,299                & 131,859    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 60,6053    & 313,299                   & 0                           & 313,299                & 107,024    \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 57,2568    & 313,299                   & 0                           & 313,299                & 83,0377    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 48,94      & 313,299                   & 0                           & 313,299                & 80,4087    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 59,18074   & 313,299                   & 0                           & 313,299                & 105,62468  \\ \hline
+\end{tabular}
+\end{table}
+
 
 \newpage
 
+
+\subsubsection{AGG con operador de cruce de segmento fijo.}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AGG-SF en el PAR con 10\% de restricciones}}                                                                                                   \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 30,7132    & 1055,24                   & 45                          & 1237,54                & 228,143    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 32,6323    & 1163,48                   & 103                         & 1580,75                & 227,444    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 32,8518    & 1348,35                   & 125                         & 1854,75                & 210,735    \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 32,3785    & 1155,87                   & 77                          & 1467,81                & 211,249    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 32,5782    & 1086,18                   & 46                          & 1272,54                & 216,735    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 32,2308    & 1161,824                  & 79,2                        & 1482,678               & 218,8612   \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AGG-SF en el PAR con 10\% de restricciones}}                                                                                                   \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 32,8901    & 288,636                   & 6                           & 307,093                & 70,1843    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 31,6602    & 288,636                   & 6                           & 307,093                & 72,1044    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 33,2177    & 288,636                   & 6                           & 307,093                & 73,0704    \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 32,6515    & 301,551                   & 86                          & 566,1                  & 73,9682    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 32,6996    & 288,636                   & 6                           & 307,093                & 71,4673    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 32,62382   & 291,219                   & 22                          & 358,8944               & 72,15892   \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AGG-SF en el PAR con 20\% de restricciones}}                                                                                                   \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 60,9859    & 1053,01                   & 117                         & 1290,01                & 328,32     \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 60,5222    & 1008,54                   & 110                         & 1231,35                & 344,946    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 58,6525    & 1017,47                   & 127                         & 1274,72                & 314,935    \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 61,5564    & 1064,83                   & 77                          & 1220,8                 & 324,725    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 59,312     & 1033,47                   & 116                         & 1268,44                & 326,822    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 60,2058    & 1035,464                  & 109,4                       & 1257,064               & 327,9496   \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AGG-SF en el PAR con 20\% de restricciones}}                                                                                                   \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 60,6225    & 313,299                   & 0                           & 313,299                & 124,651    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 59,8896    & 313,299                   & 0                           & 313,299                & 128,853    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 62,5462    & 313,299                   & 0                           & 313,299                & 124,111    \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 63,0179    & 313,299                   & 0                           & 313,299                & 122,92     \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 58,8071    & 313,299                   & 0                           & 313,299                & 112,465    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 60,97666   & 313,299                   & 0                           & 313,299                & 122,6      \\ \hline
+\end{tabular}
+\end{table}
+
+\subsubsection{AGE con operador de cruce uniforme.}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AGE-UN en el PAR con 10\% de restricciones}}                                                                                                   \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 38,2906    & 1114,98                   & 71                          & 1402,62                & 266,76     \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 37,2351    & 1025,71                   & 51                          & 1232,32                & 245,287    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 32,6881    & 1007,33                   & 44                          & 1185,58                & 148,58     \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 32,7834    & 1058,01                   & 39                          & 1216,01                & 144,3      \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 31,9797    & 1066,17                   & 27                          & 1175,55                & 146,386    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 34,59538   & 1054,44                   & 46,4                        & 1242,416               & 190,2626   \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AGE-UN en el PAR con 10\% de restricciones}}                                                                                                   \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 37,8852    & 288,636                   & 6                           & 307,093                & 71,5246    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 36,2917    & 288,636                   & 6                           & 307,093                & 80,6133    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 31,8545    & 288,636                   & 6                           & 307,093                & 47,9125    \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 32,4578    & 288,636                   & 6                           & 307,093                & 66,8237    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 30,3836    & 288,636                   & 6                           & 307,093                & 53,4953    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 33,77456   & 288,636                   & 6                           & 307,093                & 64,07388   \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AGE-UN en el PAR con 20\% de restricciones}}                                                                                                   \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 56,1564    & 1034,72                   & 92                          & 1221,08                & 386,916    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 57,3738    & 957,161                   & 135                         & 1230,62                & 375,553    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 57,3672    & 1031,52                   & 91                          & 1215,85                & 234,667    \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 60,1728    & 1054,99                   & 136                         & 1330,47                & 220,401    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 51,028     & 987,182                   & 99                          & 1187,72                & 217,812    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 56,41964   & 1013,1146                 & 110,6                       & 1237,148               & 287,0698   \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AGE-UN en el PAR con 20\% de restricciones}}                                                                                                   \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 55,8781    & 279,81                    & 268                         & 691,924                & 130,792    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 59,8021    & 313,299                   & 0                           & 313,299                & 135,768    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 60,1493    & 313,299                   & 0                           & 313,299                & 77,5305    \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 56,7057    & 313,299                   & 0                           & 313,299                & 75,2207    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 39,838     & 313,299                   & 0                           & 313,299                & 75,6606    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 54,47464   & 306,6012                  & 53,6                        & 389,024                & 98,99436   \\ \hline
+\end{tabular}
+\end{table}
+
+\subsubsection{AGE con operador de cruce de  segmento fijo.}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AGE-SF en el PAR con 10\% de restricciones}}                                                                                                   \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 34,0342    & 1023,35                   & 77                          & 1335,29                & 163,435    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 34,1759    & 1063,18                   & 51                          & 1269,79                & 157,654    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 34,8261    & 1065,84                   & 44                          & 1244,09                & 158,094    \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 33,9758    & 1048,43                   & 45                          & 1230,73                & 160,576    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 33,748     & 1041,73                   & 24                          & 1138,96                & 157,618    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 34,152     & 1048,506                  & 48,2                        & 1243,772               & 159,4754   \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AGE-SF en el PAR con 10\% de restricciones}}                                                                                                   \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 33,6354    & 288,636                   & 6                           & 307,093                & 67,0257    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 34,4358    & 288,636                   & 6                           & 307,093                & 66,4185    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 34,125     & 288,636                   & 6                           & 307,093                & 63,0778    \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 34,2755    & 288,636                   & 6                           & 307,093                & 64,5503    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 33,7706    & 288,636                   & 6                           & 307,093                & 51,5833    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 34,04846   & 288,636                   & 6                           & 307,093                & 62,53112   \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AGE-SF en el PAR con 20\% de restricciones}}                                                                                                   \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 59,5943    & 1018,05                   & 119                         & 1259,1                 & 245,266    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 62,0204    & 1061,16                   & 89                          & 1241,44                & 229,565    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 59,479     & 1023,08                   & 103                         & 1231,71                & 235,73     \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 55,5874    & 1057,14                   & 46                          & 1150,32                & 228,969    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 63,2785    & 1116,43                   & 168                         & 1456,73                & 245,612    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 59,99192   & 1055,172                  & 105                         & 1267,86                & 237,0284   \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AGE-SF en el PAR con 20\% de restricciones}}                                                                                                   \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 55,9348    & 313,299                   & 0                           & 313,299                & 86,7861    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 60,0174    & 313,299                   & 0                           & 313,299                & 90,8191    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 49,8215    & 313,299                   & 0                           & 313,299                & 83,6514    \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 49,1412    & 313,299                   & 0                           & 313,299                & 87,4083    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 63,3441    & 313,299                   & 0                           & 313,299                & 82,9621    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 55,6518    & 313,299                   & 0                           & 313,299                & 86,3254    \\ \hline
+\end{tabular}
+\end{table}
+
+\subsubsection{AM con 10 cromosomas y aplicando BLS a todos los cromosomas.}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AM-10-1 en el PAR con 10\% de restricciones}}                                                                                                  \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 30,9978    & 1038,49                   & 39                          & 1196,48                & 221,619    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 30,7944    & 1160,57                   & 52                          & 1371,23                & 245,11     \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 29,1573    & 1043,36                   & 45                          & 1225,66                & 285,234    \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 28,0696    & 1040,08                   & 19                          & 1117,05                & 252,064    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 28,8427    & 1091,18                   & 46                          & 1277,53                & 270,623    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 29,57236   & 1074,736                  & 40,2                        & 1237,59                & 254,93     \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AM-10-1 en el PAR con 10\% de restricciones}}                                                                                                  \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 29,7002    & 288,636                   & 6                           & 307,093                & 64,9115    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 31,076     & 288,636                   & 6                           & 307,093                & 59,2456    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 30,0468    & 288,636                   & 6                           & 307,093                & 67,1702    \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 27,1252    & 288,636                   & 6                           & 307,093                & 66,3171    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 26,9275    & 288,636                   & 6                           & 307,093                & 66,728     \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 28,97514   & 288,636                   & 6                           & 307,093                & 64,87448   \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AM-10-1 en el PAR con 20\% de restricciones}}                                                                                                  \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 56,7613    & 969,865                   & 75                          & 1121,78                & 354,644    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 53,8831    & 1032,09                   & 74                          & 1181,99                & 391,738    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 54,9345    & 981,339                   & 77                          & 1137,31                & 390,72     \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 56,8105    & 1001,62                   & 51                          & 1104,92                & 447,256    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 56,9273    & 1050,8                    & 58                          & 1168,28                & 419,404    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 55,86334   & 1007,1428                 & 67                          & 1142,856               & 400,7524   \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AM-10-1 en el PAR con 20\% de restricciones}}                                                                                                  \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 54,0506    & 313,299                   & 0                           & 313,299                & 95,7825    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 58,7367    & 313,299                   & 0                           & 313,299                & 112,613    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 57,2196    & 313,299                   & 0                           & 313,299                & 125,194    \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 56,6627    & 313,299                   & 0                           & 313,299                & 118,048    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 57,8803    & 313,299                   & 0                           & 313,299                & 123,738    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 56,90998   & 313,299                   & 0                           & 313,299                & 115,0751   \\ \hline
+\end{tabular}
+\end{table}
+
+
+\subsubsection{AM con 10 cromosomas y aplicando BLS al 10\% de los cromosomas.}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AM-10-0.1 en el PAR con 10\% de restricciones}}                                                                                                \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 32,5543    & 1037,29                   & 22                          & 1126,41                & 170,305    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 29,0987    & 1007,24                   & 24                          & 1104,47                & 192,828    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 32,3511    & 1007,32                   & 38                          & 1161,27                & 205,26     \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 30,1604    & 1010,8                    & 34                          & 1148,54                & 176,419    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 31,5382    & 1003,92                   & 27                          & 1113,3                 & 167,053    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 31,14054   & 1013,314                  & 29                          & 1130,798               & 182,373    \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AM-10-0.1 en el PAR con 10\% de restricciones}}                                                                                                \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 31,8139    & 288,636                   & 6                           & 307,093                & 67,0763    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 30,265     & 288,636                   & 6                           & 307,093                & 62,3063    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 32,7576    & 288,636                   & 6                           & 307,093                & 71,302     \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 29,9967    & 288,636                   & 6                           & 307,093                & 69,1749    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 30,344     & 288,636                   & 6                           & 307,093                & 69,6438    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 31,03544   & 288,636                   & 6                           & 307,093                & 67,90066   \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AM-10-0.1 en el PAR con 20\% de restricciones}}                                                                                                \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 53,1792    & 1026,86                   & 88                          & 1205,11                & 269,138    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 51,4935    & 1047,74                   & 93                          & 1236,12                & 311,127    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 59,5593    & 1026,32                   & 73                          & 1174,19                & 276,328    \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 59,3153    & 1030,99                   & 92                          & 1217,35                & 258,225    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 59,8578    & 1018,28                   & 71                          & 1162,1                 & 270,382    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 56,68102   & 1030,038                  & 83,4                        & 1198,974               & 277,04     \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AM-10-0.1 en el PAR con 20\% de restricciones}}                                                                                                \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,85                      & 0                           & 0,85                   & 0,01       & 313,299                   & 0                           & 313,299                & 102,019    \\ \hline
+9398429           & 0,85                      & 0                           & 0,85                   & 0,01       & 313,299                   & 0                           & 313,299                & 112,848    \\ \hline
+12321             & 0,85                      & 0                           & 0,85                   & 0,01       & 313,299                   & 0                           & 313,299                & 116,361    \\ \hline
+213566            & 0,85                      & 0                           & 0,85                   & 0          & 313,299                   & 0                           & 313,299                & 114,503    \\ \hline
+3939021           & 0,85                      & 0                           & 0,85                   & 0          & 313,299                   & 0                           & 313,299                & 119,927    \\ \hline
+\textbf{Media}    & 0,85                      & 0                           & 0,85                   & 0,006      & 313,299                   & 0                           & 313,299                & 113,1316   \\ \hline
+\end{tabular}
+\end{table}
+
+\newpage
+
+\subsubsection{AM con 10 cromosomas y aplicando BLS al 10\% de los mejores cromosomas.}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AM-10-0.1mej en el PAR con 10\% de restricciones}}                                                                                             \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 31,7784    & 1044,11                   & 26                          & 1149,44                & 164,814    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 30,7307    & 1008,61                   & 52                          & 1219,27                & 185,589    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 30,7091    & 1017,23                   & 44                          & 1195,48                & 161,199    \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 31,4057    & 1031,67                   & 33                          & 1165,36                & 148,7      \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 32,652     & 1009,76                   & 22                          & 1098,88                & 148,932    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 31,45518   & 1022,276                  & 35,4                        & 1165,686               & 161,8468   \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AM-10-0.1mej en el PAR con 10\% de restricciones}}                                                                                             \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 31,9085    & 288,636                   & 6                           & 307,093                & 66,5646    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 31,0092    & 288,636                   & 6                           & 307,093                & 64,5443    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 31,7498    & 288,636                   & 6                           & 307,093                & 70,7502    \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 31,6214    & 283,208                   & 95                          & 575,442                & 67,9124    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 29,3911    & 288,636                   & 6                           & 307,093                & 69,0658    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 31,136     & 287,5504                  & 23,8                        & 360,7628               & 67,76746   \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AM-10-0.1mej en el PAR con 20\% de restricciones}}                                                                                             \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 44,7121    & 984,316                   & 96                          & 1178,77                & 261,338    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 44,4636    & 1011,49                   & 85                          & 1183,66                & 280,684    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 58,2337    & 975,394                   & 103                         & 1184,03                & 242,542    \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 57,8959    & 1028,42                   & 111                         & 1253,26                & 238,36     \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 59,9682    & 984,199                   & 74                          & 1134,09                & 241,127    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 53,0547    & 996,7638                  & 93,8                        & 1186,762               & 252,8102   \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AM-10-0.1mej en el PAR con 20\% de restricciones}}                                                                                             \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 49,2114    & 313,299                   & 0                           & 313,299                & 90,0679    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 45,8253    & 313,299                   & 0                           & 313,299                & 103,773    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 60,1492    & 313,299                   & 0                           & 313,299                & 83,5632    \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 59,8315    & 313,299                   & 0                           & 313,299                & 83,0156    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 57,8916    & 313,299                   & 0                           & 313,299                & 114,417    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 54,5818    & 313,299                   & 0                           & 313,299                & 94,96734   \\ \hline
+\end{tabular}
+\end{table}
+
+\newpage
 
 \subsection{Análisis de resultados.	}
 
