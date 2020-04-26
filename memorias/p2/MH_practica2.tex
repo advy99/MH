@@ -1369,9 +1369,12 @@ Las semillas que voy a usar son:
 
 \newpage
 
+
 \subsection{Resultados obtenidos.}
 
 Estas son las tablas con los resultados de las distintas semillas:
+
+
 
 \subsubsection{AGG con operador de cruce uniforme.}
 
@@ -1456,6 +1459,8 @@ Estas son las tablas con los resultados de las distintas semillas:
 \newpage
 
 
+Usando el algoritmo genético generacional con cruce uniforme tanto en Iris como en Rand nos converge al mismo mínimo en todas las ejecuciones. En el conjunto de datos Newthyroid vemos como usando un 10\% de restricciones existen dos mínimos, el mejor mínimo lo alcanza cuatro veces y el peor de una única vez, este conjunto de datos, más complejo que rand e iris pero menos que ecoli, logra sin embargo obtener un buen mínimo sin incumplir restricciones con un 20\% de restricciones. En ecoli vemos como las soluciones están en torno a los 1300/1400 de agregado, que más adelante compararemos con otros algoritmos.
+
 \subsubsection{AGG con operador de cruce de segmento fijo.}
 
 % Please add the following required packages to your document preamble:
@@ -1529,6 +1534,8 @@ Estas son las tablas con los resultados de las distintas semillas:
 \textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 60,97666   & 313,299                   & 0                           & 313,299                & 122,6      \\ \hline
 \end{tabular}
 \end{table}
+
+En este caso vuelve a ocurrir lo mismo en los distintos conjuntos de datos, tanto iris como rand convergen al mismo punto, mientras que newthyroid tiene un punto mínimo común, aunque puede quedarse en otros mínimos peores, con ecoli seguimos encontrando mínimos más diversos debido a la complejidad del conjunto de datos y las características de sus elementos.
 
 \subsubsection{AGE con operador de cruce uniforme.}
 
@@ -1605,6 +1612,8 @@ Estas son las tablas con los resultados de las distintas semillas:
 \textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 54,47464   & 306,6012                  & 53,6                        & 389,024                & 98,99436   \\ \hline
 \end{tabular}
 \end{table}
+
+De nuevo se repite lo que ya vemos en el AGG, luego podemos intuir que esto se debe a la dificultad de los conjuntos de datos y no a los comportamientos de los algoritmos, ya que cambiando la forma de realizar las generaciones y actualizar las poblaciones no está influyendo en como se comportan con los datos. Es cierto que los resultados son distintos, pero las comparaciones entre algoritmos se realizarán más adelante.
 
 \subsubsection{AGE con operador de cruce de  segmento fijo.}
 
@@ -1683,6 +1692,8 @@ Estas son las tablas con los resultados de las distintas semillas:
 \end{tabular}
 \end{table}
 
+De nuevo sigue ocurriendo lo mismo, sin embargo vemos un cambio, ahora si converge en todas las ejecuciones en el conjunto de datos Newthyroid. Esto puede ser debido a usar el operador de cruce de segmento fijo, que explota las soluciones en lugar de explorar, por lo que la diversidad es un poco menor (aunque sigue siendo mucho más amplia comparada con la búsqueda local, por ejemplo).
+
 \subsubsection{AM con 10 cromosomas y aplicando BLS a todos los cromosomas.}
 
 % Please add the following required packages to your document preamble:
@@ -1758,6 +1769,8 @@ Estas son las tablas con los resultados de las distintas semillas:
 \end{table}
 
 
+En este caso vemos como de nuevo converge a los mismo mínimos en el nuevo conjunto de datos, ya que aunque hemos intentado no favorecer la explotación con el operador de cruce, si que le estamos aplicando una búsqueda local a todos los elementos de la población, sumado a que esta población es mucho más pequeña que con los otros algoritmos (10 cromosomas en lugar de 50).
+
 \subsubsection{AM con 10 cromosomas y aplicando BLS al 10\% de los cromosomas.}
 
 % Please add the following required packages to your document preamble:
@@ -1826,16 +1839,15 @@ Estas son las tablas con los resultados de las distintas semillas:
 \multicolumn{9}{|c|}{\textbf{Resultados obtenidos por el algoritmo AM-10-0.1 en el PAR con 20\% de restricciones}}                                                                                                \\ \hline
 \multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
                   & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
-123452244         & 0,85                      & 0                           & 0,85                   & 0,01       & 313,299                   & 0                           & 313,299                & 102,019    \\ \hline
-9398429           & 0,85                      & 0                           & 0,85                   & 0,01       & 313,299                   & 0                           & 313,299                & 112,848    \\ \hline
-12321             & 0,85                      & 0                           & 0,85                   & 0,01       & 313,299                   & 0                           & 313,299                & 116,361    \\ \hline
-213566            & 0,85                      & 0                           & 0,85                   & 0          & 313,299                   & 0                           & 313,299                & 114,503    \\ \hline
-3939021           & 0,85                      & 0                           & 0,85                   & 0          & 313,299                   & 0                           & 313,299                & 119,927    \\ \hline
-\textbf{Media}    & 0,85                      & 0                           & 0,85                   & 0,006      & 313,299                   & 0                           & 313,299                & 113,1316   \\ \hline
+123452244         & 0,746683                      & 0                           & 0,746683                   & 62,2841       & 313,299                   & 0                           & 313,299                & 102,019    \\ \hline
+9398429           & 0,746683                      & 0                           & 0,746683                  & 63,6148       & 313,299                   & 0                           & 313,299                & 112,848    \\ \hline
+12321             & 0,746683                      & 0                           & 0,746683                   & 59,912       & 313,299                   & 0                           & 313,299                & 116,361    \\ \hline
+213566            & 0,746683                      & 0                           & 0,746683                   & 59,0123          & 313,299                   & 0                           & 313,299                & 114,503    \\ \hline
+3939021           & 0,746683                      & 0                           & 0,746683                   & 61,3456          & 313,299                   & 0                           & 313,299                & 119,927    \\ \hline
+\textbf{Media}    & 0,746683                      & 0                           & 0,746683                   & 60,63376           & 313,299                   & 0                           & 313,299                & 113,1316   \\ \hline
 \end{tabular}
 \end{table}
 
-\newpage
 
 \subsubsection{AM con 10 cromosomas y aplicando BLS al 10\% de los mejores cromosomas.}
 
@@ -1911,9 +1923,14 @@ Estas son las tablas con los resultados de las distintas semillas:
 \end{tabular}
 \end{table}
 
+En este caso ocurre lo mismo que en el apartado anterior, ya que seguimos aplicando la búsqueda local. Más adelante compararemos los distintos algoritmos, discutiendo cual se adapta mejor, y encuentra una mejor solución y si es posible hacerla en poco tiempo.
+
+
 \newpage
 
 \subsection{Análisis de resultados.	}
+
+\subsubsection{10\% de restricciones}
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
@@ -1959,10 +1976,19 @@ Estas son las tablas con los resultados de las distintas semillas:
 \end{table}
 
 
+Ahora con todos los algoritmos en conjunto, vemos como todos los algoritmos vistos hasta el momento superan con creces los resultados obtenidos por el algoritmo greedy, como era de esperar.
+
+Una de las cosas más significativas en la comparación con respecto a la práctica anterior son los tiempos de ejecución, estos se deben a que no es posible factorizar los algoritmos evolutivos luego el tiempo de ejecución se dispara, llegando a tardar unos 200 segundos con el conjunto más complejo.
+
+Para realizar las comparaciones entre los algoritmos usaré el conjunto de datos ecoli, ya que con los otros conjuntos de datos siempre converge a mínimo similares.
+
+Con respecto a los algoritmos, vemos que los algoritmos genéticos estacionarios se comportan mejor que los algoritmos genétivos generacionales, esto es debido a que la exploración de los algoritmos estacionarios es mucho mayor y ninguno de estos algoritmos llega a usar ningún método de explotación, luego al explorar más zona del espacio de búsqueda es capaz de buscar soluciones más distintas, y como es en este caso, encontrar nuevas zonas de mínimos.
+
+El problema de no explotar de los algoritmos genéticos generacionales se hace más patente aún con los resultados de los algoritmos meméticos, ya que usan el mismo esquema que los algoritmos genéticos generacionales, pero cada diez iteraciones aplican una búsqueda local suave, que como vemos arregla este problema e incluso mejora los resultados de los algoritmos genéticos estacionarios, a excepción del algoritmo memético que aplica la búsqueda local a todos los cromosomas, ya que esto hace que converja demasiado rápido las soluciones, y aunque encuentra una buena solución, esta no es tan buena comparada con explotar solo el 10\% de los cromosomas, permitiendo un equilibrio entre exploración/explotación.
 
 
+\subsubsection{20\% de restricciones}
 
-\newpage
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
@@ -1996,18 +2022,25 @@ Estas son las tablas con los resultados de las distintas semillas:
 \multirow{2}{*}{}     & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
                       & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} \\ \hline
 \textbf{Greedy}       & 0,8522                    & 0                           & 0,8522                 & 0,0054     & 328,86                    & 314                         & 811,711                & 0,081181   \\ \hline
-\textbf{BL}           & 0,8522                    & 0                           & 0,8522                 & 0,031      & 313,299                   & 0                           & 313,299                & 0,273968   \\ \hline
+\textbf{BL}           & 0,8522                    & 0                           & 0,8522                 & 0,031      & 313,299                   & 0                           & 313,299                & 1,273968   \\ \hline
 \textbf{AGG-UN}       & 0,746683                  & 0                           & 0,746683               & 59,18074   & 313,299                   & 0                           & 313,299                & 105,62468  \\ \hline
 \textbf{AGG-SF}       & 0,746683                  & 0                           & 0,746683               & 60,97666   & 313,299                   & 0                           & 313,299                & 122,6      \\ \hline
 \textbf{AGE-UN}       & 0,746683                  & 0                           & 0,746683               & 54,47464   & 306,6012                  & 53,6                        & 389,024                & 98,99436   \\ \hline
 \textbf{AGE-SF}       & 0,746683                  & 0                           & 0,746683               & 55,6518    & 313,299                   & 0                           & 313,299                & 86,3254    \\ \hline
 \textbf{AM-10-1}      & 0,746683                  & 0                           & 0,746683               & 56,90998   & 313,299                   & 0                           & 313,299                & 115,0751   \\ \hline
-\textbf{AM-10-0.1}    & 0,85                      & 0                           & 0,85                   & 0,006      & 313,299                   & 0                           & 313,299                & 113,1316   \\ \hline
+\textbf{AM-10-0.1}    &  0,746683               & 0                    &  0,746683                    & 60,63376      & 313,299                   & 0                           & 313,299                & 113,1316   \\ \hline
 \textbf{AM-10-0.1mej} & 0,746683                  & 0                           & 0,746683               & 54,5818    & 313,299                   & 0                           & 313,299                & 94,96734   \\ \hline
 \end{tabular}
 \end{table}
 
+En este caso vuelve a ocurrir lo mismo con respecto a los comportamientos de los algoritmos. Destacar que como vemos el tiempo de ejecución se duplica, y esto es debido a que, tras hacer un profiling usando la herramienta gprof, la operación que más tiempo ocupa es comprobar la infactibilidad, y en este caso al tener el doble de restricciones, tarda el doble, luego es normal estos tiempos de ejecución.
+
+
 \subsection{Otros experimentos realizados.}
 
+\subsubsection{Algoritmos meméticos con mayor población.}
+
+
+\subsection{Estudio del comportamiento de los algoritmos genéticos usados.}
 
 \end{document}
