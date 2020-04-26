@@ -1364,7 +1364,6 @@ En nuestro caso, para el problema del PAR trabajaremos sobre tres conjuntos de d
 Destacar que en nuestro problema las restricciones tendrán un papel muy importante, ya que los conjuntos de datos son muy distintos y estas restricciones son un añadido no original del problema, podría darse el caso de que dos elementos que en principio son de la misma clase estén separados por las restricciones, en caso de tener muy en cuenta las restricciones en nuestra función objetivo, o viceversa, es decir, que realice la asignación de clases sin tener en cuenta las restricciones si a estas no se les da la suficiente importancia.
 
 
-
 \subsubsection{Semillas escogidas.}
 
 Las semillas que voy a usar son:
@@ -1376,6 +1375,10 @@ Las semillas que voy a usar son:
 	\item {213566}
 	\item {3939021}
 \end{itemize}
+
+\subsection{Teorema No Free Lunch}
+
+Como hemos visto en teoría, las metaheurísticas son métodos de resolución genéricos que podemos aplicar a cualquier problema, y siguiendo el teorema de no free lunch, una metaheurística que se comporte bien en un tipo de problemas se comportará mal en el resto de problemas, luego los análisis que realizaré en este documento se centrarán exclusivamente en el Problema de Asignación con Restricciones, esto quiere decir que es muy probable que las metaheurísticas más adelante analizadas se comporten de manera distinta sobre otros problemas y por tanto este análisis no se podrá extrapolar a otros problemas.
 
 \newpage
 
@@ -2414,7 +2417,7 @@ Como hemos comentado en el manual de uso, es posible observar como avanzan los a
 
 Por no extender más este documento, solo compararé las 5 gráficas (una por semilla) de ecoli con un 10\% de restricciones ya que es el único conjunto de datos suficientemente complejo y donde podremos estudiar mejor el comportamiento ya que será más distinguido. El resto se pueden consultar como explica el manual de uso, aunque los algoritmos se comportan igual que con ecoli, solo que convergen mucho más rápido (es necesario ejecutar el programa para obtener los ficheros con los que se generarán las gráficas).
 
-Haremos un análisis de las gráficas al final de estas.
+En estas gráficas podemos ver el número de generación en el eje x, y el valor de la función objetivo del mejor valor en dicha generación. Haremos un análisis de las gráficas al final de estas.
 
 \begin{figure}[H]
   \centering
@@ -2467,15 +2470,32 @@ En los cinco gráficos vemos claramente distinguidas 4 tipos de lineas según si
 	\item Algoritmos meméticos con búsqueda local normal.
 \end{itemize}
 
-En los demás gráficos no enseñados en este documento ocurre igual, solo que en otros conjuntos convergen de una forma más rápida y no se aprecia tanto la distinción.
+En los demás gráficos no enseñados en este documento ocurre igual, solo que en otros conjuntos convergen de una forma más rápida y no se aprecia tanto la distinción. Como ya hemos comentado en el análisis de resultados, los mejores resultados son obtenidos por los algoritmos meméticos con la búsqueda local normal, seguidos por los meméticos con la búsqueda local suave, los algoritmos genéticos estacionarios y por último los algoritmos genéticos generacionales.
 
 \newpage
 
 \subsubsection{Algoritmos genéticos estacionarios.}
 
+Estos algoritmos son los que más generaciones generan y tardan más generaciones en converger, de hecho, centrándonos en el caso de ecoli con 10\% de restricciones, mientras que el resto de algoritmos finalizan antes de las 5.000 generaciones los algoritmos genéticos estacionarios llegan a sobrepasar con creces las 35.000 generaciones.
+
+Aunque esto pueda parecer un mal comportamiento del algoritmo es todo lo contrario, si entendemos como funciona nuestro algoritmo genético estacionario, el operador de cruce para estos algoritmos solo se seleccionan dos cromosomas y siempre se cruzan, lo que harán que por generación se evalúen únicamente dos hijos, sumando el número de evaluaciones por mutación, pero el porcentaje de mutación es de tan solo 0.001, mientras que en algoritmos genético generacional se escogen 50 cromosomas y se cruzan un 70\% de estos, que aplicando la esperanza matemática se convierten en unas 35 evaluaciones por generación, luego el número de evaluaciones por generación está bastante alejado.
+
+Como sabemos, al no sustituir la población de forma completa y crear tan pocos hijos por generación estos algoritmos tardan mucho más en sustituir una población por otra totalmente distinta, de forma que favorecen mucho la exploración, pero a cambio de converger de una forma mucho más lenta como vemos. Esto puede ser una ventaja o una desventaja, según el problema, en nuestro caso está suponiendo una ventaja, ya que el conjunto de datos es muy complejo y al realizar esta exploración obtiene mejores resultados que el algoritmo genético generacional.
+
+
 \subsubsection{Algoritmos genéticos generacionales.}
 
+A diferencia de los algoritmos genéticos estacionarios, este algoritmo en cada nueva generación sustituye completamente a la generación anterior. Esto favorece mucho más la explotación comparado con el algoritmo genético estacionario, ya que al cambiar gran parte de la población y existir elitismo las mejores soluciones se reproducirán y permanecerán en la población, convergiendo de una forma mucho más rápida como vemos en todas las gráficas.
+
+Aún así este hecho puede traernos una desventaja, y es que como vemos, aunque existe más exploración que en otros algoritmos como la búsqueda local (donde la exploración es nula), el converger tan rápido en este problema nos causa la desventaja de que obtenemos mínimos locales peores que el algoritmo genético estacionario.
+
+\newpage
+
 \subsubsection{Algoritmos meméticos con búsqueda local suave.}
+
+Como vemos estos algoritmos son de los que más rápido convergen, si de por si un algoritmo memético tiene la base de un algoritmo genético generacional, sumando el uso de la búsqueda local consumirán aún más evaluaciones lo que causará que no sobreviva muchas generaciones.
+
+Sin embargo, como vemos en esas generaciones se comporta de forma excepcional, siendo capaz de dar muy buenas soluciones, ya que es capaz de aprovechar la exploración de un algoritmo genético generacional sumado a la explotación de una búsqueda local. Sin embargo, este hecho nos hace plantearnos una pregunta, ¿ Si pretendemos explorar, porque no basar el algoritmos memético en un algoritmo genético estacionario que tiene mayor rango de exploración ? Esta pregunta es simple de responder, como hemos visto en la implementación, el algoritmo memético aplicará la búsqueda local cada ciertas generaciones, y el algoritmo genético estacionario requiere muchas generaciones para alterar la mayor parte de su población, luego si nos basamos en este lo único que conseguiremos es hacer que todos los cromosomas converjan de forma rápida por el uso de la búsqueda local, pero al converger el algoritmo genético estacionario no podrá explorar, al cruzar dos cromosomas idénticos, en resumen, la búsqueda local ``adelantaría'' al algoritmo genético estacionario y haría que se estanque.
 
 \subsubsection{Algoritmos meméticos con búsqueda.}
 
