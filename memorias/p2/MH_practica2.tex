@@ -1081,6 +1081,7 @@ Como vemos, tenemos una serie de operadores que tenemos que aplicar a distintos 
 	\item Los algoritmos meméticos son iguales que los algoritmos genéticos, solo que aplicando una búsqueda local.
 \end{enumerate}
 
+Mencionar que se nos pedía que escogieramos nosotros el operador de cruce para los algoritmos meméticos. Como he mencionado en el desarrollo de los algoritmos, el algoritmos de cruce uniforme favorece la explotación ya que seleccionará el segmento fijo del padre con mejor función objetivo, por esto, como el algoritmo memético también explotará al aplicar la búsqueda local suave he decidido escoger el operador de cruce uniforme.
 
 Por estos motivos he decidido implementar todos los algoritmos en una única función, que dependiendo de los parámetros de entrada aplicará unos operadores u otros.
 
@@ -1946,7 +1947,7 @@ Estas son las tablas con los resultados de las distintas semillas:
 \multirow{2}{*}{}     & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
                       & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} \\ \hline
 \textbf{Greedy}       & 0,8522                    & 0                           & 0,8522                 & 0,0053     & 321,448                   & 35                          & 429,113                & 0,013897   \\ \hline
-\textbf{BL}           & 0,8522                    & 0                           & 0,8522                 & 0,031      & 288,636                   & 6                           & 307,093                & \#REF!     \\ \hline
+\textbf{BL}           & 0,8522                    & 0                           & 0,8522                 & 0,031      & 288,636                   & 6                           & 307,093                & 0,023454     \\ \hline
 \textbf{AGG-UN}       & 0,746683                  & 0                           & 0,746683               & 32,4795    & 291,219                   & 22                          & 358,8944               & 69,89108   \\ \hline
 \textbf{AGG-SF}       & 0,746683                  & 0                           & 0,746683               & 32,62382   & 291,219                   & 22                          & 358,8944               & 72,15892   \\ \hline
 \textbf{AGE-UN}       & 0,746683                  & 0                           & 0,746683               & 33,77456   & 288,636                   & 6                           & 307,093                & 64,07388   \\ \hline
