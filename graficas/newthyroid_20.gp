@@ -6,17 +6,19 @@ set grid
 
 semillas = "123452244 9398429 12321 213566 3939021"
 
-set style line 1 lc rgb "blue" lt 1 lw 1.5
-set style line 2 lc rgb "#00FFFF" lt 1 lw 1.5
-set style line 3 lc rgb "#7FFFD4" lt 1 lw 1.5
-set style line 4 lc rgb "#D2691E" lt 1 lw 1.5
-set style line 5 lc rgb "#FF7F50" lt 1 lw 1.5
-set style line 6 lc rgb "#FF8C00" lt 1 lw 1.5
-set style line 7 lc rgb "#B8860B" lt 1 lw 1.5
-set style line 8 lc rgb "#6B8E23" lt 1 lw 1.5
-set style line 9 lc rgb "#2E8B57" lt 1 lw 1.5
-set style line 10 lc rgb "#808000" lt 1 lw 1.5
+set style line 1 lc rgb "#00ffff" lt 1 lw 1.7
+set style line 2 lc rgb "#99cc00" lt 1 lw 1.7
+set style line 3 lc rgb "#000000" lt 1 lw 1.7
 
+set style line 4 lc rgb "#ff9933" lt 1 lw 1.7
+set style line 5 lc rgb "#996600" lt 1 lw 1.7
+
+set style line 6 lc rgb "#0066ff" lt 1 lw 1.7
+set style line 7 lc rgb "#ff0000" lt 1 lw 1.7
+
+set style line 8 lc rgb "#660033" lt 1 lw 1.7
+set style line 9 lc rgb "#000099" lt 1 lw 1.7
+set style line 10 lc rgb "#cc00cc" lt 1 lw 1.7
 
 do for[i in semillas] {
 	set terminal png size 1280,960
