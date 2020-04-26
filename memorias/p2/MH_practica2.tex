@@ -1990,7 +1990,7 @@ Ahora con todos los algoritmos en conjunto, vemos como todos los algoritmos vist
 
 Una de las cosas más significativas en la comparación con respecto a la práctica anterior son los tiempos de ejecución, estos se deben a que no es posible factorizar los algoritmos evolutivos luego el tiempo de ejecución se dispara, llegando a tardar unos 200 segundos con el conjunto más complejo.
 
-Para realizar las comparaciones entre los algoritmos usaré el conjunto de datos ecoli, ya que con los otros conjuntos de datos siempre converge a mínimo similares.
+Para realizar las comparaciones entre los algoritmos usaré el conjunto de datos ecoli, ya que con los otros conjuntos de datos siempre converge a mínimos similares.
 
 Con respecto a los algoritmos, vemos que los algoritmos genéticos estacionarios se comportan mejor que los algoritmos genétivos generacionales, esto es debido a que la exploración de los algoritmos estacionarios es mucho mayor y ninguno de estos algoritmos llega a usar ningún método de explotación, luego al explorar más zona del espacio de búsqueda es capaz de buscar soluciones más distintas, y como es en este caso, encontrar nuevas zonas de mínimos.
 
@@ -2052,6 +2052,8 @@ En este caso vuelve a ocurrir lo mismo con respecto a los comportamientos de los
 \subsubsection{Algoritmos meméticos con mayor población.}
 
 Los algoritmos meméticos ejecutados hasta ahora tenían un tamaño de población de 10 elementos, lo que apenas nos daba diversidad, y usando la búsqueda local suave. En este experimento ejecutaré el algoritmo memético con 50 cromosomas en la población y usando la búsqueda local usada en la práctica 1, con esto intentaré ampliar la exploración al tener una población mayor, y a la vez ampliar la explotación al usar una búsqueda local completa y no suave.
+
+El algoritmos se ha ejecutado con 500.000 evaluaciones ya que la búsqueda local de la práctica 1 consume muchas evaluaciones, pero este detalle veremos más adelante en el estudio del comportamiento de los algoritmos que no influirá, ya que convergerá muy pronto, e incluso con menos evaluaciones consiga los mismos resultados.
 
 Aplicaremos la búsqueda local cada 50 generaciones, ya que el tamaño de la población es de 50, por lo que el código de implementación explicado anteriormente sigue funcionando, la única variación es que en el siguiente enumerado enumerado:
 
@@ -2346,6 +2348,8 @@ Vemos como con esta variación conseguimos de media los mejores resultados obten
 
 Vemos como con la version de aplicar la búsqueda local al 10\% de los mejores cromosomas no funciona tan bien, y esto es debido a que la búsqueda local normal explota de forma muy profunda, luego si esa búsqueda se aplica a los mejores elementos estamos sobreexplotando, y reducimos la exploración.
 
+También vemos que los tiempos de los algoritmos son mucho más extraños, y esto ocurre porque la búsqueda local, al estar factorizada, se ejecuta mucho más rápido pero tenemos que recordar que también necesita una cantidad elevada de evaluaciones, de ahí que el algoritmos memético que aplica la búsqueda local a todos los cromosomas sea más rápido, sin embargo generará pocas generaciones.
+
 
 \newpage
 
@@ -2410,12 +2414,50 @@ Como hemos comentado en el manual de uso, es posible observar como avanzan los a
 
 Por no extender más este documento, solo compararé las 5 gráficas (una por semilla) de ecoli con un 10\% de restricciones ya que es el único conjunto de datos suficientemente complejo y donde podremos estudiar mejor el comportamiento ya que será más distinguido. El resto se pueden consultar como explica el manual de uso, aunque los algoritmos se comportan igual que con ecoli, solo que convergen mucho más rápido (es necesario ejecutar el programa para obtener los ficheros con los que se generarán las gráficas).
 
+Haremos un análisis de las gráficas al final de estas.
+
 \begin{figure}[H]
   \centering
       \includegraphics[scale = 0.50]{ecoli_set_const_10_12321.png}
  		 \caption{Comportamiento de los algoritmos evolutivos en ecoli 10\% y semilla 12321}
-  		\label{fig:ej1-f4}
+  		\label{fig:g-12321}
 
 \end{figure}
+
+
+\begin{figure}[H]
+  \centering
+      \includegraphics[scale = 0.50]{ecoli_set_const_10_213566.png}
+ 		 \caption{Comportamiento de los algoritmos evolutivos en ecoli 10\% y semilla 213566}
+  		\label{fig:g-213566}
+
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+      \includegraphics[scale = 0.50]{ecoli_set_const_10_3939021.png}
+ 		 \caption{Comportamiento de los algoritmos evolutivos en ecoli 10\% y semilla 3939021}
+  		\label{fig:g-213566}
+
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+      \includegraphics[scale = 0.50]{ecoli_set_const_10_9398429.png}
+ 		 \caption{Comportamiento de los algoritmos evolutivos en ecoli 10\% y semilla 9398429}
+  		\label{fig:g-213566}
+
+\end{figure}
+
+
+\begin{figure}[H]
+  \centering
+      \includegraphics[scale = 0.50]{ecoli_set_const_10_123452244.png}
+ 		 \caption{Comportamiento de los algoritmos evolutivos en ecoli 10\% y semilla 123452244}
+  		\label{fig:g-213566}
+
+\end{figure}
+
+
 
 \end{document}
