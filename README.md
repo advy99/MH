@@ -80,7 +80,13 @@ El programa creará un fichero por algoritmo usado, donde almacenará los result
 
 En esta carpeta se almacenan scripts de gnuplot que generan gráficas con las distintas semillas, porcentajes y conjuntos de datos para poder comparar como se comportan los algoritmos genéticos y la búsqueda local.
 
-Dentro existe una carpeta llamada datos donde el programa almacenará los datos para gnuplot.
+Dentro existe una carpeta llamada datos donde el programa almacenará los datos para gnuplot y otra llamada salidas_png donde se guardarán las imagenes tras ejecutar:
+
+```
+gnuplot <fichero>.gp
+```
+
+Es necesario ejecutar el programa para obtener los ficheros con los que se generarán las gráficas.
 
 ## Carpeta include
 
