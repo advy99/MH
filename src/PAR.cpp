@@ -28,7 +28,12 @@ PAR::PAR(const std::string fichero_datos, const std::string fichero_restriccione
 
 	for (auto it = restricciones.begin(); it != restricciones.end(); ++it){
 		lista_restricciones.push_back( std::make_tuple( (*it).first.first, (*it).first.second, (*it).second ) );
+		if ( (*it).first.first > (*it).first.second ){
+			lista_restricciones_superior.push_back(std::make_tuple( (*it).first.first, (*it).first.second, (*it).second ));
+		}
 	}
+
+
 
 
 	// creamos todos
@@ -610,7 +615,7 @@ int PAR::calcular_infactibilidad() const{
 
 	}*/
 
-	for (auto it = lista_restricciones.begin(); it != lista_restricciones.end(); ++it){
+	for (auto it = lista_restricciones_superior.begin(); it != lista_restricciones_superior.end(); ++it){
 		if ( std::get<0>((*it)) > std::get<1>((*it)) ){
 			int c1 = buscar_elemento(std::get<0>((*it)));
 			int c2 = buscar_elemento(std::get<1>((*it)));

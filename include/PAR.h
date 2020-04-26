@@ -86,6 +86,8 @@ class PAR{
 		std::map< std::pair<int, int>, int> restricciones;
 		std::vector< std::vector<double> > datos;
 		std::list< std::tuple<int, int, int> > lista_restricciones;
+		std::list< std::tuple<int, int, int> > lista_restricciones_superior;
+
 
 		double desviacion_general;
 
