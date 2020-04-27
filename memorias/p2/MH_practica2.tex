@@ -869,8 +869,12 @@ Este operador obtendrá de forma aleatoria dos valores, uno será el inicio del 
 	\item Seleccionar al padre de mejor función objetivo: Favorecemos la explotación, al intentar mantener la información de una buena solución.
 	\item Seleccionar al padre de peor función objetivo: Favorecemos la exploración ya que la solución tardará más en converger.
 \end{enumerate}
+
+Para desarrollar este operador he decidido favorecer la explotación, ya que de por si los algoritmos a implementar cuentan con gran exploración. 
+
  
 Este operador recibirá por referencia la población y la probabilidad de cruce, y devolverá el número de evaluaciones realizadas. En este operador usaremos las herramientas explicadas en el cambio de representación, ya que evaluar la solución es mucho más fácil con la representación de la práctica 1.
+
  
 La implementación sería la siguiente:
 
@@ -894,7 +898,7 @@ Devuelve el número de evaluaciones - Recibe un vector de parejas <cromosoma, va
 	
 		Si pob[indice_p2].valoracion	< pob[indice_p1].valoracion:
 			indice_p1 = 1
-			indice_p1 = 0
+			indice_p2 = 0
 	
 	
 		tam_segmento = aleatorio(0, pob[i].cromosoma.size())
@@ -1991,7 +1995,7 @@ En este caso ocurre lo mismo que en el apartado anterior, ya que seguimos aplica
 
 Ahora con todos los algoritmos en conjunto, vemos como todos los algoritmos vistos hasta el momento superan con creces los resultados obtenidos por el algoritmo greedy, como era de esperar.
 
-Una de las cosas más significativas en la comparación con respecto a la práctica anterior son los tiempos de ejecución, estos se deben a que no es posible factorizar los algoritmos evolutivos luego el tiempo de ejecución se dispara, llegando a tardar unos 200 segundos con el conjunto más complejo.
+Una de las cosas más significativas en la comparación con respecto a la práctica anterior son los tiempos de ejecución, estos se deben a que no es posible factorizar los algoritmos evolutivos luego el tiempo de ejecución se dispara, llegando a tardar unos 200 segundos con el conjunto más complejo\footnote{Tras realizar la práctica y pasar todos los datos a este documento he conseguido reducir los tiempos de ejecución a prácticamente la mitad con los mismos resultados, por falta de tiempo no he podido volver a realizar las ejecuciones, pero al afectar a todos los algoritmos no he visto la necesidad}.
 
 Para realizar las comparaciones entre los algoritmos usaré el conjunto de datos ecoli, ya que con los otros conjuntos de datos siempre converge a mínimos similares.
 
@@ -2314,9 +2318,9 @@ En este caso comentaré directamente la tabla de resultados globales.
 \textbf{AM-10-1}         & 0,595316                  & 0                           & 0,595316               & 29,57236   & 1074,736                  & 40,2                        & 1237,59                & 254,93     \\ \hline
 \textbf{AM-10-0.1}       & 0,595316                  & 0                           & 0,595316               & 31,14054   & 1013,314                  & 29                          & 1130,798               & 182,373    \\ \hline
 \textbf{AM-10-0.1mej}    & 0,595316                  & 0                           & 0,595316               & 31,45518   & 1022,276                  & 35,4                        & 1165,686               & 161,8468   \\ \hline
-\textbf{AM-BL-10-1}      & 0,595316                  & 0                           & 0,595316               & 29,01588   & 1009,4486                 & 18,6                        & 1084,802               & 112,3606   \\ \hline
-\textbf{AM-BL-10-0.1}    & 0,595316                  & 0                           & 0,595316               & 98,08708   & 993,4624                  & 16,8                        & 1061,522               & 187,1166   \\ \hline
-\textbf{AM-BL-10-0.1mej} & 0,595316                  & 0                           & 0,595316               & 141,1162   & 998,9748                  & 26,6                        & 1106,734               & 240,1654   \\ \hline
+\textbf{AM-BL-50-1}      & 0,595316                  & 0                           & 0,595316               & 29,01588   & 1009,4486                 & 18,6                        & 1084,802               & 112,3606   \\ \hline
+\textbf{AM-BL-50-0.1}    & 0,595316                  & 0                           & 0,595316               & 98,08708   & 993,4624                  & 16,8                        & 1061,522               & 187,1166   \\ \hline
+\textbf{AM-BL-50-0.1mej} & 0,595316                  & 0                           & 0,595316               & 141,1162   & 998,9748                  & 26,6                        & 1106,734               & 240,1654   \\ \hline
 \end{tabular}
 \end{table}
 
@@ -2340,9 +2344,9 @@ En este caso comentaré directamente la tabla de resultados globales.
 \textbf{AM-10-1}         & 0,746683                  & 0                           & 0,746683               & 28,97514   & 288,636                   & 6                           & 307,093                & 64,87448   \\ \hline
 \textbf{AM-10-0.1}       & 0,746683                  & 0                           & 0,746683               & 31,03544   & 288,636                   & 6                           & 307,093                & 67,90066   \\ \hline
 \textbf{AM-10-0.1mej}    & 0,746683                  & 0                           & 0,746683               & 31,136     & 287,5504                  & 23,8                        & 360,7628               & 67,76746   \\ \hline
-\textbf{AM-BL-10-1}      & 0,746683                  & 0                           & 0,746683               & 28,97514   & 288,636                   & 6                           & 307,093                & 46,31588   \\ \hline
-\textbf{AM-BL-10-0.1}    & 0,746683                  & 0                           & 0,746683               & 96,3543    & 288,636                   & 6                           & 307,093                & 187,2      \\ \hline
-\textbf{AM-BL-10-0.1mej} & 0,746683                  & 0                           & 0,746683               & 139,5158   & 288,636                   & 6                           & 307,093                & 258,0528   \\ \hline
+\textbf{AM-BL-50-1}      & 0,746683                  & 0                           & 0,746683               & 28,97514   & 288,636                   & 6                           & 307,093                & 46,31588   \\ \hline
+\textbf{AM-BL-50-0.1}    & 0,746683                  & 0                           & 0,746683               & 96,3543    & 288,636                   & 6                           & 307,093                & 187,2      \\ \hline
+\textbf{AM-BL-50-0.1mej} & 0,746683                  & 0                           & 0,746683               & 139,5158   & 288,636                   & 6                           & 307,093                & 258,0528   \\ \hline
 \end{tabular}
 \end{table}
 
@@ -2375,9 +2379,9 @@ También vemos que los tiempos de los algoritmos son mucho más extraños, y est
 \textbf{AM-10-1}         & 0,595316                  & 0                           & 0,595316               & 55,86334   & 1007,1428                 & 67                          & 1142,856               & 400,7524   \\ \hline
 \textbf{AM-10-0.1}       & 0,595316                  & 0                           & 0,595316               & 56,68102   & 1030,038                  & 83,4                        & 1198,974               & 277,04     \\ \hline
 \textbf{AM-10-0.1mej}    & 0,595316                  & 0                           & 0,595316               & 53,0547    & 996,7638                  & 93,8                        & 1186,762               & 252,8102   \\ \hline
-\textbf{AM-BL-10-1}      & 0,595316                  & 0                           & 0,595316               & 46,86176   & 974,9386                  & 60,8                        & 1098,092               & 131,6912   \\ \hline
-\textbf{AM-BL-10-0.1}    & 0,595316                  & 0                           & 0,595316               & 177,1576   & 973,6262                  & 49,4                        & 1073,692               & 273,9566   \\ \hline
-\textbf{AM-BL-10-0.1mej} & 0,595316                  & 0                           & 0,595316               & 233,341    & 989,0804                  & 58,8                        & 1108,182               & 350,5506   \\ \hline
+\textbf{AM-BL-50-1}      & 0,595316                  & 0                           & 0,595316               & 46,86176   & 974,9386                  & 60,8                        & 1098,092               & 131,6912   \\ \hline
+\textbf{AM-BL-50-0.1}    & 0,595316                  & 0                           & 0,595316               & 177,1576   & 973,6262                  & 49,4                        & 1073,692               & 273,9566   \\ \hline
+\textbf{AM-BL-50-0.1mej} & 0,595316                  & 0                           & 0,595316               & 233,341    & 989,0804                  & 58,8                        & 1108,182               & 350,5506   \\ \hline
 \end{tabular}
 \end{table}
 
@@ -2400,9 +2404,9 @@ También vemos que los tiempos de los algoritmos son mucho más extraños, y est
 \textbf{AM-10-1}         & 0,746683                  & 0                           & 0,746683               & 56,90998   & 313,299                   & 0                           & 313,299                & 115,0751   \\ \hline
 \textbf{AM-10-0.1}       & 0,85                      & 0                           & 0,85                   & 0,006      & 313,299                   & 0                           & 313,299                & 113,1316   \\ \hline
 \textbf{AM-10-0.1mej}    & 0,746683                  & 0                           & 0,746683               & 54,5818    & 313,299                   & 0                           & 313,299                & 94,96734   \\ \hline
-\textbf{AM-BL-10-1}      & 0,746683                  & 0                           & 0,746683               & 46,87196   & 313,299                   & 0                           & 313,299                & 74,59396   \\ \hline
-\textbf{AM-BL-10-0.1}    & 0,746683                  & 0                           & 0,746683               & 181,2178   & 313,299                   & 0                           & 313,299                & 312,4922   \\ \hline
-\textbf{AM-BL-10-0.1mej} & 0,746683                  & 0                           & 0,746683               & 235,1968   & 313,299                   & 0                           & 313,299                & 300,1704   \\ \hline
+\textbf{AM-BL-50-1}      & 0,746683                  & 0                           & 0,746683               & 46,87196   & 313,299                   & 0                           & 313,299                & 74,59396   \\ \hline
+\textbf{AM-BL-50-0.1}    & 0,746683                  & 0                           & 0,746683               & 181,2178   & 313,299                   & 0                           & 313,299                & 312,4922   \\ \hline
+\textbf{AM-BL-50-0.1mej} & 0,746683                  & 0                           & 0,746683               & 235,1968   & 313,299                   & 0                           & 313,299                & 300,1704   \\ \hline
 \end{tabular}
 \end{table}
 
@@ -2497,10 +2501,26 @@ Como vemos estos algoritmos son de los que más rápido convergen, si de por si 
 
 Sin embargo, como vemos en esas generaciones se comporta de forma excepcional, siendo capaz de dar muy buenas soluciones, ya que es capaz de aprovechar la exploración de un algoritmo genético generacional sumado a la explotación de una búsqueda local. Sin embargo, este hecho nos hace plantearnos una pregunta, ¿ Si pretendemos explorar, porque no basar el algoritmos memético en un algoritmo genético estacionario que tiene mayor rango de exploración ? Esta pregunta es simple de responder, como hemos visto en la implementación, el algoritmo memético aplicará la búsqueda local cada ciertas generaciones, y el algoritmo genético estacionario requiere muchas generaciones para alterar la mayor parte de su población, luego si nos basamos en este lo único que conseguiremos es hacer que todos los cromosomas converjan de forma rápida por el uso de la búsqueda local, pero al converger el algoritmo genético estacionario no podrá explorar, al cruzar dos cromosomas idénticos, en resumen, la búsqueda local ``adelantaría'' al algoritmo genético estacionario y haría que se estanque.
 
-\subsubsection{Algoritmos meméticos con búsqueda.}
+\subsubsection{Algoritmos meméticos con búsqueda local normal.}
+
+Estos algoritmos  son los que más rápido convergen como podemos ver en la gráfica. Este comportamiento es normal ya que aumentamos la explotación al aplicar una búsqueda local normal en lugar de una suave, y aun así vemos como obtenemos los mejores resultados, ya que también combinamos la exploración que nos ofrecen los algoritmos genéticos.
+
+Este experimento tampoco habría tenido sentido si el tamaño de la población fuera de tan solo diez elementos, como nos pedían para el algoritmo original, ya que como podemos observar en las gráficas, la búsqueda local va a aplicar una fuerte explotación.
+
+De hecho, en la gráfica, a pesar de aparecer en la leyenda el algoritmo memético de cincuenta cromosomas al que aplica la búsqueda local a toda la población no podemos apreciar su linea en la gráfica debido a que al aplicar la búsqueda local a las 50 soluciones no dispone de suficientes evaluaciones.
+
+\newpage
 
 \subsubsection{Diferencias entre los operadores de cruce.}
 
+En este apartado comentaremos las diferencias entre los dos operadores de cruce usados, el operador de cruce uniforme y el operador de cruce de segmento fijo.
 
+Como vemos en la mayoría de casos (tanto en las gráficas como en los resultados medios de las tablas), con el operador de cruce de segmento fijo estamos obteniendo mejores resultados, y es que tenemos que recordad que en la implementación de este operador decidimos que el padre del que el hijo obtiene el segmento fijo es el padre con mejor valoración, favoreciendo la explotación, esto lo podemos observar en las caidas de las curvas, que vemos como en general la curva de los algoritmos que usan este operador están por encima de las curvas que usan el operador de cruce uniforme.
+
+Esto en el algoritmo genético estacionario hace que se logre un mayor equilibrio y obtengamos una mejor solución que en el algoritmo genético generacional, ya que como hemos comentado, al converger más rápido no cuenta con tanta explotación.
+
+Con respecto al operador de cruce uniforme, este operador de cruce no da prioridad a ninguna de los cromosomas, luego se podría decir que es imparcial, y simplemente genera nuevos hijos, dejando la tarea de explorar/explotar a otros operadores como el de selección o si existe elitismo.
+
+En nuestro problema el operador de cruce de segmento fijo es claramente superior y esto se debe a la dificultad del caso, en iris, rand o newthyroid no tenia sentido esta comparación ya que en todos esos conjuntos, con ambos operadores se alcanzaba la misma solución, sin embargo en ecoli, donde las soluciones son mucho más diversas, es donde podemos decidir que operador es más útil para este problema. De nuevo, esto no quiere decir que el operador de cruce uniforme sea malo para todos los casos o problemas, simplemente se adapta peor que el operador de cruce de segmento fijo en este problema.
 
 \end{document}
