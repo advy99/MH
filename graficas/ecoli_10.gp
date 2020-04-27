@@ -24,7 +24,7 @@ set style line 10 lc rgb "#cc00cc" lt 1 lw 1.7
 do for[i in semillas] {
 
 	set terminal png size 1280,960
-	set output "salidas_png/ecoli_set_const_10.const_".i
+	set output "salidas_png/ecoli_set_const_10_".i.".png"
 
 
 	plot "datos/ecoli_set_const_10.const_".i."_AM-1_UN.out" with lines title "AM-1 semilla ".i ls 1,\

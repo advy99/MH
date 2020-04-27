@@ -1,6 +1,7 @@
 set title "Iris con un 10% de restricciones"
 set xlabel "Número de generación"
 set ylabel "Valor de la función objetivo"
+set ytics 30
 set grid
 
 semillas = "123452244 9398429 12321 213566 3939021"
@@ -22,19 +23,18 @@ set style line 10 lc rgb "#cc00cc" lt 1 lw 1.7
 do for[i in semillas] {
 
 	set terminal png size 1280,960
-	set output "salidas_png/ecoli_set_const_10.const_".i
+	set output "salidas_png/iris_set_const_10_".i.".png"
 
 
-	plot "datos/iris_set_const_10.const_".i."_AM-1_UN.out" with lines title "AM-1 semilla ".i,\
-	"datos/iris_set_const_10.const_".i."_AM-0_1_UN.out" with lines title "AM-0.1 semilla ".i, \
-	"datos/iris_set_const_10.const_".i."_AM-0_1mej_UN.out" with lines title "AM-0.1mej semilla ".i, \
-	"datos/iris_set_const_10.const_".i."_AGG_UN.out" with lines title "AGG-UN semilla ".i, \
-	"datos/iris_set_const_10.const_".i."_AGG_SF.out" with lines title "AGG-SF semilla ".i, \
-	"datos/iris_set_const_10.const_".i."_AGE_UN.out" with lines title "AGE-UN semilla ".i, \
-	"datos/iris_set_const_10.const_".i."_AGE_SF.out" with lines title "AGE-SF semilla ".i, \
-	"datos/iris_set_const_10.const_".i."_BL.out" with lines title "BL semilla ".i, \
-	"datos/iris_set_const_10.const_".i."_AM-BL-1_UN.out" with lines title "AM-BL-1 semilla ".i,\
-	"datos/iris_set_const_10.const_".i."_AM-BL-0_1_UN.out" with lines title "AM-BL-0.1 semilla ".i, \
-	"datos/iris_set_const_10.const_".i."_AM-BL-0_1mej_UN.out" with lines title "AM-BL-0.1mej semilla ".i
+	plot "datos/iris_set_const_10.const_".i."_AM-1_UN.out" with lines title "AM-1 semilla ".i ls 1,\
+	"datos/iris_set_const_10.const_".i."_AM-0_1_UN.out" with lines title "AM-0.1 semilla ".i ls 2, \
+	"datos/iris_set_const_10.const_".i."_AM-0_1mej_UN.out" with lines title "AM-0.1mej semilla ".i ls 3, \
+	"datos/iris_set_const_10.const_".i."_AGG_UN.out" with lines title "AGG-UN semilla ".i ls 4, \
+	"datos/iris_set_const_10.const_".i."_AGG_SF.out" with lines title "AGG-SF semilla ".i ls 5, \
+	"datos/iris_set_const_10.const_".i."_AGE_UN.out" with lines title "AGE-UN semilla ".i ls 6, \
+	"datos/iris_set_const_10.const_".i."_AGE_SF.out" with lines title "AGE-SF semilla ".i ls 7, \
+	"datos/iris_set_const_10.const_".i."_AM-BL-1_UN.out" with lines title "AM-BL-1 semilla ".i ls 8,\
+	"datos/iris_set_const_10.const_".i."_AM-BL-0_1_UN.out" with lines title "AM-BL-0.1 semilla ".i ls 9, \
+	"datos/iris_set_const_10.const_".i."_AM-BL-0_1mej_UN.out" with lines title "AM-BL-0.1mej semilla ".i ls 10
 
 }
