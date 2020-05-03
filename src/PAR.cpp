@@ -1458,13 +1458,15 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_BMB(const int num_so
 		soluciones.push_back(generar_solucion_aleatoria());
 	}
 
-	std::pair<std::vector<PAR::Cluster>, double> mejor = std::make_pair{std::vector<PAR::Cluster>(), std::numeric_limits<double>::inifinity()};
+	std::pair<std::vector<PAR::Cluster>, double> mejor;
+	mejor.second = std::numeric_limits<double>::infinity();
 
 	for (int i = 0; i < num_soluciones; i++){
-		auto sol_i = algoritmo_BL(soluciones[i], num_ite_solucion);
+		int iteraciones = num_ite_solucion;
+		auto sol_i = algoritmo_BL(soluciones[i], iteraciones);
 
-		if (sol_ini.second < mejor.second){
-			mejor = sol_ini;
+		if (sol_i.second < mejor.second){
+			mejor = sol_i;
 		}
 	}
 
