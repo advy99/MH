@@ -62,6 +62,8 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 		tam_pob_ini = 50;
 		evaluaciones = 500000;
 		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::UNIFORME, tipo_generacion::MEMETICO_BL_0_1_MEJ );
+	} else if (alg == "BMB"){
+		solucion = par.algoritmo_BMB(10, evaluaciones);
 	}
 
 
@@ -104,48 +106,54 @@ int main(int argc, char ** argv){
 
 	ejecutar_PAR(par, datos, restricciones, clus, semilla, "BL");
 
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-10-1");
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-10-0_1");
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-10-0_1mej");
+	//
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGG-UN");
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGG-SF");
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGE-UN");
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGE-SF");
+	//
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-BL-10-1");
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-BL-10-0_1");
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-BL-10-0_1mej");
 
 	Set_random( semilla );
 
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-10-1");
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-10-0_1");
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-10-0_1mej");
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "BMB");
 
 
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGG-UN");
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGG-SF");
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGE-UN");
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AGE-SF");
-
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-BL-10-1");
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-BL-10-0_1");
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-BL-10-0_1mej");
 
 	return 0;
 }
