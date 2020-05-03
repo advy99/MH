@@ -72,6 +72,9 @@ class PAR{
 																				 const tipo_generacion tipo_gen,
 																			 	 const bool elitismo = true);
 
+		std::pair<std::vector<PAR::Cluster>, double> algoritmo_BMB(const int num_soluciones,
+																					  const int num_ite_solucion);
+
 		int calcular_infactibilidad() const;
 		std::vector<Cluster> generar_solucion_aleatoria();
 		friend std::ostream & operator << (std::ostream & flujo, const PAR & par);

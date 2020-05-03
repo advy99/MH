@@ -1440,6 +1440,57 @@ double PAR::funcion_objetivo() const {
 
 
 
+/*
+
+	PRACTICA 3
+
+
+*/
+
+std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_BMB(const int num_soluciones,
+																			  		 const int num_ite_solucion){
+
+	//algoirtmo búsqueda multiarranque básico
+
+	std::vector<std::vector<PAR::Cluster>> soluciones;
+
+	for (int i = 0; i < num_soluciones; i++){
+		soluciones.push_back(generar_solucion_aleatoria());
+	}
+
+	std::pair<std::vector<PAR::Cluster>, double> mejor = std::make_pair{std::vector<PAR::Cluster>(), std::numeric_limits<double>::inifinity()};
+
+	for (int i = 0; i < num_soluciones; i++){
+		auto sol_i = algoritmo_BL(soluciones[i], num_ite_solucion);
+
+		if (sol_ini.second < mejor.second){
+			mejor = sol_ini;
+		}
+	}
+
+	return mejor;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
