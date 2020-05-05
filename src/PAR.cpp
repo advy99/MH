@@ -1471,6 +1471,8 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_BMB(const int num_so
 		}
 	}
 
+	clusters = mejor.first;
+	calcular_desviacion_general();
 	return mejor;
 
 }
@@ -1539,7 +1541,8 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ES(const std::vector
 		//std::cout << temperatura << std::endl;
 	}
 
-
+	clusters = mejor_solucion.first.first;
+	calcular_desviacion_general();
 	return mejor_solucion.first;
 }
 
