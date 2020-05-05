@@ -1505,6 +1505,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ES(const std::vector
 	// inicializo a 1 para que entre en el bucle, luego se ponen a 0
 	unsigned num_vecinos = 1;
 	unsigned exitos = 1;
+	//std::cout << "Temperatura inicial: " << temperatura << std::endl;
 
 	while (evaluaciones < TOPE_EVALUACIONES && exitos != 0 && temperatura > TEMPERATURA_FINAL){
 
@@ -1535,7 +1536,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ES(const std::vector
 
 		// esquema de enfriamiento
 		temperatura = esquema_enfriamiento(temperatura, TEMPERATURA_INICIAL, TEMPERATURA_FINAL, NUM_ENFRIAMIENTOS_M);
-
+		//std::cout << temperatura << std::endl;
 	}
 
 
@@ -1550,6 +1551,7 @@ double PAR::esquema_enfriamiento(const double temperatura, const double temperat
 	const double BETA = (temperatura_inicial - temperatura_final) / (M * temperatura_inicial * temperatura_final);
 
 	return temperatura / (1 + BETA * temperatura);
+	//return temperatura * 0.92;
 
 }
 
