@@ -75,6 +75,11 @@ class PAR{
 		std::pair<std::vector<PAR::Cluster>, double> algoritmo_BMB(const int num_soluciones,
 																					  const int num_ite_solucion);
 
+		std::pair<std::vector<PAR::Cluster>, double> algoritmo_ES(const std::vector<PAR::Cluster> & ini,
+																					 const unsigned TOPE_EVALUACIONES,
+																					 const double prob_sea_peor,
+																					 const double prob_aceptar_peor);
+
 		int calcular_infactibilidad() const;
 		std::vector<Cluster> generar_solucion_aleatoria();
 		friend std::ostream & operator << (std::ostream & flujo, const PAR & par);
@@ -127,8 +132,10 @@ class PAR{
 
 
 		//static const int TOPE_BL = 100000;
+		double esquema_enfriamiento(const double temperatura, const double temperatura_inicial,
+			 								 const double temperatura_final, const double M) const;
 
-
+		std::pair<std::pair<std::vector<PAR::Cluster>, double>, int> generar_vecino_es(const std::pair<std::pair<std::vector<PAR::Cluster>, double>, int> & ini);
 
 };
 

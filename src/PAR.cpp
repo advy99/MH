@@ -639,13 +639,14 @@ int PAR::calcular_infactibilidad() const{
 
 int PAR::buscar_elemento(const int elemento) const{
 	int ret = -1;
-	bool encontrado = false;;
+	bool encontrado = false;
 
 	for (unsigned i = 0; i < clusters.size() && !encontrado; i++){
 		auto it = clusters[i].get_elementos().find(elemento);
 
 		if (it != clusters[i].get_elementos().end()){
 			ret = i;
+			encontrado = true;
 		}
 	}
 
@@ -1475,15 +1476,126 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_BMB(const int num_so
 }
 
 
+std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ES(const std::vector<PAR::Cluster> & ini,
+																					const unsigned TOPE_EVALUACIONES,
+																					const double prob_sea_peor,
+																					const double prob_aceptar_peor){
+
+	clusters = ini;
+	calcular_desviacion_general();
+	std::pair<std::pair<std::vector<PAR::Cluster>, double>, int> solucion_actual = std::make_pair(std::make_pair(ini, funcion_objetivo() ), calcular_infactibilidad() );
+	std::pair<std::pair<std::vector<PAR::Cluster>, double>, int> mejor_solucion = solucion_actual;
+	std::pair<std::pair<std::vector<PAR::Cluster>, double>, int> vecino;
+
+	// numero máximo de vecinos para el bucle interno, 10 por el número de datos del problema
+	const unsigned MAX_VECINOS = 10 * datos.size();
+	const unsigned MAX_EXITOS  = 0.1 * MAX_VECINOS;
+
+	const double NUM_ENFRIAMIENTOS_M = TOPE_EVALUACIONES / MAX_VECINOS;
+
+	unsigned evaluaciones = 0;
+
+
+	const double TEMPERATURA_INICIAL = (prob_sea_peor * solucion_actual.first.second) / -log(prob_aceptar_peor);
+
+	const double TEMPERATURA_FINAL = 0.001;
+
+	double temperatura = TEMPERATURA_INICIAL;
+
+	// inicializo a 1 para que entre en el bucle, luego se ponen a 0
+	unsigned num_vecinos = 1;
+	unsigned exitos = 1;
+
+	while (evaluaciones < TOPE_EVALUACIONES && exitos != 0 && temperatura > TEMPERATURA_FINAL){
+
+		num_vecinos = 0;
+		exitos = 0;
+
+		while (num_vecinos < MAX_VECINOS && exitos < MAX_EXITOS){
+			// generamos vecino
+			vecino = generar_vecino_es(solucion_actual);
+			evaluaciones++;
+			num_vecinos++;
+
+			// calculamos diferencia de funcion objetivo
+			double diferencia = vecino.first.second - solucion_actual.first.second;
+
+			// si la solucion es mejor o si con probabilidad uniforme (0,1) <= criterio metropolis
+			if (diferencia < 0 || Rand() <= exp( -diferencia/temperatura )){
+				// cambiamos a esa solucion
+				solucion_actual = vecino;
+				exitos++;
+				// si el coste de esa solucion es mejor que la mejor solucion, actualizamos mejor_solucoon
+				if (solucion_actual.first.second < mejor_solucion.first.second){
+					mejor_solucion = solucion_actual;
+				}
+			}
+
+		}
+
+		// esquema de enfriamiento
+		temperatura = esquema_enfriamiento(temperatura, TEMPERATURA_INICIAL, TEMPERATURA_FINAL, NUM_ENFRIAMIENTOS_M);
+
+	}
+
+
+	return mejor_solucion.first;
+}
 
 
 
 
+double PAR::esquema_enfriamiento(const double temperatura, const double temperatura_inicial, const double temperatura_final,
+											const double M) const {
+	const double BETA = (temperatura_inicial - temperatura_final) / (M * temperatura_inicial * temperatura_final);
+
+	return temperatura / (1 + BETA * temperatura);
+
+}
 
 
 
+std::pair<std::pair<std::vector<PAR::Cluster>, double>, int> PAR::generar_vecino_es(const std::pair<std::pair<std::vector<PAR::Cluster>, double>, int> & ini){
+
+	std::pair<std::pair<std::vector<PAR::Cluster>, double>, int> vecino = ini;
+
+	bool vecino_valido = false;
+
+	clusters = vecino.first.first;
+
+	do {
+		int elemento_cambiar = RandPositiveInt(datos.size());
+
+		int num_cluster = buscar_elemento(elemento_cambiar);
+
+		// si puedo sacar el elemento del cluster
+		if (vecino.first.first[num_cluster].num_elementos() - 1 > 0){
+			int nuevo_cluster;
+			do {
+				nuevo_cluster = RandPositiveInt(get_num_clusters());
+			} while (nuevo_cluster == num_cluster);
+
+			vecino.first.first[num_cluster].delete_elemento( elemento_cambiar );
+
+			vecino.second -= cumple_restricciones( elemento_cambiar, num_cluster );
+			vecino.second += cumple_restricciones( elemento_cambiar, nuevo_cluster );
 
 
+			vecino.first.first[nuevo_cluster].add_elemento( elemento_cambiar );
+
+			clusters = vecino.first.first;
+			calcular_desviacion_general();
+			vecino.first.second = get_desviacion_general() + (vecino.second * get_lambda());
+
+
+			vecino_valido = true;
+		}
+
+	} while (!vecino_valido);
+
+	return vecino;
+
+}
 
 
 
