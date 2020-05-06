@@ -80,6 +80,11 @@ class PAR{
 																					 const double prob_sea_peor,
 																					 const double prob_aceptar_peor);
 
+
+		std::pair<std::vector<PAR::Cluster>, double> algoritmo_ILS(const std::vector<PAR::Cluster> & ini,
+																					  const unsigned IT_BL);
+
+
 		int calcular_infactibilidad() const;
 		std::vector<Cluster> generar_solucion_aleatoria();
 		friend std::ostream & operator << (std::ostream & flujo, const PAR & par);
@@ -136,6 +141,9 @@ class PAR{
 			 								 const double temperatura_final, const double M) const;
 
 		std::pair<std::pair<std::vector<PAR::Cluster>, double>, int> generar_vecino_es(const std::pair<std::pair<std::vector<PAR::Cluster>, double>, int> & ini);
+
+		std::pair<std::vector<PAR::Cluster>, double> operador_mutacion_segmento_fijo(const std::pair<std::vector<PAR::Cluster>, double> & ini,
+																											  const double porcentaje_cambiar);
 
 };
 

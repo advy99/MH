@@ -1608,6 +1608,98 @@ std::pair<std::pair<std::vector<PAR::Cluster>, double>, int> PAR::generar_vecino
 
 
 
+// std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ILS(const std::vector<PAR::Cluster> & ini,
+// 																			  		 const unsigned IT_BL,
+// 																				 	 const unsigned IT_ILS){
+//
+// 	clusters = ini;
+// 	calcular_desviacion_general();
+// 	std::pair<std::vector<PAR::Cluster>, double> sol_ini = std::make_pair(ini, funcion_objetivo());
+//
+// 	std::pair<std::vector<PAR::Cluster>, double> mejor_sol = sol_ini;
+//
+// 	int iteraciones_BL = IT_BL;
+//
+// 	sol_ini = algoritmo_BL(sol_ini.first, iteraciones_BL);
+//
+// 	if (sol_ini.second > mejor_sol.second){
+// 		mejor_sol = sol_ini;
+// 	}
+//
+//
+// 	unsigned evaluaciones = 0;
+//
+// 	while () {
+//
+//
+//
+// 	}
+//
+//
+// 	clusters = mejor_sol;
+// 	calcular_desviacion_general();
+// 	return mejor_sol;
+//
+// }
+
+
+
+std::pair<std::vector<PAR::Cluster>, double> operador_mutacion_segmento_fijo(const std::pair<std::vector<PAR::Cluster>, double> & ini,
+																									  const double porcentaje_cambiar){
+
+	std::vector<int> original = clusters_to_solucion(ini);
+	std::vector<int> mutacion = original;
+	std::vector<Cluster> solucion;
+
+	unsigned INI_SEGMENTO = RandPositiveInt(original.size());
+
+	unsigned TAM_SEGMENTO = original.size() * porcentaje_cambiar;
+
+	int nuevo_cluster = -1;
+
+	for (unsigned i = INI_SEGMENTO; i < ((INI_SEGMENTO + TAM_SEGMENTO) % original.size()) - 1; i++){
+
+		do {
+			nuevo_cluster = RandPositiveInt(get_num_clusters());
+		} while (nuevo_cluster == original[i]);
+
+		mutacion[i] = nuevo_cluster;
+
+	}
+
+	solucion = solucion_to_clusters(mutacion);
+	clusters = solucion;
+	calcular_desviacion_general();
+	return std::make_pair(solucion, funcion_objetivo());
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
