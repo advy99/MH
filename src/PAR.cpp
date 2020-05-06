@@ -1608,46 +1608,55 @@ std::pair<std::pair<std::vector<PAR::Cluster>, double>, int> PAR::generar_vecino
 
 
 
-// std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ILS(const std::vector<PAR::Cluster> & ini,
-// 																			  		 const unsigned IT_BL,
-// 																				 	 const unsigned IT_ILS){
-//
-// 	clusters = ini;
-// 	calcular_desviacion_general();
-// 	std::pair<std::vector<PAR::Cluster>, double> sol_ini = std::make_pair(ini, funcion_objetivo());
-//
-// 	std::pair<std::vector<PAR::Cluster>, double> mejor_sol = sol_ini;
-//
-// 	int iteraciones_BL = IT_BL;
-//
-// 	sol_ini = algoritmo_BL(sol_ini.first, iteraciones_BL);
-//
-// 	if (sol_ini.second > mejor_sol.second){
-// 		mejor_sol = sol_ini;
-// 	}
-//
-//
-// 	unsigned evaluaciones = 0;
-//
-// 	while () {
-//
-//
-//
-// 	}
-//
-//
-// 	clusters = mejor_sol;
-// 	calcular_desviacion_general();
-// 	return mejor_sol;
-//
-// }
+std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ILS(const std::vector<PAR::Cluster> & ini,
+																			  		 const unsigned IT_BL,
+																				 	 const unsigned IT_ILS,
+																				 	 const double cambio_mutacion){
+
+	clusters = ini;
+	calcular_desviacion_general();
+	std::pair<std::vector<PAR::Cluster>, double> sol_ini = std::make_pair(ini, funcion_objetivo());
+
+	std::pair<std::vector<PAR::Cluster>, double> mejor_sol = sol_ini;
+
+	int iteraciones_BL = IT_BL;
+
+	sol_ini = algoritmo_BL(sol_ini.first, iteraciones_BL);
+
+	if (sol_ini.second > mejor_sol.second){
+		mejor_sol = sol_ini;
+	}
+
+
+	unsigned evaluaciones = 0;
+
+	while (evaluaciones < IT_ILS) {
+
+		sol_ini = operador_mutacion_segmento_fijo(mejor_sol, cambio_mutacion);
+
+		iteraciones_BL = IT_BL;
+		sol_ini = algoritmo_BL(sol_ini.first, iteraciones_BL);
+		evaluaciones += iteraciones_BL;
+
+		if (sol_ini.second < mejor_sol.second){
+			mejor_sol = sol_ini;
+		}
+
+	}
+
+
+	clusters = mejor_sol.first;
+	calcular_desviacion_general();
+	return mejor_sol;
+
+}
 
 
 
-std::pair<std::vector<PAR::Cluster>, double> operador_mutacion_segmento_fijo(const std::pair<std::vector<PAR::Cluster>, double> & ini,
+std::pair<std::vector<PAR::Cluster>, double> PAR::operador_mutacion_segmento_fijo(const std::pair<std::vector<PAR::Cluster>, double> & ini,
 																									  const double porcentaje_cambiar){
 
-	std::vector<int> original = clusters_to_solucion(ini);
+	std::vector<int> original = clusters_to_solucion(ini.first);
 	std::vector<int> mutacion = original;
 	std::vector<Cluster> solucion;
 

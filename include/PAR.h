@@ -82,7 +82,9 @@ class PAR{
 
 
 		std::pair<std::vector<PAR::Cluster>, double> algoritmo_ILS(const std::vector<PAR::Cluster> & ini,
-																					  const unsigned IT_BL);
+																			  		 const unsigned IT_BL,
+																				 	 const unsigned IT_ILS,
+																				 	 const double cambio_mutacion);
 
 
 		int calcular_infactibilidad() const;
