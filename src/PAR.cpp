@@ -1551,10 +1551,10 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ES(const std::vector
 
 double PAR::esquema_enfriamiento(const double temperatura, const double temperatura_inicial, const double temperatura_final,
 											const double M) const {
-	const double BETA = (temperatura_inicial - temperatura_final) / (M * temperatura_inicial * temperatura_final);
-
-	return temperatura / (1 + BETA * temperatura);
-	//return temperatura * 0.92;
+	// const double BETA = (temperatura_inicial - temperatura_final) / (M * temperatura_inicial * temperatura_final);
+	//
+	// return temperatura / (1 + BETA * temperatura);
+	return temperatura * 0.92;
 
 }
 
@@ -1611,7 +1611,8 @@ std::pair<std::pair<std::vector<PAR::Cluster>, double>, int> PAR::generar_vecino
 std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ILS(const std::vector<PAR::Cluster> & ini,
 																			  		 const unsigned IT_BL,
 																				 	 const unsigned IT_ILS,
-																				 	 const double cambio_mutacion){
+																				 	 const double cambio_mutacion,
+																				 	 const tipo_ils algoritmo_trayectorias){
 
 	clusters = ini;
 	calcular_desviacion_general();
@@ -1621,26 +1622,43 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ILS(const std::vecto
 
 	int iteraciones_BL = IT_BL;
 
-	sol_ini = algoritmo_BL(sol_ini.first, iteraciones_BL);
+	unsigned iteraciones = 0;
 
-	if (sol_ini.second > mejor_sol.second){
+
+	if (algoritmo_trayectorias == tipo_ils::BL){
+		sol_ini = algoritmo_BL(sol_ini.first, iteraciones_BL);
+	} else {
+		sol_ini = algoritmo_ES(sol_ini.first, iteraciones_BL, 0.3, 0.3);
+	}
+	iteraciones++;
+
+
+	if (sol_ini.second < mejor_sol.second){
 		mejor_sol = sol_ini;
 	}
 
 
-	unsigned evaluaciones = 0;
 
-	while (evaluaciones < IT_ILS) {
+	while (iteraciones < IT_ILS) {
 
 		sol_ini = operador_mutacion_segmento_fijo(mejor_sol, cambio_mutacion);
 
 		iteraciones_BL = IT_BL;
-		sol_ini = algoritmo_BL(sol_ini.first, iteraciones_BL);
-		evaluaciones += iteraciones_BL;
+
+		if (algoritmo_trayectorias == tipo_ils::BL){
+			sol_ini = algoritmo_BL(sol_ini.first, iteraciones_BL);
+		} else {
+			sol_ini = algoritmo_ES(sol_ini.first, iteraciones_BL, 0.3, 0.3);
+		}
+
+
 
 		if (sol_ini.second < mejor_sol.second){
+			std::cout << sol_ini.second << " " << mejor_sol.second << std::endl;
 			mejor_sol = sol_ini;
 		}
+
+		iteraciones++;
 
 	}
 

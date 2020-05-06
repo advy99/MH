@@ -11,6 +11,7 @@
 
 enum class operador_cruce {SEGMENTO_FIJO, UNIFORME};
 enum class tipo_generacion {GENERACIONAL, ESTACIONARIO, MEMETICO_1, MEMETICO_0_1, MEMETICO_0_1_MEJ, MEMETICO_BL_1, MEMETICO_BL_0_1, MEMETICO_BL_0_1_MEJ};
+enum class tipo_ils {BL, ES};
 
 class PAR{
 
@@ -84,7 +85,8 @@ class PAR{
 		std::pair<std::vector<PAR::Cluster>, double> algoritmo_ILS(const std::vector<PAR::Cluster> & ini,
 																			  		 const unsigned IT_BL,
 																				 	 const unsigned IT_ILS,
-																				 	 const double cambio_mutacion);
+																				 	 const double cambio_mutacion,
+																				 	 const tipo_ils algoritmo_trayectorias);
 
 
 		int calcular_infactibilidad() const;
