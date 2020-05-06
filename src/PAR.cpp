@@ -1453,18 +1453,15 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_BMB(const int num_so
 
 	//algoirtmo búsqueda multiarranque básico
 
-	std::vector<std::vector<PAR::Cluster>> soluciones;
-
-	for (int i = 0; i < num_soluciones; i++){
-		soluciones.push_back(generar_solucion_aleatoria());
-	}
+	std::vector<PAR::Cluster> solucion;
 
 	std::pair<std::vector<PAR::Cluster>, double> mejor;
 	mejor.second = std::numeric_limits<double>::infinity();
 
 	for (int i = 0; i < num_soluciones; i++){
+		solucion = generar_solucion_aleatoria();
 		int iteraciones = num_ite_solucion;
-		auto sol_i = algoritmo_BL(soluciones[i], iteraciones);
+		auto sol_i = algoritmo_BL(solucion, iteraciones);
 
 		if (sol_i.second < mejor.second){
 			mejor = sol_i;
