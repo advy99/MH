@@ -65,15 +65,15 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 	} else if (alg == "BMB"){
 		solucion = par.algoritmo_BMB(10, evaluaciones);
 	} else if (alg == "ES-PRO"){
-		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::PROPORCIONAL);
+		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::PROPORCIONAL, true);
 	} else if (alg == "ES-CA"){
-		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::CAUCHY);
+		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::CAUCHY, true);
 	} else if (alg == "ES-CA-MOD"){
-		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::CAUCHY_MOD);
+		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::CAUCHY_MOD, true);
 	} else if (alg == "ES-BOLTZ"){
-		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::BOLTZMANN);
+		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::BOLTZMANN, true);
 	} else if (alg == "ES-BOLTZ-MOD"){
-		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::BOLTZMANN_MOD);
+		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::BOLTZMANN_MOD, true);
 	} else if (alg == "ILS"){
 		solucion = par.algoritmo_ILS(par.generar_solucion_aleatoria(), 10000, 10, 0.1, tipo_ils::BL);
 	} else if (alg == "ILS-ES"){
