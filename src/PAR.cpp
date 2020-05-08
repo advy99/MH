@@ -1479,7 +1479,39 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ES(const std::vector
 																					const unsigned TOPE_EVALUACIONES,
 																					const double prob_sea_peor,
 																					const double prob_aceptar_peor,
-																					const esquemas_enfriamiento esquema){
+																					const esquemas_enfriamiento esquema,
+																					const bool salida){
+
+
+
+	std::string fichero = "graficas/";
+
+	fichero += NOM_RESTRICCIONES;
+	fichero += "_" + SEMILLA;
+
+	if (esquema == esquemas_enfriamiento::PROPORCIONAL){
+		fichero += "_PRO";
+	} else if (esquema == esquemas_enfriamiento::CAUCHY){
+		fichero += "_CA";
+	} else if (esquema == esquemas_enfriamiento::CAUCHY_MOD){
+		fichero += "_CA-MOD";
+	} else if (esquema == esquemas_enfriamiento::BOLTZMANN){
+		fichero += "_BO";
+	} else if (esquema == esquemas_enfriamiento::BOLTZMANN_MOD){
+		fichero += "_BO-MOD";
+	}
+
+	fichero += ".out";
+
+	std::fstream fic;
+
+	if (salida){
+		fic.open (fichero, std::fstream::out);
+	}
+
+
+
+
 
 	clusters = ini;
 	calcular_desviacion_general();
@@ -1518,6 +1550,10 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ES(const std::vector
 			vecino = generar_vecino_es(solucion_actual);
 			evaluaciones++;
 			num_vecinos++;
+
+			if (salida){
+				fic << evaluaciones << "\t" << temperatura << std::endl;
+			}
 
 			// calculamos diferencia de funcion objetivo
 			double diferencia = vecino.first.second - solucion_actual.first.second;
@@ -1562,9 +1598,6 @@ double PAR::esquema_enfriamiento(const double temperatura, const double temperat
 
 	} else if (esquema == esquemas_enfriamiento::BOLTZMANN_MOD){
 		nuevo_valor = temperatura / (1 + log(BETA * temperatura));
-
-	} else if (esquema == esquemas_enfriamiento::CONSTANTE){
-		nuevo_valor = temperatura - temperatura_inicial/M;
 
 	} else if (esquema == esquemas_enfriamiento::CAUCHY){
 		nuevo_valor = temperatura_inicial / (1 + num_enfriamiento);

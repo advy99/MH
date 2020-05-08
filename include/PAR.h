@@ -12,7 +12,7 @@
 enum class operador_cruce {SEGMENTO_FIJO, UNIFORME};
 enum class tipo_generacion {GENERACIONAL, ESTACIONARIO, MEMETICO_1, MEMETICO_0_1, MEMETICO_0_1_MEJ, MEMETICO_BL_1, MEMETICO_BL_0_1, MEMETICO_BL_0_1_MEJ};
 enum class tipo_ils {BL, ES};
-enum class esquemas_enfriamiento {CAUCHY, CAUCHY_MOD, PROPORCIONAL, BOLTZMANN, BOLTZMANN_MOD, CONSTANTE};
+enum class esquemas_enfriamiento {CAUCHY, CAUCHY_MOD, PROPORCIONAL, BOLTZMANN, BOLTZMANN_MOD};
 
 class PAR{
 
@@ -81,7 +81,8 @@ class PAR{
 																					 const unsigned TOPE_EVALUACIONES,
 																					 const double prob_sea_peor,
 																					 const double prob_aceptar_peor,
-																				 	 const esquemas_enfriamiento esquema = esquemas_enfriamiento::PROPORCIONAL);
+																				 	 const esquemas_enfriamiento esquema = esquemas_enfriamiento::PROPORCIONAL,
+																				 	 const bool salida = false);
 
 
 		std::pair<std::vector<PAR::Cluster>, double> algoritmo_ILS(const std::vector<PAR::Cluster> & ini,

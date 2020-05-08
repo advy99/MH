@@ -64,12 +64,20 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::UNIFORME, tipo_generacion::MEMETICO_BL_0_1_MEJ );
 	} else if (alg == "BMB"){
 		solucion = par.algoritmo_BMB(10, evaluaciones);
-	} else if (alg == "ES"){
-		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3);
+	} else if (alg == "ES-PRO"){
+		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::PROPORCIONAL);
+	} else if (alg == "ES-CA"){
+		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::CAUCHY);
+	} else if (alg == "ES-CA-MOD"){
+		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::CAUCHY_MOD);
+	} else if (alg == "ES-BOLTZ"){
+		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::BOLTZMANN);
+	} else if (alg == "ES-BOLTZ-MOD"){
+		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::BOLTZMANN_MOD);
 	} else if (alg == "ILS"){
-		solucion = par.algoritmo_ILS(par.generar_solucion_aleatoria(), 100000, 10, 0.1, tipo_ils::BL);
+		solucion = par.algoritmo_ILS(par.generar_solucion_aleatoria(), 10000, 10, 0.1, tipo_ils::BL);
 	} else if (alg == "ILS-ES"){
-		solucion = par.algoritmo_ILS(par.generar_solucion_aleatoria(), 100000, 10, 0.1, tipo_ils::ES);
+		solucion = par.algoritmo_ILS(par.generar_solucion_aleatoria(), 10000, 10, 0.1, tipo_ils::ES);
 	}
 
 
@@ -104,13 +112,13 @@ int main(int argc, char ** argv){
 
 	PAR par(datos, restricciones, clus, std::to_string(semilla));
 
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "GREEDY");
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "BL");
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "GREEDY");
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "BL");
 
 	//
 	// Set_random( semilla );
@@ -155,21 +163,38 @@ int main(int argc, char ** argv){
 	//
 	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-BL-10-0_1mej");
 
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "BMB");
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES");
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "BMB");
 
 	Set_random( semilla );
 
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ILS");
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-PRO");
 
 	Set_random( semilla );
 
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ILS-ES");
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-CA");
+
+	Set_random( semilla );
+
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-CA-MOD");
+
+	Set_random( semilla );
+
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-BOLTZ");
+
+	Set_random( semilla );
+
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-BOLTZ-MOD");
+
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "ILS");
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "ILS-ES");
 
 
 
