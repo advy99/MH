@@ -12,6 +12,7 @@
 enum class operador_cruce {SEGMENTO_FIJO, UNIFORME};
 enum class tipo_generacion {GENERACIONAL, ESTACIONARIO, MEMETICO_1, MEMETICO_0_1, MEMETICO_0_1_MEJ, MEMETICO_BL_1, MEMETICO_BL_0_1, MEMETICO_BL_0_1_MEJ};
 enum class tipo_ils {BL, ES};
+enum class esquemas_enfriamiento {CAUCHY, CAUCHY_MOD, PROPORCIONAL, BOLTZMANN, BOLTZMANN_MOD, CONSTANTE};
 
 class PAR{
 
@@ -79,7 +80,8 @@ class PAR{
 		std::pair<std::vector<PAR::Cluster>, double> algoritmo_ES(const std::vector<PAR::Cluster> & ini,
 																					 const unsigned TOPE_EVALUACIONES,
 																					 const double prob_sea_peor,
-																					 const double prob_aceptar_peor);
+																					 const double prob_aceptar_peor,
+																				 	 const esquemas_enfriamiento esquema = esquemas_enfriamiento::PROPORCIONAL);
 
 
 		std::pair<std::vector<PAR::Cluster>, double> algoritmo_ILS(const std::vector<PAR::Cluster> & ini,
@@ -142,7 +144,9 @@ class PAR{
 
 		//static const int TOPE_BL = 100000;
 		double esquema_enfriamiento(const double temperatura, const double temperatura_inicial,
-			 								 const double temperatura_final, const double M) const;
+			 								 const double temperatura_final, const double M,
+											 const esquemas_enfriamiento esquema,
+										 	 const unsigned num_enfriamiento) const;
 
 		std::pair<std::pair<std::vector<PAR::Cluster>, double>, int> generar_vecino_es(const std::pair<std::pair<std::vector<PAR::Cluster>, double>, int> & ini);
 

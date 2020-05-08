@@ -1478,7 +1478,8 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_BMB(const int num_so
 std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ES(const std::vector<PAR::Cluster> & ini,
 																					const unsigned TOPE_EVALUACIONES,
 																					const double prob_sea_peor,
-																					const double prob_aceptar_peor){
+																					const double prob_aceptar_peor,
+																					const esquemas_enfriamiento esquema){
 
 	clusters = ini;
 	calcular_desviacion_general();
@@ -1493,6 +1494,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ES(const std::vector
 	const double NUM_ENFRIAMIENTOS_M = TOPE_EVALUACIONES / MAX_VECINOS;
 
 	unsigned evaluaciones = 0;
+	unsigned num_enfriamiento = 0;
 
 
 	const double TEMPERATURA_INICIAL = (prob_sea_peor * solucion_actual.first.second) / -log(prob_aceptar_peor);
@@ -1534,8 +1536,8 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ES(const std::vector
 		}
 
 		// esquema de enfriamiento
-		temperatura = esquema_enfriamiento(temperatura, TEMPERATURA_INICIAL, TEMPERATURA_FINAL, NUM_ENFRIAMIENTOS_M);
-		//std::cout << temperatura << std::endl;
+		temperatura = esquema_enfriamiento(temperatura, TEMPERATURA_INICIAL, TEMPERATURA_FINAL, NUM_ENFRIAMIENTOS_M, esquema, num_enfriamiento);
+		num_enfriamiento++;
 	}
 
 	clusters = mejor_solucion.first.first;
@@ -1547,11 +1549,33 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ES(const std::vector
 
 
 double PAR::esquema_enfriamiento(const double temperatura, const double temperatura_inicial, const double temperatura_final,
-											const double M) const {
-	// const double BETA = (temperatura_inicial - temperatura_final) / (M * temperatura_inicial * temperatura_final);
-	//
-	// return temperatura / (1 + BETA * temperatura);
-	return temperatura * 0.92;
+											const double M, const esquemas_enfriamiento esquema, const unsigned num_enfriamiento) const {
+
+	double nuevo_valor = temperatura * 0.92;
+	const double BETA = (temperatura_inicial - temperatura_final) / (M * temperatura_inicial * temperatura_final);
+
+	if (esquema == esquemas_enfriamiento::CAUCHY_MOD){
+		nuevo_valor = temperatura / (1 + BETA * temperatura);
+
+	} else if (esquema == esquemas_enfriamiento::PROPORCIONAL){
+		nuevo_valor = temperatura * 0.92;
+
+	} else if (esquema == esquemas_enfriamiento::BOLTZMANN_MOD){
+		nuevo_valor = temperatura / (1 + log(BETA * temperatura));
+
+	} else if (esquema == esquemas_enfriamiento::CONSTANTE){
+		nuevo_valor = temperatura - temperatura_inicial/M;
+
+	} else if (esquema == esquemas_enfriamiento::CAUCHY){
+		nuevo_valor = temperatura_inicial / (1 + num_enfriamiento);
+
+	} else if (esquema == esquemas_enfriamiento::BOLTZMANN){
+		nuevo_valor = temperatura_inicial / (1 + log(num_enfriamiento));
+
+	}
+
+
+	return nuevo_valor;
 
 }
 
@@ -1674,6 +1698,11 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::operador_mutacion_segmento_fij
 	std::vector<int> original = clusters_to_solucion(ini.first);
 	std::vector<int> mutacion = original;
 	std::vector<Cluster> solucion;
+	std::vector<int> contador (get_num_clusters(), 0);
+
+	for (unsigned i = 0; i < original.size(); i++){
+		contador[original[i]]++;
+	}
 
 	unsigned INI_SEGMENTO = RandPositiveInt(original.size());
 
@@ -1685,10 +1714,11 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::operador_mutacion_segmento_fij
 
 		do {
 			nuevo_cluster = RandPositiveInt(get_num_clusters());
-		} while (nuevo_cluster == original[i]);
+		} while (nuevo_cluster == original[i] && contador[original[i]] - 1 > 0);
 
+		contador[original[i]]--;
 		mutacion[i] = nuevo_cluster;
-
+		contador[nuevo_cluster]++;
 	}
 
 	solucion = solucion_to_clusters(mutacion);
