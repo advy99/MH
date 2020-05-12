@@ -12,7 +12,7 @@
 enum class operador_cruce {SEGMENTO_FIJO, UNIFORME};
 enum class tipo_generacion {GENERACIONAL, ESTACIONARIO, MEMETICO_1, MEMETICO_0_1, MEMETICO_0_1_MEJ, MEMETICO_BL_1, MEMETICO_BL_0_1, MEMETICO_BL_0_1_MEJ};
 enum class tipo_ils {BL, ES};
-enum class esquemas_enfriamiento {CAUCHY, CAUCHY_MOD, PROPORCIONAL, BOLTZMANN, BOLTZMANN_MOD};
+enum class esquemas_enfriamiento {CAUCHY, CAUCHY_MOD, PROPORCIONAL, BOLTZMANN, BOLTZMANN_MOD, CONSTANTE};
 
 class PAR{
 
