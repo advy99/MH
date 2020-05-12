@@ -1499,14 +1499,20 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ES(const std::vector
 		fichero += "_BO";
 	} else if (esquema == esquemas_enfriamiento::BOLTZMANN_MOD){
 		fichero += "_BO-MOD";
+	} else if (esquema == esquemas_enfriamiento::CONSTANTE){
+		fichero += "_CONST";
 	}
 
+	std::string fichero_f_obj;
+	fichero_f_obj = fichero + "_fobjetivo.out";
 	fichero += ".out";
 
 	std::fstream fic;
+	std::fstream fic_f_obj;
 
 	if (salida){
 		fic.open (fichero, std::fstream::out);
+		fic_f_obj.open (fichero_f_obj, std::fstream::out);
 	}
 
 
@@ -1553,6 +1559,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ES(const std::vector
 
 			if (salida){
 				fic << evaluaciones << "\t" << temperatura << std::endl;
+				fic_f_obj << evaluaciones << "\t" << solucion_actual.first.second << std::endl;
 			}
 
 			// calculamos diferencia de funcion objetivo
@@ -1605,6 +1612,8 @@ double PAR::esquema_enfriamiento(const double temperatura, const double temperat
 	} else if (esquema == esquemas_enfriamiento::BOLTZMANN){
 		nuevo_valor = temperatura_inicial / (1 + log(num_enfriamiento));
 
+	} else if (esquema == esquemas_enfriamiento::CONSTANTE){
+		nuevo_valor = temperatura - (temperatura_inicial/M);
 	}
 
 
