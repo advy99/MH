@@ -44,3 +44,5 @@ bin/
 *.synctex.gz
 
 *.txt
+
+graficas/salidas_png/*.png
