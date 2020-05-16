@@ -387,6 +387,32 @@ return infac
 
 
 
+ \textbf{Generador de solución inicial aleatoria.}
+ 
+ Primero he desarrollado una función que nos genera una solución aleatoria que cumple con las restricciones fuertes (todos los clusters tienen al menos un elemento).
+ 
+ \begin{lstlisting}
+vaciar_clusters()
+
+indices_aleatorios = {0...datos.size()}
+
+indices_aleatorios = random_shuffle(indices)
+
+contador = 0
+
+// nos aseguramos que cada cluster tiene uno al menos
+Para cada indice i desde 0 hasta clusters.size():
+	clusters[i].insertar_elemento(indices_aleatorios[contador])
+	contador++
+	
+Para contador < indices_aleatorios.size()
+	clusters[EnteroAleatorio(0, clusters.size())].insertar_elemento(indices_aleatorios[contador])
+	contador++
+	
+
+\end{lstlisting}
+ 
+
 
 Tanto en PAR como en Cluster tendremos otras operaciones auxiliares relativas a los algoritmos de búsqueda o comparación, que explicaré más adelante.
 
@@ -451,31 +477,6 @@ Este algoritmo no nos asegurará obtener el optimo, solo nos garantiza obtener u
 El algoritmo solo cambiará una solución por otra mejor, por lo que el punto de inicio será muy importante.
 
 Para desarrollar este algoritmo necesitamos varios componentes:
- 
- \subsubsection{Generador de solución inicial aleatoria.}
- 
- Primero he desarrollado una función que nos genera una solución aleatoria que cumple con las restricciones fuertes (todos los clusters tienen al menos un elemento).
- 
- \begin{lstlisting}
-vaciar_clusters()
-
-indices_aleatorios = {0...datos.size()}
-
-indices_aleatorios = random_shuffle(indices)
-
-contador = 0
-
-// nos aseguramos que cada cluster tiene uno al menos
-Para cada indice i desde 0 hasta clusters.size():
-	clusters[i].insertar_elemento(indices_aleatorios[contador])
-	contador++
-	
-Para contador < indices_aleatorios.size()
-	clusters[EnteroAleatorio(0, clusters.size())].insertar_elemento(indices_aleatorios[contador])
-	contador++
-	
-
-\end{lstlisting}
  
  
 \subsubsection{Generador de vecinos}
@@ -579,6 +580,15 @@ while evaluaciones < TOPE_BL Y encontrado_mejor
 Como consideraciones a este algoritmo, vemos como por el operador de vecino es posible que nos estanquemos en mínimos locales de los que no seamos capaces de salir, siendo este el principal problema del algoritmo de búsqueda local.
 
 También mencionar que el escoger la función objetivo puede hacer variar la solución de una forma bastante importante dependiendo del peso que le demos a incumplir las restricciones, como veremos más adelante en los análisis de los resultados y experimentos, ya que de la función objetivo dependerá la penalización por incumplir restricciones por lo que modificando esta función podremos escoger entre mejorar la desviación general o no permitir que se incumplan restricciones.
+
+
+\subsection{Algoritmo de Búsqueda Multiarranque Básica (BMB).}
+
+\subsection{Algoritmo de Enfriamiento Simulado (ES).}
+
+\subsection{Algoritmo de Búsqueda Local Reiterada (ILS).}
+
+\subsection{Algoritmo híbrido ILS y ES (ILS-ES).}
 
 \section{Algoritmo de comparación.}
 
