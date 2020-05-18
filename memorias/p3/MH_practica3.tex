@@ -584,7 +584,31 @@ También mencionar que el escoger la función objetivo puede hacer variar la sol
 
 \subsection{Algoritmo de Búsqueda Multiarranque Básica (BMB).}
 
+Este algoritmo se basa en ejecutar múltiples veces el algoritmo de búsqueda local sobre soluciones generadas de forma aleatoria y quedarnos con la mejor solución que encontremos. De esta forma paliamos levemente el principal problema de la búsqueda local, que la exploración es nula y la solución obtenida depende exclusivamente de si el mínimo más cercano al punto de arranque es un buen mínimo. 
+
+\begin{lstlisting}
+Devuelve: vector de cluster (solución) y valoración de la solución - Recibe: num_sols - número de soluciones a obtener por BL y num_ite - iteraciones de cada BL
+
+	//
+	mejor = pareja<NULL, infinito>
+	Para i = 0 hasta num_sols:
+		solucion = generar_solucion_aleatoria();
+		sol_i = algoritmo_BL(solucion, num_ite);
+		
+		Si sol_i.second < mejor.second
+			mejor = sol_i
+		
+	// cargamos la mejor en los clusters y la devolvemos
+	clusters = mejor.first;		
+	return mejor; 
+
+\end{lstlisting} 
+
+Este algoritmo como vemos no es de gran complejidad, más adelante veremos como se comporta.
+
 \subsection{Algoritmo de Enfriamiento Simulado (ES).}
+
+
 
 \subsection{Algoritmo de Búsqueda Local Reiterada (ILS).}
 
