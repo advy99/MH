@@ -608,6 +608,19 @@ Este algoritmo como vemos no es de gran complejidad, más adelante veremos como 
 
 \subsection{Algoritmo de Enfriamiento Simulado (ES).}
 
+Este algoritmo se trata de una modificación de la búsqueda local para añadirle diversidad. La idea de este algoritmo es diversificar al inicio de la ejecución del algoritmo y según avance el algoritmo y nos quede menos tiempo (iteraciones en nuestro caso) explotaremos la solución.
+
+Para añadir esta diversidad e intentar conseguir el equilibrio exploración/explotación añadiremos un nuevo componente, la temperatura. Con este nuevo componente simularemos el enfriamiento de esta temperatura a lo largo del algoritmo, y en su ejecución aceptaremos un cambio de una solución a su vecino si el vecino es mejor o por un criterio dependiendo de la temperatura que explicaré más adelante, de forma que a mayor temperatura mayor será la probabilidad de aceptar un vecino aunque este sea peor. De esta forma el objetivo del algoritmo es comenzar con una temperatura alta de forma que se aceptarán soluciones peores lo que permitirá salir de mínimos locales, y segun avance la ejecución la temperatura disminuirá, simulando el enfriamiento de esta, de forma que la probabilidad de aceptar peores soluciones será menor por lo que principalmente aceptaremos soluciones que sean mejores, explotando la solución cuando la temperatura sea baja.
+
+\subsubsection{Criterio de enfriamiento.}
+
+\subsubsection{Operador de vecino.}
+
+
+\subsubsection{Implementación del algoritmo.}
+
+Tenemos que recordar que en este algoritmo basado en trayectorias trabaja únicamente con una solución y al diversificar podríamos pasar a soluciones peores, por lo que necesitaremos almacenar la mejor solución obtenida hasta el momento.
+
 
 
 \subsection{Algoritmo de Búsqueda Local Reiterada (ILS).}
