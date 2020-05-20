@@ -1,6 +1,6 @@
 set xlabel "Número de evaluación"
 set ylabel "Valor de la función objetivo"
-set ytics 500
+set ytics 30
 set xrange [0:100000]
 set grid
 set termoption dashed
