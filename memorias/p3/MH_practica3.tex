@@ -610,11 +610,45 @@ Este algoritmo como vemos no es de gran complejidad, más adelante veremos como 
 
 Este algoritmo se trata de una modificación de la búsqueda local para añadirle diversidad. La idea de este algoritmo es diversificar al inicio de la ejecución del algoritmo y según avance el algoritmo y nos quede menos tiempo (iteraciones en nuestro caso) explotaremos la solución.
 
-Para añadir esta diversidad e intentar conseguir el equilibrio exploración/explotación añadiremos un nuevo componente, la temperatura. Con este nuevo componente simularemos el enfriamiento de esta temperatura a lo largo del algoritmo, y en su ejecución aceptaremos un cambio de una solución a su vecino si el vecino es mejor o por un criterio dependiendo de la temperatura que explicaré más adelante, de forma que a mayor temperatura mayor será la probabilidad de aceptar un vecino aunque este sea peor. De esta forma el objetivo del algoritmo es comenzar con una temperatura alta de forma que se aceptarán soluciones peores lo que permitirá salir de mínimos locales, y segun avance la ejecución la temperatura disminuirá, simulando el enfriamiento de esta, de forma que la probabilidad de aceptar peores soluciones será menor por lo que principalmente aceptaremos soluciones que sean mejores, explotando la solución cuando la temperatura sea baja.
+Para añadir esta diversidad e intentar conseguir el equilibrio exploración/explotación añadiremos un nuevo componente, la temperatura. Con este nuevo componente simularemos el enfriamiento de esta temperatura a lo largo del algoritmo, y en su ejecución aceptaremos un cambio de una solución a su vecino si el vecino es mejor o por un criterio dependiendo de la temperatura que explicaré más adelante, de forma que a mayor temperatura mayor será la probabilidad de aceptar un vecino aunque este sea peor. De esta forma el objetivo del algoritmo es comenzar con una temperatura alta de forma que se aceptarán soluciones peores lo que permitirá salir de mínimos locales, y según avance la ejecución la temperatura disminuirá, simulando el enfriamiento de esta, de forma que la probabilidad de aceptar peores soluciones será menor por lo que principalmente aceptaremos soluciones que sean mejores, explotando la solución cuando la temperatura sea baja consiguiendo diversificación en la etapa inicial del algoritmo y explotación en la etapa final.
 
-\subsubsection{Criterio de enfriamiento.}
+
+\subsubsection{Exploración del entorno.}
+
+Como he comentado anteriormente, este algoritmo se basa en una modificación de la búsqueda local por lo que también explorará un vecindario. Un vecino será la alteración de un único elemento de una solución, es decir, cambiar un elemento de un cluster a otro, siempre que cumpla con las restricciones duras del problema.
+
+El vecindario se explorará de la misma forma que en la búsqueda local, es decir, por el primer mejor, al encontrar un vecino mejor que la solución actual, la solución actual pasará a ser ese vecino. También existe otro criterio de aceptación añadido por la temperatura que nos permitirá aceptar soluciones peores, explicaremos este criterio de aceptación más adelante.
+
+
+
+\subsubsection{Criterios de aceptación.}
+
+Existen dos criterios de aceptación de un vecino:
+
+\begin{enumerate}
+	\item Mejor solución: El vecino generado obtiene un mejor valor de la función objetivo que la solución actual.
+	\item Criterio de Metrópolis: Con este criterio añadiremos la posibilidad aceptar vecinos peores que la solución actual. Este criterio utilizará la temperatura para calcular un valor entre 0 y 1, de forma que generaremos un número aleatorio entre 0 y 1 y si dicho número es menor que el número calculado a partir de la temperatura aceptaremos la solución. A temperaturas más altas el valor del criterio de Metrópolis se acercará a 1, aceptando prácticamente cualquier solución, y a temperaturas bajas se acercará a 0 de forma que solo aceptaremos si el vecino es mejor.
+\end{enumerate}
+
+El criterio de Metrópolis se calcula con la exponencial del negativo de la diferencia entre la valoración del vecino y la valoración de la solución actual dividido entre la temperatura.
+
+\begin{figure}[H]
+	\centering
+	$$ \Delta valoracion = vecino.valoracion - solucion_actual.valoracion $$
+	$$ P_{aceptacion} = exp(\frac{- \Delta valoracion}{temperatura\_actual}) $$
+	\caption{Cálculo del criterio de Metrópolis }
+	\label{cMetropolis}
+\end{figure}
+
 
 \subsubsection{Operador de vecino.}
+
+
+
+
+\subsubsection{Calculo de temperatura inicial.}
+
+\subsubsection{Método de enfriamiento.}
 
 
 \subsubsection{Implementación del algoritmo.}
