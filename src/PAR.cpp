@@ -20,8 +20,8 @@ Clase PAR
 */
 
 PAR::PAR(const std::string fichero_datos, const std::string fichero_restricciones,
-	 		const int n_clusters, const std::string semilla):NOM_DATOS(fichero_datos), NOM_RESTRICCIONES(fichero_restricciones)
-			, SEMILLA(semilla){
+	 		const int n_clusters, const std::string semilla):NOM_DATOS(fichero_datos), NOM_RESTRICCIONES(fichero_restricciones),
+			SEMILLA(semilla){
 
 	leer_datos(fichero_datos);
 	leer_restricciones(fichero_restricciones);
