@@ -751,6 +751,87 @@ Usaremos tres criterios de parada:
 
 \subsubsection{Implementación del algoritmo.}
 
+Tenemos que recordar que en este algoritmo basado en trayectorias trabaja únicamente con una solución y al diversificar podríamos pasar a soluciones peores, por lo que necesitaremos almacenar la mejor solución obtenida hasta el momento. 
+
+En el algoritmo implementado almacenaremos las soluciones de una forma un poco complicada, almacenaremos la solución, el valor de la función objetivo, y el número de restricciones que incumple la solución, esto nos servirá para poder factorizar los cálculos y que el algoritmo sea mucho más rápido.
+
+En el pseudocódigo explicado omitiré salida de datos necesaria para generar las gráficas que mostraré más adelante.
+
+Usando todos los operadores y parámetros explicados, el algoritmo quedaría de la siguiente forma:
+
+\begin{lstlisting}
+Devuelve: Solución (pareja de asignación y función objetivo)
+Recibe: ini, asignación de clusters inicial
+		TOPE_EVALUACIONES, tope de evaluaciones 
+		prob_sea_peor, probabilidad de que sea peor 
+		prob_aceptar_peor, probabilidad de que sea peor 
+		esquema, esquema de enfriamiento a utilizar
+		
+	// cargamos en los clusters la solucion inicial
+	clusters = ini		
+	solucion_actual = {{ini, funcion_objetivo()}, calcular_infactibilidad()}
+	mejor_solucion = solucion_actual
+	
+	MAX_VECINOS  = 10 * datos.size()
+	MAX_EXITOS = 0.1 * MAX_VECINOS
+	
+	// numero de enfriamientos a realizar (de media, seguramente 
+	// sean menos) en el criterio de
+	// enfriamiento utilizado no lo utilizaremos, pero en otros
+	// criterios explicados más adelante sí
+	NUM_ENFRIAMIENTOS_M = TOPE_EVALUACIONES / MAX_VECINOS
+	
+	evaluaciones = 0
+	num_enfriamiento = 0
+	
+	// calculamos la temperatura inicial como gemos explicado
+	TEMPERATURA_INICIAL = (prob_sea_peor*solucion_actual.valoracion)/ -ln(prob_aceptar_peor)
+
+	TEMPERATURA_FINAL = 0.001
+	
+	temperatura = TEMPERATURA_INICIAL
+	
+	exitos = 1
+	
+	// las tres condiciones de parada
+	Mientras evaluaciones < TOPE_EVALUACIONES  Y exitos != 0 
+			Y temperatura > TEMPERATURA_FINAL:
+	
+		// al principio no tenemos ni exitos ni vecinos generados
+		num_vecinos = 0
+		exitos = 0
+		
+		Mientras num_vecinos < MAX_VECINOS Y exitos < MAX_EXITOS:
+			vecino = generar_vecino_es(solucion_actual)
+			evaluaciones = evaluaciones + 1
+			num_vecinos = num_vecinos + 1
+			
+			diferencia = vecino.valoracion - solucion_actual.valoracion
+			
+			// criterios de aceptación de soluciones
+			Si diferencia < 0 O
+				Aleatorio(0,1) <= exp(-diferencia/temperatura):
+				
+				solucion_actual = vecino
+				exitos = exitos + 1
+				
+				Si solucion_actual.valoracion < mejor_solucion.valoracion:
+					mejor_solucion = solucion_actual
+		
+		// tenemos que indicar la temperatura inicial, final, el numero de 
+		// enfriamiento para los distintos esquemas, ya que cada uno
+		// utiliza datos distintos sobre la situación actual del algoritmo
+		// solo indico estos dos por acortar
+		temperatura = esquema_enfriamiento(temperatura, esquema, etc)
+		num_enfriamiento++
+		
+	// cargamos la mejor solucion
+	clusters = mejor_solucion.asignacion
+	
+	Devolver mejor_solucion.asignacion
+			
+
+\end{lstlisting}
 
 
 
