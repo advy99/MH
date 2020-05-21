@@ -648,8 +648,8 @@ El operador de vecino es similar al operador de vecino de la búsqueda local, a 
 Por este motivo, la implementación quedaría de la siguiente forma:
 
 \begin{lstlisting}
-Devuelve: pareja solución (pareja de asignación y valor de f_objetivo ), infactibilidad
-Recibe: ini, pareja solución (pareja de asignación y valor de f_objetivo ), infactibilidad
+Devuelve: pareja solución (pareja de asignación y valor de f_objetivo ), 
+Recibe: ini, pareja solución (pareja de asignación y valor de f_objetivo ), restricciones_incumplidas
 
 	vecino = ini;
 	vecino_valido = false;
@@ -689,14 +689,68 @@ Recibe: ini, pareja solución (pareja de asignación y valor de f_objetivo ), in
 
 De esta forma, cuando llamemos a este método en el código del algoritmo enfriamiento simulado si en una solución no acepta un vecino, el siguiente vecino podría ser el mismo que el anterior y aun así ser aceptado.
 
-\subsubsection{Calculo de temperatura inicial.}
+\subsubsection{Calculo de temperatura inicial y final.}
 
-\subsubsection{Método de enfriamiento.}
+La temperatura inicial se calcula usando el valor de la función objetivo de la solución inicial de la siguiente forma:
 
+\begin{figure}[H]
+	\centering
+	$$ T_0 = \frac{\mu C(S_0)}{-ln(\phi)} $$
+	\caption{Cálculo de la temperatura inicial. }
+	\label{cTini}
+\end{figure}
+
+Siendo $C(S_0)$ el coste de la solución inicial y $\phi$ la probabilidad de aceptar una solución $\mu$ por 1 peor que la inicial. En nuestro algoritmo consideraremos $\phi = \mu = 0.3$.
+
+Usaremos como temperatura final un valor cercano a cero, en nuestro caso $10^{-3}$.
+
+\subsubsection{Esquema de enfriamiento.}
+
+Para el esquema de enfriamiento usaremos un esquema proporcional, en el que simplemente multiplicaremos la temperatura por un factor $\alpha$ menor que uno.
+
+\begin{figure}[H]
+	\centering
+	$$ T = T \alpha $$
+	\caption{Esquema de enfriamiento proporcional. }
+	\label{enfriamientoPro}
+\end{figure}
+
+En el guión se nos recomendaba usar el esquema de Cauchy modificado, pero debido a que el enfriamiento era demasiado rápido he decidido usar este esquema. Más adelante haré una comparación entre distintos esquemas de enfriamiento.
+
+\subsubsection{Condición de enfriamiento.}
+
+En esta sección explicaré en que momento vamos a enfriar la temperatura, finalizando la iteración con dicha temperatura. Usaremos dos criterios:
+
+\begin{enumerate}
+	\item Número máximo de vecinos: Tendremos un número máximo de vecinos que se generarán con la temperatura de una iteración.
+	\item Número máximo de éxitos: Tendremos un número máximo de éxitos. Consideraremos un éxito cuando se acepte una nueva solución (por cualquiera de los criterios de aceptación).
+\end{enumerate}
+
+El número máximo de vecinos será $10 n$ siendo $n$ el tamaño del caso del problema y el número máximo de éxitos será $0.1 max\_vecinos$.
+
+\begin{figure}[H]
+	\centering
+	$$ max\_vecinos = 10 n $$
+	$$ max\_exitos = 0.1 max\_vecinos $$
+	\caption{Cálculo del número máximo de vecinos y el de éxitos. }
+	\label{cExitosVecinos}
+\end{figure}
+
+
+\subsubsection{Criterios de parada.}
+
+Usaremos tres criterios de parada:
+
+\begin{enumerate}
+	\item Número máximo de evaluaciones: Usaremos un tope de evaluaciones, como en todos los algoritmos hasta el momento, usaremos 100.000.
+	\item La temperatura actual llega a la temperatura final.
+	\item Número de éxitos es igual a cero: Si en una iteración completa de cierta temperatura no llegamos a aceptar a ningún vecino sabemos que es el mejor del vecindario, y además la temperatura es tan baja que no estamos aceptando peores soluciones, de forma que con una temperatura más baja aun tampoco aceptaremos soluciones, de forma que no tiene sentido continuar con un algoritmo que sabemos que no va a mejorar la situación actual.
+\end{enumerate}
+
+\newpage
 
 \subsubsection{Implementación del algoritmo.}
 
-Tenemos que recordar que en este algoritmo basado en trayectorias trabaja únicamente con una solución y al diversificar podríamos pasar a soluciones peores, por lo que necesitaremos almacenar la mejor solución obtenida hasta el momento.
 
 
 
