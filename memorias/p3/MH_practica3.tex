@@ -643,8 +643,51 @@ El criterio de Metrópolis se calcula con la exponencial del negativo de la dife
 
 \subsubsection{Operador de vecino.}
 
+El operador de vecino es similar al operador de vecino de la búsqueda local, a excepción de una diferencia, en la búsqueda local no tenía sentido repetir un vecino en la generación ya que si en un principio no ha sido aceptado nunca lo vamos a aceptar, sin embargo, en enfriamiento simulado es posible que generemos un vecino, no lo aceptemos por ninguno de los dos criterios de aceptación y en un segundo intento si lo podríamos aceptar por el criterio de Metrópolis.
 
+Por este motivo, la implementación quedaría de la siguiente forma:
 
+\begin{lstlisting}
+Devuelve: pareja solución (pareja de asignación y valor de f_objetivo ), infactibilidad
+Recibe: ini, pareja solución (pareja de asignación y valor de f_objetivo ), infactibilidad
+
+	vecino = ini;
+	vecino_valido = false;
+	clusters = vecino.first.first;
+	
+	Hacer:
+		// sacamos un aleatorio entre 0 y el número de datos
+		elemento_cambiar = Aleatorio(0, datos.size())
+	
+		// buscamos en que cluster está el elemento a cambiar
+		num_cluster = buscar_elemento(elemento_cambiar)
+		// si la asignacion de la solucion del vecino tiene 
+		// más de un elemento en el cluster cumple las
+		// restricciones fuertes
+		Si vecino.solucion.asignacion[num_cluster].num_elementos() - 1 > 0:
+			Hacer:
+				// sacamos un aleatorio donde mover el cluster
+				// asegurando que no sea el cluster en el que ya estaba
+				nuevo_cluster = Aleatorio(0, num_clusters)
+			Mientras nuevo_cluster == num_cluster
+			
+			// eliminamos el elemento del cluster antiguo
+			vecino.solucion.asignacion[num_cluster].eliminar(elemento_cambiar)
+			
+			// calculamos la nueva infactibilidad (factorizando, solo calculamos)
+			// la del elemento que cambia
+			vecino.infactibilidad -= cumple_restricciones(elemento_cambiar, num_cluster)
+			vecino.infactibilidad += cumple_restricciones(elemento_cambiar, nuevo_cluster)
+			
+			// añadimos el elemento al nuevo cluster
+			vecino.solucion.asignacion[nuevo_cluster].añadir(elemento_cambiar)
+			vecino_valido = true;	
+	Mientras NO vecino_valido
+	
+	Devolver vecino
+\end{lstlisting}
+
+De esta forma, cuando llamemos a este método en el código del algoritmo enfriamiento simulado si en una solución no acepta un vecino, el siguiente vecino podría ser el mismo que el anterior y aun así ser aceptado.
 
 \subsubsection{Calculo de temperatura inicial.}
 
