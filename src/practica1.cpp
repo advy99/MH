@@ -63,7 +63,7 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 		evaluaciones = 500000;
 		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::UNIFORME, tipo_generacion::MEMETICO_BL_0_1_MEJ );
 	} else if (alg == "BMB"){
-		solucion = par.algoritmo_BMB(10, evaluaciones);
+		solucion = par.algoritmo_BMB(10, 10000);
 	} else if (alg == "ES-PRO"){
 		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::PROPORCIONAL, true);
 	} else if (alg == "ES-CA"){
@@ -74,6 +74,8 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::BOLTZMANN, true);
 	} else if (alg == "ES-BOLTZ-MOD"){
 		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::BOLTZMANN_MOD, true);
+	} else if (alg == "ES-CONST"){
+		solucion = par.algoritmo_ES(par.generar_solucion_aleatoria(), evaluaciones, 0.3, 0.3, esquemas_enfriamiento::CONSTANTE, true);
 	} else if (alg == "ILS"){
 		solucion = par.algoritmo_ILS(par.generar_solucion_aleatoria(), 10000, 10, 0.1, tipo_ils::BL);
 	} else if (alg == "ILS-ES"){
@@ -186,6 +188,10 @@ int main(int argc, char ** argv){
 	Set_random( semilla );
 
 	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-BOLTZ-MOD");
+
+	Set_random( semilla );
+
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-CONST");
 
 	//
 	// Set_random( semilla );
