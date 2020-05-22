@@ -1717,7 +1717,6 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_ILS(const std::vecto
 
 
 		if (sol_ini.second < mejor_sol.second){
-			std::cout << sol_ini.second << " " << mejor_sol.second << std::endl;
 			mejor_sol = sol_ini;
 		}
 
