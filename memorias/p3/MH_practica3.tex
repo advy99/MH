@@ -835,11 +835,80 @@ Al ejecutar este algoritmo lo haremos con un tope de 100.000 evaluaciones y un $
 
 \subsection{Algoritmo de Búsqueda Local Reiterada (ILS).}
 
+La búsqueda local reiterada (ILS) se basa en aplicar la búsqueda local ya explicada en la práctica 1. Una vez obtenemos un mínimo, aplicar una mutación lo suficientemente grande como para alterar la solución encontrada y que esta cambie a otra zona del espacio, donde encuentre un mínimo distinto pero manteniendo parte de la información de la solución anterior para no partir desde el inicio de la búsqueda. Esto lo conseguiremos usando la búsqueda local de la práctica 1 y un operador de mutación para alterar la solución una vez cae en el mínimo local.
 
 \subsubsection{Operador de mutación de segmento fijo.}
 
+Este operador será el encargado de aplicar la alteración de la solución. Dada una solución y un porcentaje de elementos a cambiar de dicha solución, obtendremos de forma aleatoria un segmento fijo de tamaño $elementos\_solucion \cdot porcentaje\_mutacion$, de forma que los elementos no contenidos en ese segmento se mantienen, y los elementos dentro del segmento le aplicaremos la mutación, como siempre, teniendo en cuenta que cumplimos con las restricciones fuertes del problema.
+
+
+\begin{lstlisting}
+Devuelve: solución (pareja asignacion y valor función objetivo)
+Recibe: ini, solucion a mutar (pareja asignacion y valor función objetivo)
+		porcentaje_cambiar, porcentaje de la solución a mutar
+		
+	mutacion = ini
+	
+	// array para contar los elementos de cada cluster
+	contador = {get_num_clusters(), 0}
+	Para todos los elementos i de la solucion:
+		contador[ini.asignacion[i]]++
+		
+	INI_SEGMENTO = Aleatorio(0, ini.asignacion.size())
+	TAM_SEGMENTO = ini.asignacion.size() * porcentaje_cambiar
+	
+	nuevo_cluster = -1
+	
+	// para los elementos del segmento, los cambiamos de cluster
+	Para i = INI_SEGMENTO hasta i < ((INI_SEGMENTO + TAM_SEGMENTO) % ini.asignacion.size()) - 1:
+	
+		Hacer:
+			nuevo_cluster = Aleatorio (0, get_num_clusters)
+		Mientras nuevo_cluster == ini.asignacion[i] Y contador[ini.asignacion[i]] - 1 > 0
+		
+		contador[ini.asignacion[i]]--
+		mutacion[i] = nuevo_cluster
+		contador[nuevo_cluster]++
+	
+	// cargamos la mutacion para poder calcular su función objetivo
+	clusters = mutacion
+	Devolver {mutacion, funcion_objetivo()}	
+	
+\end{lstlisting}
+
+Y con esto tenemos el único nuevo operador de este nuevo algoritmo.
 
 \subsubsection{Implementación del algoritmo.}
+
+El algoritmo se basa en lanzar una búsqueda local, y tras esa BL aplicar la mutación como he explicado. Esta mutación la aplicaremos siempre desde la mejor solución encontrada. El algoritmo quedaría de la siguiente forma:
+
+\begin{lstlisting}
+Devuelve: solución (pareja asignacion y valor función objetivo)
+Recibe: ini, solución inicial
+		EVAL_BL, evaluaciones para la búsqueda local a aplicar
+		IT_ILS, iteraciones de la ILS (número de ejecuciones de BL y mutación)
+		cambio_mutacion, porcentaje de solución a mutar en cada iteración
+
+
+
+	solucion_actual = ini
+	mejor = ini
+	
+	solucion_actual = algoritmo_BL(solucion_actual.asignacion, EVAL_BL)
+	iteraciones = 1
+	
+	Mientras iteraciones < IT_ILS:
+		solucion_actual = operador_mutacion_segmento_fijo(mejor, cambio_mutacion)
+		solucion_actual = algoritmo_BL(solucion_actual.asignacion, EVAL_BL)
+		
+		Si solucion_actual.valoracion < mejor.valoracion:
+			mejor = solucion_actual
+			
+		iteraciones++
+	
+	clusters = mejor
+	Devolver mejor
+\end{lstlisting}
 
 \subsection{Algoritmo híbrido ILS y ES (ILS-ES).}
 
