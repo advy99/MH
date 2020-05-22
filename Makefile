@@ -7,7 +7,13 @@ LIB      = $(HOME)/lib
 DATOS	   = $(HOME)/datos
 GRAFICAS = $(HOME)/graficas/datos
 
+DEBUG=0
+
+ifeq ($(DEBUG),0)
 FLAGS = --std=c++17 -O3 -Wall
+else
+FLAGS = --std=c++17 -g -Wall
+endif
 
 all: $(BIN)/practica1
 
