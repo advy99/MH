@@ -910,10 +910,26 @@ Recibe: ini, solución inicial
 	Devolver mejor
 \end{lstlisting}
 
+
 \subsection{Algoritmo híbrido ILS y ES (ILS-ES).}
 
+Este algoritmo se trata de una hibridación entre el ILS del apartado anterior y enfriamiento simulado. La idea es aplicar ILS, solo que en lugar de usar BL como algoritmo de trayectorias interno usar el algoritmo de enfriamiento simulado.
 
 \subsubsection{Implementación del algoritmo.}
+
+Para implementarlo simplemente le he añadido un parámetro extra al algoritmo ILS que nos marcará que algoritmo ejecutar, de forma que las lineas:
+
+\begin{lstlisting}
+solucion_actual = algoritmo_BL(solucion_actual.asignacion, EVAL_BL)
+\end{lstlisting}
+
+Pasarán a ser:
+
+\begin{lstlisting}
+solucion_actual = algoritmo_ES(solucion_actual.asignacion, EVAL_BL, 0.3, 0.3)
+\end{lstlisting}
+
+Y por lo demás es exactamente igual.
 
 \section{Algoritmo de comparación.}
 
