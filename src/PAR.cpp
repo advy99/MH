@@ -1751,7 +1751,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::operador_mutacion_segmento_fij
 
 	int nuevo_cluster = -1;
 
-	for (unsigned i = INI_SEGMENTO; i < ((INI_SEGMENTO + TAM_SEGMENTO) % original.size()) - 1; i++){
+	for (unsigned i = INI_SEGMENTO; i < ((INI_SEGMENTO + TAM_SEGMENTO - 1) % original.size()); i++){
 
 		do {
 			nuevo_cluster = RandPositiveInt(get_num_clusters());
