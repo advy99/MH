@@ -1516,7 +1516,7 @@ Aunque se ejecuta con los mismos parámetros que ILS (10 iteraciones de la ILS y
 	\includegraphics[scale = 0.35]{ecoli-ils-es.png}
 	
 	\caption{ILS-ES sobre ecoli con 10\% de restricciones.}
-	\label{fig:es-cmp2}
+	\label{fig:ils-es-cmp2}
 \end{figure}
 
 \begin{figure}[H]
@@ -1524,7 +1524,7 @@ Aunque se ejecuta con los mismos parámetros que ILS (10 iteraciones de la ILS y
 	\includegraphics[scale = 0.35]{iris-ils-es.png}
 	
 	\caption{ILS-ES sobre ecoli con 10\% de restricciones.}
-	\label{fig:es-cmp1}
+	\label{fig:ils-es-cmp1}
 \end{figure}
 
 Vemos que en ambos casos hace más de 10.000 iteraciones en algunas ejecuciones, lo que hace que no sean exactamente el mismo número de evaluaciones, sin embargo si modifico esto no se realizarían en todos los casos las 10 mutaciones.
@@ -1540,6 +1540,8 @@ El caso de ecoli lo podríamos solucionar buscando un esquema de enfriamiento qu
 
 
 \subsection{Análisis de resultados.	}
+
+En esta sección comentaré las principales diferencias entre los distintos algoritmos.
 
 \subsubsection{10\% de restricciones.}
 
@@ -1577,6 +1579,17 @@ El caso de ecoli lo podríamos solucionar buscando un esquema de enfriamiento qu
 \textbf{ILS-ES}                         & 0,746683                  & 0                           & 0,746683               & 5,1976125  & 307,8254                  & 985,6                       & 3339,68                & 6,69461    \\ \hline
 \end{tabular}
 \end{table}
+
+En los conjuntos de datos con un 10\% de restricciones vemos como en rand e iris todos los algoritmos se comportan bien por los motivos que hemos dado en cada sección ya que estos conjuntos son simples, en newthyroid a excepción de ILS-ES los demás se comportan muy bien y por último en ecoli ILS-ES se comporta muy mal,  BMB da malos resultados pero es capaz de mejorar los de la solución inicial y ES-PRO e ILS se comportan muy bien.
+
+
+Esto se debe a que con 100.000 evaluaciones en ES-PRO todos los algoritmos son capaces de enfriar y obtener buenas soluciones. 
+
+En BMB todos los conjuntos son capaces de converger usando una búsqueda local de 10.000 evaluaciones a excepción de ecoli, por lo que todos los conjuntos son capaces de converger y competir entre todas las ejecuciones de BL menos ecoli, por eso la BL normal supera en bastante la solución dada ya que la BL normal si llega a converger.
+
+Usando la ILS todos los conjuntos obtienen buenas soluciones ya que aunque ecoli no converge a un mínimo con las 10.000 iteraciones, converge lo suficiente como para que tras la primera mutación, al aplicar de nuevo la BL si que llegue a un mínimo local, por lo que las demás iteraciones de la ILS si sean competentes frente a los demás algoritmos y sea capaz de igualar o mejorar la búsqueda local o el enfriamiento simulado.
+
+La hibridación entre ILS y ES esta sumida al fracaso desde un principio a no ser que el conjunto de datos sea muy simple, como es el caso de rand o iris. Esto se debe a que con tan solo 10.000 evaluaciones, a excepción de estos conjuntos pequeños y simples, no son suficientes para llegar a enfriar la temperatura e intentar obtener un mínimo local, por lo que en realidad tenemos una gran exploración del propio enfriamiento simulado al inicio de este y le añadimos más exploración al aplicar los mutaciones, luego realmente nunca llevamos a explotar ninguna solución.
 
 \subsubsection{20\% de restricciones.}
 
@@ -1616,17 +1629,86 @@ El caso de ecoli lo podríamos solucionar buscando un esquema de enfriamiento qu
 \end{tabular}
 \end{table}
 
+
+Con el 20\% de restricciones vemos que se repite todo lo comentado en el apartado anterior, y esto tiene sentido ya que el principal problema de los algoritmos es el explotar, luego si complicamos el encontrar mínimos ya que existen más restricciones, los problemas serán los mismos o mayores.
+
+
+Como conclusión añadir que todos los algoritmos implementados en esta práctica introducen mejoras bastantes sustanciales en nuestro problema, sin embargo tenemos que ser capaces de encontrar con los parámetros correctos. Esto en puede parecer un problema ya que implica que tenemos que ser capaces de saber con anterioridad como son los conjuntos de datos y de que forma se comportan y su dificultad, pero por otro lado permite que estos algoritmos sean muy versátiles y puedan llegar a trabajar bien en gran cantidad de problemas.
+
 \subsection{Otros experimentos: Distintos esquemas de enfriamiento para ES.}
+
+Ya hemos visto la importancia de escoger unos buenos parámetros, por este motivo voy a proponer distintos esquemas de enfriamiento vistos en teoría que nos permitirán comprender mejor el comportamiento del enfriamiento simulado y el criterio de Metrópolis.
+
+En todo caso el cálculo de la temperatura inicial y final siempre será el mismo, solo modificaremos la forma en la que modificamos la temperatura a lo largo de la ejecución.
+
+En este apartado propongo los siguientes 5 esquemas:
+
+\begin{enumerate}
+	\item Cauchy.
+	\item Cauchy modificado.
+	\item Bolztmann.
+	\item Bolztmann modificado.
+	\item Constante.
+\end{enumerate}
+
+En cada apartado comentaré en que consisten y como se calcula el descenso de temperatura y comentaré los resultados obtenidos y comparaciones al final de todas las explicaciones.
 
 \subsubsection{Cauchy.}
 
+El esquema de Cauchy original utiliza la temperatura inicial y el número de enfriamiento para calcular la temperatura de dicho enfriamiento. Lo hará de la siguiente forma:
+
+$$ T_k = \frac{T_0}{1 + k} $$
+
+Siendo $k$ el número de enfriamiento. De esta forma la temperatura seguirá la forma de una hipérbola donde la temperatura al inicio será muy alta, bajará de forma muy rápida, y finalmente tenderá a 0 de forma muy lenta.
+
+Obtenemos los siguientes resultados:
+
+
+
 \subsubsection{Cauchy modificado.}
+
+El principal problema de usar el esquema de Cauchy es que no se tiene en cuenta el número de evaluaciones ni de iteraciones, por lo que se suele modificar para que estas se tengan en cuenta y asegurarse de que al menos se realizan un cierto número de enfriamientos, es decir, en lugar de arriesgarse a que las iteraciones sean muy pocas y realizar los primeros enfriamientos, estimamos el número de enfriamientos que queremos hacer y escogemos las temperaturas de forma que el enfriamiento se adapte.
+
+Para controlar este número de iteraciones, usaremos la siguiente formula:
+
+$$ M = 100.000/max\_vecinos $$
+$$ \beta = \frac{T_0 - T_f}{M \cdot T_0 \cdot T_f} $$
+$$ T_{k+1} = \frac{T_k}{1 + \beta \cdot T_k} $$
+
+Siendo $T_0$ la temperatura inicial, $T_f$ la temperatura final y $M$ la estimación del número de enfriamientos. 
+
+Obtenemos los siguientes resultados:
 
 \subsubsection{Boltzmann.}
 
+Se trata de una forma similar al esquema de Cauchy, solo que en este caso en el denominador aplicaremos una función logarítmica sobre el número de enfriamiento para suavizar el gran enfriamiento que cuenta Cauchy en las primeras iteraciones:
+
+$$ T_k = \frac{T_0}{1 + log(k)} $$
+
+Obtenemos los siguientes resultados:
+
+
+
+
 \subsubsection{Boltzmann modificado.}
+
+De igual forma que el esquema de Cauchy, podemos modificar el esquema de Bolztmann para que este tenga en cuenta el número de iteraciones:
+
+$$ M = 100.000/max\_vecinos $$
+$$ \beta = \frac{T_0 - T_f}{M \cdot T_0 \cdot T_f} $$
+$$ T_{k+1} = \frac{T_k}{1 + log(\beta \cdot T_k)} $$
+
+Obtenemos los siguientes resultados:
 
 \subsubsection{Constante.}
 
+Este esquema de enfriamiento simplemente resta a la temperatura una fracción de la temperatura inicial que calcularemos con la estimación del número de enfriamientos que queremos realizar:
+
+$$ T_{k+1} = T_k - \frac{T_0}{M}$$
+
+Obtenemos los siguientes resultados:
+
+
+\subsubsection{Estudio y comparación de los distintos enfriamientos.}
 
 \end{document}
