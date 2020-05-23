@@ -1116,6 +1116,8 @@ Como hemos visto en teoría, las metaheurísticas son métodos de resolución ge
 
 \subsection{Resultados obtenidos.}
 
+En esta sección comentaré los resultados de los algoritmos por separado, así como comprobar que efectivamente se comportan como esperábamos.
+
 \subsubsection{BMB.}
 
 % Please add the following required packages to your document preamble:
@@ -1189,6 +1191,33 @@ Como hemos visto en teoría, las metaheurísticas son métodos de resolución ge
 \end{tabular}
 \end{table}
 
+Este algoritmo, ejecutado 10 veces con 10.000 evaluaciones cada BL.
+
+Obtenemos resultados bastante en todos los conjuntos de datos rand, iris y newthyroid, aunque vemos como en ecoli no ocurre esto, y lo explicare con las siguientes trazas:
+
+\begin{figure}[H]
+	\centering
+	\hspace*{-1.7cm}\includegraphics[scale = 0.40]{bmb-ecoli.png}
+	
+	\caption{BMB en ecoli.}
+	\label{fig:bmb-cmp1}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\hspace*{-1.7cm}\includegraphics[scale = 0.40]{bmb-newthyroid.png}
+	
+	\caption{BMB en newthyroid.}
+	\label{fig:bmb-cmp2}
+\end{figure}
+
+
+En estas imágenes vemos como en ecoli si utiliza las 10.000 evaluaciones de la BL mientras que en newthyroid (conjunto bastante más difícil que iris o rand) con unas 4.000 evaluaciones converge y encuentra una buena solución, lo que nos lleva a que tenga sentido ejecutar este algoritmo para este conjunto de datos. 
+
+Si recordamos, en la práctica 1, ecoli necesitaba unas 40.000 evaluaciones para converger, luego usando este método con tan solo 10.000 evaluaciones no es capaz de converger y por lo tanto cualquier BL con más evaluaciones será mejor, es decir, en este conjunto de datos el intentar equilibrar exploración/explotación usando la búsqueda multiarranque básica hace que el nivel de explotación se vea tan afectado que no podamos obtener soluciones tan buenas como en otros algoritmos.
+
+Recalcar que a pesar de esto, el algoritmo se comporta como se esperaba y como vemos en las tablas y en la imagen de newthyroid, hace obtener buenas soluciones siempre que los parámetros de ejecución sean los correctos para el conjunto de datos.
+
 \subsubsection{ES-Proporcional.}
 
 % Please add the following required packages to your document preamble:
@@ -1261,6 +1290,36 @@ Como hemos visto en teoría, las metaheurísticas son métodos de resolución ge
 \textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 1,715114   & 313,299                   & 0                           & 313,299                & 6,500736   \\ \hline
 \end{tabular}
 \end{table}
+
+
+Con  algoritmo de enfriamiento simulado se intenta buscar una gran exploración al inicio del algoritmo, y según este avanza explotar la solución encontrada, de forma que si en el proceso de exploración encuentra una zona del espacio de búsqueda prometedora, aunque la temperatura sea alta la explorará ya que obtendrá mejor solución, aunque podrá salir de esa zona por la temperatura. Por el contrario, si el algoritmo ya está lo suficientemente avanzado, la temperatura será más baja e intentará explotar esa zona para que esa sea su mejor solución.
+
+Como comente en la implementación del algoritmo, modifique el esquema de enfriamiento pasando a usar el esquema proporcional en lugar del esquema de Cauchy modificado debido a que este último realizaba un enfriamiento demasiado brusco. Ese enfriamiento brusco no permitía tener el equilibrio exploración/exploración que se buscaba y por eso decidí realizar este cambio. Lo justificare en detalle en la sección de otros experimentos donde realizaré un análisis más exhaustivo de la importancia de escoger un buen criterio de enfriamiento.
+
+Viendo los resultados de las tablas vemos como parece que las soluciones son bastante buenas en las distintas semillas y casos, sin embargo las tablas no nos permiten ver si el algoritmo se comporta como esperábamos, por eso me basaré en imágenes para explicar el comportamiento:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.35]{es-temp-ecoli-10.png}
+	
+	\caption{Temperatura en ES-PRO en ecoli.}
+	\label{fig:bmb-cmp2}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.35]{es-ecoli-10.png}
+	
+	\caption{Función objetivo en ES-PRO en ecoli.}
+	\label{fig:bmb-cmp1}
+\end{figure}
+
+
+Para comentar el algoritmo he utilizado la ejecución en ecoli con un 10\% de restricciones, aunque en todos los conjuntos de datos se comporta correctamente y se puede comprobar en los png que se pueden generar en la carpeta gráficas tras ejecutar los algoritmos (aun así los adjunto en la entrega en la carpeta de gráficas/salidas\_png). He escogido este conjunto ya que se marca claramente el avance.
+
+En la primera imagen vemos como avanza la temperatura en la ejecución, mientras que en la segunda el valor de la función objetivo de la solución actual. Estas imágenes tenemos que interpretarlas juntas. Vemos como al inicio, en las primeras 20.000 evaluaciones donde la temperatura es alta, el valor de la función objetivo va tomando distintos valores y hay pequeñas zonas donde se reduce y otras donde aumenta, dando lugar a esa exploración del espacio de búsqueda, mientras que en las siguientes evaluaciones, cuando la temperatura cae, la explotación se intensifica y converge a una solución bastante buena.
+
+El que la temperatura sea baja no impide que acepte peores soluciones, en ocasiones, como vemos alrededor de la evaluación 40.000 se aceptan soluciones peores, o incluso cerca de la evaluación 90.000 se siguen aceptando soluciones un poco peores, pero como vemos por el criterio de Metrópolis, la diferencia de estas soluciones con respecto a la actual es cada vez más pequeña, por lo que el comportamiento es correcto y como vemos logramos un resultado bastante bueno.
 
 \subsubsection{ILS.}
 
