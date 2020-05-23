@@ -1420,6 +1420,19 @@ Hay que tener muy en cuenta los parámetros con los que ejecutamos el algoritmo 
 	\item \textbf{Porcentaje de cambios muy bajo}: El cambio apenas es brusco, por lo que la solución se mantendrá en la misma zona del espacio, haciendo que este algoritmo no explore, y por lo tanto sea equivalente a única BL.
 \end{enumerate}
 
+
+Es importante tener en cuenta que la mutación, al ser un porcentaje de la solución, se adapta bien a los conjuntos de datos, esto lo podemos ver en como se comporta en iris:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.35]{iris-ils.png}
+	
+	\caption{Función objetivo en ILS en iris.}
+	\label{fig:ils-cmp2}
+\end{figure}
+
+Vemos como se sigue comportando de forma correcta, ya que llega a un mínimo, por lo que al aplicar la mutación no supone irnos a una solución muy mala.
+
 \subsubsection{ILS-ES.}
 
 % Please add the following required packages to your document preamble:
@@ -1492,6 +1505,39 @@ Hay que tener muy en cuenta los parámetros con los que ejecutamos el algoritmo 
 \textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 5,760605   & 313,7838                  & 2038,2                      & 3448,01                & 7,416618   \\ \hline
 \end{tabular}
 \end{table}
+
+Este algoritmo se basa de una hibridación del algoritmo ILS pero usando enfriamiento simulado en lugar de búsqueda local como algoritmo por trayectorias en cada iteración de la ILS. 
+
+Aunque se ejecuta con los mismos parámetros que ILS (10 iteraciones de la ILS y 10.000 evaluaciones cada ejecución del ES), vemos como los resultados en este caso son igual de buenos en iris y rand, pero no en ecoli y newthyroid. Esto se debe al comportamiento y dificultad de cada conjunto de datos, por lo que compararemos a fondo el comportamiento comparando la ejecución en iris con la ejecución en ecoli:
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.35]{ecoli-ils-es.png}
+	
+	\caption{ILS-ES sobre ecoli con 10\% de restricciones.}
+	\label{fig:es-cmp2}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.35]{iris-ils-es.png}
+	
+	\caption{ILS-ES sobre ecoli con 10\% de restricciones.}
+	\label{fig:es-cmp1}
+\end{figure}
+
+Vemos que en ambos casos hace más de 10.000 iteraciones en algunas ejecuciones, lo que hace que no sean exactamente el mismo número de evaluaciones, sin embargo si modifico esto no se realizarían en todos los casos las 10 mutaciones.
+
+Como comente en enfriamiento simulado y entraré más a fondo más adelante, el criterio de enfriamiento es muy importante. En este ejemplo lo podemos ver, en un conjunto pequeño y sencillo como iris, las 10.000 evaluaciones son suficientes para lograr enfriar lo suficientemente rápido usando un esquema proporcional y ser capaces de dar una buena solución, aunque si es cierto que se introduce un nuevo problema, y es que estamos en el caso 3 que comenté en  el apartado de ILS. 
+
+La búsqueda local es capaz de hacer converger rápidamente la solución de iris y entrar en un mínimo, por lo que al aplicar la mutación del 10\% la solución no empeora mucho. Por el contrario, en este caso, aunque el enfriamiento simulado llega a explotar, no hace la suficiente explotación como para converger a un mínimo, solo se acerca a este, por lo que la mutación en conjunto al error que contiene de por si la solución tiene como efecto que la solución con la que se trabaja sea prácticamente como una nueva solución, por lo que el comportamiento es el del algoritmo de BMB. 
+
+
+Por el contrario, en ecoli, debido a la complejidad y tamaño del conjunto de datos, con 10.000 evaluaciones de enfriamiento simulado la temperatura sigue siendo tan alta que el algoritmo simplemente se reduce a explorar soluciones distintas, y no explotarlas, por lo que nos da soluciones muy malas y prácticamente aleatorias.
+
+El caso de ecoli lo podríamos solucionar buscando un esquema de enfriamiento que enfríe más rápido, para que así en las 10.000 evaluaciones sea capaz de explotar y no simplemente explorar.
+
 
 \subsection{Análisis de resultados.	}
 
