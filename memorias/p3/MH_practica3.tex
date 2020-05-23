@@ -1214,7 +1214,7 @@ Obtenemos resultados bastante en todos los conjuntos de datos rand, iris y newth
 
 En estas imágenes vemos como en ecoli si utiliza las 10.000 evaluaciones de la BL mientras que en newthyroid (conjunto bastante más difícil que iris o rand) con unas 4.000 evaluaciones converge y encuentra una buena solución, lo que nos lleva a que tenga sentido ejecutar este algoritmo para este conjunto de datos. 
 
-Si recordamos, en la práctica 1, ecoli necesitaba unas 40.000 evaluaciones para converger, luego usando este método con tan solo 10.000 evaluaciones no es capaz de converger y por lo tanto cualquier BL con más evaluaciones será mejor, es decir, en este conjunto de datos el intentar equilibrar exploración/explotación usando la búsqueda multiarranque básica hace que el nivel de explotación se vea tan afectado que no podamos obtener soluciones tan buenas como en otros algoritmos.
+Si recordamos, en la práctica 1, ecoli necesitaba unas 35.000 evaluaciones para converger, luego usando este método con tan solo 10.000 evaluaciones no es capaz de converger y por lo tanto cualquier BL con más evaluaciones será mejor, es decir, en este conjunto de datos el intentar equilibrar exploración/explotación usando la búsqueda multiarranque básica hace que el nivel de explotación se vea tan afectado que no podamos obtener soluciones tan buenas como en otros algoritmos.
 
 Recalcar que a pesar de esto, el algoritmo se comporta como se esperaba y como vemos en las tablas y en la imagen de newthyroid, hace obtener buenas soluciones siempre que los parámetros de ejecución sean los correctos para el conjunto de datos.
 
@@ -1303,7 +1303,7 @@ Viendo los resultados de las tablas vemos como parece que las soluciones son bas
 	\includegraphics[scale = 0.35]{es-temp-ecoli-10.png}
 	
 	\caption{Temperatura en ES-PRO en ecoli.}
-	\label{fig:bmb-cmp2}
+	\label{fig:es-cmp2}
 \end{figure}
 
 \begin{figure}[H]
@@ -1311,7 +1311,7 @@ Viendo los resultados de las tablas vemos como parece que las soluciones son bas
 	\includegraphics[scale = 0.35]{es-ecoli-10.png}
 	
 	\caption{Función objetivo en ES-PRO en ecoli.}
-	\label{fig:bmb-cmp1}
+	\label{fig:es-cmp1}
 \end{figure}
 
 
@@ -1393,6 +1393,32 @@ El que la temperatura sea baja no impide que acepte peores soluciones, en ocasio
 \textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 0,33316975 & 313,299                   & 0                           & 313,299                & 1,0687554  \\ \hline
 \end{tabular}
 \end{table}
+
+La ILS, ejecutada con parámetros de 10 iteraciones y cada iteración una BL de 10.000 evaluaciones vemos que obtenemos soluciones bastante buenas, pero de nuevo, en las tablas no somos capaces de evaluar el comportamiento del algoritmo. Por este motivo, una traza de la ejecución sobre ecoli es esta:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.35]{ecoli-ils.png}
+	
+	\caption{Función objetivo en ILS en ecoli.}
+	\label{fig:ils-cmp1}
+\end{figure}
+
+De nuevo he usado ecoli ya que los otros conjuntos de datos el algoritmo se comporta bien pero al necesitar menos evaluaciones para converger se hace menos visual el comportamiento del algoritmo.
+
+Vemos como en las dos primeras ejecuciones utiliza un poco más de las 10.000 evaluaciones, ya que en la búsqueda local permitíamos esto para no tener que detener la ejecución en mitad de la exploración de un vecindario, pero al partir de una solución parecida y no una totalmente nueva como en el caso de BMB, evitamos precisamente el problema de la BMB de no tener suficientes iteraciones para converger y antes de realizar la segunda mutación ya encuentra un mínimo local.
+
+En cada ejecución de la búsqueda local vemos como la mutación funciona y modifica la solución lo suficiente como para que el siguiente mínimo sea distinto al anterior, por lo que el algoritmo cumple con su objetivo y es capaz de moverse por las zonas del espacio cuando cae en un mínimo.
+
+Esto funciona ya que sabemos que la búsqueda local nos va a encontrar el mejor de su entorno y vamos a llegar a mínimos locales. 
+
+Hay que tener muy en cuenta los parámetros con los que ejecutamos el algoritmo ILS, en especial el porcentaje de solución a mutar, ya que tenemos tres escenarios:
+
+\begin{enumerate}
+	\item \textbf{Porcentaje a mutar demasiado alto con respecto al número de evaluaciones de cada BL}: Cada vez que ejecutemos la mutación se la solución será muy distinta a la que teníamos, por lo tanto, cada BL necesitará más evaluaciones con el fin de llegar a un mínimo, y si no cuenta con ese mínimo de evaluaciones nunca convergeremos, dando malas soluciones.
+	\item \textbf{Porcentaje a mutar acorde a las evaluaciones de cada BL}: Este es el escenario que buscamos, los cambios en una solución son tan bruscos como para movernos a otra zona del espacio de búsqueda, sin embargo siguen permitiendo a la BL llegar a un mínimo local.
+	\item \textbf{Porcentaje de cambios muy bajo}: El cambio apenas es brusco, por lo que la solución se mantendrá en la misma zona del espacio, haciendo que este algoritmo no explore, y por lo tanto sea equivalente a única BL.
+\end{enumerate}
 
 \subsubsection{ILS-ES.}
 
