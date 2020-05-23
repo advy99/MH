@@ -860,7 +860,7 @@ Recibe: ini, solucion a mutar (pareja asignacion y valor función objetivo)
 	nuevo_cluster = -1
 	
 	// para los elementos del segmento, los cambiamos de cluster
-	Para i = INI_SEGMENTO hasta i < ((INI_SEGMENTO + TAM_SEGMENTO) % ini.asignacion.size()) - 1:
+	Para i = INI_SEGMENTO hasta i < ((INI_SEGMENTO + TAM_SEGMENTO - 1) % ini.asignacion.size()) :
 	
 		Hacer:
 			nuevo_cluster = Aleatorio (0, get_num_clusters)
