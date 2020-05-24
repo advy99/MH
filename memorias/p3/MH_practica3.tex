@@ -2136,4 +2136,102 @@ Tras todas las ejecuciones obtenemos los siguientes resultados globales:
 \end{tabular}
 \end{table}
 
+
+Podemos ver como en iris y rand es independiente el esquema de enfriamiento que usemos a excepción del esquema de Boltzmann y el constante. Con estos esquemas de enfiamiento obtenemos malos resultados independientemente del conjunto de datos, mientras que con los otros esquemas obtenemos buenos resultados en los conjuntos de datos, a excepción del esquema de Cauchy en ecoli.
+
+Vamos a ver que ocurre en los distintos conjuntos de datos con los valores de la función objetivo y la temperatura a lo largo de la ejecución del algoritmo.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.30]{cmp-tmp/rand-temp.png}
+	
+	\caption{Temperatura en ES en rand con los distintos esquemas de enfriamiento.}
+	\label{fig:es-cmp2}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.30]{cmp-tmp/rand-es.png}
+	
+	\caption{Función objetivo en ES en rand con los distintos esquemas de enfriamiento.}
+	\label{fig:es-cmp1}
+\end{figure}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.3]{cmp-tmp/iris-temp.png}
+	
+	\caption{Temperatura en ES en iris con los distintos esquemas de enfriamiento.}
+	\label{fig:es-cmp2}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.3]{cmp-tmp/iris-es.png}
+	
+	\caption{Función objetivo en ES en iris con los distintos esquemas de enfriamiento.}
+	\label{fig:es-cmp1}
+\end{figure}
+
+
+
+
+
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.35]{cmp-tmp/newthyroid-temp.png}
+	
+	\caption{Temperatura en ES en newthyroid con los distintos esquemas de enfriamiento.}
+	\label{fig:es-cmp2}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.35]{cmp-tmp/newthyroid-es.png}
+	
+	\caption{Función objetivo en ES en newthyroid con los distintos esquemas de enfriamiento.}
+	\label{fig:es-cmp1}
+\end{figure}
+
+
+
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.35]{cmp-tmp/ecoli-temp.png}
+	
+	\caption{Temperatura en ES en ecoli con los distintos esquemas de enfriamiento.}
+	\label{fig:es-cmp2}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.35]{cmp-tmp/ecoli-es.png}
+	
+	\caption{Función objetivo en ES en ecoli con los distintos esquemas de enfriamiento.}
+	\label{fig:es-cmp1}
+\end{figure}
+
+
+Con estos gráficos vemos claramente el comportamiento de cada esquema.
+
+Para empezar, el esquema de Boltzmann aunque esta dibujado no es visible en las gráficas de ningún conjunto, ya que intenta paliar el problema de Cauchy y que el enfriamiento sea más suave, pero con el número de evaluaciones que utilizamos Cauchy funciona bastante bien, como explicaré más adelante, luego con el criterio de Boltzmann intentamos resolver un problema que no existe, haciendo que durante toda la ejecución no se llegue a enfriar al esperar un mayor número de evaluaciones.
+
+
+Con respecto a los esquemas de Boltzmann modificado y Cauchy modificado, el intentar ajustarlos a la estimación de enfriamientos hace que enfríen de manera muy rápida, haciendo que durante toda la ejecución del algoritmo la temperatura sea prácticamente 0, por lo que la probabilidad de que acepte por el criterio de Metrópoli sea muy baja y el algoritmo se comporte como la búsqueda local al aceptar únicamente por el criterio de encontrar un vecino mejor. 
+
+Esto ocurre en todos los conjuntos de datos a excepción de iris con el esquema de Boltzmann modificado, en el que aunque enfría muy rápido al principio, durante el resto de la ejecución aunque el nivel de temperatura sea bajo, la dificultad del conjunto de datos es muy pequeña, luego las variaciones entre soluciones al ser más pequeñas siguen manteniendo una pequeña probabilidad de cambiar a soluciones peores.
+
+Utilizando esquema constante en todos los conjuntos de datos ocurre lo mismo, la caída de temperatura, al ser siempre fija, es tan pronunciada que se realiza el enfriamiento demasiado rápido y no da tiempo a converger a la solución, por lo que obtenemos malos resultados.
+
+Por último encontramos dos esquemas que realizan el mejor comportamiento para el enfriamiento simulado, con la única excepción de ecoli que comentaré ahora, Cauchy y el esquema proporcional.
+
+
+
+
+
 \end{document}
