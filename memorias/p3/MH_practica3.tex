@@ -1193,7 +1193,7 @@ En esta sección comentaré los resultados de los algoritmos por separado, así 
 
 Este algoritmo, ejecutado 10 veces con 10.000 evaluaciones cada BL.
 
-Obtenemos resultados bastante en todos los conjuntos de datos rand, iris y newthyroid, aunque vemos como en ecoli no ocurre esto, y lo explicare con las siguientes trazas:
+Obtenemos resultados bastante buenos en todos los conjuntos de datos rand, iris y newthyroid, aunque no en ecoli, y lo explicare con las siguientes trazas:
 
 \begin{figure}[H]
 	\centering
@@ -1212,11 +1212,11 @@ Obtenemos resultados bastante en todos los conjuntos de datos rand, iris y newth
 \end{figure}
 
 
-En estas imágenes vemos como en ecoli si utiliza las 10.000 evaluaciones de la BL mientras que en newthyroid (conjunto bastante más difícil que iris o rand) con unas 4.000 evaluaciones converge y encuentra una buena solución, lo que nos lleva a que tenga sentido ejecutar este algoritmo para este conjunto de datos. 
+En estas imágenes vemos como en ecoli si utiliza las 10.000 evaluaciones de la BL mientras que en newthyroid (conjunto bastante más difícil que iris o rand) con unas 4.000 evaluaciones converge y encuentra una buena solución, lo que nos lleva a que no necesite las 10.000 evaluaciones y pare la ejecución antes de llegar a estas. 
 
-Si recordamos, en la práctica 1, ecoli necesitaba unas 35.000 evaluaciones para converger, luego usando este método con tan solo 10.000 evaluaciones no es capaz de converger y por lo tanto cualquier BL con más evaluaciones será mejor, es decir, en este conjunto de datos el intentar equilibrar exploración/explotación usando la búsqueda multiarranque básica hace que el nivel de explotación se vea tan afectado que no podamos obtener soluciones tan buenas como en otros algoritmos.
+Si recordamos, en la práctica 1, ecoli necesitaba unas 35.000 evaluaciones para converger, luego usando este método con tan solo 10.000 evaluaciones no es capaz de converger y por lo tanto aplicar BL con más evaluaciones será mejor, es decir, en este conjunto de datos el intentar equilibrar exploración/explotación usando la búsqueda multiarranque básica hace que el nivel de explotación se vea tan afectado que no podamos obtener soluciones tan buenas como en otros algoritmos.
 
-Recalcar que a pesar de esto, el algoritmo se comporta como se esperaba y como vemos en las tablas y en la imagen de newthyroid, hace obtener buenas soluciones siempre que los parámetros de ejecución sean los correctos para el conjunto de datos.
+Recalcar que a pesar de esto, el algoritmo se comporta como se esperaba y como vemos en las tablas y en la imagen de newthyroid, hace obtener buenas soluciones siempre que los parámetros de ejecución sean los correctos para el conjunto de datos, es decir, que cada BL se ejecute con un número de evaluaciones suficiente como para que alcance un mínimo local.
 
 \subsubsection{ES-Proporcional.}
 
@@ -1292,7 +1292,7 @@ Recalcar que a pesar de esto, el algoritmo se comporta como se esperaba y como v
 \end{table}
 
 
-Con  algoritmo de enfriamiento simulado se intenta buscar una gran exploración al inicio del algoritmo, y según este avanza explotar la solución encontrada, de forma que si en el proceso de exploración encuentra una zona del espacio de búsqueda prometedora, aunque la temperatura sea alta la explorará ya que obtendrá mejor solución, aunque podrá salir de esa zona por la temperatura. Por el contrario, si el algoritmo ya está lo suficientemente avanzado, la temperatura será más baja e intentará explotar esa zona para que esa sea su mejor solución.
+Con el algoritmo de enfriamiento simulado se intenta buscar una gran exploración al inicio del algoritmo, y según este avanza explotar la solución encontrada, de forma que si en el proceso de exploración encuentra una zona del espacio de búsqueda prometedora, aunque la temperatura sea alta la explorará ya que obtendrá mejor solución, aunque podrá salir de esa zona por la temperatura. Por el contrario, si el algoritmo ya está lo suficientemente avanzado, la temperatura será más baja e intentará explotar esa zona para llegar al mínimo local de dicha zona.
 
 Como comente en la implementación del algoritmo, modifique el esquema de enfriamiento pasando a usar el esquema proporcional en lugar del esquema de Cauchy modificado debido a que este último realizaba un enfriamiento demasiado brusco. Ese enfriamiento brusco no permitía tener el equilibrio exploración/exploración que se buscaba y por eso decidí realizar este cambio. Lo justificare en detalle en la sección de otros experimentos donde realizaré un análisis más exhaustivo de la importancia de escoger un buen criterio de enfriamiento.
 
@@ -1315,7 +1315,7 @@ Viendo los resultados de las tablas vemos como parece que las soluciones son bas
 \end{figure}
 
 
-Para comentar el algoritmo he utilizado la ejecución en ecoli con un 10\% de restricciones, aunque en todos los conjuntos de datos se comporta correctamente y se puede comprobar en los png que se pueden generar en la carpeta gráficas tras ejecutar los algoritmos (aun así los adjunto en la entrega en la carpeta de gráficas/salidas\_png). He escogido este conjunto ya que se marca claramente el avance.
+Para comentar el algoritmo he utilizado la ejecución en ecoli con un 10\% de restricciones, aunque en todos los conjuntos de datos se comporta correctamente y se puede comprobar en las imágenes que se pueden generar en la carpeta gráficas tras ejecutar los algoritmos (aun así los adjunto en la entrega en la carpeta de gráficas/salidas\_png). He escogido este conjunto ya que se marca claramente el avance.
 
 En la primera imagen vemos como avanza la temperatura en la ejecución, mientras que en la segunda el valor de la función objetivo de la solución actual. Estas imágenes tenemos que interpretarlas juntas. Vemos como al inicio, en las primeras 20.000 evaluaciones donde la temperatura es alta, el valor de la función objetivo va tomando distintos valores y hay pequeñas zonas donde se reduce y otras donde aumenta, dando lugar a esa exploración del espacio de búsqueda, mientras que en las siguientes evaluaciones, cuando la temperatura cae, la explotación se intensifica y converge a una solución bastante buena.
 
@@ -1406,7 +1406,7 @@ La ILS, ejecutada con parámetros de 10 iteraciones y cada iteración una BL de 
 
 De nuevo he usado ecoli ya que los otros conjuntos de datos el algoritmo se comporta bien pero al necesitar menos evaluaciones para converger se hace menos visual el comportamiento del algoritmo.
 
-Vemos como en las dos primeras ejecuciones utiliza un poco más de las 10.000 evaluaciones, ya que en la búsqueda local permitíamos esto para no tener que detener la ejecución en mitad de la exploración de un vecindario, pero al partir de una solución parecida y no una totalmente nueva como en el caso de BMB, evitamos precisamente el problema de la BMB de no tener suficientes iteraciones para converger y antes de realizar la segunda mutación ya encuentra un mínimo local.
+Vemos como en las dos primeras ejecuciones utiliza un poco más de las 10.000 evaluaciones, ya que en la búsqueda local permitíamos esto para no tener que detener la ejecución en mitad de la exploración de un vecindario, pero al partir de una solución parecida y no una totalmente nueva como en el caso de BMB evitamos precisamente el problema de la BMB de no tener suficientes iteraciones para converger y antes de realizar la segunda mutación ya encuentra un mínimo local.
 
 En cada ejecución de la búsqueda local vemos como la mutación funciona y modifica la solución lo suficiente como para que el siguiente mínimo sea distinto al anterior, por lo que el algoritmo cumple con su objetivo y es capaz de moverse por las zonas del espacio cuando cae en un mínimo.
 
@@ -1415,13 +1415,13 @@ Esto funciona ya que sabemos que la búsqueda local nos va a encontrar el mejor 
 Hay que tener muy en cuenta los parámetros con los que ejecutamos el algoritmo ILS, en especial el porcentaje de solución a mutar, ya que tenemos tres escenarios:
 
 \begin{enumerate}
-	\item \textbf{Porcentaje a mutar demasiado alto con respecto al número de evaluaciones de cada BL}: Cada vez que ejecutemos la mutación se la solución será muy distinta a la que teníamos, por lo tanto, cada BL necesitará más evaluaciones con el fin de llegar a un mínimo, y si no cuenta con ese mínimo de evaluaciones nunca convergeremos, dando malas soluciones.
+	\item \textbf{Porcentaje a mutar demasiado alto con respecto al número de evaluaciones de cada BL}: Cada vez que ejecutemos la mutación la solución será muy distinta a la que teníamos, tanto que puede darse el caso de que sea igual que una nueva solución generada de forma aleatoria, por lo tanto, cada BL necesitará más evaluaciones con el fin de llegar a un mínimo, y si no cuenta con ese mínimo de evaluaciones nunca convergerá, dando malas soluciones.
 	\item \textbf{Porcentaje a mutar acorde a las evaluaciones de cada BL}: Este es el escenario que buscamos, los cambios en una solución son tan bruscos como para movernos a otra zona del espacio de búsqueda, sin embargo siguen permitiendo a la BL llegar a un mínimo local.
 	\item \textbf{Porcentaje de cambios muy bajo}: El cambio apenas es brusco, por lo que la solución se mantendrá en la misma zona del espacio, haciendo que este algoritmo no explore, y por lo tanto sea equivalente a única BL.
 \end{enumerate}
 
 
-Es importante tener en cuenta que la mutación, al ser un porcentaje de la solución, se adapta bien a los conjuntos de datos, esto lo podemos ver en como se comporta en iris:
+Es importante tener en cuenta que la mutación, al ser un porcentaje aplicado al tamaño del caso se adapta bien a los conjuntos de datos, esto lo podemos ver en como se comporta en iris:
 
 \begin{figure}[H]
 	\centering
@@ -1430,8 +1430,6 @@ Es importante tener en cuenta que la mutación, al ser un porcentaje de la soluc
 	\caption{Función objetivo en ILS en iris.}
 	\label{fig:ils-cmp2}
 \end{figure}
-
-Vemos como se sigue comportando de forma correcta, ya que llega a un mínimo, por lo que al aplicar la mutación no supone irnos a una solución muy mala.
 
 \subsubsection{ILS-ES.}
 
@@ -1534,9 +1532,9 @@ Como comente en enfriamiento simulado y entraré más a fondo más adelante, el 
 La búsqueda local es capaz de hacer converger rápidamente la solución de iris y entrar en un mínimo, por lo que al aplicar la mutación del 10\% la solución no empeora mucho. Por el contrario, en este caso, aunque el enfriamiento simulado llega a explotar, no hace la suficiente explotación como para converger a un mínimo, solo se acerca a este, por lo que la mutación en conjunto al error que contiene de por si la solución tiene como efecto que la solución con la que se trabaja sea prácticamente como una nueva solución, por lo que el comportamiento es el del algoritmo de BMB. 
 
 
-Por el contrario, en ecoli, debido a la complejidad y tamaño del conjunto de datos, con 10.000 evaluaciones de enfriamiento simulado la temperatura sigue siendo tan alta que el algoritmo simplemente se reduce a explorar soluciones distintas, y no explotarlas, por lo que nos da soluciones muy malas y prácticamente aleatorias.
+Por el contrario, en ecoli y newthyroid debido a la complejidad y tamaño de los conjuntos de datos, con 10.000 evaluaciones en enfriamiento simulado el criterio de enfriamiento no cuenta con las evaluaciones suficientes para enfriar, la temperatura sigue siendo tan alta que el algoritmo simplemente se reduce a explorar soluciones distintas, y no explotarlas, por lo que nos da soluciones muy malas y prácticamente aleatorias.
 
-El caso de ecoli lo podríamos solucionar buscando un esquema de enfriamiento que enfríe más rápido, para que así en las 10.000 evaluaciones sea capaz de explotar y no simplemente explorar.
+El caso de ecoli lo podríamos solucionar buscando un esquema de enfriamiento que enfríe más rápido, para que así en las 10.000 evaluaciones sea capaz de explotar y no simplemente explorar, pero en realidad ILS estaríamos trabajando con un enfriamiento simulado que se comporta como una búsqueda local, así que simplemente podríamos usar el algoritmo ILS ya visto.
 
 
 \subsection{Análisis de resultados.	}
@@ -1585,11 +1583,11 @@ En los conjuntos de datos con un 10\% de restricciones vemos como en rand e iris
 
 Esto se debe a que con 100.000 evaluaciones en ES-PRO todos los algoritmos son capaces de enfriar y obtener buenas soluciones. 
 
-En BMB todos los conjuntos son capaces de converger usando una búsqueda local de 10.000 evaluaciones a excepción de ecoli, por lo que todos los conjuntos son capaces de converger y competir entre todas las ejecuciones de BL menos ecoli, por eso la BL normal supera en bastante la solución dada ya que la BL normal si llega a converger.
+En BMB todos los conjuntos son capaces de converger usando una búsqueda local de 10.000 evaluaciones a excepción de ecoli, por lo que todos los conjuntos son capaces de converger y competir entre todas las ejecuciones de BL menos ecoli, por eso la BL normal supera en bastante la solución dada ya que la BL normal si llega a converger aunque comparándolo con el algoritmo greedy vemos como lo sigue mejorando aun a falta de converger.
 
-Usando la ILS todos los conjuntos obtienen buenas soluciones ya que aunque ecoli no converge a un mínimo con las 10.000 iteraciones, converge lo suficiente como para que tras la primera mutación, al aplicar de nuevo la BL si que llegue a un mínimo local, por lo que las demás iteraciones de la ILS si sean competentes frente a los demás algoritmos y sea capaz de igualar o mejorar la búsqueda local o el enfriamiento simulado.
+Usando la ILS todos los conjuntos obtienen buenas soluciones ya que aunque en ecoli no converge a un mínimo con las 10.000 iteraciones, converge lo suficiente como para que tras la primera mutación y aplicar de nuevo la BL si que llegue a un mínimo local, por lo que las demás iteraciones de la ILS si sean competentes frente a los demás algoritmos y sea capaz de igualar o mejorar la búsqueda local o el enfriamiento simulado.
 
-La hibridación entre ILS y ES esta sumida al fracaso desde un principio a no ser que el conjunto de datos sea muy simple, como es el caso de rand o iris. Esto se debe a que con tan solo 10.000 evaluaciones, a excepción de estos conjuntos pequeños y simples, no son suficientes para llegar a enfriar la temperatura e intentar obtener un mínimo local, por lo que en realidad tenemos una gran exploración del propio enfriamiento simulado al inicio de este y le añadimos más exploración al aplicar los mutaciones, luego realmente nunca llevamos a explotar ninguna solución.
+La hibridación entre ILS y ES esta sumida al fracaso desde un principio, ya que la ILS está pensada en añadir exploración a la búsqueda local, permitiendo salir de mínimos una vez son alcanzados por ls BL. Con esta hibridación estamos usando un ES que de por si tiene la gran parte de exploración al inicio del algoritmo y con tan pocas evaluaciones no es capaz de enfriar lo suficiente como para explotar a no ser que el conjunto de datos sea muy simple, como es el caso de rand o iris. En realidad tenemos una gran exploración del propio enfriamiento simulado al inicio de este y le añadimos más exploración al aplicar los mutaciones, luego realmente nunca llevamos a explotar ninguna solución.
 
 \subsubsection{20\% de restricciones.}
 
@@ -1633,7 +1631,7 @@ La hibridación entre ILS y ES esta sumida al fracaso desde un principio a no se
 Con el 20\% de restricciones vemos que se repite todo lo comentado en el apartado anterior, y esto tiene sentido ya que el principal problema de los algoritmos es el explotar, luego si complicamos el encontrar mínimos ya que existen más restricciones, los problemas serán los mismos o mayores.
 
 
-Como conclusión añadir que todos los algoritmos implementados en esta práctica introducen mejoras bastantes sustanciales en nuestro problema, sin embargo tenemos que ser capaces de encontrar con los parámetros correctos. Esto en puede parecer un problema ya que implica que tenemos que ser capaces de saber con anterioridad como son los conjuntos de datos y de que forma se comportan y su dificultad, pero por otro lado permite que estos algoritmos sean muy versátiles y puedan llegar a trabajar bien en gran cantidad de problemas.
+Como conclusión añadir que todos los algoritmos implementados en esta práctica introducen mejoras bastantes sustanciales en nuestro problema, sin embargo tenemos que ser capaces de encontrar con los parámetros correctos. Esto puede parecer un problema ya que implica que tenemos que ser capaces de saber con anterioridad como son los conjuntos de datos y de que forma se comportan y su dificultad, pero por otro lado permite que estos algoritmos sean muy versátiles y puedan llegar a trabajar bien en gran cantidad de problemas.
 
 \subsection{Otros experimentos: Distintos esquemas de enfriamiento para ES.}
 
@@ -2222,21 +2220,21 @@ Con estos gráficos vemos claramente el comportamiento de cada esquema.
 Para empezar, el esquema de Boltzmann aunque esta dibujado no es visible en las gráficas de ningún conjunto, ya que intenta paliar el problema de Cauchy y que el enfriamiento sea más suave, pero con el número de evaluaciones que utilizamos Cauchy funciona bastante bien, como explicaré más adelante, luego con el criterio de Boltzmann intentamos resolver un problema que no existe, haciendo que durante toda la ejecución no se llegue a enfriar al esperar un mayor número de evaluaciones.
 
 
-Con respecto a los esquemas de Boltzmann modificado y Cauchy modificado, el intentar ajustarlos a la estimación de enfriamientos hace que enfríen de manera muy rápida, haciendo que durante toda la ejecución del algoritmo la temperatura sea prácticamente 0, por lo que la probabilidad de que acepte por el criterio de Metrópoli sea muy baja y el algoritmo se comporte como la búsqueda local al aceptar únicamente por el criterio de encontrar un vecino mejor. 
+Con respecto a los esquemas de Boltzmann modificado y Cauchy modificado, el intentar ajustarlos a la estimación de número de enfriamientos hace que enfríen de manera muy rápida, haciendo que durante toda la ejecución del algoritmo la temperatura sea prácticamente 0, por lo que la probabilidad de que acepte por el criterio de Metrópoli sea muy baja y el algoritmo se comporte como la búsqueda local al aceptar únicamente por el criterio de encontrar un vecino mejor. 
 
-Esto ocurre en todos los conjuntos de datos a excepción de iris con el esquema de Boltzmann modificado, en el que aunque enfría muy rápido al principio, durante el resto de la ejecución aunque el nivel de temperatura sea bajo, la dificultad del conjunto de datos es muy pequeña, luego las variaciones entre soluciones al ser más pequeñas siguen manteniendo una pequeña probabilidad de cambiar a soluciones peores.
+Esto ocurre en todos los conjuntos de datos a excepción de iris con el esquema de Boltzmann modificado, en el que aunque enfría muy rápido al principio, durante el resto de la ejecución el nivel de temperatura se mantiene en cierto nivel, la dificultad del conjunto de datos es muy pequeña, luego las variaciones entre soluciones al ser más pequeñas siguen manteniendo una pequeña probabilidad de cambiar a soluciones peores.
 
 Utilizando esquema constante en todos los conjuntos de datos ocurre lo mismo, la caída de temperatura, al ser siempre fija, es tan pronunciada que se realiza el enfriamiento demasiado rápido y no da tiempo a converger a la solución además de alcanzar de golpe el 0 en temperatura, parando la ejecución del algoritmo de forma muy temprana, por lo que obtenemos malos resultados.
 
 Por último encontramos dos esquemas que realizan el mejor comportamiento para el enfriamiento simulado, con la única excepción de ecoli que comentaré ahora, Cauchy y el esquema proporcional.
 
 
-Para empezar comentaré el esquema proporcional, el propuesto por los profesores si el esquema de Cauchy modificado no se comportaba como esperábamos. Este esquema a pesar de ser más simple que los demás (a excepción del constante, que ya es demasiado simple) se ajusta bien a los niveles de temperatura usados, aunque hay que ser conscientes de que esto claramente depende del conjunto y valores de la temperatura inicial. 
+Para empezar comentaré el esquema proporcional, el propuesto por los profesores si el esquema de Cauchy modificado no se comportaba como esperábamos. Este esquema a pesar de ser más simple que los demás (a excepción del constante) se ajusta bien a los niveles de temperatura usados, aunque hay que ser conscientes de que esto claramente depende del conjunto y valores de la temperatura inicial. 
 
-Esto lo podemos ver en la comparación de ecoli con los demás conjuntos de datos. Ecoli necesita unas 20.000 para acercarse a un nivel de temperatura cercano a cero y hacer una mayor explotación mientras que en los otros conjuntos necesita tan solo entre 5.000 y 10.000 evaluaciones, es decir, no es que este esquema sea el mejor por defecto, simplemente se ha ajustado mejor a los parámetros del problema sobre todo en ecoli, seguramente si en iris, rand y newthyroid modificamos el $\alpha$ del esquema proporcional para que sea más cercano a uno el comportamiento será mejor, pero si esto mismo lo hacemos en ecoli nos arriesgamos que el enfriamiento sea tan lento que con las 100.000 no llegue a converger.
+Esto lo podemos ver en la comparación de ecoli con los demás conjuntos de datos. Ecoli necesita unas 20.000 para acercarse a un nivel de temperatura cercano a cero y hacer una mayor explotación mientras que en los otros conjuntos necesita tan solo entre 5.000 y 10.000 evaluaciones, es decir, no es que este esquema sea el mejor por defecto, simplemente se ha ajustado mejor a los parámetros del problema sobre todo en ecoli, seguramente si en iris, rand y newthyroid modificamos el $\alpha$ del esquema proporcional para que sea más cercano a uno el comportamiento será mejor al realizar un mayor equilibrio entre exploración y explotación, pero si esto mismo lo hacemos en ecoli nos arriesgamos que el enfriamiento sea tan lento que con las 100.000 no llegue a converger.
 
 
-El otro esquema que en nuestro problema y conjuntos de datos nos da buenas soluciones es Cauchy, que vemos como tiene una curva de temperatura similar al esquema proporcional aunque al principio la caída de temperatura es mayor, sin embargo una vez realiza una reducción alta de temperatura tarda más en converger a cero que el esquema proporcional. Esto hace que incluso en las etapas intermedias y finales del algoritmo se sigan aceptando bastantes soluciones peores que la actual por el criterio de Metrópolis.
+Otro esquema en el que para nuestro problema y conjuntos de datos obtenemos buenas soluciones es Cauchy, que vemos como tiene una curva de temperatura similar al esquema proporcional aunque al principio la caída de temperatura es mayor, sin embargo una vez realiza una reducción alta de temperatura tarda más en converger a cero que el esquema proporcional. Esto hace que incluso en las etapas intermedias y finales del algoritmo se sigan aceptando bastantes soluciones peores que la actual por el criterio de Metrópolis.
 
 El único problema que tenemos con el esquema de Cauchy es que la complejidad de ecoli sumado a ese enfriamiento más leve para llegar a temperaturas cercanas a cero hace que necesite más de  100.000 evaluaciones y por lo tanto hace que la explotación se comience en una etapa final del algoritmo, que incluso tiene una gran prioridad por explorar, de ahí que no obtengamos soluciones tan buenas como las esperadas.
 
