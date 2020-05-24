@@ -2226,12 +2226,28 @@ Con respecto a los esquemas de Boltzmann modificado y Cauchy modificado, el inte
 
 Esto ocurre en todos los conjuntos de datos a excepción de iris con el esquema de Boltzmann modificado, en el que aunque enfría muy rápido al principio, durante el resto de la ejecución aunque el nivel de temperatura sea bajo, la dificultad del conjunto de datos es muy pequeña, luego las variaciones entre soluciones al ser más pequeñas siguen manteniendo una pequeña probabilidad de cambiar a soluciones peores.
 
-Utilizando esquema constante en todos los conjuntos de datos ocurre lo mismo, la caída de temperatura, al ser siempre fija, es tan pronunciada que se realiza el enfriamiento demasiado rápido y no da tiempo a converger a la solución, por lo que obtenemos malos resultados.
+Utilizando esquema constante en todos los conjuntos de datos ocurre lo mismo, la caída de temperatura, al ser siempre fija, es tan pronunciada que se realiza el enfriamiento demasiado rápido y no da tiempo a converger a la solución además de alcanzar de golpe el 0 en temperatura, parando la ejecución del algoritmo de forma muy temprana, por lo que obtenemos malos resultados.
 
 Por último encontramos dos esquemas que realizan el mejor comportamiento para el enfriamiento simulado, con la única excepción de ecoli que comentaré ahora, Cauchy y el esquema proporcional.
 
 
+Para empezar comentaré el esquema proporcional, el propuesto por los profesores si el esquema de Cauchy modificado no se comportaba como esperábamos. Este esquema a pesar de ser más simple que los demás (a excepción del constante, que ya es demasiado simple) se ajusta bien a los niveles de temperatura usados, aunque hay que ser conscientes de que esto claramente depende del conjunto y valores de la temperatura inicial. 
 
+Esto lo podemos ver en la comparación de ecoli con los demás conjuntos de datos. Ecoli necesita unas 20.000 para acercarse a un nivel de temperatura cercano a cero y hacer una mayor explotación mientras que en los otros conjuntos necesita tan solo entre 5.000 y 10.000 evaluaciones, es decir, no es que este esquema sea el mejor por defecto, simplemente se ha ajustado mejor a los parámetros del problema sobre todo en ecoli, seguramente si en iris, rand y newthyroid modificamos el $\alpha$ del esquema proporcional para que sea más cercano a uno el comportamiento será mejor, pero si esto mismo lo hacemos en ecoli nos arriesgamos que el enfriamiento sea tan lento que con las 100.000 no llegue a converger.
+
+
+El otro esquema que en nuestro problema y conjuntos de datos nos da buenas soluciones es Cauchy, que vemos como tiene una curva de temperatura similar al esquema proporcional aunque al principio la caída de temperatura es mayor, sin embargo una vez realiza una reducción alta de temperatura tarda más en converger a cero que el esquema proporcional. Esto hace que incluso en las etapas intermedias y finales del algoritmo se sigan aceptando bastantes soluciones peores que la actual por el criterio de Metrópolis.
+
+El único problema que tenemos con el esquema de Cauchy es que la complejidad de ecoli sumado a ese enfriamiento más leve para llegar a temperaturas cercanas a cero hace que necesite más de  100.000 evaluaciones y por lo tanto hace que la explotación se comience en una etapa final del algoritmo, que incluso tiene una gran prioridad por explorar, de ahí que no obtengamos soluciones tan buenas como las esperadas.
+
+
+Como conclusión es muy importante escoger bien el esquema de enfriamiento en este algoritmo, y tenemos que tener en cuenta tanto el número de evaluaciones como complejidad de los conjuntos de datos. 
+
+En este caso, con el esquema proporcional hemos logrado llegar a un equilibrio, sin embargo, los otros esquemas a excepción de Cauchy, que esperábamos un mejor comportamiento al estimar el número de enfriamientos e intentar ajustar el avance de la temperatura a esto.
+
+Seguramente los esquemas que tenían en cuenta la estimación de enfriamientos han fracasado porque solo contemplaban enfriar una vez se llegaba al número máximo de vecinos, sin embargo existe otra condición, cuando se alcanza un número máximo de éxitos. 
+
+El principal problema es que al inicio del algoritmo, todas las veces se alcanza el máximo de éxitos al tener una temperatura muy alta, por lo que los enfriamientos que estaban pensados para 100.000 evaluaciones los realiza al principio de la ejecución, es decir, estos esquemas se están comportando de forma correcta, simplemente que la estimación del número de enfriamientos $M$ no ha sido la correcta.
 
 
 \end{document}
