@@ -1663,7 +1663,77 @@ Siendo $k$ el número de enfriamiento. De esta forma la temperatura seguirá la 
 
 Obtenemos los siguientes resultados:
 
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-CA en el PAR con un 10\% de restricciones}}                                                                                                                            \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 5,37064    & 2022,33                   & 648                         & 4647,49                & 13,5046    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 5,37064    & 2017,45                   & 580                         & 4367,13                & 11,3156    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 5,71977    & 1967,59                   & 474                         & 3887,85                & 14,2208    \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 5,66534    & 2044,19                   & 505                         & 4090,03                & 18,1783    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 5,34639    & 2040,19                   & 546                         & 4252,13                & 9,58301    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 5,494556   & 2018,35                   & 550,6                       & 4248,926               & 13,360462  \\ \hline
+\end{tabular}
+\end{table}
 
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-CA en el PAR con un 10\% de restricciones}}                                                                                                                            \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 5,07446    & 287,493                   & 8                           & 312,102                & 7,74662    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 5,13346    & 327,816                   & 3                           & 337,044                & 8,85759    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 5,34486    & 317,982                   & 6                           & 336,438                & 8,54793    \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 5,61017    & 302,226                   & 4                           & 314,53                 & 9,48142    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 5,66914    & 296,79                    & 7                           & 318,323                & 6,51438    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 5,4394075  & 306,4614                  & 5,6                         & 323,6874               & 8,229588   \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-CA en el PAR con un 20\% de restricciones}}                                                                                                                            \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 6,56862    & 1838,03                   & 781                         & 3420,01                & 12,1917    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 6,585      & 1962,92                   & 959                         & 3905,46                & 12,2219    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 6,94729    & 2116,33                   & 1232                        & 4611,86                & 12,6275    \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 5,51766    & 1944,47                   & 1093                        & 4158,43                & 12,189     \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 5,58887    & 1899,26                   & 1130                        & 4188,17                & 12,1288    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 6,241488   & 1952,202                  & 1039                        & 4056,786               & 12,27178   \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-CA en el PAR con un 20\% de restricciones}}                                                                                                                            \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 5,97198    & 310,332                   & 5                           & 318,021                & 9,34959    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 6,35364    & 310,332                   & 5                           & 318,021                & 8,33608    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 6,572      & 313,299                   & 0                           & 313,299                & 9,62304    \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 6,33178    & 313,299                   & 0                           & 313,299                & 9,99274    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 6,90158    & 312,302                   & 10                          & 327,679                & 8,78704    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 6,426196   & 311,9128                  & 4                           & 318,0638               & 9,217698   \\ \hline
+\end{tabular}
+\end{table}
+
+\newpage
 
 \subsubsection{Cauchy modificado.}
 
@@ -1679,6 +1749,78 @@ Siendo $T_0$ la temperatura inicial, $T_f$ la temperatura final y $M$ la estimac
 
 Obtenemos los siguientes resultados:
 
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-CA-MOD en el PAR con un 10\% de restricciones}}                                                                                                                        \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 0,28573    & 1045,54                   & 58                          & 1280,51                & 2,423      \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 0,314568   & 1008,3                    & 44                          & 1186,55                & 1,76109    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 0,357849   & 1041,92                   & 50                          & 1244,47                & 2,33744    \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 0,318064   & 1010,68                   & 31                          & 1136,27                & 3,45219    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 0,199075   & 1039,13                   & 19                          & 1116,1                 & 2,82137    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 0,2950572  & 1029,114                  & 40,4                        & 1192,78                & 2,559018   \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-CA-MOD en el PAR con un 10\% de restricciones}}                                                                                                                        \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 0,261924   & 288,636                   & 6                           & 307,093                & 0,392768   \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 0,182185   & 301,551                   & 86                          & 566,1                  & 0,578629   \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 0,209078   & 288,636                   & 6                           & 307,093                & 0,471835   \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 0,285572   & 288,636                   & 6                           & 307,093                & 0,734014   \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 0,174196   & 288,636                   & 6                           & 307,093                & 0,31988    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 0,21275775 & 291,219                   & 22                          & 358,8944               & 0,4994252  \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-CA-MOD en el PAR con un 20\% de restricciones}}                                                                                                                        \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 0,347303   & 1027,22                   & 112                         & 1254,09                & 2,91651    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 0,25151    & 985,925                   & 90                          & 1168,23                & 2,90978    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 0,347387   & 1007,84                   & 107                         & 1224,58                & 3,41168    \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 0,232698   & 1027,26                   & 91                          & 1211,59                & 2,92304    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 0,236945   & 1023,59                   & 132                         & 1290,97                & 2,16273    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 0,2831686  & 1014,367                  & 106,4                       & 1229,892               & 2,864748   \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-CA-MOD en el PAR con un 20\% de restricciones}}                                                                                                                        \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 0,324042   & 313,299                   & 0                           & 313,299                & 0,471303   \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 0,346223   & 313,299                   & 0                           & 313,299                & 0,334655   \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 0,246802   & 313,299                   & 0                           & 313,299                & 0,434799   \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 0,25964    & 313,299                   & 0                           & 313,299                & 0,428033   \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 0,265364   & 282,773                   & 229                         & 634,916                & 0,494382   \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 0,2884142  & 307,1938                  & 45,8                        & 377,6224               & 0,4326344  \\ \hline
+\end{tabular}
+\end{table}
+
+
+\newpage
 \subsubsection{Boltzmann.}
 
 Se trata de una forma similar al esquema de Cauchy, solo que en este caso en el denominador aplicaremos una función logarítmica sobre el número de enfriamiento para suavizar el gran enfriamiento que cuenta Cauchy en las primeras iteraciones:
@@ -1687,7 +1829,74 @@ $$ T_k = \frac{T_0}{1 + log(k)} $$
 
 Obtenemos los siguientes resultados:
 
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-BOLZTMANN en el PAR con un 10\% de restricciones}}                                                                                                                     \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 4,38045                   & 472                         & 25,593                 & 0,00956    & 2332,68                   & 1793                        & 9596,43                & 0,045694   \\ \hline
+9398429           & 4,40918                   & 487                         & 26,2958                & 0,009886   & 2380,69                   & 1798                        & 9664,7                 & 0,039378   \\ \hline
+12321             & 4,50541                   & 490                         & 26,5269                & 0,010412   & 2313,32                   & 1792                        & 9573,02                & 0,036729   \\ \hline
+213566            & 4,42612                   & 481                         & 26,0431                & 0,01052    & 2361,72                   & 1778                        & 9564,7                 & 0,049526   \\ \hline
+3939021           & 4,51867                   & 477                         & 25,9559                & 0,00963    & 2353,48                   & 1811                        & 9690,16                & 0,053454   \\ \hline
+\textbf{Media}    & 4,447966                  & 481,4                       & 26,08294               & 0,0100016  & 2348,378                  & 1794,4                      & 9617,802               & 0,0449562  \\ \hline
+\end{tabular}
+\end{table}
 
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-BOLZTMANN en el PAR con un 10\% de restricciones}}                                                                                                                     \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 8,07274                   & 477                         & 35,706                 & 0,009359   & 284,815                   & 1167                        & 3874,69                & 0,017105   \\ \hline
+9398429           & 8,34948                   & 458                         & 34,882                 & 0,009127   & 295,081                   & 1121                        & 3743,45                & 0,025832   \\ \hline
+12321             & 8,19835                   & 471                         & 35,484                 & 0,009294   & 293,857                   & 1132                        & 3776,06                & 0,017817   \\ \hline
+213566            & 8,28724                   & 474                         & 35,7467                & 0,010118   & 296,797                   & 1123                        & 3751,32                & 0,017668   \\ \hline
+3939021           & 8,25046                   & 484                         & 36,2892                & 0,007363   & 299,683                   & 1167                        & 3889,55                & 0,015033   \\ \hline
+\textbf{Media}    & 8,231654                  & 472,8                       & 35,62158               & 0,0089755  & 294,0466                  & 1142                        & 3807,014               & 0,018691   \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-BOLZTMANN en el PAR con un 20\% de restricciones}}                                                                                                                     \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 4,33927                   & 938                         & 25,4075                & 0,011969   & 2340,09                   & 3556                        & 9543,08                & 0,043996   \\ \hline
+9398429           & 4,36999                   & 948                         & 25,6629                & 0,011708   & 2342,3                    & 3615                        & 9664,79                & 0,043605   \\ \hline
+12321             & 4,48497                   & 947                         & 25,7554                & 0,011953   & 2348,94                   & 3633                        & 9707,9                 & 0,045615   \\ \hline
+213566            & 4,50892                   & 922                         & 25,2178                & 0,011804   & 2340,26                   & 3525                        & 9480,45                & 0,043923   \\ \hline
+3939021           & 4,52185                   & 966                         & 26,219                 & 0,011869   & 2321,42                   & 3630                        & 9674,3                 & 0,043905   \\ \hline
+\textbf{Media}    & 4,445                     & 944,2                       & 25,65252               & 0,0118606  & 2338,602                  & 3591,8                      & 9614,104               & 0,0442088  \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-BOLZTMANN en el PAR con un 20\% de restricciones}}                                                                                                                     \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 8,03683                   & 966                         & 36,0051                & 0,011573   & 288,551                   & 2334                        & 3877,64                & 0,016902   \\ \hline
+9398429           & 8,33991                   & 965                         & 36,2793                & 0,011733   & 294,073                   & 2292                        & 3818,58                & 0,018254   \\ \hline
+12321             & 8,24652                   & 949                         & 35,7226                & 0,011855   & 297,271                   & 2298                        & 3831                   & 0,017593   \\ \hline
+213566            & 8,32356                   & 936                         & 35,4233                & 0,01169    & 291,882                   & 2311                        & 3845,6                 & 0,017647   \\ \hline
+3939021           & 8,24705                   & 950                         & 35,7521                & 0,011886   & 289,734                   & 2271                        & 3781,95                & 0,017971   \\ \hline
+\textbf{Media}    & 8,238774                  & 953,2                       & 35,83648               & 0,0117474  & 292,3022                  & 2301,2                      & 3830,954               & 0,0176734  \\ \hline
+\end{tabular}
+\end{table}
 
 
 \subsubsection{Boltzmann modificado.}
@@ -1700,6 +1909,79 @@ $$ T_{k+1} = \frac{T_k}{1 + log(\beta \cdot T_k)} $$
 
 Obtenemos los siguientes resultados:
 
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-BOLZTMANN-MOD en el PAR con un 10\% de restricciones}}                                                                                                                 \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 2,39833    & 1151,74                   & 76                          & 1459,62                & 4,1363     \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 1,90885    & 1047,09                   & 53                          & 1261,8                 & 3,34351    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 2,87755    & 1037,86                   & 47                          & 1228,26                & 2,73434    \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 4,7752     & 1058,2                    & 29                          & 1175,68                & 3,49209    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 1,93493    & 1045,7                    & 49                          & 1244,21                & 2,99779    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 2,778972   & 1068,118                  & 50,8                        & 1273,914               & 3,340806   \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-BOLZTMANN-MOD en el PAR con un 10\% de restricciones}}                                                                                                                 \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 0,252162   & 288,636                   & 6                           & 307,093                & 0,451041   \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 0,283979   & 301,551                   & 86                          & 566,1                  & 2,98329    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 0,425      & 288,636                   & 6                           & 307,093                & 0,706628   \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 0,362514   & 288,636                   & 6                           & 307,093                & 0,59096    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 0,20492    & 288,636                   & 6                           & 307,093                & 0,520252   \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 0,31910325 & 291,219                   & 22                          & 358,8944               & 1,0504342  \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-BOLZTMANN-MOD en el PAR con un 20\% de restricciones}}                                                                                                                 \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 0,773808   & 986,583                   & 91                          & 1170,91                & 2,58202    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 0,7283     & 1003,08                   & 78                          & 1161,07                & 2,56853    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 2,69502    & 1024,24                   & 141                         & 1309,85                & 2,70669    \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 6,13876    & 1024,58                   & 124                         & 1275,75                & 2,58917    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 1,11128    & 1029,12                   & 94                          & 1219,52                & 3,77399    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 2,2894336  & 1013,5206                 & 105,6                       & 1227,42                & 2,84408    \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-BOLZTMANN-MOD en el PAR con un 20\% de restricciones}}                                                                                                                 \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 0,265357   & 313,299                   & 0                           & 313,299                & 0,522115   \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 0,40719    & 313,299                   & 0                           & 313,299                & 0,531226   \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 0,366435   & 313,299                   & 0                           & 313,299                & 0,368577   \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 0,312942   & 313,299                   & 0                           & 313,299                & 0,512391   \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 0,367049   & 313,299                   & 0                           & 313,299                & 0,369907   \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 0,3437946  & 313,299                   & 0                           & 313,299                & 0,4608432  \\ \hline
+\end{tabular}
+\end{table}
+
+\newpage
 \subsubsection{Constante.}
 
 Este esquema de enfriamiento simplemente resta a la temperatura una fracción de la temperatura inicial que calcularemos con la estimación del número de enfriamientos que queremos realizar:
@@ -1709,6 +1991,149 @@ $$ T_{k+1} = T_k - \frac{T_0}{M}$$
 Obtenemos los siguientes resultados:
 
 
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-CONSTANTE en el PAR con un 10\% de restricciones}}                                                                                                                     \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 4,25156                   & 362                         & 20,5205                & 0,699106   & 2357,29                   & 1750                        & 9446,84                & 1,03116    \\ \hline
+9398429           & 3,24438                   & 290                         & 16,2775                & 0,703758   & 2333,42                   & 1750                        & 9422,97                & 1,03325    \\ \hline
+12321             & 3,01422                   & 325                         & 17,6203                & 0,589705   & 2327,79                   & 1762                        & 9465,95                & 1,04342    \\ \hline
+213566            & 3,89243                   & 374                         & 20,7007                & 0,450681   & 2351,36                   & 1772                        & 9530,04                & 1,01904    \\ \hline
+3939021           & 4,03323                   & 365                         & 20,437                 & 0,695233   & 2368,54                   & 1742                        & 9425,68                & 1,02643    \\ \hline
+\textbf{Media}    & 3,687164                  & 343,2                       & 19,1112                & 0,6276966  & 2347,68                   & 1755,2                      & 9458,296               & 1,03066    \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-CONSTANTE en el PAR con un 10\% de restricciones}}                                                                                                                     \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 8,3402                    & 413                         & 32,2658                & 0,686626   & 303,286                   & 1009                        & 3407,12                & 0,647946   \\ \hline
+9398429           & 5,29018                   & 296                         & 22,4379                & 0,706958   & 300,216                   & 1101                        & 3687,06                & 0,642707   \\ \hline
+12321             & 6,56347                   & 338                         & 26,1443                & 0,674316   & 299,279                   & 1071                        & 3593,84                & 0,653427   \\ \hline
+213566            & 7,04735                   & 363                         & 28,0764                & 0,679742   & 295,922                   & 1094                        & 3661,23                & 0,643863   \\ \hline
+3939021           & 6,49611                   & 352                         & 26,8879                & 0,68237    & 305,495                   & 1061                        & 3569,29                & 0,652884   \\ \hline
+\textbf{Media}    & 6,747462                  & 352,4                       & 27,16246               & 0,6858465  & 300,8396                  & 1067,2                      & 3583,708               & 0,6481654  \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-CONSTANTE en el PAR con un 20\% de restricciones}}                                                                                                                     \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 3,07961                   & 680                         & 18,353                 & 0,759893   & 2330,77                   & 3530                        & 9481,09                & 1,19506    \\ \hline
+9398429           & 2,36294                   & 601                         & 15,8619                & 0,758274   & 2337,5                    & 3541                        & 9510,1                 & 1,19015    \\ \hline
+12321             & 4,20555                   & 810                         & 22,3988                & 0,765261   & 2349,96                   & 3506                        & 9451,67                & 1,24132    \\ \hline
+213566            & 4,15897                   & 823                         & 22,6442                & 0,482172   & 2340,26                   & 3525                        & 9480,45                & 1,19636    \\ \hline
+3939021           & 3,61833                   & 776                         & 21,0479                & 0,753532   & 2333,39                   & 3568                        & 9560,69                & 1,19718    \\ \hline
+\textbf{Media}    & 3,48508                   & 738                         & 20,06116               & 0,7038264  & 2338,376                  & 3534                        & 9496,8                 & 1,204014   \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados ES-CONSTANTE en el PAR con un 20\% de restricciones}}                                                                                                                     \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 0,252162   & 303,246                   & 2196                        & 3680,13                & 0,75743    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 0,283979   & 297,596                   & 2225                        & 3719,07                & 0,785438   \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 0,425      & 299,376                   & 2192                        & 3670,11                & 0,770113   \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 0,362514   & 302,759                   & 2186                        & 3664,26                & 0,760486   \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 0,20492    & 298,231                   & 2222                        & 3715,09                & 0,77245    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 0,305715   & 300,2416                  & 2204,2                      & 3689,732               & 0,7691834  \\ \hline
+\end{tabular}
+\end{table}
+
 \subsubsection{Estudio y comparación de los distintos enfriamientos.}
+
+Tras todas las ejecuciones obtenemos los siguientes resultados globales:
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\hspace*{-1.2cm}\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados globales en ES en el PAR con un 10\% de restricciones}}                                                                                                                                         \\ \hline
+\multicolumn{1}{|l|}{\multirow{2}{*}{}} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+\multicolumn{1}{|l|}{}                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} \\ \hline
+\textbf{ES-PRO}                         & 0,595316                  & 0                           & 0,595316               & 1,49684    & 1026,614                  & 24                          & 1123,84                & 15,0164    \\ \hline
+\textbf{ES-CA}                          & 0,595316                  & 0                           & 0,595316               & 5,494556   & 2018,35                   & 550,6                       & 4248,926               & 13,360462  \\ \hline
+\textbf{ES-CA-MOD}                      & 0,595316                  & 0                           & 0,595316               & 0,2950572  & 1029,114                  & 40,4                        & 1192,78                & 2,559018   \\ \hline
+\textbf{ES-BOLTZ}                       & 4,447966                  & 481,4                       & 26,08294               & 0,0100016  & 2348,378                  & 1794,4                      & 9617,802               & 0,0449562  \\ \hline
+\textbf{ES-BOLTZ-MOD}                   & 0,595316                  & 0                           & 0,595316               & 2,778972   & 1068,118                  & 50,8                        & 1273,914               & 3,340806   \\ \hline
+\textbf{ES-CONST}                       & 3,687164                  & 343,2                       & 19,1112                & 0,6276966  & 2347,68                   & 1755,2                      & 9458,296               & 1,03066    \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\hspace*{-1.2cm}\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados globales en ES en el PAR con un 10\% de restricciones}}                                                                                                                                         \\ \hline
+\multicolumn{1}{|l|}{\multirow{2}{*}{}} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+\multicolumn{1}{|l|}{}                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} \\ \hline
+\textbf{ES-PRO}                         & 0,746683                  & 0                           & 0,746683               & 1,4893275  & 288,636                   & 6                           & 307,093                & 5,949792   \\ \hline
+\textbf{ES-CA}                          & 0,746683                  & 0                           & 0,746683               & 5,4394075  & 306,4614                  & 5,6                         & 323,6874               & 8,229588   \\ \hline
+\textbf{ES-CA-MOD}                      & 0,746683                  & 0                           & 0,746683               & 0,21275775 & 291,219                   & 22                          & 358,8944               & 0,4994252  \\ \hline
+\textbf{ES-BOLTZ}                       & 8,231654                  & 472,8                       & 35,62158               & 0,0089755  & 294,0466                  & 1142                        & 3807,014               & 0,018691   \\ \hline
+\textbf{ES-BOLTZ-MOD}                   & 0,746683                  & 0                           & 0,746683               & 0,31910325 & 291,219                   & 22                          & 358,8944               & 1,0504342  \\ \hline
+\textbf{ES-CONST}                       & 6,747462                  & 352,4                       & 27,16246               & 0,6858465  & 300,8396                  & 1067,2                      & 3583,708               & 0,6481654  \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\hspace*{-1.2cm}\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados globales en ES en el PAR con un 20\% de restricciones}}                                                                                                                                         \\ \hline
+\multicolumn{1}{|l|}{\multirow{2}{*}{}} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+\multicolumn{1}{|l|}{}                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} \\ \hline
+\textbf{ES-PRO}                         & 0,595316                  & 0                           & 0,595316               & 1,834362   & 1024,16                   & 71,6                        & 1169,192               & 15,89972   \\ \hline
+\textbf{ES-CA}                          & 0,595316                  & 0                           & 0,595316               & 6,241488   & 1952,202                  & 1039                        & 4056,786               & 12,27178   \\ \hline
+\textbf{ES-CA-MOD}                      & 0,595316                  & 0                           & 0,595316               & 0,2831686  & 1014,367                  & 106,4                       & 1229,892               & 2,864748   \\ \hline
+\textbf{ES-BOLTZ}                       & 4,445                     & 944,2                       & 25,65252               & 0,0118606  & 2338,602                  & 3591,8                      & 9614,104               & 0,0442088  \\ \hline
+\textbf{ES-BOLTZ-MOD}                   & 0,595316                  & 0                           & 0,595316               & 2,2894336  & 1013,5206                 & 105,6                       & 1227,42                & 2,84408    \\ \hline
+\textbf{ES-CONST}                       & 3,48508                   & 738                         & 20,06116               & 0,7038264  & 2338,376                  & 3534                        & 9496,8                 & 1,204014   \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\hspace*{-1.2cm}\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados globales en ES en el PAR con un 20\% de restricciones}}                                                                                                                                         \\ \hline
+\multicolumn{1}{|l|}{\multirow{2}{*}{}} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+\multicolumn{1}{|l|}{}                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} \\ \hline
+\textbf{ES-PRO}                         & 0,746683                  & 0                           & 0,746683               & 1,715114   & 313,299                   & 0                           & 313,299                & 6,500736   \\ \hline
+\textbf{ES-CA}                          & 0,746683                  & 0                           & 0,746683               & 6,426196   & 311,9128                  & 4                           & 318,0638               & 9,217698   \\ \hline
+\textbf{ES-CA-MOD}                      & 0,746683                  & 0                           & 0,746683               & 0,2884142  & 307,1938                  & 45,8                        & 377,6224               & 0,4326344  \\ \hline
+\textbf{ES-BOLTZ}                       & 8,238774                  & 953,2                       & 35,83648               & 0,0117474  & 292,3022                  & 2301,2                      & 3830,954               & 0,0176734  \\ \hline
+\textbf{ES-BOLTZ-MOD}                   & 0,746683                  & 0                           & 0,746683               & 0,3437946  & 313,299                   & 0                           & 313,299                & 0,4608432  \\ \hline
+\textbf{ES-CONST}                       & 0,746683                  & 0                           & 0,746683               & 0,305715   & 300,2416                  & 2204,2                      & 3689,732               & 0,7691834  \\ \hline
+\end{tabular}
+\end{table}
 
 \end{document}
