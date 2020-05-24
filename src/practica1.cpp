@@ -114,13 +114,13 @@ int main(int argc, char ** argv){
 
 	PAR par(datos, restricciones, clus, std::to_string(semilla));
 
-	// Set_random( semilla );
-	//
-	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "GREEDY");
-	//
-	// Set_random( semilla );
-	//
-	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "BL");
+	Set_random( semilla );
+
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "GREEDY");
+
+	Set_random( semilla );
+
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "BL");
 
 	//
 	// Set_random( semilla );
@@ -165,9 +165,9 @@ int main(int argc, char ** argv){
 	//
 	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-BL-10-0_1mej");
 
-	// Set_random( semilla );
-	//
-	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "BMB");
+	Set_random( semilla );
+
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "BMB");
 
 	Set_random( semilla );
 
@@ -194,13 +194,13 @@ int main(int argc, char ** argv){
 	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-CONST");
 
 	//
-	// Set_random( semilla );
+	Set_random( semilla );
 	//
-	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "ILS");
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ILS");
+
+	Set_random( semilla );
 	//
-	// Set_random( semilla );
-	//
-	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "ILS-ES");
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ILS-ES");
 
 
 
