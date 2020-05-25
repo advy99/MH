@@ -634,7 +634,7 @@ El criterio de Metrópolis se calcula con la exponencial del negativo de la dife
 
 \begin{figure}[H]
 	\centering
-	$$ \Delta valoracion = vecino.valoracion - solucion_actual.valoracion $$
+	$$ \Delta valoracion = vecino.valoracion - solucion\_actual.valoracion $$
 	$$ P_{aceptacion} = exp(\frac{- \Delta valoracion}{temperatura\_actual}) $$
 	\caption{Cálculo del criterio de Metrópolis }
 	\label{cMetropolis}
@@ -1521,7 +1521,7 @@ Aunque se ejecuta con los mismos parámetros que ILS (10 iteraciones de la ILS y
 	\centering
 	\includegraphics[scale = 0.35]{iris-ils-es.png}
 	
-	\caption{ILS-ES sobre ecoli con 10\% de restricciones.}
+	\caption{ILS-ES sobre iris con 10\% de restricciones.}
 	\label{fig:ils-es-cmp1}
 \end{figure}
 
@@ -1587,7 +1587,7 @@ En BMB todos los conjuntos son capaces de converger usando una búsqueda local d
 
 Usando la ILS todos los conjuntos obtienen buenas soluciones ya que aunque en ecoli no converge a un mínimo con las 10.000 iteraciones, converge lo suficiente como para que tras la primera mutación y aplicar de nuevo la BL si que llegue a un mínimo local, por lo que las demás iteraciones de la ILS si sean competentes frente a los demás algoritmos y sea capaz de igualar o mejorar la búsqueda local o el enfriamiento simulado.
 
-La hibridación entre ILS y ES esta sumida al fracaso desde un principio, ya que la ILS está pensada en añadir exploración a la búsqueda local, permitiendo salir de mínimos una vez son alcanzados por ls BL. Con esta hibridación estamos usando un ES que de por si tiene la gran parte de exploración al inicio del algoritmo y con tan pocas evaluaciones no es capaz de enfriar lo suficiente como para explotar a no ser que el conjunto de datos sea muy simple, como es el caso de rand o iris. En realidad tenemos una gran exploración del propio enfriamiento simulado al inicio de este y le añadimos más exploración al aplicar los mutaciones, luego realmente nunca llevamos a explotar ninguna solución.
+La hibridación entre ILS y ES esta abocada al fracaso desde un principio, ya que la ILS está pensada en añadir exploración a la búsqueda local, permitiendo salir de mínimos una vez son alcanzados por la BL. Con esta hibridación estamos usando un ES que de por si tiene la gran parte de exploración al inicio del algoritmo y con tan pocas evaluaciones no es capaz de enfriar lo suficiente como para explotar a no ser que el conjunto de datos sea muy simple, como es el caso de rand o iris. En realidad tenemos una gran exploración del propio enfriamiento simulado al inicio de este y le añadimos más exploración al aplicar los mutaciones, luego realmente nunca llevamos a explotar ninguna solución.
 
 \subsubsection{20\% de restricciones.}
 
