@@ -1803,33 +1803,56 @@ std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL
 	std::vector<std::vector<int>> p2 = generar_poblacion_inicial(TAM_POB_INI);
 
 
-	std::vector<std::pair<std::vector<int>, double>> poblacion_1;
-	std::vector<std::pair<std::vector<int>, double>> poblacion_2;
+	std::vector<std::pair<std::vector<int>, double>> poblacion_explorar;
+	std::vector<std::pair<std::vector<int>, double>> poblacion_explotar;
 
-	std::pair<std::vector<int>, double> mejor_p1 = std::make_pair(std::vector<int>(), std::numeric_limits<double>::infinity());
-	std::pair<std::vector<int>, double> mejor_p2 = std::make_pair(std::vector<int>(), std::numeric_limits<double>::infinity());;
+	std::pair<std::vector<int>, double> mejor_explorar = std::make_pair(std::vector<int>(), std::numeric_limits<double>::infinity());
+	std::pair<std::vector<int>, double> mejor_explotar = std::make_pair(std::vector<int>(), std::numeric_limits<double>::infinity());;
 
 
 	// poblaciones iniciales
 	for (int i = 0; i < TAM_POB_INI; i++ ){
 		clusters = solucion_to_clusters(p1[i]);
 		calcular_desviacion_general();
-		poblacion_1.push_back(std::make_pair(p1[i]), funcion_objetivo() );
+		poblacion_explorar.push_back(std::make_pair(p1[i]), funcion_objetivo() );
 
-		if (mejor_p1.second > poblacion_1.back().second){
-			mejor_p1 = poblacion_1.back();
+		if (mejor_explorar.second > poblacion_explorar.back().second){
+			mejor_explorar = poblacion_explorar.back();
 		}
 
 		clusters = solucion_to_clusters(p2[i]);
 		calcular_desviacion_general();
-		poblacion_2.push_back(std::make_pair(p2[i]), funcion_objetivo() );
+		poblacion_explotar.push_back(std::make_pair(p2[i]), funcion_objetivo() );
 
-		if (mejor_p2.second > poblacion_2.back().second){
-			mejor_p2 = poblacion_2.back();
+		if (mejor_explotar.second > poblacion_explotar.back().second){
+			mejor_explotar = poblacion_explotar.back();
 		}
 	}
 
+	int eval = 0;
 
+	while (i < MAX_EVAL){
+		// tenemos que hacer el funcionamiento de ambas poblaciones
+
+		// primera poblacion, explotar
+
+
+		// segunda poblacion, explorar
+
+
+		// intercambiar poblaciones en caso de que sea necesario
+		// si la que explora es mejor que la que explota, intercambiamos
+		if (mejor_explotar.second > mejor_explorar.second){
+			auto intercambio_pob = poblacion_explorar;
+			poblacion_explorar = poblacion_explotar;
+			poblacion_explorar = intercambio_pob;
+
+			auto intercambio_mejor = mejor_explorar;
+			mejor_explorar = mejor_explotar;
+			mejor_explotar = intercambio_pob;
+		}
+
+	}
 
 
 }
