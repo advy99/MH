@@ -1806,17 +1806,31 @@ std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL
 	std::vector<std::pair<std::vector<int>, double>> poblacion_1;
 	std::vector<std::pair<std::vector<int>, double>> poblacion_2;
 
+	std::pair<std::vector<int>, double> mejor_p1 = std::make_pair(std::vector<int>(), std::numeric_limits<double>::infinity());
+	std::pair<std::vector<int>, double> mejor_p2 = std::make_pair(std::vector<int>(), std::numeric_limits<double>::infinity());;
+
+
 	// poblaciones iniciales
 	for (int i = 0; i < TAM_POB_INI; i++ ){
 		clusters = solucion_to_clusters(p1[i]);
 		calcular_desviacion_general();
 		poblacion_1.push_back(std::make_pair(p1[i]), funcion_objetivo() );
 
+		if (mejor_p1.second > poblacion_1.back().second){
+			mejor_p1 = poblacion_1.back();
+		}
 
 		clusters = solucion_to_clusters(p2[i]);
 		calcular_desviacion_general();
 		poblacion_2.push_back(std::make_pair(p2[i]), funcion_objetivo() );
+
+		if (mejor_p2.second > poblacion_2.back().second){
+			mejor_p2 = poblacion_2.back();
+		}
 	}
+
+
+
 
 }
 
