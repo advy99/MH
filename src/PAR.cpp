@@ -1788,6 +1788,62 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::operador_mutacion_segmento_fij
 
 
 
+/*
+
+	Práctica 4 de teoría
+
+*/
+
+
+std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL, const int TAM_POB_INI, const double PROB_CAMBIAR_GEN){
+
+	// algoritmo propio para la p4
+
+	std::vector<std::vector<int>> p1 = generar_poblacion_inicial(TAM_POB_INI);
+	std::vector<std::vector<int>> p2 = generar_poblacion_inicial(TAM_POB_INI);
+
+
+	std::vector<std::pair<std::vector<int>, double>> poblacion_1;
+	std::vector<std::pair<std::vector<int>, double>> poblacion_2;
+
+	// poblaciones iniciales
+	for (int i = 0; i < TAM_POB_INI; i++ ){
+		clusters = solucion_to_clusters(p1[i]);
+		calcular_desviacion_general();
+		poblacion_1.push_back(std::make_pair(p1[i]), funcion_objetivo() );
+
+
+		clusters = solucion_to_clusters(p2[i]);
+		calcular_desviacion_general();
+		poblacion_2.push_back(std::make_pair(p2[i]), funcion_objetivo() );
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
