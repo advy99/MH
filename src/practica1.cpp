@@ -80,6 +80,8 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 		solucion = par.algoritmo_ILS(par.generar_solucion_aleatoria(), 10000, 10, 0.1, tipo_ils::BL);
 	} else if (alg == "ILS-ES"){
 		solucion = par.algoritmo_ILS(par.generar_solucion_aleatoria(), 10000, 10, 0.1, tipo_ils::ES);
+	} else if (alg == "ALG-PROPIO"){
+		solucion = par.algoritmo_propio(evaluaciones, 50, 0.3);
 	}
 
 
@@ -164,44 +166,47 @@ int main(int argc, char ** argv){
 	// Set_random( semilla );
 	//
 	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-BL-10-0_1mej");
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "BMB");
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-PRO");
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-CA");
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-CA-MOD");
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-BOLTZ");
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-BOLTZ-MOD");
-
-	Set_random( semilla );
-
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-CONST");
-
 	//
-	Set_random( semilla );
+	// Set_random( semilla );
 	//
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ILS");
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "BMB");
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-PRO");
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-CA");
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-CA-MOD");
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-BOLTZ");
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-BOLTZ-MOD");
+	//
+	// Set_random( semilla );
+	//
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "ES-CONST");
+	//
+	// //
+	// Set_random( semilla );
+	// //
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "ILS");
+	//
+	// Set_random( semilla );
+	// //
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "ILS-ES");
 
 	Set_random( semilla );
 	//
-	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ILS-ES");
-
+	ejecutar_PAR(par, datos, restricciones, clus, semilla, "ALG-PROPIO");
 
 
 	return 0;
