@@ -1874,6 +1874,25 @@ std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL
 		// la explotación se hara haciendo que las soluciones se parezcan a la mejor
 		// de la población de explotación
 
+		// solo se me ocurre hacerlo como la HO, hacer pasadas de la mejor, aceptar con cierto porcentaje
+
+		int aleatorio;
+		for (unsigned i = 0; i < poblacion_explotar.size(); i++){
+			for (unsigned j = 0; j < poblacion_explotar[i].size(); j++){
+				aleatorio = Rand();
+				if (aleatorio < PROB_CAMBIAR_GEN){
+					poblacion_explotar[i].first[j] = poblacion_explotar[mejor_explotar].first[j];
+				}
+			}
+
+			clusters = solucion_to_clusters(poblacion_explotar[i].first);
+			calcular_desviacion_general();
+			poblacion_explotar[i].second = funcion_objetivo();
+
+		}
+
+		eval += poblacion_explotar.size();
+
 
 
 		// comprobamos si hay un nuevo mejor
