@@ -1834,10 +1834,24 @@ std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL
 	while (i < MAX_EVAL){
 		// tenemos que hacer el funcionamiento de ambas poblaciones
 
-		// primera poblacion, explotar
+		// primera poblacion, explorar
 
 
-		// segunda poblacion, explorar
+		// segunda poblacion, explotar
+
+
+
+		// comprobamos si hay un nuevo mejor
+		// da igual el indice que miremos, las dos poblaciones tienen el mismo tamaño
+		for (unsigned i = 0; i < poblacion_explorar.size(); i++){
+			if (mejor_explorar.second > poblacion_explorar[i].second){
+				mejor_explorar = poblacion_explorar[i];
+			}
+
+			if (mejor_explotar.second > poblacion_explotar[i].second){
+				mejor_explotar = poblacion_explotar[i];
+			}
+		}
 
 
 		// intercambiar poblaciones en caso de que sea necesario
