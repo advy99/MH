@@ -1806,8 +1806,8 @@ std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL
 	std::vector<std::pair<std::vector<int>, double>> poblacion_explorar;
 	std::vector<std::pair<std::vector<int>, double>> poblacion_explotar;
 
-	std::pair<std::vector<int>, double> mejor_explorar = std::make_pair(std::vector<int>(), std::numeric_limits<double>::infinity());
-	std::pair<std::vector<int>, double> mejor_explotar = std::make_pair(std::vector<int>(), std::numeric_limits<double>::infinity());;
+	int mejor_explorar = 0;
+	int mejor_explotar = 0;
 
 
 	// poblaciones iniciales
@@ -1816,55 +1816,71 @@ std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL
 		calcular_desviacion_general();
 		poblacion_explorar.push_back(std::make_pair(p1[i]), funcion_objetivo() );
 
-		if (mejor_explorar.second > poblacion_explorar.back().second){
-			mejor_explorar = poblacion_explorar.back();
+		if (poblacion_explorar[mejor_explorar].second > poblacion_explorar.back().second){
+			mejor_explorar = i;
 		}
 
 		clusters = solucion_to_clusters(p2[i]);
 		calcular_desviacion_general();
 		poblacion_explotar.push_back(std::make_pair(p2[i]), funcion_objetivo() );
 
-		if (mejor_explotar.second > poblacion_explotar.back().second){
-			mejor_explotar = poblacion_explotar.back();
+		if (poblacion_explotar[mejor_explotar].second > poblacion_explotar.back().second){
+			mejor_explotar = i;
 		}
 	}
 
 	int eval = 0;
 
 	while (i < MAX_EVAL){
+		// intercambiar poblaciones en caso de que sea necesario
+		// si la que explora es mejor que la que explota, intercambiamos
+		if (poblacion_explotar[mejor_explotar].second > poblacion_explorar[mejor_explorar].second){
+			auto intercambio_pob = poblacion_explorar[mejor_explorar];
+			poblacion_explorar[mejor_explorar] = poblacion_explotar[mejor_explotar];
+			poblacion_explotar[mejor_explotar] = intercambio_pob;
+		}
+
+
+
 		// tenemos que hacer el funcionamiento de ambas poblaciones
 
 		// primera poblacion, explorar
 
+		// OPCIONES:
+
+		// he pensado en aplicar una mutación aleatoria y aplicar BL a cada solución
+		// pero eso me hasta muchas evaluaciones
+
+
+
+		// ¿seleccionar un porcentaje aleatorio y aplicar la mutacion + BL por ahí?
+		// set<int> indices;
+		//
+		// const int NUM_EXPLORAR = 0.1 *
+
 
 		// segunda poblacion, explotar
+		// la explotación se hara haciendo que las soluciones se parezcan a la mejor
+		// de la población de explotación
 
 
 
 		// comprobamos si hay un nuevo mejor
-		// da igual el indice que miremos, las dos poblaciones tienen el mismo tamaño
+		// lo separo por si tenemos tamaños distintos de poblaciones
 		for (unsigned i = 0; i < poblacion_explorar.size(); i++){
-			if (mejor_explorar.second > poblacion_explorar[i].second){
-				mejor_explorar = poblacion_explorar[i];
+			if (poblacion_explorar[mejor_explorar].second > poblacion_explorar[i].second){
+				mejor_explorar = i;
 			}
+		}
 
-			if (mejor_explotar.second > poblacion_explotar[i].second){
-				mejor_explotar = poblacion_explotar[i];
+		for (unsigned i = 0; i < poblacion_explotar.size(); i++){
+			if (poblacion_explotar[mejor_explotar].second > poblacion_explotar[i].second){
+				mejor_explotar = i;
 			}
 		}
 
 
-		// intercambiar poblaciones en caso de que sea necesario
-		// si la que explora es mejor que la que explota, intercambiamos
-		if (mejor_explotar.second > mejor_explorar.second){
-			auto intercambio_pob = poblacion_explorar;
-			poblacion_explorar = poblacion_explotar;
-			poblacion_explorar = intercambio_pob;
 
-			auto intercambio_mejor = mejor_explorar;
-			mejor_explorar = mejor_explotar;
-			mejor_explotar = intercambio_pob;
-		}
 
 	}
 
