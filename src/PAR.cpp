@@ -1799,7 +1799,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 
 	// algoritmo propio para la p4
 
-	std::vector<std::vector<int>> p1 = generar_poblacion_inicial(0.1*TAM_POB_INI);
+	std::vector<std::vector<int>> p1 = generar_poblacion_inicial(0.4*TAM_POB_INI);
 	std::vector<std::vector<int>> p2 = generar_poblacion_inicial(TAM_POB_INI);
 
 
@@ -1859,10 +1859,10 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 		// la poblacion que explora es del 10% el tam de la pob inicial, tengo que parametrizar esto
 		for (unsigned i = 0; i < poblacion_explorar.size(); i++){
 			auto a_evaluar = std::make_pair(solucion_to_clusters(poblacion_explorar[i].first), poblacion_explorar[i].second);
-			a_evaluar = operador_mutacion_segmento_fijo(a_evaluar, 0.1);
+			a_evaluar = operador_mutacion_segmento_fijo(a_evaluar, 0.3);
 			poblacion_explotar[i].first = clusters_to_solucion( a_evaluar.first);
 
-			int eval_BL = 5000;
+			int eval_BL = 10000;
 			auto sol_bl = algoritmo_BL(solucion_to_clusters(poblacion_explorar[i].first), eval_BL);
 
 			poblacion_explorar[i].first = clusters_to_solucion(sol_bl.first);
@@ -1894,7 +1894,6 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 		}
 
 		eval += poblacion_explotar.size();
-
 
 
 		// comprobamos si hay un nuevo mejor

@@ -23,12 +23,12 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 
 	double tiempo = 0.0d;
 
-	unsigned evaluaciones = 100000;
+	unsigned evaluaciones = 600000;
 	unsigned tam_pob_ini = 50;
 
 	start_timers();
 	if (alg == "BL"){
-		int eval_BL = 100000;
+		int eval_BL = evaluaciones;
 		solucion = par.algoritmo_BL(par.generar_solucion_aleatoria(), eval_BL, true);
 		//solucion = par.algoritmo_BL(par.algoritmo_greedy().first)
 	} else if (alg == "GREEDY") {
@@ -81,7 +81,7 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 	} else if (alg == "ILS-ES"){
 		solucion = par.algoritmo_ILS(par.generar_solucion_aleatoria(), 10000, 10, 0.1, tipo_ils::ES);
 	} else if (alg == "ALG-PROPIO"){
-		solucion = par.algoritmo_propio(evaluaciones, 50, 0.3);
+		solucion = par.algoritmo_propio(evaluaciones, 50, 0.5);
 	}
 
 
