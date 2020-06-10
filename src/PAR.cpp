@@ -1795,7 +1795,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::operador_mutacion_segmento_fij
 */
 
 
-std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL, const int TAM_POB_INI, const double PROB_CAMBIAR_GEN){
+std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX_EVAL, const int TAM_POB_INI, const double PROB_CAMBIAR_GEN){
 
 	// algoritmo propio para la p4
 
@@ -1814,7 +1814,7 @@ std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL
 	for (unsigned i = 0; i < p1.size(); i++ ){
 		clusters = solucion_to_clusters(p1[i]);
 		calcular_desviacion_general();
-		poblacion_explorar.push_back(std::make_pair(p1[i]), funcion_objetivo() );
+		poblacion_explorar.push_back(std::make_pair(p1[i], funcion_objetivo() ));
 
 		if (poblacion_explorar[mejor_explorar].second > poblacion_explorar.back().second){
 			mejor_explorar = i;
@@ -1827,7 +1827,7 @@ std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL
 
 		clusters = solucion_to_clusters(p2[i]);
 		calcular_desviacion_general();
-		poblacion_explotar.push_back(std::make_pair(p2[i]), funcion_objetivo() );
+		poblacion_explotar.push_back(std::make_pair(p2[i], funcion_objetivo() ));
 
 		if (poblacion_explotar[mejor_explotar].second > poblacion_explotar.back().second){
 			mejor_explotar = i;
@@ -1858,13 +1858,15 @@ std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL
 		// pero eso me hasta muchas evaluaciones, solucion, reducir el tamaño,
 		// la poblacion que explora es del 10% el tam de la pob inicial, tengo que parametrizar esto
 		for (unsigned i = 0; i < poblacion_explorar.size(); i++){
-			auto a_evaluar = solucion_to_clusters(poblacion_explorar[i]);
-			poblacion_explotar[i] = clusters_to_solucion(operador_mutacion_segmento_fijo(a_evaluar, 0.1) );
+			auto a_evaluar = std::make_pair(solucion_to_clusters(poblacion_explorar[i].first), poblacion_explorar[i].second);
+			a_evaluar = operador_mutacion_segmento_fijo(a_evaluar, 0.1);
+			poblacion_explotar[i].first = clusters_to_solucion( a_evaluar.first);
 
 			int eval_BL = 5000;
-			auto sol_bl = algoritmo_BL(poblacion_explorar[i], eval_BL);
+			auto sol_bl = algoritmo_BL(solucion_to_clusters(poblacion_explorar[i].first), eval_BL);
 
-			poblacion_explorar[i] = sol_bl.first;
+			poblacion_explorar[i].first = clusters_to_solucion(sol_bl.first);
+			poblacion_explorar[i].second = sol_bl.second;
 			eval += eval_BL;
 		}
 
@@ -1878,7 +1880,7 @@ std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL
 
 		int aleatorio;
 		for (unsigned i = 0; i < poblacion_explotar.size(); i++){
-			for (unsigned j = 0; j < poblacion_explotar[i].size(); j++){
+			for (unsigned j = 0; j < poblacion_explotar[i].first.size(); j++){
 				aleatorio = Rand();
 				if (aleatorio < PROB_CAMBIAR_GEN){
 					poblacion_explotar[i].first[j] = poblacion_explotar[mejor_explotar].first[j];
@@ -1909,11 +1911,18 @@ std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL
 			}
 		}
 
-
-
-
 	}
 
+
+	std::pair<std::vector<PAR::Cluster>, double> solucion;
+
+	if (poblacion_explotar[mejor_explotar].second > poblacion_explorar[mejor_explorar].second){
+		solucion = std::make_pair(solucion_to_clusters(poblacion_explorar[mejor_explorar].first), poblacion_explorar[mejor_explorar].second);
+	} else {
+		solucion = std::make_pair(solucion_to_clusters(poblacion_explotar[mejor_explorar].first), poblacion_explorar[mejor_explotar].second);
+	}
+
+	return solucion;
 
 }
 
