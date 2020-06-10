@@ -1799,8 +1799,8 @@ std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL
 
 	// algoritmo propio para la p4
 
-	std::vector<std::vector<int>> p1 = generar_poblacion_inicial(TAM_POB_INI);
-	std::vector<std::vector<int>> p2 = generar_poblacion_inicial(0.1*TAM_POB_INI);
+	std::vector<std::vector<int>> p1 = generar_poblacion_inicial(0.1*TAM_POB_INI);
+	std::vector<std::vector<int>> p2 = generar_poblacion_inicial(TAM_POB_INI);
 
 
 	std::vector<std::pair<std::vector<int>, double>> poblacion_explorar;
@@ -1820,13 +1820,6 @@ std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL
 			mejor_explorar = i;
 		}
 
-		clusters = solucion_to_clusters(p2[i]);
-		calcular_desviacion_general();
-		poblacion_explotar.push_back(std::make_pair(p2[i]), funcion_objetivo() );
-
-		if (poblacion_explotar[mejor_explotar].second > poblacion_explotar.back().second){
-			mejor_explotar = i;
-		}
 	}
 
 
@@ -1844,7 +1837,7 @@ std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL
 
 	int eval = 0;
 
-	while (i < MAX_EVAL){
+	while (eval < MAX_EVAL){
 		// intercambiar poblaciones en caso de que sea necesario
 		// si la que explora es mejor que la que explota, intercambiamos
 		if (poblacion_explotar[mejor_explotar].second > poblacion_explorar[mejor_explorar].second){
@@ -1862,14 +1855,19 @@ std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL
 		// OPCIONES:
 
 		// he pensado en aplicar una mutación aleatoria y aplicar BL a cada solución
-		// pero eso me hasta muchas evaluaciones
+		// pero eso me hasta muchas evaluaciones, solucion, reducir el tamaño,
+		// la poblacion que explora es del 10% el tam de la pob inicial, tengo que parametrizar esto
+		for (unsigned i = 0; i < poblacion_explorar.size(); i++){
+			auto a_evaluar = solucion_to_clusters(poblacion_explorar[i]);
+			poblacion_explotar[i] = clusters_to_solucion(operador_mutacion_segmento_fijo(a_evaluar, 0.1) );
 
+			int eval_BL = 5000;
+			auto sol_bl = algoritmo_BL(poblacion_explorar[i], eval_BL);
 
+			poblacion_explorar[i] = sol_bl.first;
+			eval += eval_BL;
+		}
 
-		// ¿seleccionar un porcentaje aleatorio y aplicar la mutacion + BL por ahí?
-		// set<int> indices;
-		//
-		// const int NUM_EXPLORAR = 0.1 *
 
 
 		// segunda poblacion, explotar
