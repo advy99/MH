@@ -1800,7 +1800,7 @@ std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL
 	// algoritmo propio para la p4
 
 	std::vector<std::vector<int>> p1 = generar_poblacion_inicial(TAM_POB_INI);
-	std::vector<std::vector<int>> p2 = generar_poblacion_inicial(TAM_POB_INI);
+	std::vector<std::vector<int>> p2 = generar_poblacion_inicial(0.1*TAM_POB_INI);
 
 
 	std::vector<std::pair<std::vector<int>, double>> poblacion_explorar;
@@ -1811,7 +1811,7 @@ std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL
 
 
 	// poblaciones iniciales
-	for (int i = 0; i < TAM_POB_INI; i++ ){
+	for (unsigned i = 0; i < p1.size(); i++ ){
 		clusters = solucion_to_clusters(p1[i]);
 		calcular_desviacion_general();
 		poblacion_explorar.push_back(std::make_pair(p1[i]), funcion_objetivo() );
@@ -1828,6 +1828,19 @@ std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL
 			mejor_explotar = i;
 		}
 	}
+
+
+	for (unsigned i = 0; i < p2.size(); i++ ){
+
+		clusters = solucion_to_clusters(p2[i]);
+		calcular_desviacion_general();
+		poblacion_explotar.push_back(std::make_pair(p2[i]), funcion_objetivo() );
+
+		if (poblacion_explotar[mejor_explotar].second > poblacion_explotar.back().second){
+			mejor_explotar = i;
+		}
+	}
+
 
 	int eval = 0;
 
