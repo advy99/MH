@@ -1867,16 +1867,16 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 		// pero eso me hasta muchas evaluaciones, solucion, reducir el tamaño,
 		// la poblacion que explora es del 10% el tam de la pob inicial, tengo que parametrizar esto
 		for (unsigned i = 0; i < poblacion_explorar.size(); i++){
-			auto a_evaluar = std::make_pair(solucion_to_clusters(poblacion_explorar[i].first), poblacion_explorar[i].second);
-			a_evaluar = operador_mutacion_segmento_fijo(a_evaluar, PORCENTAJE_MUTAR);
-			poblacion_explorar[i].first = clusters_to_solucion( a_evaluar.first);
-
-			int eval_BL = 10000;
-			auto sol_bl = algoritmo_BL(solucion_to_clusters(poblacion_explorar[i].first), eval_BL);
-
-			poblacion_explorar[i].first = clusters_to_solucion(sol_bl.first);
-			poblacion_explorar[i].second = sol_bl.second;
-			eval += eval_BL;
+			// auto a_evaluar = std::make_pair(solucion_to_clusters(poblacion_explorar[i].first), poblacion_explorar[i].second);
+			// a_evaluar = operador_mutacion_segmento_fijo(a_evaluar, PORCENTAJE_MUTAR);
+			// poblacion_explorar[i].first = clusters_to_solucion( a_evaluar.first);
+			//
+			// int eval_BL = 10000;
+			// auto sol_bl = algoritmo_BL(solucion_to_clusters(poblacion_explorar[i].first), eval_BL);
+			//
+			// poblacion_explorar[i].first = clusters_to_solucion(sol_bl.first);
+			// poblacion_explorar[i].second = sol_bl.second;
+			eval += algoritmo_BL_suave(poblacion_explorar[i], poblacion_explorar[i].first.size()*0.1);
 		}
 
 
@@ -1887,11 +1887,21 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 
 		// solo se me ocurre hacerlo como la HO, hacer pasadas de la mejor, aceptar con cierto porcentaje
 
+		// aplicamos la BL suave para seguir explotando
+		eval += algoritmo_BL_suave(poblacion_explotar[mejor_explotar], poblacion_explotar[mejor_explotar].first.size()*0.1);
+
+		// int eval_BL_1 = 10000;
+		// auto sol_bl_1 = algoritmo_BL(solucion_to_clusters(poblacion_explotar[mejor_explotar].first), eval_BL_1);
+		//
+		// poblacion_explotar[mejor_explotar].first = clusters_to_solucion(sol_bl_1.first);
+		// poblacion_explotar[mejor_explotar].second = sol_bl_1.second;
+		//
+
 		int aleatorio;
 		for (unsigned i = 0; i < poblacion_explotar.size(); i++){
 			for (unsigned j = 0; j < poblacion_explotar[i].first.size(); j++){
 				aleatorio = Rand();
-				if (aleatorio < PROB_CAMBIAR_GEN){
+				if (aleatorio <= PROB_CAMBIAR_GEN){
 					poblacion_explotar[i].first[j] = poblacion_explotar[mejor_explotar].first[j];
 				}
 			}
