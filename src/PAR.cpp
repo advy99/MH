@@ -1796,7 +1796,8 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::operador_mutacion_segmento_fij
 
 
 std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX_EVAL, const int TAM_POB_INI,
-																						 const double PROB_CAMBIAR_GEN, const double PORCENTAJE_EXPLORAR){
+																						 const double PROB_CAMBIAR_GEN, const double PORCENTAJE_EXPLORAR,
+																					 	 const double PORCENTAJE_EXPLORAR){
 
 	// algoritmo propio para la p4
 
@@ -1860,7 +1861,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 		// la poblacion que explora es del 10% el tam de la pob inicial, tengo que parametrizar esto
 		for (unsigned i = 0; i < poblacion_explorar.size(); i++){
 			auto a_evaluar = std::make_pair(solucion_to_clusters(poblacion_explorar[i].first), poblacion_explorar[i].second);
-			a_evaluar = operador_mutacion_segmento_fijo(a_evaluar, 0.3);
+			a_evaluar = operador_mutacion_segmento_fijo(a_evaluar, PORCENTAJE_MUTAR);
 			poblacion_explotar[i].first = clusters_to_solucion( a_evaluar.first);
 
 			int eval_BL = 10000;
