@@ -94,7 +94,7 @@ class PAR{
 
 		std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL, const int TAM_POB_INI,
 																						  const double PROB_CAMBIAR_GEN, const double PORCENTAJE_EXPLORAR,
-																					  	  const double PORCENTAJE_EXPLORAR);
+																					  	  const double PORCENTAJE_MUTAR);
 
 		int calcular_infactibilidad() const;
 		std::vector<Cluster> generar_solucion_aleatoria();

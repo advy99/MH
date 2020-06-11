@@ -81,7 +81,7 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 	} else if (alg == "ILS-ES"){
 		solucion = par.algoritmo_ILS(par.generar_solucion_aleatoria(), 10000, 10, 0.1, tipo_ils::ES);
 	} else if (alg == "ALG-PROPIO"){
-		solucion = par.algoritmo_propio(evaluaciones, 50, 0.5);
+		solucion = par.algoritmo_propio(evaluaciones, 50, 0.5, 0.4, 0.3);
 	}
 
 
