@@ -1836,8 +1836,13 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 		}
 	}
 
+	int eval_BL_1 = 10000;
+	auto sol_bl_1 = algoritmo_BL(solucion_to_clusters(poblacion_explotar[mejor_explotar].first), eval_BL_1);
 
-	int eval = 0;
+	poblacion_explotar[mejor_explotar].first = clusters_to_solucion(sol_bl_1.first);
+	poblacion_explotar[mejor_explotar].second = sol_bl_1.second;
+
+	int eval = eval_BL_1;
 
 	while (eval < MAX_EVAL){
 		// intercambiar poblaciones en caso de que sea necesario
@@ -1846,6 +1851,8 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 			auto intercambio_pob = poblacion_explorar[mejor_explorar];
 			poblacion_explorar[mejor_explorar] = poblacion_explotar[mejor_explotar];
 			poblacion_explotar[mejor_explotar] = intercambio_pob;
+
+			std::cout << "CAMBIO" << std::endl;
 		}
 
 
