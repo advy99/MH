@@ -1836,13 +1836,13 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 		}
 	}
 
-	int eval_BL_1 = 10000;
-	auto sol_bl_1 = algoritmo_BL(solucion_to_clusters(poblacion_explotar[mejor_explotar].first), eval_BL_1);
+	// int eval_BL_1 = 10000;
+	// auto sol_bl_1 = algoritmo_BL(solucion_to_clusters(poblacion_explotar[mejor_explotar].first), eval_BL_1);
+	//
+	// poblacion_explotar[mejor_explotar].first = clusters_to_solucion(sol_bl_1.first);
+	// poblacion_explotar[mejor_explotar].second = sol_bl_1.second;
 
-	poblacion_explotar[mejor_explotar].first = clusters_to_solucion(sol_bl_1.first);
-	poblacion_explotar[mejor_explotar].second = sol_bl_1.second;
-
-	int eval = eval_BL_1;
+	int eval = 0;
 
 	while (eval < MAX_EVAL){
 		// intercambiar poblaciones en caso de que sea necesario
@@ -1869,7 +1869,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 		for (unsigned i = 0; i < poblacion_explorar.size(); i++){
 			auto a_evaluar = std::make_pair(solucion_to_clusters(poblacion_explorar[i].first), poblacion_explorar[i].second);
 			a_evaluar = operador_mutacion_segmento_fijo(a_evaluar, PORCENTAJE_MUTAR);
-			poblacion_explotar[i].first = clusters_to_solucion( a_evaluar.first);
+			poblacion_explorar[i].first = clusters_to_solucion( a_evaluar.first);
 
 			int eval_BL = 10000;
 			auto sol_bl = algoritmo_BL(solucion_to_clusters(poblacion_explorar[i].first), eval_BL);
