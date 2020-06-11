@@ -1795,11 +1795,12 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::operador_mutacion_segmento_fij
 */
 
 
-std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX_EVAL, const int TAM_POB_INI, const double PROB_CAMBIAR_GEN){
+std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX_EVAL, const int TAM_POB_INI,
+																						 const double PROB_CAMBIAR_GEN, const double PORCENTAJE_EXPLORAR){
 
 	// algoritmo propio para la p4
 
-	std::vector<std::vector<int>> p1 = generar_poblacion_inicial(0.4*TAM_POB_INI);
+	std::vector<std::vector<int>> p1 = generar_poblacion_inicial(PORCENTAJE_EXPLORAR*TAM_POB_INI);
 	std::vector<std::vector<int>> p2 = generar_poblacion_inicial(TAM_POB_INI);
 
 
