@@ -1861,7 +1861,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 
 	// int eval_BL_1 = 10000;
 	// auto sol_bl_1 = algoritmo_BL(solucion_to_clusters(poblacion_explotar[mejor_explotar].first), eval_BL_1);
-	//
+
 	// poblacion_explotar[mejor_explotar].first = clusters_to_solucion(sol_bl_1.first);
 	// poblacion_explotar[mejor_explotar].second = sol_bl_1.second;
 
@@ -1887,13 +1887,13 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 			poblacion_explorar[i].first = clusters_to_solucion( a_evaluar.first);
 			poblacion_explorar[i].second = a_evaluar.second;
 
-			int eval_BL = 10000;
-			auto sol_bl = algoritmo_BL(solucion_to_clusters(poblacion_explorar[i].first), eval_BL);
-
-			poblacion_explorar[i].first = clusters_to_solucion(sol_bl.first);
-			poblacion_explorar[i].second = sol_bl.second;
-			eval += eval_BL;
-			// eval += algoritmo_BL_suave(poblacion_explorar[i], poblacion_explorar[i].first.size());
+			// int eval_BL = 10000;
+			// auto sol_bl = algoritmo_BL(solucion_to_clusters(poblacion_explorar[i].first), eval_BL);
+			//
+			// poblacion_explorar[i].first = clusters_to_solucion(sol_bl.first);
+			// poblacion_explorar[i].second = sol_bl.second;
+			// eval += eval_BL;
+			eval += algoritmo_BL_suave(poblacion_explorar[i], poblacion_explorar[i].first.size()*0.3);
 			// int aleatorio;
 			// for (unsigned j = 0; j < poblacion_explorar[i].first.size(); j++){
 			// 	aleatorio = Rand();
@@ -1948,6 +1948,8 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 				calcular_desviacion_general();
 				poblacion_explotar[i].second = funcion_objetivo();
 				eval++;
+				eval += algoritmo_BL_suave(poblacion_explotar[i], poblacion_explotar[i].first.size()*0.1);
+
 			}
 
 		}
