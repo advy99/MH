@@ -1887,13 +1887,13 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 			poblacion_explorar[i].first = clusters_to_solucion( a_evaluar.first);
 			poblacion_explorar[i].second = a_evaluar.second;
 
-			// int eval_BL = 10000;
-			// auto sol_bl = algoritmo_BL(solucion_to_clusters(poblacion_explorar[i].first), eval_BL);
-			//
-			// poblacion_explorar[i].first = clusters_to_solucion(sol_bl.first);
-			// poblacion_explorar[i].second = sol_bl.second;
-			// eval += eval_BL;
-			eval += algoritmo_BL_suave(poblacion_explorar[i], poblacion_explorar[i].first.size()*0.3);
+			int eval_BL = 10000;
+			auto sol_bl = algoritmo_BL(solucion_to_clusters(poblacion_explorar[i].first), eval_BL);
+
+			poblacion_explorar[i].first = clusters_to_solucion(sol_bl.first);
+			poblacion_explorar[i].second = sol_bl.second;
+			eval += eval_BL;
+			// eval += algoritmo_BL_suave(poblacion_explorar[i], poblacion_explorar[i].first.size()*0.3);
 			// int aleatorio;
 			// for (unsigned j = 0; j < poblacion_explorar[i].first.size(); j++){
 			// 	aleatorio = Rand();
@@ -1978,9 +1978,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 		// intercambiar poblaciones en caso de que sea necesario
 		// si la que explora es mejor que la que explota, intercambiamos
 		if (poblacion_explotar[mejor_explotar].second > poblacion_explorar[mejor_explorar].second){
-			auto intercambio_pob = poblacion_explorar[mejor_explorar];
-			poblacion_explorar[mejor_explorar] = poblacion_explotar[mejor_explotar];
-			poblacion_explotar[mejor_explotar] = intercambio_pob;
+			poblacion_explotar[mejor_explotar] = poblacion_explorar[mejor_explorar];
 
 			std::cout << "CAMBIO" << std::endl;
 		}
