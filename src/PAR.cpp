@@ -1797,9 +1797,32 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::operador_mutacion_segmento_fij
 
 std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX_EVAL, const int TAM_POB_INI,
 																						 const double PROB_CAMBIAR_GEN, const double PORCENTAJE_EXPLORAR,
-																					 	 const double PORCENTAJE_MUTAR){
+																					 	 const double PORCENTAJE_MUTAR, const bool SALIDA){
 
 	// algoritmo propio para la p4
+
+	std::fstream fic_explotar;
+	std::fstream fic_explorar;
+
+
+	if (SALIDA){
+		std::string fichero = "graficas/";
+		fichero += NOM_RESTRICCIONES;
+		fichero += "_" + SEMILLA;
+		fichero += "_ALG-PRO_explotar.out";
+
+		fic_explotar.open(fichero, std::fstream::out);
+
+
+		std::string fichero2 = "graficas/";
+		fichero2 += NOM_RESTRICCIONES;
+		fichero2 += "_" + SEMILLA;
+		fichero2 += "_ALG-PRO_explorar.out";
+
+		fic_explorar.open(fichero2, std::fstream::out);
+	}
+
+
 
 	std::vector<std::vector<int>> p1 = generar_poblacion_inicial(PORCENTAJE_EXPLORAR*TAM_POB_INI);
 	std::vector<std::vector<int>> p2 = generar_poblacion_inicial(TAM_POB_INI);
@@ -1845,6 +1868,13 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 	int eval = 0;
 
 	while (eval < MAX_EVAL){
+
+		if (SALIDA){
+			fic_explorar << eval << "\t" << poblacion_explorar[mejor_explorar].second << std::endl;
+			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << std::endl;
+		}
+
+
 		// intercambiar poblaciones en caso de que sea necesario
 		// si la que explora es mejor que la que explota, intercambiamos
 		if (poblacion_explotar[mejor_explotar].second > poblacion_explorar[mejor_explorar].second){
@@ -1860,23 +1890,39 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 		// tenemos que hacer el funcionamiento de ambas poblaciones
 
 		// primera poblacion, explorar
-
-		// OPCIONES:
-
 		// he pensado en aplicar una mutación aleatoria y aplicar BL a cada solución
 		// pero eso me hasta muchas evaluaciones, solucion, reducir el tamaño,
 		// la poblacion que explora es del 10% el tam de la pob inicial, tengo que parametrizar esto
 		for (unsigned i = 0; i < poblacion_explorar.size(); i++){
-			// auto a_evaluar = std::make_pair(solucion_to_clusters(poblacion_explorar[i].first), poblacion_explorar[i].second);
-			// a_evaluar = operador_mutacion_segmento_fijo(a_evaluar, PORCENTAJE_MUTAR);
-			// poblacion_explorar[i].first = clusters_to_solucion( a_evaluar.first);
+			auto a_evaluar = std::make_pair(solucion_to_clusters(poblacion_explorar[i].first), poblacion_explorar[i].second);
+			a_evaluar = operador_mutacion_segmento_fijo(a_evaluar, PORCENTAJE_MUTAR);
+			poblacion_explorar[i].first = clusters_to_solucion( a_evaluar.first);
+			poblacion_explorar[i].second = a_evaluar.second;
 			//
-			// int eval_BL = 10000;
-			// auto sol_bl = algoritmo_BL(solucion_to_clusters(poblacion_explorar[i].first), eval_BL);
+			int eval_BL = 5000;
+			auto sol_bl = algoritmo_BL(solucion_to_clusters(poblacion_explorar[i].first), eval_BL);
+
+			poblacion_explorar[i].first = clusters_to_solucion(sol_bl.first);
+			poblacion_explorar[i].second = sol_bl.second;
+			eval += eval_BL;
+			// eval += algoritmo_BL_suave(poblacion_explorar[i], poblacion_explorar[i].first.size());
+			// int aleatorio;
+			// for (unsigned j = 0; j < poblacion_explorar[i].first.size(); j++){
+			// 	aleatorio = Rand();
+			// 	if (aleatorio <= PROB_CAMBIAR_GEN){
+			// 		poblacion_explorar[i].first[j] = RandPositiveInt(get_num_clusters());
+			// 	}
+			// }
 			//
-			// poblacion_explorar[i].first = clusters_to_solucion(sol_bl.first);
-			// poblacion_explorar[i].second = sol_bl.second;
-			eval += algoritmo_BL_suave(poblacion_explorar[i], poblacion_explorar[i].first.size()*0.1);
+			// clusters = solucion_to_clusters(poblacion_explorar[i].first);
+			// calcular_desviacion_general();
+			// poblacion_explorar[i].second = funcion_objetivo();
+			// eval++;
+		}
+
+		if (SALIDA){
+			fic_explorar << eval << "\t" << poblacion_explorar[mejor_explorar].second << std::endl;
+			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << std::endl;
 		}
 
 
@@ -1887,8 +1933,6 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 
 		// solo se me ocurre hacerlo como la HO, hacer pasadas de la mejor, aceptar con cierto porcentaje
 
-		// aplicamos la BL suave para seguir explotando
-		eval += algoritmo_BL_suave(poblacion_explotar[mejor_explotar], poblacion_explotar[mejor_explotar].first.size()*0.1);
 
 		// int eval_BL_1 = 10000;
 		// auto sol_bl_1 = algoritmo_BL(solucion_to_clusters(poblacion_explotar[mejor_explotar].first), eval_BL_1);
@@ -1899,21 +1943,35 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 
 		int aleatorio;
 		for (unsigned i = 0; i < poblacion_explotar.size(); i++){
-			for (unsigned j = 0; j < poblacion_explotar[i].first.size(); j++){
-				aleatorio = Rand();
-				if (aleatorio <= PROB_CAMBIAR_GEN){
-					poblacion_explotar[i].first[j] = poblacion_explotar[mejor_explotar].first[j];
+			if ((int) i != mejor_explotar){
+				for (unsigned j = 0; j < poblacion_explotar[i].first.size(); j++){
+					aleatorio = Rand();
+					if (aleatorio <= PROB_CAMBIAR_GEN){
+						poblacion_explotar[i].first[j] = poblacion_explotar[mejor_explotar].first[j];
+					} else {
+						poblacion_explotar[i].first[j] = RandPositiveInt(get_num_clusters());
+					}
 				}
+
+				clusters = solucion_to_clusters(poblacion_explotar[i].first);
+				calcular_desviacion_general();
+				poblacion_explotar[i].second = funcion_objetivo();
+				eval++;
+			} else {
+				// aplicamos la BL a la mejor suave para seguir explotando
+				eval += algoritmo_BL_suave(poblacion_explotar[mejor_explotar], poblacion_explotar[mejor_explotar].first.size()*0.2);
+
 			}
 
-			clusters = solucion_to_clusters(poblacion_explotar[i].first);
-			calcular_desviacion_general();
-			poblacion_explotar[i].second = funcion_objetivo();
 
 		}
 
 		eval += poblacion_explotar.size();
 
+		if (SALIDA){
+			fic_explorar << eval << "\t" << poblacion_explorar[mejor_explorar].second << std::endl;
+			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << std::endl;
+		}
 
 		// comprobamos si hay un nuevo mejor
 		// lo separo por si tenemos tamaños distintos de poblaciones
@@ -1937,7 +1995,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 	if (poblacion_explotar[mejor_explotar].second > poblacion_explorar[mejor_explorar].second){
 		solucion = std::make_pair(solucion_to_clusters(poblacion_explorar[mejor_explorar].first), poblacion_explorar[mejor_explorar].second);
 	} else {
-		solucion = std::make_pair(solucion_to_clusters(poblacion_explotar[mejor_explorar].first), poblacion_explorar[mejor_explotar].second);
+		solucion = std::make_pair(solucion_to_clusters(poblacion_explotar[mejor_explotar].first), poblacion_explotar[mejor_explotar].second);
 	}
 
 	return solucion;
