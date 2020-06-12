@@ -23,7 +23,7 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 
 	double tiempo = 0.0d;
 
-	unsigned evaluaciones = 200000;
+	unsigned evaluaciones = 500000;
 	unsigned tam_pob_ini = 50;
 
 	start_timers();
@@ -81,7 +81,7 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 	} else if (alg == "ILS-ES"){
 		solucion = par.algoritmo_ILS(par.generar_solucion_aleatoria(), 10000, 10, 0.1, tipo_ils::ES);
 	} else if (alg == "ALG-PROPIO"){
-		solucion = par.algoritmo_propio(evaluaciones, 50, 0.7, 0.2, 0.3);
+		solucion = par.algoritmo_propio(evaluaciones, 10, 0.7, 0.1, 0.2);
 	}
 
 
