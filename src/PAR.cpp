@@ -1797,7 +1797,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::operador_mutacion_segmento_fij
 
 std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX_EVAL, const int TAM_POB_INI,
 																						 const double PROB_CAMBIAR_GEN, const double PORCENTAJE_EXPLORAR,
-																					 	 const double PORCENTAJE_MUTAR, const int PORCENTAJE_INTERCAMBIAR,
+																					 	 const double PORCENTAJE_MUTAR, const double PORCENTAJE_INTERCAMBIAR,
 																						 const bool SALIDA){
 
 	// algoritmo propio para la p4
@@ -1911,6 +1911,20 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 
 
 		if (SALIDA){
+			// comprobamos si hay un nuevo mejor
+			// lo separo por si tenemos tamaños distintos de poblaciones
+			for (unsigned i = 0; i < poblacion_explorar.size(); i++){
+				if (poblacion_explorar[mejor_explorar].second > poblacion_explorar[i].second){
+					mejor_explorar = i;
+				}
+			}
+
+			for (unsigned i = 0; i < poblacion_explotar.size(); i++){
+				if (poblacion_explotar[mejor_explotar].second > poblacion_explotar[i].second){
+					mejor_explotar = i;
+				}
+			}
+
 			fic_explorar << eval << "\t" << poblacion_explorar[mejor_explorar].second << std::endl;
 			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << std::endl;
 		}
@@ -1944,11 +1958,11 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 					}
 				}
 
-				clusters = solucion_to_clusters(poblacion_explotar[i].first);
-				calcular_desviacion_general();
-				poblacion_explotar[i].second = funcion_objetivo();
-				eval++;
-				eval += algoritmo_BL_suave(poblacion_explotar[i], poblacion_explotar[i].first.size()*0.1);
+				// clusters = solucion_to_clusters(poblacion_explotar[i].first);
+				// calcular_desviacion_general();
+				// poblacion_explotar[i].second = funcion_objetivo();
+				// eval++;
+				// eval += algoritmo_BL_suave(poblacion_explotar[i], poblacion_explotar[i].first.size()*0.1);
 
 			}
 
@@ -1957,32 +1971,22 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 		eval += poblacion_explotar.size();
 
 		if (SALIDA){
+			// comprobamos si hay un nuevo mejor
+			// lo separo por si tenemos tamaños distintos de poblaciones
+			for (unsigned i = 0; i < poblacion_explorar.size(); i++){
+				if (poblacion_explorar[mejor_explorar].second > poblacion_explorar[i].second){
+					mejor_explorar = i;
+				}
+			}
+
+			for (unsigned i = 0; i < poblacion_explotar.size(); i++){
+				if (poblacion_explotar[mejor_explotar].second > poblacion_explotar[i].second){
+					mejor_explotar = i;
+				}
+			}
+
 			fic_explorar << eval << "\t" << poblacion_explorar[mejor_explorar].second << std::endl;
 			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << std::endl;
-		}
-
-
-		// comprobamos si hay un nuevo mejor
-		// lo separo por si tenemos tamaños distintos de poblaciones
-		for (unsigned i = 0; i < poblacion_explorar.size(); i++){
-			if (poblacion_explorar[mejor_explorar].second > poblacion_explorar[i].second){
-				mejor_explorar = i;
-			}
-		}
-
-		for (unsigned i = 0; i < poblacion_explotar.size(); i++){
-			if (poblacion_explotar[mejor_explotar].second > poblacion_explotar[i].second){
-				mejor_explotar = i;
-			}
-		}
-
-		// intercambiamos la mejor solucion
-		if (poblacion_explotar[mejor_explotar].second > poblacion_explorar[mejor_explorar].second){
-			auto aux = poblacion_explotar[mejor_explotar];
-			poblacion_explotar[mejor_explotar] = poblacion_explorar[mejor_explorar];
-			poblacion_explorar[mejor_explorar] = aux;
-
-			std::cout << "CAMBIO" << std::endl;
 		}
 
 
@@ -2022,6 +2026,38 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 			indices_mejores_explorar.erase(indices_mejores_explorar.begin());
 			indices_peores_explotar.erase(indices_peores_explotar.begin());
 		}
+
+
+
+
+		// comprobamos si hay un nuevo mejor
+		// lo separo por si tenemos tamaños distintos de poblaciones
+		for (unsigned i = 0; i < poblacion_explorar.size(); i++){
+			if (poblacion_explorar[mejor_explorar].second > poblacion_explorar[i].second){
+				mejor_explorar = i;
+			}
+		}
+
+		for (unsigned i = 0; i < poblacion_explotar.size(); i++){
+			if (poblacion_explotar[mejor_explotar].second > poblacion_explotar[i].second){
+				mejor_explotar = i;
+			}
+		}
+
+		if (SALIDA){
+			fic_explorar << eval << "\t" << poblacion_explorar[mejor_explorar].second << std::endl;
+			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << std::endl;
+		}
+
+
+		// // intercambiamos la mejor solucion
+		// if (poblacion_explotar[mejor_explotar].second > poblacion_explorar[mejor_explorar].second){
+		// 	auto aux = poblacion_explotar[mejor_explotar];
+		// 	poblacion_explotar[mejor_explotar] = poblacion_explorar[mejor_explorar];
+		// 	poblacion_explorar[mejor_explorar] = aux;
+		//
+		// 	std::cout << "CAMBIO" << std::endl;
+		// }
 
 	}
 
