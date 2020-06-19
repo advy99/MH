@@ -1930,7 +1930,6 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 
 		// poblacion_explotar[mejor_explotar].first = clusters_to_solucion(sol_bl_1.first);
 		// poblacion_explotar[mejor_explotar].second = sol_bl_1.second;
-		//
 
 		int aleatorio;
 		for (unsigned i = 0; i < poblacion_explotar.size(); i++){
@@ -1975,8 +1974,6 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 			}
 		}
 
-		// intercambiar poblaciones en caso de que sea necesario
-		// si la que explora es mejor que la que explota, intercambiamos
 		if (poblacion_explotar[mejor_explotar].second > poblacion_explorar[mejor_explorar].second){
 			poblacion_explotar[mejor_explotar] = poblacion_explorar[mejor_explorar];
 
@@ -1988,11 +1985,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 
 	std::pair<std::vector<PAR::Cluster>, double> solucion;
 
-	if (poblacion_explotar[mejor_explotar].second > poblacion_explorar[mejor_explorar].second){
-		solucion = std::make_pair(solucion_to_clusters(poblacion_explorar[mejor_explorar].first), poblacion_explorar[mejor_explorar].second);
-	} else {
-		solucion = std::make_pair(solucion_to_clusters(poblacion_explotar[mejor_explotar].first), poblacion_explotar[mejor_explotar].second);
-	}
+	solucion = std::make_pair(solucion_to_clusters(poblacion_explotar[mejor_explotar].first), poblacion_explotar[mejor_explotar].second);
 
 	return solucion;
 
