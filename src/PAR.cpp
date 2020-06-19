@@ -1797,7 +1797,8 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::operador_mutacion_segmento_fij
 
 std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX_EVAL, const int TAM_POB_INI,
 																						 const double PROB_CAMBIAR_GEN, const double PORCENTAJE_EXPLORAR,
-																					 	 const double PORCENTAJE_MUTAR, const bool SALIDA){
+																					 	 const double PORCENTAJE_MUTAR, const int PORCENTAJE_INTERCAMBIAR,
+																						 const bool SALIDA){
 
 	// algoritmo propio para la p4
 
@@ -1960,6 +1961,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << std::endl;
 		}
 
+
 		// comprobamos si hay un nuevo mejor
 		// lo separo por si tenemos tamaños distintos de poblaciones
 		for (unsigned i = 0; i < poblacion_explorar.size(); i++){
@@ -1974,11 +1976,42 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 			}
 		}
 
+		// intercambiamos la mejor solucion
 		if (poblacion_explotar[mejor_explotar].second > poblacion_explorar[mejor_explorar].second){
+			auto aux = poblacion_explotar[mejor_explotar];
 			poblacion_explotar[mejor_explotar] = poblacion_explorar[mejor_explorar];
+			poblacion_explorar[mejor_explorar] = aux;
 
 			std::cout << "CAMBIO" << std::endl;
 		}
+
+
+		// para buscar los mejores y peores de cada población
+		std::set<int> indices_peores_explotar;
+		std::set<int> indices_mejores_explorar;
+
+		for (unsigned i = 0; i < PORCENTAJE_INTERCAMBIAR * TAM_POB_INI; i++){
+			int indice_mejor = 0;
+			// buscamos el mejor de explorar
+			for (unsigned j = 0; j < poblacion_explorar.size(); j++){
+				if (poblacion_explorar[indice_mejor].second > poblacion_explorar[j].second &&
+					 indices_mejores_explorar.find(j) == indices_mejores_explorar.end() ){
+					indice_mejor = j;
+				}
+			}
+			indices_mejores_explorar.insert(indice_mejor);
+
+			int indice_peor = 0;
+			// buscamos el peor de explotar
+			for (unsigned j = 0; j < poblacion_explotar.size(); j++){
+				if (poblacion_explotar[indice_peor].second < poblacion_explotar[j].second &&
+					 indices_peores_explotar.find(j) == indices_peores_explotar.end()){
+					indice_peor = j;
+				}
+			}
+			indices_peores_explotar.insert(indice_peor);
+		}
+
 
 	}
 
