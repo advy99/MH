@@ -81,7 +81,12 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 	} else if (alg == "ILS-ES"){
 		solucion = par.algoritmo_ILS(par.generar_solucion_aleatoria(), 10000, 10, 0.1, tipo_ils::ES);
 	} else if (alg == "ALG-PROPIO"){
-		solucion = par.algoritmo_propio(evaluaciones, 10, 0.7, 0.1, 0.2);
+		int tam_pob = 10;
+		double prob_cambiar_gen = 0.6;
+		double porcentaje_explorar = 1;
+		double porcentaje_mutar = 0.2;
+		double porcentaje_intercambiar = 0.2;
+		solucion = par.algoritmo_propio(evaluaciones, tam_pob, prob_cambiar_gen, porcentaje_explorar, porcentaje_mutar, porcentaje_intercambiar);
 	}
 
 

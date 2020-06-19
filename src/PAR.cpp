@@ -1990,7 +1990,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 		std::set<int> indices_peores_explotar;
 		std::set<int> indices_mejores_explorar;
 
-		for (unsigned i = 0; i < PORCENTAJE_INTERCAMBIAR * TAM_POB_INI; i++){
+		for (int i = 0; i < PORCENTAJE_INTERCAMBIAR * TAM_POB_INI; i++){
 			int indice_mejor = 0;
 			// buscamos el mejor de explorar
 			for (unsigned j = 0; j < poblacion_explorar.size(); j++){
@@ -2012,6 +2012,16 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 			indices_peores_explotar.insert(indice_peor);
 		}
 
+		// intercambiamos las mejores de explorar por las peores de explotar
+		// la idea es sacar a las que no explotan de los mínimos en los que se encuentran
+		while ( !indices_peores_explotar.empty() && !indices_mejores_explorar.empty() ){
+			auto aux = poblacion_explotar[ (*indices_peores_explotar.begin()) ];
+			poblacion_explotar[(*indices_peores_explotar.begin())] = poblacion_explorar[ (*indices_mejores_explorar.begin()) ];
+			poblacion_explorar[(*indices_mejores_explorar.begin())] = aux;
+
+			indices_mejores_explorar.erase(indices_mejores_explorar.begin());
+			indices_peores_explotar.erase(indices_peores_explotar.begin());
+		}
 
 	}
 
