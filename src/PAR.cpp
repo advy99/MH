@@ -1888,7 +1888,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 			poblacion_explorar[i].first = clusters_to_solucion( a_evaluar.first);
 			poblacion_explorar[i].second = a_evaluar.second;
 
-			int eval_BL = 10000;
+			int eval_BL = 5000;
 			auto sol_bl = algoritmo_BL(solucion_to_clusters(poblacion_explorar[i].first), eval_BL);
 
 			poblacion_explorar[i].first = clusters_to_solucion(sol_bl.first);
@@ -1953,8 +1953,6 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 					aleatorio = Rand();
 					if (aleatorio <= PROB_CAMBIAR_GEN){
 						poblacion_explotar[i].first[j] = poblacion_explotar[mejor_explotar].first[j];
-					} else {
-						poblacion_explotar[i].first[j] = RandPositiveInt(get_num_clusters());
 					}
 				}
 
