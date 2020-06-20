@@ -1949,6 +1949,14 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 		int aleatorio;
 		for (unsigned i = 0; i < poblacion_explotar.size(); i++){
 			if ((int) i != mejor_explotar){
+				// si una solucion se estanca en el mejor que tenemos le aplicamos una mutacion
+				if (poblacion_explotar[i].first == poblacion_explotar[mejor_explotar].first){
+					auto a_evaluar = std::make_pair(solucion_to_clusters(poblacion_explotar[i].first), poblacion_explotar[i].second);
+					a_evaluar = operador_mutacion_segmento_fijo(a_evaluar, PORCENTAJE_MUTAR+0.2);
+					poblacion_explotar[i].first = clusters_to_solucion( a_evaluar.first);
+					poblacion_explotar[i].second = a_evaluar.second;
+				}
+
 				for (unsigned j = 0; j < poblacion_explotar[i].first.size(); j++){
 					aleatorio = Rand();
 					if (aleatorio <= PROB_CAMBIAR_GEN){
@@ -1956,11 +1964,11 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 					}
 				}
 
-				// clusters = solucion_to_clusters(poblacion_explotar[i].first);
-				// calcular_desviacion_general();
-				// poblacion_explotar[i].second = funcion_objetivo();
-				// eval++;
-				// eval += algoritmo_BL_suave(poblacion_explotar[i], poblacion_explotar[i].first.size()*0.1);
+				clusters = solucion_to_clusters(poblacion_explotar[i].first);
+				calcular_desviacion_general();
+				poblacion_explotar[i].second = funcion_objetivo();
+				eval++;
+				eval += algoritmo_BL_suave(poblacion_explotar[i], poblacion_explotar[i].first.size()*0.1);
 
 			}
 
