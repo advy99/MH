@@ -1964,19 +1964,21 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 					}
 				}
 
-				// clusters = solucion_to_clusters(poblacion_explotar[i].first);
-				// calcular_desviacion_general();
-				// poblacion_explotar[i].second = funcion_objetivo();
-				// eval++;
+				clusters = solucion_to_clusters(poblacion_explotar[i].first);
+				calcular_desviacion_general();
+				poblacion_explotar[i].second = funcion_objetivo();
+				eval++;
+
+
+
 				// eval += algoritmo_BL_suave(poblacion_explotar[i], poblacion_explotar[i].first.size()*0.1);
 
-				int eval_BL = 5000;
+				int eval_BL = 3000;
 				auto sol_bl = algoritmo_BL(solucion_to_clusters(poblacion_explotar[i].first), eval_BL);
 
 				poblacion_explotar[i].first = clusters_to_solucion(sol_bl.first);
 				poblacion_explotar[i].second = sol_bl.second;
 				eval += eval_BL;
-				// eval += algoritmo_BL_suave(poblacion_explotar[i], poblacion_explotar[i].first.size()*0.3);
 
 
 			}
@@ -2076,11 +2078,16 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 
 	}
 
-
 	std::pair<std::vector<PAR::Cluster>, double> solucion;
 
-	solucion = std::make_pair(solucion_to_clusters(poblacion_explotar[mejor_explotar].first), poblacion_explotar[mejor_explotar].second);
+	if (poblacion_explotar[mejor_explotar].second < poblacion_explorar[mejor_explorar].second){
+		solucion = std::make_pair(solucion_to_clusters(poblacion_explotar[mejor_explotar].first), poblacion_explotar[mejor_explotar].second);
+	} else {
+		solucion = std::make_pair(solucion_to_clusters(poblacion_explorar[mejor_explorar].first), poblacion_explorar[mejor_explorar].second);
+	}
 
+	clusters = solucion_to_clusters(poblacion_explotar[mejor_explotar].first);
+	calcular_desviacion_general();
 	return solucion;
 
 }
