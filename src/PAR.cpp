@@ -1976,6 +1976,8 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 				poblacion_explotar[i].first = clusters_to_solucion(sol_bl.first);
 				poblacion_explotar[i].second = sol_bl.second;
 				eval += eval_BL;
+				// eval += algoritmo_BL_suave(poblacion_explotar[i], poblacion_explotar[i].first.size()*0.3);
+
 
 			}
 
