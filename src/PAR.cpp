@@ -1952,7 +1952,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 				// si una solucion se estanca en el mejor que tenemos le aplicamos una mutacion
 				if (poblacion_explotar[i].first == poblacion_explotar[mejor_explotar].first){
 					auto a_evaluar = std::make_pair(solucion_to_clusters(poblacion_explotar[i].first), poblacion_explotar[i].second);
-					a_evaluar = operador_mutacion_segmento_fijo(a_evaluar, PORCENTAJE_MUTAR+0.2);
+					a_evaluar = operador_mutacion_segmento_fijo(a_evaluar, PORCENTAJE_MUTAR);
 					poblacion_explotar[i].first = clusters_to_solucion( a_evaluar.first);
 					poblacion_explotar[i].second = a_evaluar.second;
 				}
