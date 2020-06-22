@@ -1883,7 +1883,6 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 		// pero eso me hasta muchas evaluaciones, solucion, reducir el tamaño,
 		// la poblacion que explora es del 10% el tam de la pob inicial, tengo que parametrizar esto
 		for (unsigned i = 0; i < poblacion_explorar.size(); i++){
-			// eval += algoritmo_BL_suave(poblacion_explorar[i], poblacion_explorar[i].first.size()*0.3);
 
 			double aleatorio;
 			for (unsigned j = 0; j < poblacion_explorar[i].first.size(); j++){
@@ -1898,17 +1897,6 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 				}
 			}
 
-			// int eval_BL = 10000;
-			// auto sol_bl = algoritmo_BL(solucion_to_clusters(poblacion_explorar[i].first), eval_BL);
-			//
-			// poblacion_explorar[i].first = clusters_to_solucion(sol_bl.first);
-			// poblacion_explorar[i].second = sol_bl.second;
-			// eval += eval_BL;
-
-			// clusters = solucion_to_clusters(poblacion_explorar[i].first);
-			// calcular_desviacion_general();
-			// poblacion_explorar[i].second = funcion_objetivo();
-			// eval++;
 		}
 
 
@@ -1937,17 +1925,6 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 		// la explotación se hara haciendo que las soluciones se parezcan a la mejor
 		// de la población de explotación
 
-		// solo se me ocurre hacerlo como la HO, hacer pasadas de la mejor, aceptar con cierto porcentaje
-		// aplicamos la BL a la mejor suave para seguir explotando
-		// eval += algoritmo_BL_suave(poblacion_explotar[mejor_explotar], poblacion_explotar[mejor_explotar].first.size()*0.2);
-
-
-		// int eval_BL_1 = 10000;
-		// auto sol_bl_1 = algoritmo_BL(solucion_to_clusters(poblacion_explotar[mejor_explotar].first), eval_BL_1);
-
-		// poblacion_explotar[mejor_explotar].first = clusters_to_solucion(sol_bl_1.first);
-		// poblacion_explotar[mejor_explotar].second = sol_bl_1.second;
-
 		double aleatorio;
 		for (unsigned i = 0; i < poblacion_explotar.size(); i++){
 			if ((int) i != mejor_explotar){
@@ -1970,18 +1947,6 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 				calcular_desviacion_general();
 				poblacion_explotar[i].second = funcion_objetivo();
 				eval++;
-
-
-
-				// eval += algoritmo_BL_suave(poblacion_explotar[i], poblacion_explotar[i].first.size()*0.1);
-
-				// int eval_BL = 5000;
-				// auto sol_bl = algoritmo_BL(solucion_to_clusters(poblacion_explotar[i].first), eval_BL);
-				//
-				// poblacion_explotar[i].first = clusters_to_solucion(sol_bl.first);
-				// poblacion_explotar[i].second = sol_bl.second;
-				// eval += eval_BL;
-
 
 			}
 
@@ -2007,6 +1972,34 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 			fic_explorar << eval << "\t" << poblacion_explorar[mejor_explorar].second << std::endl;
 			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << std::endl;
 		}
+
+		// buscamos el 0.1 mejor de la poblacion de explotar
+		std::set<int> indices_mejores_explotar;
+		for (int i = 0; i < 0.1 * TAM_POB_INI; i++){
+			int indice_mejor = 0;
+			// buscamos el mejor de explorar
+			for (unsigned j = 0; j < poblacion_explotar.size(); j++){
+				if (poblacion_explotar[indice_mejor].second > poblacion_explotar[j].second &&
+					 indices_mejores_explotar.find(j) == indices_mejores_explotar.end() ){
+					indice_mejor = j;
+				}
+			}
+			indices_mejores_explotar.insert(indice_mejor);
+		}
+
+		// le aplicamos la BL
+		while (!indices_mejores_explotar.empty()){
+			int elemento = (*indices_mejores_explotar.begin());
+			eval += algoritmo_BL_suave(poblacion_explotar[elemento], poblacion_explotar[elemento].first.size()*0.2);
+
+			indices_mejores_explotar.erase( indices_mejores_explotar.begin() );
+		}
+
+
+
+
+
+
 
 
 		// para buscar los mejores y peores de cada población
@@ -2034,6 +2027,11 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 			}
 			indices_peores_explotar.insert(indice_peor);
 		}
+
+
+
+
+
 
 		// intercambiamos las mejores de explorar por las peores de explotar
 		// la idea es sacar a las que no explotan de los mínimos en los que se encuentran
