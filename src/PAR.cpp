@@ -1834,6 +1834,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 
 	int mejor_explorar = 0;
 	int mejor_explotar = 0;
+	int peor_explotar = 0;
 
 
 	// poblaciones iniciales
@@ -1858,6 +1859,10 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 		if (poblacion_explotar[mejor_explotar].second > poblacion_explotar.back().second){
 			mejor_explotar = i;
 		}
+
+		if (poblacion_explotar[peor_explotar].second < poblacion_explotar.back().second){
+			peor_explotar = i;
+		}
 	}
 
 	// int eval_BL_1 = 30000;
@@ -1872,7 +1877,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 
 		if (SALIDA){
 			fic_explorar << eval << "\t" << poblacion_explorar[mejor_explorar].second << std::endl;
-			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << std::endl;
+			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << "\t" << poblacion_explotar[peor_explotar].second << std::endl;
 		}
 
 
@@ -1913,10 +1918,15 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 				if (poblacion_explotar[mejor_explotar].second > poblacion_explotar[i].second){
 					mejor_explotar = i;
 				}
+
+				if (poblacion_explotar[peor_explotar].second < poblacion_explotar.back().second){
+					peor_explotar = i;
+				}
+
 			}
 
 			fic_explorar << eval << "\t" << poblacion_explorar[mejor_explorar].second << std::endl;
-			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << std::endl;
+			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << "\t" << poblacion_explotar[peor_explotar].second << std::endl;
 		}
 
 
@@ -1967,10 +1977,14 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 				if (poblacion_explotar[mejor_explotar].second > poblacion_explotar[i].second){
 					mejor_explotar = i;
 				}
+
+				if (poblacion_explotar[peor_explotar].second < poblacion_explotar.back().second){
+					peor_explotar = i;
+				}
 			}
 
 			fic_explorar << eval << "\t" << poblacion_explorar[mejor_explorar].second << std::endl;
-			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << std::endl;
+			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << "\t" << poblacion_explotar[peor_explotar].second << std::endl;
 		}
 
 		// buscamos el 0.1 mejor de la poblacion de explotar
@@ -2059,11 +2073,16 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 			if (poblacion_explotar[mejor_explotar].second > poblacion_explotar[i].second){
 				mejor_explotar = i;
 			}
+
+			if (poblacion_explotar[peor_explotar].second < poblacion_explotar.back().second){
+				peor_explotar = i;
+			}
+
 		}
 
 		if (SALIDA){
 			fic_explorar << eval << "\t" << poblacion_explorar[mejor_explorar].second << std::endl;
-			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << std::endl;
+			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << "\t" << poblacion_explotar[peor_explotar].second << std::endl;
 		}
 
 
