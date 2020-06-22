@@ -1865,12 +1865,6 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 		}
 	}
 
-	// int eval_BL_1 = 30000;
-	// auto sol_bl_1 = algoritmo_BL(solucion_to_clusters(poblacion_explotar[mejor_explotar].first), eval_BL_1);
-	//
-	// poblacion_explotar[mejor_explotar].first = clusters_to_solucion(sol_bl_1.first);
-	// poblacion_explotar[mejor_explotar].second = sol_bl_1.second;
-
 	int eval = 0;
 
 	while (eval < MAX_EVAL){
@@ -1905,32 +1899,6 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 		}
 
 
-		if (SALIDA){
-			// comprobamos si hay un nuevo mejor
-			// lo separo por si tenemos tamaños distintos de poblaciones
-			for (unsigned i = 0; i < poblacion_explorar.size(); i++){
-				if (poblacion_explorar[mejor_explorar].second > poblacion_explorar[i].second){
-					mejor_explorar = i;
-				}
-			}
-
-			for (unsigned i = 0; i < poblacion_explotar.size(); i++){
-				if (poblacion_explotar[mejor_explotar].second > poblacion_explotar[i].second){
-					mejor_explotar = i;
-				}
-
-				if (poblacion_explotar[peor_explotar].second < poblacion_explotar.back().second){
-					peor_explotar = i;
-				}
-
-			}
-
-			fic_explorar << eval << "\t" << poblacion_explorar[mejor_explorar].second << std::endl;
-			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << "\t" << poblacion_explotar[peor_explotar].second << std::endl;
-		}
-
-
-
 		// segunda poblacion, explotar
 		// la explotación se hara haciendo que las soluciones se parezcan a la mejor
 		// de la población de explotación
@@ -1939,12 +1907,6 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 		for (unsigned i = 0; i < poblacion_explotar.size(); i++){
 			if ((int) i != mejor_explotar){
 				// si una solucion se estanca en el mejor que tenemos le aplicamos una mutacion
-				if (poblacion_explotar[i].first == poblacion_explotar[mejor_explotar].first){
-					auto a_evaluar = std::make_pair(solucion_to_clusters(poblacion_explotar[i].first), poblacion_explotar[i].second);
-					a_evaluar = operador_mutacion_segmento_fijo(a_evaluar, PORCENTAJE_MUTAR);
-					poblacion_explotar[i].first = clusters_to_solucion( a_evaluar.first);
-					poblacion_explotar[i].second = a_evaluar.second;
-				}
 
 				for (unsigned j = 0; j < poblacion_explotar[i].first.size(); j++){
 					aleatorio = Rand();
@@ -1958,34 +1920,18 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 				poblacion_explotar[i].second = funcion_objetivo();
 				eval++;
 
+				if (poblacion_explotar[i].second == poblacion_explotar[mejor_explotar].second){
+					poblacion_explotar[i].first = clusters_to_solucion(generar_solucion_aleatoria());
+					clusters = solucion_to_clusters(poblacion_explotar[i].first);
+					calcular_desviacion_general();
+					poblacion_explotar[i].second = funcion_objetivo();
+					eval++;
+				}
+
 			}
 
 		}
 
-		eval += poblacion_explotar.size();
-
-		if (SALIDA){
-			// comprobamos si hay un nuevo mejor
-			// lo separo por si tenemos tamaños distintos de poblaciones
-			for (unsigned i = 0; i < poblacion_explorar.size(); i++){
-				if (poblacion_explorar[mejor_explorar].second > poblacion_explorar[i].second){
-					mejor_explorar = i;
-				}
-			}
-
-			for (unsigned i = 0; i < poblacion_explotar.size(); i++){
-				if (poblacion_explotar[mejor_explotar].second > poblacion_explotar[i].second){
-					mejor_explotar = i;
-				}
-
-				if (poblacion_explotar[peor_explotar].second < poblacion_explotar.back().second){
-					peor_explotar = i;
-				}
-			}
-
-			fic_explorar << eval << "\t" << poblacion_explorar[mejor_explorar].second << std::endl;
-			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << "\t" << poblacion_explotar[peor_explotar].second << std::endl;
-		}
 
 		// buscamos el 0.1 mejor de la poblacion de explotar
 		std::set<int> indices_mejores_explotar;
@@ -2008,13 +1954,6 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 
 			indices_mejores_explotar.erase( indices_mejores_explotar.begin() );
 		}
-
-
-
-
-
-
-
 
 		// para buscar los mejores y peores de cada población
 		std::set<int> indices_peores_explotar;
@@ -2079,21 +2018,6 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 			}
 
 		}
-
-		if (SALIDA){
-			fic_explorar << eval << "\t" << poblacion_explorar[mejor_explorar].second << std::endl;
-			fic_explotar << eval << "\t" << poblacion_explotar[mejor_explotar].second << "\t" << poblacion_explotar[peor_explotar].second << std::endl;
-		}
-
-
-		// // intercambiamos la mejor solucion
-		// if (poblacion_explotar[mejor_explotar].second > poblacion_explorar[mejor_explorar].second){
-		// 	auto aux = poblacion_explotar[mejor_explotar];
-		// 	poblacion_explotar[mejor_explotar] = poblacion_explorar[mejor_explorar];
-		// 	poblacion_explorar[mejor_explorar] = aux;
-		//
-		// 	std::cout << "CAMBIO" << std::endl;
-		// }
 
 	}
 

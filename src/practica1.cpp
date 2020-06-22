@@ -85,7 +85,7 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 		double prob_cambiar_gen = 0.4;
 		double porcentaje_explorar = 1;
 		double porcentaje_mutar = 0.3;
-		double porcentaje_intercambiar = 0.2;
+		double porcentaje_intercambiar = 0.4;
 		solucion = par.algoritmo_propio(evaluaciones, tam_pob, prob_cambiar_gen, porcentaje_explorar, porcentaje_mutar, porcentaje_intercambiar);
 	}
 
