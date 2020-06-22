@@ -30,11 +30,11 @@ do for[i in semillas] {
 	set output "salidas_png/ecoli_set_const_20_".i."_temp.png"
 
 
-	plot "datos/ecoli_set_const_20.const_".i."_BO-MOD.out" with lines title "Boltzmann modificado " ls 7,\
-	"datos/ecoli_set_const_20.const_".i."_BO.out" with lines title "Boltzmann " ls 8 , \
-	"datos/ecoli_set_const_20.const_".i."_CA-MOD.out" with lines title "Cauchy modificado " ls 9, \
-	"datos/ecoli_set_const_20.const_".i."_CA.out" with lines title "Cauchy " ls 10, \
-	"datos/ecoli_set_const_20.const_".i."_PRO.out" with lines title "Proporcional " ls 11, \
-	"datos/ecoli_set_const_20.const_".i."_CONST.out" with lines title "Constante " ls 12
+	plot "../datos/ecoli_set_const_20.const_".i."_BO-MOD.out" with lines title "Boltzmann modificado " ls 7,\
+	"../datos/ecoli_set_const_20.const_".i."_BO.out" with lines title "Boltzmann " ls 8 , \
+	"../datos/ecoli_set_const_20.const_".i."_CA-MOD.out" with lines title "Cauchy modificado " ls 9, \
+	"../datos/ecoli_set_const_20.const_".i."_CA.out" with lines title "Cauchy " ls 10, \
+	"../datos/ecoli_set_const_20.const_".i."_PRO.out" with lines title "Proporcional " ls 11, \
+	"../datos/ecoli_set_const_20.const_".i."_CONST.out" with lines title "Constante " ls 12
 
 }

@@ -1,6 +1,6 @@
 set xlabel "Número de evaluación"
 set ylabel "Valor de la temperatura"
-set ytics 10
+set ytics 100
 set xrange [0:100000]
 set grid
 set termoption dashed
@@ -25,16 +25,16 @@ set style line 12 lc rgb "#0066ff" lt 1 lw 1.7 dashtype '-.-'
 
 do for[i in semillas] {
 
-	set title "Rand con un 10% de restricciones con la semilla ".i
+	set title "Newthyroid con un 10% de restricciones con la semilla ".i
 	set term pngcairo dashed size 1400,1050
-	set output "salidas_png/rand_set_const_10_".i."_temp.png"
+	set output "salidas_png/newthyroid_set_const_10_".i."_temp.png"
 
 
-	plot "datos/rand_set_const_10.const_".i."_BO-MOD.out" with lines title "Boltzmann modificado " ls 7,\
-	"datos/rand_set_const_10.const_".i."_BO.out" with lines title "Boltzmann " ls 8 , \
-	"datos/rand_set_const_10.const_".i."_CA-MOD.out" with lines title "Cauchy modificado " ls 9, \
-	"datos/rand_set_const_10.const_".i."_CA.out" with lines title "Cauchy " ls 10, \
-	"datos/rand_set_const_10.const_".i."_PRO.out" with lines title "Proporcional " ls 11, \
-	"datos/rand_set_const_10.const_".i."_CONST.out" with lines title "Constante " ls 12
+	plot "../datos/newthyroid_set_const_10.const_".i."_BO-MOD.out" with lines title "Boltzmann modificado " ls 7,\
+	"../datos/newthyroid_set_const_10.const_".i."_BO.out" with lines title "Boltzmann " ls 8 , \
+	"../datos/newthyroid_set_const_10.const_".i."_CA-MOD.out" with lines title "Cauchy modificado " ls 9, \
+	"../datos/newthyroid_set_const_10.const_".i."_CA.out" with lines title "Cauchy " ls 10, \
+	"../datos/newthyroid_set_const_10.const_".i."_PRO.out" with lines title "Proporcional " ls 11, \
+	"../datos/newthyroid_set_const_10.const_".i."_CONST.out" with lines title "Constante " ls 12
 
 }

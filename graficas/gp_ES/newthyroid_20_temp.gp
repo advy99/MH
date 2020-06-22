@@ -1,5 +1,5 @@
 set xlabel "Número de evaluación"
-set ylabel "Valor de la función objetivo"
+set ylabel "Valor de la temperatura"
 set ytics 100
 set xrange [0:100000]
 set grid
@@ -25,16 +25,16 @@ set style line 12 lc rgb "#0066ff" lt 1 lw 1.7 dashtype '-.-'
 
 do for[i in semillas] {
 
-	set title "Newthyroid con un 10% de restricciones con la semilla ".i
+	set title "Newthyroid con un 20% de restricciones con la semilla ".i
 	set term pngcairo dashed size 1400,1050
-	set output "salidas_png/newthyroid_set_const_10_".i."_es.png"
+	set output "salidas_png/newthyroid_set_const_20_".i."_temp.png"
 
 
-	plot "datos/newthyroid_set_const_10.const_".i."_BO-MOD_fobjetivo.out" with lines title "Boltzmann modificado (Valor F. objetivo) " ls 1,\
-	"datos/newthyroid_set_const_10.const_".i."_BO_fobjetivo.out" with lines title "Boltzmann (Valor F. objetivo) " ls 2 , \
-	"datos/newthyroid_set_const_10.const_".i."_CA-MOD_fobjetivo.out" with lines title "Cauchy modificado (Valor F. objetivo) " ls 3, \
-	"datos/newthyroid_set_const_10.const_".i."_CA_fobjetivo.out" with lines title "Cauchy (Valor F. objetivo) " ls 4, \
-	"datos/newthyroid_set_const_10.const_".i."_PRO_fobjetivo.out" with lines title "Proporcional (Valor F. objetivo) " ls 5, \
-	"datos/newthyroid_set_const_10.const_".i."_CONST_fobjetivo.out" with lines title "Constante (Valor F. objetivo) " ls 6
+	plot "../datos/newthyroid_set_const_20.const_".i."_BO-MOD.out" with lines title "Boltzmann modificado " ls 7,\
+	"../datos/newthyroid_set_const_20.const_".i."_BO.out" with lines title "Boltzmann " ls 8 , \
+	"../datos/newthyroid_set_const_20.const_".i."_CA-MOD.out" with lines title "Cauchy modificado " ls 9, \
+	"../datos/newthyroid_set_const_20.const_".i."_CA.out" with lines title "Cauchy " ls 10, \
+	"../datos/newthyroid_set_const_20.const_".i."_PRO.out" with lines title "Proporcional " ls 11, \
+	"../datos/newthyroid_set_const_20.const_".i."_CONST.out" with lines title "Constante " ls 12
 
 }

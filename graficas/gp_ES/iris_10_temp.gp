@@ -30,11 +30,11 @@ do for[i in semillas] {
 	set output "salidas_png/iris_set_const_10_".i."_temp.png"
 
 
-	plot "datos/iris_set_const_10.const_".i."_BO-MOD.out" with lines title "Boltzmann modificado " ls 7,\
-	"datos/iris_set_const_10.const_".i."_BO.out" with lines title "Boltzmann " ls 8 , \
-	"datos/iris_set_const_10.const_".i."_CA-MOD.out" with lines title "Cauchy modificado " ls 9, \
-	"datos/iris_set_const_10.const_".i."_CA.out" with lines title "Cauchy " ls 10, \
-	"datos/iris_set_const_10.const_".i."_PRO.out" with lines title "Proporcional " ls 11, \
-	"datos/iris_set_const_10.const_".i."_CONST.out" with lines title "Constante " ls 12
+	plot "../datos/iris_set_const_10.const_".i."_BO-MOD.out" with lines title "Boltzmann modificado " ls 7,\
+	"../datos/iris_set_const_10.const_".i."_BO.out" with lines title "Boltzmann " ls 8 , \
+	"../datos/iris_set_const_10.const_".i."_CA-MOD.out" with lines title "Cauchy modificado " ls 9, \
+	"../datos/iris_set_const_10.const_".i."_CA.out" with lines title "Cauchy " ls 10, \
+	"../datos/iris_set_const_10.const_".i."_PRO.out" with lines title "Proporcional " ls 11, \
+	"../datos/iris_set_const_10.const_".i."_CONST.out" with lines title "Constante " ls 12
 
 }

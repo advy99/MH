@@ -1,6 +1,6 @@
 set xlabel "Número de evaluación"
 set ylabel "Valor de la función objetivo"
-set ytics 500
+set ytics 30
 set xrange [0:100000]
 set grid
 set termoption dashed
@@ -25,16 +25,16 @@ set style line 12 lc rgb "#0066ff" lt 1 lw 1.7 dashtype '-.-'
 
 do for[i in semillas] {
 
-	set title "Ecoli con un 10% de restricciones con la semilla ".i
+	set title "Iris con un 10% de restricciones con la semilla ".i
 	set term pngcairo dashed size 1400,1050
-	set output "salidas_png/ecoli_set_const_10_".i."_es.png"
+	set output "salidas_png/iris_set_const_10_".i."_es.png"
 
 
-	plot "datos/ecoli_set_const_10.const_".i."_BO-MOD_fobjetivo.out" with lines title "Boltzmann modificado (Valor F. objetivo) " ls 1,\
-	"datos/ecoli_set_const_10.const_".i."_BO_fobjetivo.out" with lines title "Boltzmann (Valor F. objetivo) " ls 2 , \
-	"datos/ecoli_set_const_10.const_".i."_CA-MOD_fobjetivo.out" with lines title "Cauchy modificado (Valor F. objetivo) " ls 3, \
-	"datos/ecoli_set_const_10.const_".i."_CA_fobjetivo.out" with lines title "Cauchy (Valor F. objetivo) " ls 4, \
-	"datos/ecoli_set_const_10.const_".i."_PRO_fobjetivo.out" with lines title "Proporcional (Valor F. objetivo) " ls 5, \
-	"datos/ecoli_set_const_10.const_".i."_CONST_fobjetivo.out" with lines title "Constante (Valor F. objetivo) " ls 6
+	plot "../datos/iris_set_const_10.const_".i."_BO-MOD_fobjetivo.out" with lines title "Boltzmann modificado (Valor F. objetivo) " ls 1,\
+	"../datos/iris_set_const_10.const_".i."_BO_fobjetivo.out" with lines title "Boltzmann (Valor F. objetivo) " ls 2 , \
+	"../datos/iris_set_const_10.const_".i."_CA-MOD_fobjetivo.out" with lines title "Cauchy modificado (Valor F. objetivo) " ls 3, \
+	"../datos/iris_set_const_10.const_".i."_CA_fobjetivo.out" with lines title "Cauchy (Valor F. objetivo) " ls 4, \
+	"../datos/iris_set_const_10.const_".i."_PRO_fobjetivo.out" with lines title "Proporcional (Valor F. objetivo) " ls 5, \
+	"../datos/iris_set_const_10.const_".i."_CONST_fobjetivo.out" with lines title "Constante (Valor F. objetivo) " ls 6
 
 }
