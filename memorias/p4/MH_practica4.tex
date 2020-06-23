@@ -594,13 +594,30 @@ Vemos como claramente tenemos un problema de convergencia ya que incluso con med
 
 \subsubsection{Mejora de la implementación: Mayor convergencia.}
 
+Con el objetivo de paliar el problema de la convergencia demasiado lenta, decidí aplicar búsqueda local que implementé en la práctica 1 con pocas evaluaciones a la población de explotación. En principio esto soluciona el problema de convergencia, pero hace que se genere justo el problema contrario, existe demasiada convergencia y la búsqueda local requiere demasiadas evaluaciones, lo que hace que el algoritmo se pare de forma temprana y sin apenas explorar.
+
+Para intentar paliar esto modifique la forma de aplicar la búsqueda local, ya no se aplicará al total de la población, si no solo a cierto porcentaje de esta, a las mejores soluciones que tenemos actualmente.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.33]{con_BL_explotar.png}
+	
+	\caption{Comportamiento de la segunda versión de la propuesta, con BL para converger.}
+	\label{fig:basico_BL}
+\end{figure}
+
+Aun así vemos que esto sigue siendo demasiada explotación, y el algoritmo no se comporta como esperábamos, en el siguiente punto realizaremos los últimos ajustes y veremos como solucionar este problema.
+
+
 \subsubsection{Mejora de la implementación y versión final: Ajuste de la convergencia y reinicialización de soluciones estancadas.}
 
 
 
+\subsection{Pseudocódigo.}
+
 \subsection{Parámetros escogidos.}
 
-\subsection{Pseudocódigo.}
 
 
 El pseudocódigo final del algoritmo quedaría de la siguiente forma:
