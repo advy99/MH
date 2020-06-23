@@ -853,9 +853,162 @@ Como hemos visto en teoría, las metaheurísticas son métodos de resolución ge
 
 \subsection{Resultados obtenidos.}
 
+En esta sección veremos los resultados de la metaheurística propuesta con las distintas semillas de ejecución.
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos en el PAR con un 10 \% de restricciones y 100.000 evaluaciones}}                                                                                                \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 18,5084    & 1007,3                    & 21                          & 1092,38                & 97,7751    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 16,984     & 1027,18                   & 29                          & 1144,66                & 102,453    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 20,0279    & 1046,7                    & 28                          & 1160,13                & 100,28     \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 18,9155    & 1007,86                   & 48                          & 1202,32                & 104,457    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 18,7755    & 1010,69                   & 15                          & 1071,46                & 98,7245    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 18,64226   & 1019,946                  & 28,2                        & 1134,19                & 100,73792  \\ \hline
+\end{tabular}
+\end{table}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos en el PAR con un 10 \% de restricciones y 100.000 evaluaciones}}                                                                                                \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 18,3887    & 288,636                   & 6                           & 307,093                & 36,4046    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 17,3493    & 288,636                   & 6                           & 307,093                & 35,1656    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 20,4942    & 288,636                   & 6                           & 307,093                & 38,6944    \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 19,25      & 288,636                   & 6                           & 307,093                & 42,1734    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 18,5986    & 288,636                   & 6                           & 307,093                & 35,0651    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 18,923025  & 288,636                   & 6                           & 307,093                & 37,50062   \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos en el PAR con un 20 \% de restricciones y 100.000 evaluaciones}}                                                                                                \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 33,122     & 982,257                   & 58                          & 1099,74                & 146,207    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 31,6669    & 1029,1                    & 62                          & 1154,68                & 160,091    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 34,8101    & 983,705                   & 81                          & 1147,78                & 148,274    \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 35,0625    & 1004,15                   & 40                          & 1085,18                & 141,43     \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 34,4076    & 966,093                   & 69                          & 1105,86                & 148,047    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 33,81382   & 993,061                   & 62                          & 1118,648               & 148,8098   \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos en el PAR con un 20 \% de restricciones y 100.000 evaluaciones}}                                                                                                \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 28,6735    & 313,299                   & 0                           & 313,299                & 55,7937    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 27,5961    & 313,299                   & 0                           & 313,299                & 53,5622    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 34,5216    & 313,299                   & 0                           & 313,299                & 64,9033    \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 34,5362    & 313,299                   & 0                           & 313,299                & 65,2081    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 33,8561    & 313,299                   & 0                           & 313,299                & 56,4405    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 31,8367    & 313,299                   & 0                           & 313,299                & 59,18156   \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+
+Para comprobar si la metaheurística tiene una convergencia lenta y necesita más evaluaciones lo hemos ejecutado con $500.000$ evaluaciones:
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos en el PAR con un 10 \% de restricciones y 500.000 evaluaciones}}                                                                                                \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 97,2171    & 1010,69                   & 15                          & 1071,46                & 502,456    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 94,355     & 950,992                   & 31                          & 1076,58                & 496,302    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 101,313    & 989,412                   & 26                          & 1094,74                & 522,49     \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 96,3239    & 992,281                   & 18                          & 1065,2                 & 496,963    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 96,8177    & 992,281                   & 18                          & 1065,2                 & 478,311    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 97,20534   & 987,1312                  & 21,6                        & 1074,636               & 499,3044   \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos en el PAR con un 10 \% de restricciones y 500.000 evaluaciones}}                                                                                                \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 97,4146    & 288,636                   & 6                           & 307,093                & 193,301    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 94,8557    & 288,636                   & 6                           & 307,093                & 171,614    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 100,335    & 288,636                   & 6                           & 307,093                & 213,649    \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 97,5751    & 288,636                   & 6                           & 307,093                & 192,919    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 96,3705    & 288,636                   & 6                           & 307,093                & 172,189    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 97,284075  & 288,636                   & 6                           & 307,093                & 188,7344   \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos en el PAR con un 20 \% de restricciones y 500.000 evaluaciones}}                                                                                                \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Iris}}                                                            & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,595316                  & 0                           & 0,595316               & 169,547    & 982,399                   & 49                          & 1081,65                & 741,916    \\ \hline
+9398429           & 0,595316                  & 0                           & 0,595316               & 164,881    & 1020,99                   & 61                          & 1144,55                & 783,979    \\ \hline
+12321             & 0,595316                  & 0                           & 0,595316               & 154,416    & 984,041                   & 56                          & 1097,47                & 745,848    \\ \hline
+213566            & 0,595316                  & 0                           & 0,595316               & 175,745    & 1004,15                   & 40                          & 1085,18                & 695,819    \\ \hline
+3939021           & 0,595316                  & 0                           & 0,595316               & 169,263    & 961,792                   & 68                          & 1099,53                & 772,989    \\ \hline
+\textbf{Media}    & 0,595316                  & 0                           & 0,595316               & 166,7704   & 990,6744                  & 54,8                        & 1101,676               & 748,1102   \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{9}{|c|}{\textbf{Resultados obtenidos en el PAR con un 20 \% de restricciones y 500.000 evaluaciones}}                                                                                                \\ \hline
+\multirow{2}{*}{} & \multicolumn{4}{c|}{\textbf{Rand}}                                                            & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-9} 
+                  & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr,}} & \textbf{T} \\ \hline
+123452244         & 0,746683                  & 0                           & 0,746683               & 151,117    & 313,299                   & 0                           & 313,299                & 295,144    \\ \hline
+9398429           & 0,746683                  & 0                           & 0,746683               & 147,444    & 313,299                   & 0                           & 313,299                & 289,401    \\ \hline
+12321             & 0,746683                  & 0                           & 0,746683               & 171,277    & 313,299                   & 0                           & 313,299                & 310,99     \\ \hline
+213566            & 0,746683                  & 0                           & 0,746683               & 174,549    & 313,299                   & 0                           & 313,299                & 326,693    \\ \hline
+3939021           & 0,746683                  & 0                           & 0,746683               & 151,476    & 313,299                   & 0                           & 313,299                & 304,998    \\ \hline
+\textbf{Media}    & 0,746683                  & 0                           & 0,746683               & 159,1726   & 313,299                   & 0                           & 313,299                & 305,4452   \\ \hline
+\end{tabular}
+\end{table}
+
 
 \subsection{Análisis de resultados.	}
 
+En esta sección veremos la media de la función objetivo obtenida en global con nuestro algoritmo (usando las medias de las soluciones obtenidas con las distintas semillas) y la compararemos con las distintas metaheurísticas desarrolladas en prácticas.
 
 \subsubsection{10\% de restricciones.}
 
