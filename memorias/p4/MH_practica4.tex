@@ -1013,7 +1013,266 @@ En esta sección veremos la media de la función objetivo obtenida en global con
 \subsubsection{10\% de restricciones.}
 
 
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multicolumn{5}{|c|}{\textbf{Resultados globales para el PAR con un 10\% de restricciones}}                                 \\ \hline
+\multirow{2}{*}{}           & \multicolumn{4}{c|}{\textbf{Iris}}                                                            \\ \cline{2-5} 
+                            & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} \\ \hline
+\textbf{Greedy}             & 0,5976                    & 18,2                        & 1,4155                 & 0,0089     \\ \hline
+\textbf{BL}                 & 0,5953                    & 0                           & 0,5953                 & 0,033      \\ \hline
+\textbf{AGG-UN}             & 0,595316                  & 0                           & 0,595316               & 33,90718   \\ \hline
+\textbf{AGG-SF}             & 0,595316                  & 0                           & 0,595316               & 32,2308    \\ \hline
+\textbf{AGE-UN}             & 0,595316                  & 0                           & 0,595316               & 34,59538   \\ \hline
+\textbf{AGE-SF}             & 0,595316                  & 0                           & 0,595316               & 34,152     \\ \hline
+\textbf{AM-10-1}            & 0,595316                  & 0                           & 0,595316               & 29,57236   \\ \hline
+\textbf{AM-10-0.1}          & 0,595316                  & 0                           & 0,595316               & 31,14054   \\ \hline
+\textbf{AM-10-0.1mej}       & 0,595316                  & 0                           & 0,595316               & 31,45518   \\ \hline
+\textbf{AM-BL-50-1*}        & 0,595316                  & 0                           & 0,595316               & 29,01588   \\ \hline
+\textbf{AM-BL-50-0.1*}      & 0,595316                  & 0                           & 0,595316               & 98,08708   \\ \hline
+\textbf{AM-BL-50-0.1mej*}   & 0,595316                  & 0                           & 0,595316               & 141,1162   \\ \hline
+\textbf{ES-PROPORCIONAL}    & 0,595316                  & 0                           & 0,595316               & 1,49684    \\ \hline
+\textbf{ES-CAUCHY*}         & 0,595316                  & 0                           & 0,595316               & 5,494556   \\ \hline
+\textbf{ES-CAUCHY-MOD*}     & 0,595316                  & 0                           & 0,595316               & 0,2950572  \\ \hline
+\textbf{ES-BOLTZMANN*}      & 4,447966                  & 481,4                       & 26,08294               & 0,0100016  \\ \hline
+\textbf{ES-BOLTZMANN-MOD*}  & 0,595316                  & 0                           & 0,595316               & 2,778972   \\ \hline
+\textbf{ES-CONST*}          & 3,687164                  & 343,2                       & 19,1112                & 0,6276966  \\ \hline
+\textbf{ALG-PROPIO-100.000} & 0,595316                  & 0                           & 0,595316               & 18,64226   \\ \hline
+\textbf{ALG-PROPIO-500.000} & 0,595316                  & 0                           & 0,595316               & 97,20534   \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multicolumn{5}{|c|}{\textbf{Resultados globales para el PAR con un 10\% de restricciones}}                                 \\ \hline
+\multirow{2}{*}{}           & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-5} 
+                            & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} \\ \hline
+\textbf{Greedy}             & 1620,404                  & 225,2                       & 2532,7281              & 0,3308     \\ \hline
+\textbf{BL}                 & 1015,3152                 & 34,4                        & 1154,6755              & 1,0767     \\ \hline
+\textbf{AGG-UN}             & 1141,344                  & 85,6                        & 1488,124               & 197,5652   \\ \hline
+\textbf{AGG-SF}             & 1161,824                  & 79,2                        & 1482,678               & 218,8612   \\ \hline
+\textbf{AGE-UN}             & 1054,44                   & 46,4                        & 1242,416               & 190,2626   \\ \hline
+\textbf{AGE-SF}             & 1048,506                  & 48,2                        & 1243,772               & 159,4754   \\ \hline
+\textbf{AM-10-1}            & 1074,736                  & 40,2                        & 1237,59                & 254,93     \\ \hline
+\textbf{AM-10-0.1}          & 1013,314                  & 29                          & 1130,798               & 182,373    \\ \hline
+\textbf{AM-10-0.1mej}       & 1022,276                  & 35,4                        & 1165,686               & 161,8468   \\ \hline
+\textbf{AM-BL-50-1*}        & 1009,4486                 & 18,6                        & 1084,802               & 112,3606   \\ \hline
+\textbf{AM-BL-50-0.1*}      & 993,4624                  & 16,8                        & 1061,522               & 187,1166   \\ \hline
+\textbf{AM-BL-50-0.1mej*}   & 998,9748                  & 26,6                        & 1106,734               & 240,1654   \\ \hline
+\textbf{ES-PROPORCIONAL}    & 1026,614                  & 24                          & 1123,84                & 15,0164    \\ \hline
+\textbf{ES-CAUCHY*}         & 2018,35                   & 550,6                       & 4248,926               & 13,360462  \\ \hline
+\textbf{ES-CAUCHY-MOD*}     & 1029,114                  & 40,4                        & 1192,78                & 2,559018   \\ \hline
+\textbf{ES-BOLTZMANN*}      & 2348,378                  & 1794,4                      & 9617,802               & 0,0449562  \\ \hline
+\textbf{ES-BOLTZMANN-MOD*}  & 1068,118                  & 50,8                        & 1273,914               & 3,340806   \\ \hline
+\textbf{ES-CONST*}          & 2347,68                   & 1755,2                      & 9458,296               & 1,03066    \\ \hline
+\textbf{ALG-PROPIO-100.000} & 1019,946                  & 28,2                        & 1134,19                & 100,73792  \\ \hline
+\textbf{ALG-PROPIO-500.000} & 987,1312                  & 21,6                        & 1074,636               & 499,3044   \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multicolumn{5}{|c|}{\textbf{Resultados globales para el PAR con un 10\% de restricciones}}                                 \\ \hline
+\multirow{2}{*}{}           & \multicolumn{4}{c|}{\textbf{Rand}}                                                            \\ \cline{2-5} 
+                            & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} \\ \hline
+\textbf{Greedy}             & 0,8522                    & 0                           & 0,8522                 & 0,0053     \\ \hline
+\textbf{BL}                 & 0,8522                    & 0                           & 0,8522                 & 0,031      \\ \hline
+\textbf{AGG-UN}             & 0,746683                  & 0                           & 0,746683               & 32,4795    \\ \hline
+\textbf{AGG-SF}             & 0,746683                  & 0                           & 0,746683               & 32,62382   \\ \hline
+\textbf{AGE-UN}             & 0,746683                  & 0                           & 0,746683               & 33,77456   \\ \hline
+\textbf{AGE-SF}             & 0,746683                  & 0                           & 0,746683               & 34,04846   \\ \hline
+\textbf{AM-10-1}            & 0,746683                  & 0                           & 0,746683               & 28,97514   \\ \hline
+\textbf{AM-10-0.1}          & 0,746683                  & 0                           & 0,746683               & 31,03544   \\ \hline
+\textbf{AM-10-0.1mej}       & 0,746683                  & 0                           & 0,746683               & 31,136     \\ \hline
+\textbf{AM-BL-50-1*}        & 0,746683                  & 0                           & 0,746683               & 28,97514   \\ \hline
+\textbf{AM-BL-50-0.1*}      & 0,746683                  & 0                           & 0,746683               & 96,3543    \\ \hline
+\textbf{AM-BL-50-0.1mej*}   & 0,746683                  & 0                           & 0,746683               & 139,5158   \\ \hline
+\textbf{ES-PROPORCIONAL}    & 0,746683                  & 0                           & 0,746683               & 1,4893275  \\ \hline
+\textbf{ES-CAUCHY*}         & 0,746683                  & 0                           & 0,746683               & 5,4394075  \\ \hline
+\textbf{ES-CAUCHY-MOD*}     & 0,746683                  & 0                           & 0,746683               & 0,21275775 \\ \hline
+\textbf{ES-BOLTZMANN*}      & 8,231654                  & 472,8                       & 35,62158               & 0,0089755  \\ \hline
+\textbf{ES-BOLTZMANN-MOD*}  & 0,746683                  & 0                           & 0,746683               & 0,31910325 \\ \hline
+\textbf{ES-CONST*}          & 6,747462                  & 352,4                       & 27,16246               & 0,6858465  \\ \hline
+\textbf{ALG-PROPIO-100.000} & 0,746683                  & 0                           & 0,746683               & 18,923025  \\ \hline
+\textbf{ALG-PROPIO-500.000} & 0,746683                  & 0                           & 0,746683               & 97,284075  \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multicolumn{5}{|c|}{\textbf{Resultados globales para el PAR con un 10\% de restricciones}}                                 \\ \hline
+\multirow{2}{*}{}           & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-5} 
+                            & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} \\ \hline
+\textbf{Greedy}             & 321,448                   & 35                          & 429,113                & 0,013897   \\ \hline
+\textbf{BL}                 & 288,636                   & 6                           & 307,093                & 0,023454   \\ \hline
+\textbf{AGG-UN}             & 291,219                   & 22                          & 358,8944               & 69,89108   \\ \hline
+\textbf{AGG-SF}             & 291,219                   & 22                          & 358,8944               & 72,15892   \\ \hline
+\textbf{AGE-UN}             & 288,636                   & 6                           & 307,093                & 64,07388   \\ \hline
+\textbf{AGE-SF}             & 288,636                   & 6                           & 307,093                & 62,53112   \\ \hline
+\textbf{AM-10-1}            & 288,636                   & 6                           & 307,093                & 64,87448   \\ \hline
+\textbf{AM-10-0.1}          & 288,636                   & 6                           & 307,093                & 67,90066   \\ \hline
+\textbf{AM-10-0.1mej}       & 287,5504                  & 23,8                        & 360,7628               & 67,76746   \\ \hline
+\textbf{AM-BL-50-1*}        & 288,636                   & 6                           & 307,093                & 46,31588   \\ \hline
+\textbf{AM-BL-50-0.1*}      & 288,636                   & 6                           & 307,093                & 187,2      \\ \hline
+\textbf{AM-BL-50-0.1mej*}   & 288,636                   & 6                           & 307,093                & 258,0528   \\ \hline
+\textbf{ES-PROPORCIONAL}    & 288,636                   & 6                           & 307,093                & 5,949792   \\ \hline
+\textbf{ES-CAUCHY*}         & 306,4614                  & 5,6                         & 323,6874               & 8,229588   \\ \hline
+\textbf{ES-CAUCHY-MOD*}     & 291,219                   & 22                          & 358,8944               & 0,4994252  \\ \hline
+\textbf{ES-BOLTZMANN*}      & 294,0466                  & 1142                        & 3807,014               & 0,018691   \\ \hline
+\textbf{ES-BOLTZMANN-MOD*}  & 291,219                   & 22                          & 358,8944               & 1,0504342  \\ \hline
+\textbf{ES-CONST*}          & 300,8396                  & 1067,2                      & 3583,708               & 0,6481654  \\ \hline
+\textbf{ALG-PROPIO-100.000} & 288,636                   & 6                           & 307,093                & 37,50062   \\ \hline
+\textbf{ALG-PROPIO-500.000} & 288,636                   & 6                           & 307,093                & 188,7344   \\ \hline
+\end{tabular}
+\end{table}
+
+
 \subsubsection{20\% de restricciones.}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multicolumn{5}{|c|}{\textbf{Resultados globales para el PAR con un 20\% de restricciones}}                                 \\ \hline
+\multirow{2}{*}{}           & \multicolumn{4}{c|}{\textbf{Iris}}                                                            \\ \cline{2-5} 
+                            & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} \\ \hline
+\textbf{Greedy}             & 0,6488                    & 31                          & 1,3451                 & 0,0075     \\ \hline
+\textbf{BL}                 & 0,5953                    & 0                           & 0,5953                 & 0,0359     \\ \hline
+\textbf{AGG-UN}             & 0,595316                  & 0                           & 0,595316               & 60,29382   \\ \hline
+\textbf{AGG-SF}             & 0,595316                  & 0                           & 0,595316               & 60,2058    \\ \hline
+\textbf{AGE-UN}             & 0,595316                  & 0                           & 0,595316               & 56,41964   \\ \hline
+\textbf{AGE-SF}             & 0,595316                  & 0                           & 0,595316               & 59,99192   \\ \hline
+\textbf{AM-10-1}            & 0,595316                  & 0                           & 0,595316               & 55,86334   \\ \hline
+\textbf{AM-10-0.1}          & 0,595316                  & 0                           & 0,595316               & 56,68102   \\ \hline
+\textbf{AM-10-0.1mej}       & 0,595316                  & 0                           & 0,595316               & 53,0547    \\ \hline
+\textbf{AM-BL-50-1*}        & 0,595316                  & 0                           & 0,595316               & 46,86176   \\ \hline
+\textbf{AM-BL-50-0.1*}      & 0,595316                  & 0                           & 0,595316               & 177,1576   \\ \hline
+\textbf{AM-BL-50-0.1mej*}   & 0,595316                  & 0                           & 0,595316               & 233,341    \\ \hline
+\textbf{ES-PROPORCIONAL}    & 0,595316                  & 0                           & 0,595316               & 1,834362   \\ \hline
+\textbf{ES-CAUCHY*}         & 0,595316                  & 0                           & 0,595316               & 6,241488   \\ \hline
+\textbf{ES-CAUCHY-MOD*}     & 0,595316                  & 0                           & 0,595316               & 0,2831686  \\ \hline
+\textbf{ES-BOLTZMANN*}      & 4,445                     & 944,2                       & 25,65252               & 0,0118606  \\ \hline
+\textbf{ES-BOLTZMANN-MOD*}  & 0,595316                  & 0                           & 0,595316               & 2,2894336  \\ \hline
+\textbf{ES-CONST*}          & 3,48508                   & 738                         & 20,06116               & 0,7038264  \\ \hline
+\textbf{ALG-PROPIO-100.000} & 0,595316                  & 0                           & 0,595316               & 33,81382   \\ \hline
+\textbf{ALG-PROPIO-500.000} & 0,595316                  & 0                           & 0,595316               & 166,7704   \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multicolumn{5}{|c|}{\textbf{Resultados globales para el PAR con un 20\% de restricciones}}                                 \\ \hline
+\multirow{2}{*}{}           & \multicolumn{4}{c|}{\textbf{Ecoli}}                                                           \\ \cline{2-5} 
+                            & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} \\ \hline
+\textbf{Greedy}             & 1526,108                  & 220,6                       & 1972,9523              & 0,2535     \\ \hline
+\textbf{BL}                 & 1003,4532                 & 93,2                        & 1192,2378              & 1,2888     \\ \hline
+\textbf{AGG-UN}             & 1033,278                  & 99,2                        & 1234,216               & 326,942    \\ \hline
+\textbf{AGG-SF}             & 1035,464                  & 109,4                       & 1257,064               & 327,9496   \\ \hline
+\textbf{AGE-UN}             & 1013,1146                 & 110,6                       & 1237,148               & 287,0698   \\ \hline
+\textbf{AGE-SF}             & 1055,172                  & 105                         & 1267,86                & 237,0284   \\ \hline
+\textbf{AM-10-1}            & 1007,1428                 & 67                          & 1142,856               & 400,7524   \\ \hline
+\textbf{AM-10-0.1}          & 1030,038                  & 83,4                        & 1198,974               & 277,04     \\ \hline
+\textbf{AM-10-0.1mej}       & 996,7638                  & 93,8                        & 1186,762               & 252,8102   \\ \hline
+\textbf{AM-BL-50-1*}        & 974,9386                  & 60,8                        & 1098,092               & 131,6912   \\ \hline
+\textbf{AM-BL-50-0.1*}      & 973,6262                  & 49,4                        & 1073,692               & 273,9566   \\ \hline
+\textbf{AM-BL-50-0.1mej*}   & 989,0804                  & 58,8                        & 1108,182               & 350,5506   \\ \hline
+\textbf{ES-PROPORCIONAL}    & 1024,16                   & 71,6                        & 1169,192               & 15,89972   \\ \hline
+\textbf{ES-CAUCHY*}         & 1952,202                  & 1039                        & 4056,786               & 12,27178   \\ \hline
+\textbf{ES-CAUCHY-MOD*}     & 1014,367                  & 106,4                       & 1229,892               & 2,864748   \\ \hline
+\textbf{ES-BOLTZMANN*}      & 2338,602                  & 3591,8                      & 9614,104               & 0,0442088  \\ \hline
+\textbf{ES-BOLTZMANN-MOD*}  & 1013,5206                 & 105,6                       & 1227,42                & 2,84408    \\ \hline
+\textbf{ES-CONST*}          & 2338,376                  & 3534                        & 9496,8                 & 1,204014   \\ \hline
+\textbf{ALG-PROPIO-100.000} & 993,061                   & 62                          & 1118,648               & 148,8098   \\ \hline
+\textbf{ALG-PROPIO-500.000} & 990,6744                  & 54,8                        & 1101,676               & 748,1102   \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multicolumn{5}{|c|}{\textbf{Resultados globales para el PAR con un 20\% de restricciones}}                                 \\ \hline
+\multirow{2}{*}{}           & \multicolumn{4}{c|}{\textbf{Rand}}                                                            \\ \cline{2-5} 
+                            & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} \\ \hline
+\textbf{Greedy}             & 0,8522                    & 0                           & 0,8522                 & 0,0054     \\ \hline
+\textbf{BL}                 & 0,8522                    & 0                           & 0,8522                 & 0,031      \\ \hline
+\textbf{AGG-UN}             & 0,746683                  & 0                           & 0,746683               & 59,18074   \\ \hline
+\textbf{AGG-SF}             & 0,746683                  & 0                           & 0,746683               & 60,97666   \\ \hline
+\textbf{AGE-UN}             & 0,746683                  & 0                           & 0,746683               & 54,47464   \\ \hline
+\textbf{AGE-SF}             & 0,746683                  & 0                           & 0,746683               & 55,6518    \\ \hline
+\textbf{AM-10-1}            & 0,746683                  & 0                           & 0,746683               & 56,90998   \\ \hline
+\textbf{AM-10-0.1}          & 0,85                      & 0                           & 0,85                   & 0,006      \\ \hline
+\textbf{AM-10-0.1mej}       & 0,746683                  & 0                           & 0,746683               & 54,5818    \\ \hline
+\textbf{AM-BL-50-1*}        & 0,746683                  & 0                           & 0,746683               & 46,87196   \\ \hline
+\textbf{AM-BL-50-0.1*}      & 0,746683                  & 0                           & 0,746683               & 181,2178   \\ \hline
+\textbf{AM-BL-50-0.1mej*}   & 0,746683                  & 0                           & 0,746683               & 235,1968   \\ \hline
+\textbf{ES-PROPORCIONAL}    & 0,746683                  & 0                           & 0,746683               & 1,715114   \\ \hline
+\textbf{ES-CAUCHY*}         & 0,746683                  & 0                           & 0,746683               & 6,426196   \\ \hline
+\textbf{ES-CAUCHY-MOD*}     & 0,746683                  & 0                           & 0,746683               & 0,2884142  \\ \hline
+\textbf{ES-BOLTZMANN*}      & 8,238774                  & 953,2                       & 35,83648               & 0,0117474  \\ \hline
+\textbf{ES-BOLTZMANN-MOD*}  & 0,746683                  & 0                           & 0,746683               & 0,3437946  \\ \hline
+\textbf{ES-CONST*}          & 0,746683                  & 0                           & 0,746683               & 0,305715   \\ \hline
+\textbf{ALG-PROPIO-100.000} & 0,746683                  & 0                           & 0,746683               & 31,8367    \\ \hline
+\textbf{ALG-PROPIO-500.000} & 0,746683                  & 0                           & 0,746683               & 159,1726   \\ \hline
+\end{tabular}
+\end{table}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multicolumn{5}{|c|}{\textbf{Resultados globales para el PAR con un 20\% de restricciones}}                                 \\ \hline
+\multirow{2}{*}{}           & \multicolumn{4}{c|}{\textbf{Newthyroid}}                                                      \\ \cline{2-5} 
+                            & \textit{\textbf{Tasa\_C}} & \textit{\textbf{Tasa\_inf}} & \textit{\textbf{Agr.}} & \textbf{T} \\ \hline
+\textbf{Greedy}             & 328,86                    & 314                         & 811,711                & 0,081181   \\ \hline
+\textbf{BL}                 & 313,299                   & 0                           & 313,299                & 0,273968   \\ \hline
+\textbf{AGG-UN}             & 313,299                   & 0                           & 313,299                & 105,62468  \\ \hline
+\textbf{AGG-SF}             & 313,299                   & 0                           & 313,299                & 122,6      \\ \hline
+\textbf{AGE-UN}             & 306,6012                  & 53,6                        & 389,024                & 98,99436   \\ \hline
+\textbf{AGE-SF}             & 313,299                   & 0                           & 313,299                & 86,3254    \\ \hline
+\textbf{AM-10-1}            & 313,299                   & 0                           & 313,299                & 115,0751   \\ \hline
+\textbf{AM-10-0.1}          & 313,299                   & 0                           & 313,299                & 113,1316   \\ \hline
+\textbf{AM-10-0.1mej}       & 313,299                   & 0                           & 313,299                & 94,96734   \\ \hline
+\textbf{AM-BL-50-1*}        & 313,299                   & 0                           & 313,299                & 74,59396   \\ \hline
+\textbf{AM-BL-50-0.1*}      & 313,299                   & 0                           & 313,299                & 312,4922   \\ \hline
+\textbf{AM-BL-50-0.1mej*}   & 313,299                   & 0                           & 313,299                & 300,1704   \\ \hline
+\textbf{ES-PROPORCIONAL}    & 313,299                   & 0                           & 313,299                & 6,500736   \\ \hline
+\textbf{ES-CAUCHY*}         & 311,9128                  & 4                           & 318,0638               & 9,217698   \\ \hline
+\textbf{ES-CAUCHY-MOD*}     & 307,1938                  & 45,8                        & 377,6224               & 0,4326344  \\ \hline
+\textbf{ES-BOLTZMANN*}      & 292,3022                  & 2301,2                      & 3830,954               & 0,0176734  \\ \hline
+\textbf{ES-BOLTZMANN-MOD*}  & 313,299                   & 0                           & 313,299                & 0,4608432  \\ \hline
+\textbf{ES-CONST*}          & 300,2416                  & 2204,2                      & 3689,732               & 0,7691834  \\ \hline
+\textbf{ALG-PROPIO-100.000} & 313,299                   & 0                           & 313,299                & 59,18156   \\ \hline
+\textbf{ALG-PROPIO-500.000} & 313,299                   & 0                           & 313,299                & 305,4452   \\ \hline
+\end{tabular}
+\end{table}
 
 
 \subsection{Otros experimentos: Estudio de los parámetros de la metaheurística propuesta.}
