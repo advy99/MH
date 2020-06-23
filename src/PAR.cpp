@@ -1798,7 +1798,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::operador_mutacion_segmento_fij
 std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX_EVAL, const int TAM_POB_INI,
 																						 const double PROB_CAMBIAR_GEN, const double PORCENTAJE_EXPLORAR,
 																					 	 const double PORCENTAJE_MUTAR, const double PORCENTAJE_INTERCAMBIAR,
-																						 const bool SALIDA){
+																						 const double PORCENTAJE_BL, const bool SALIDA){
 
 	// algoritmo propio para la p4
 
@@ -1935,7 +1935,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 
 		// buscamos el 0.1 mejor de la poblacion de explotar
 		std::set<int> indices_mejores_explotar;
-		for (int i = 0; i < 0.1 * TAM_POB_INI; i++){
+		for (int i = 0; i < PORCENTAJE_BL * TAM_POB_INI; i++){
 			int indice_mejor = 0;
 			// buscamos el mejor de explorar
 			for (unsigned j = 0; j < poblacion_explotar.size(); j++){
