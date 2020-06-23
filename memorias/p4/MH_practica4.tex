@@ -855,6 +855,8 @@ Como hemos visto en teoría, las metaheurísticas son métodos de resolución ge
 
 En esta sección veremos los resultados de la metaheurística propuesta con las distintas semillas de ejecución.
 
+Recordar que todos los resultados se han obtenido sin aplicar la raíz cuadrada al calcular las distancias de los elementos a los centroides en ningún momento, ya que la función para calcular la raíz cuadrada tiene un alto coste computacional y no aporta nada, ya que la raíz cuadrada aplicada a distancias siempre positivas es continua y estrictamente creciente, luego es indiferente aplicarla o no para comparar resultados.
+
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
@@ -1057,6 +1059,7 @@ Todos los algoritmos están explicados en prácticas anteriores, tanto su constr
 \end{tabular}
 \end{table}
 
+En iris, al igual que con otros algoritmos, encontramos un mínimo que es el mejor obtenido con todos los algoritmos utilizados. Esto se debe a que este conjunto de datos es muy simple y encuentra un valor de la función objetivo muy bueno.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
