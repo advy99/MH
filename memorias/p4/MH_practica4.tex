@@ -853,7 +853,7 @@ Como hemos visto en teoría, las metaheurísticas son métodos de resolución ge
 
 \subsection{Resultados obtenidos.}
 
-En esta sección veremos los resultados de la metaheurística propuesta con las distintas semillas de ejecución.
+En esta sección veremos los resultados de la metaheurística propuesta con las distintas semillas de ejecución. Comentare el comportamiento del algoritmo en cada conjunto de datos en concreto.
 
 Recordar que todos los resultados se han obtenido sin aplicar la raíz cuadrada al calcular las distancias de los elementos a los centroides en ningún momento, ya que la función para calcular la raíz cuadrada tiene un alto coste computacional y no aporta nada, ya que la raíz cuadrada aplicada a distancias siempre positivas es continua y estrictamente creciente, luego es indiferente aplicarla o no para comparar resultados.
 
@@ -894,6 +894,57 @@ Recordar que todos los resultados se han obtenido sin aplicar la raíz cuadrada 
 
 
 
+Con un 10\% de restricciones ocurre lo mismo que en prácticas anteriores para los conjuntos de datos Iris, Rand y Newthyroid, estos conjuntos son simples y prácticamente todos los algoritmos vistos en prácticas y ahora esta propuesta son capaces de converger a una buena solución con una función objetivo baja. El principal problema lo seguimos teniendo en el conjunto de datos Ecoli, mucho más complejo que los otros tres. Para desarrollar el comportamiento en cada conjunto de datos me apoyaré en la salida del avance del algoritmo.
+
+
+En esta memoria tendremos algunas gráficas de ejemplo, en el código se pueden generar todas las gráficas para las distintas ejecuciones y se adjuntarán en la entrega.
+
+Nota: Hay zonas de las gráficas que a veces están sin pintar, son zonas con demasiados picos que gnuplot no ha sido capaz de pintar.
+
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.5]{iris_1.png}
+	
+	\caption{Avance del algoritmo sobre iris con 100.000 evaluaciones y un 10\% de restricciones.}
+	\label{fig:iris_1}
+\end{figure}
+
+En iris rápidamente converge a la mejor solución conocida y pasa a una mayor exploración reinicializando las soluciones que llegan a ser como la mejor, obteniendo buen resultado y un comportamiento correcto del algoritmo.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.5]{ecoli_1.png}
+	
+	\caption{Avance del algoritmo sobre ecoli con 100.000 evaluaciones y un 10\% de restricciones.}
+	\label{fig:ecoli_1}
+\end{figure}
+
+En ecoli, al ser un conjunto de datos más complejo, la población de explotación no converge al estar intercambiando la mejor solución ya que encuentra mejoras con el paso de las evaluaciones. Tras unas 40.000 evaluaciones llega a un mínimo, y comienza a converger, haciendo que entre en juego la reinicialización. Como vemos el comportamiento en este conjunto de datos también es correcto, aunque para algunas semillas las 100.000 evaluaciones se han quedado justas y es posible que fuera a encontrar una mejor solución si utilizamos un mayor número de evaluaciones.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.5]{rand_1.png}
+	
+	\caption{Avance del algoritmo sobre rand con 100.000 evaluaciones y un 10\% de restricciones.}
+	\label{fig:rand_1}
+\end{figure}
+
+Para Rand, que es todavía más simple que Iris, ocurre lo mismo que con el primer conjunto de datos, rápidamente llega a la mejor solución obtenida a lo largo de las prácticas como veremos más adelante y a partir de ahí sigue explorando el espacio de búsqueda hasta quedarse sin evaluaciones.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.5]{newthyroid_1.png}
+	
+	\caption{Avance del algoritmo sobre newthyroid con 100.000 evaluaciones y un 10\% de restricciones.}
+	\label{fig:new_1}
+\end{figure}
+
+Con Newthyroid tenemos la misma situación que con Iris y Rand, aunque es un poco más complejo, no llega al nivel de Ecoli y rápidamente converge a una solución bastante buena (la mejor obtenida en el desarrollo de las prácticas).
+
+\newpage
+
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
 \begin{table}[H]
@@ -930,9 +981,11 @@ Recordar que todos los resultados se han obtenido sin aplicar la raíz cuadrada 
 \end{table}
 
 
+Con el 20\% de restricciones vuelve a ocurrir lo mismo que para el 10\% de restricciones, por lo que no explicaré otra vez el mismo comportamiento.
 
+\newpage
 
-Para comprobar si la metaheurística tiene una convergencia lenta y necesita más evaluaciones lo hemos ejecutado con $500.000$ evaluaciones:
+Para comprobar si la metaheurística tiene una convergencia lenta y necesita más evaluaciones lo hemos ejecutado con $500.000$ evaluaciones, aunque como hemos visto, con gran probabilidad en Iris, Rand y Newthyroid esto no será necesario:
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
@@ -1008,6 +1061,18 @@ Para comprobar si la metaheurística tiene una convergencia lenta y necesita má
 \end{table}
 
 
+Vemos como el comportamiento tanto para el 10\% de restricciones como para el 20\% de restricciones es el mismo en Iris, Rand y Newthyroid, sin embargo en Ecoli vemos como ha mejorado las soluciones encontradas.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.5]{ecoli_2.png}
+	
+	\caption{Avance del algoritmo sobre ecoli con 500.000 evaluaciones y un 10\% de restricciones.}
+	\label{fig:ecoli_2}
+\end{figure}
+
+En este caso vemos como con 100.000 evaluaciones han sido suficientes para converger, sin embargo con esta gráficas podemos ver una de las gran ventajas del algoritmo propuesto, incluso cuando ya ha convergido la población de explotación, gracias a la población de exploración y la reinicialización es capaz de encontrar mejores soluciones, como vemos un poco antes de la evaluación 250.000. Esto es una prueba de la potencia y el equilibrio de exploración y explotación con el que cuenta el algoritmo, haciéndolo tan competitivo como otros vistos en las prácticas, como veremos en el siguiente punto.
+
 \subsection{Análisis de resultados.	}
 
 En esta sección veremos la media de la función objetivo obtenida en global con nuestro algoritmo (usando las medias de las soluciones obtenidas con las distintas semillas) y la compararemos con las distintas metaheurísticas desarrolladas en prácticas.
@@ -1059,7 +1124,6 @@ Todos los algoritmos están explicados en prácticas anteriores, tanto su constr
 \end{tabular}
 \end{table}
 
-En iris, al igual que con otros algoritmos, encontramos un mínimo que es el mejor obtenido con todos los algoritmos utilizados. Esto se debe a que este conjunto de datos es muy simple y encuentra un valor de la función objetivo muy bueno.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
