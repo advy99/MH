@@ -1,4 +1,4 @@
-\documentclass[11pt, spanish]{article}
+\documentclass[12pt, spanish]{article}
 \usepackage[spanish]{babel}
 \selectlanguage{spanish}
 \usepackage{natbib}
@@ -499,8 +499,6 @@ Para los elementos j de los clusters != cluster:
 	Si j y elemento tienen una restricción Y dicha restricción == 1
 		incumplidas++
 
-
-
 return incumplidas
 
 
@@ -560,10 +558,56 @@ Esta propuesta no esta ajustada a ningún criterio ni se ha equilibrado la explo
 
 \subsection{Implementación y adaptaciones de la propuesta.}
 
+De cara a la implementación he adaptado la propuesta al problema del PAR realizando algunas adaptaciones y realizando distintas pruebas para estudiar su exploración y su explotación.
+
+\subsubsection{Implementación temprana: Adaptación de la propuesta.}
+
+Para la primera implementación simplemente lleve al código la idea de tener dos poblaciones, una que explore el espacio de búsqueda y otra que lo explote.
+
+De cara a realizar la exploración y la explotación, intentando buscar métodos alternativos a los vistos en clase y tomando la idea del superhombre como solución, se me ocurrío la siguiente propuesta, la mejor solución de la población de explotación será el superhombre. Las dos poblaciones tendrán el siguiente comportamiento:
+
+\begin{itemize}
+	\item Población que explota: Intentando parecerse al superhombre (mejor solución de esta población), todas las soluciones copiarán parte de los elementos de la mejor solución.
+	\item Población que explora: Intentando alejarse del superhombre y no parecerse a este, con un porcentaje inverso al que la población que explota la mejor solución, estas soluciones cambiarán sus elementos por otros distintos a los que tiene la mejor solución.
+\end{itemize} 
+
+De esta forma, si el porcentaje es por ejemplo, del 40\%, en cada iteración las soluciones de la población que explota copiarán la asignación de elementos de la mejor solución existente en la población y se parecerán más a la mejor solución, intentando que con esa parte de la mejor solución y el resto de asignación ya tenían la solución, encontrar una mejor asignación. De forma análoga, las soluciones de la población que explora modificarán el 60\% de su asignación para que sea distinta a la mejor solución.
+
+Para intentar que exista una comunicación entre ambas poblaciones intenté que si la población que explora encuentra una mejor solución que todas las que hay en la población de explotación, estas se intercambien (que no copiarla en otra, ya que perderíamos la información de la antigua mejor solución), sin embargo esta comunicación era muy poca y no funcionaba correctamente, el algoritmo no presentaba un comportamiento bueno.
+
+Como solución a este problema he añadido un parámetro al algoritmo, un porcentaje de intercambio. En cada iteración, el porcentaje indicado en este parámetro se usará para intercambiar las peores soluciones de la población que explota por las mejores soluciones de la población que explora, haciendo que las soluciones que se encuentran en las zonas del espacio prometedoras comiencen a explotar, y las que estaban en zonas que aunque estuvieran explotando no conseguían avanzar, pasen a explorar.
+
+Esta primera versión conseguía una convergencia muy lenta, pero poco a poco se acerca a buenas soluciones, esta es una gráfica de como se comporta el algoritmo con el conjunto de datos más complejo con el que hemos trabajado en prácticas:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.33]{basico_sin_BL.png}
+	
+	\caption{Comportamiento de la primera versión de la propuesta.}
+	\label{fig:basico_sin_BL}
+\end{figure}
+
+En esta imagen vemos en morado la mejor solución del conjunto de exploración y en verde la mejor solución del conjunto de explotación. Vemos como ambas poco a poco convergen, y tenemos que tener en  cuenta que el conjunto de exploración no alcanza buenas soluciones, porque en cuento logra encontrar una buena solución esta pasa al conjunto de explotación.
+
+Vemos como claramente tenemos un problema de convergencia ya que incluso con medio millón de evaluaciones no llegamos a lograr que encuentre una solución aceptable, y seguramente con más evaluaciones siga encontrando nuevas soluciones.
+
+
+\subsubsection{Mejora de la implementación: Mayor convergencia.}
+
+\subsubsection{Mejora de la implementación y versión final: Ajuste de la convergencia y reinicialización de soluciones estancadas.}
+
+
+
 \subsection{Parámetros escogidos.}
 
 \subsection{Pseudocódigo.}
 
+
+El pseudocódigo final del algoritmo quedaría de la siguiente forma:
+
+\begin{lstlisting}
+Devuelve: Solución del PAR - Recibe: 
+\end{lstlisting}
 
 
 \section{Proceso de implementación.}
