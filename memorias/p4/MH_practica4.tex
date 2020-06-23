@@ -631,7 +631,7 @@ Vemos como al principio del algoritmo, cuando todavía no ha logrado converger, 
 
 De esta forma hemos conseguido equilibrar tanto la exploración como la explotación y se ha llegado a diseñar una metaheurística que es capaz de cambiar de estrategia dependiendo de la situación de las soluciones a las que llegue.
 
-Esto se ha conseguido ya que tanto cada vez que se cambiaba de mejor solución como en los intercambios de información de las poblaciones, el resto de la población seguía manteniendo información sobre las mejores soluciones antiguas, y esto les llevaba a encontrar nuevas soluciones mejores. Una vez una solución gana peso sobre las demás y hace que todas las otras soluciones se estanquen en esa, se reinicializan con el objetivo de encontrar una solución distinta.
+Esto se ha conseguido ya que tanto cada vez que se cambiaba de mejor solución como en los intercambios de información de las poblaciones, el resto de la población seguía manteniendo información sobre las mejores soluciones antiguas, y esto les llevaba a encontrar nuevas soluciones mejores. Una vez una solución gana peso sobre las demás y hace que todas las otras soluciones se estanquen en esa, se reinicializan con el objetivo de encontrar una solución distinta, intentando favorecer la exploración cuando se estanca la solución en un mínimo muy bueno.
 
 
 \subsection{Parámetros.}
