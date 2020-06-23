@@ -1895,6 +1895,10 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX
 					poblacion_explorar[i].first[j] = nuevo_cluster;
 				}
 			}
+			clusters = solucion_to_clusters(poblacion_explorar[i].first);
+			calcular_desviacion_general();
+			poblacion_explorar[i].second = funcion_objetivo();
+			eval++;
 
 		}
 
