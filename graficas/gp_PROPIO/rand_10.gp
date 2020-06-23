@@ -1,7 +1,7 @@
 set title "rand con un 10% de restricciones"
 set xlabel "Número de evaluación"
 set ylabel "Valor de la función objetivo"
-set ytics 500
+set ytics 40
 set grid
 
 semillas = "123452244 9398429 12321 213566 3939021"
