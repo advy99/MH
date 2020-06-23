@@ -660,7 +660,10 @@ Las soluciones se representan como una pareja de el vector con la asignación y 
 El pseudocódigo final del algoritmo quedaría de la siguiente forma. Los argumentos son los explicados en el apartado anterior en orden. Todas las variables en el código son variables para operaciones auxiliares o bien para realizar la salida:
 
 \begin{lstlisting}
-Devuelve: Solución del PAR (pareja asignación y valoración)
+
+algoritmo_propio(MAX_EVALS, TAM_POB_INI, PROB_MOD_GEN, PORCENTAJE_EXPLORAR, PORCENTAJE_INTERCAMBIAR, PORCENTAJE_BL)
+
+Devuelve: Solucion del PAR (pareja asignacion y valoracion)
 Recibe:  MAX_EVALS
 		 TAM_POB_INI
 		 PROB_MOD_GEN
@@ -678,9 +681,9 @@ Recibe:  MAX_EVALS
 	
 	Mientras evals < MAX_EVALS:
 		Para i = 0 hasta poblacion_explorar.size():
-			Para cada elemento j de una solución:
+			Para cada elemento j de una solucion:
 				Si aleatorio(0,1) <= 1 - PROB_MOD_GEN:
-					Modificamos la asignacion poblacion_explorar[i].asignacion[j] a una distinta a poblacion_explotar[mejor_explotar].asignacion[j]
+					poblacion_explorar[i].asignacion[j] = valor distinto a poblacion_explotar[mejor_explotar].asignacion[j]
 					
 			poblacion_explorar[i].valoracion = funcion_objetivo(poblacion_explorar[i].asignacion)
 			evals++
@@ -688,11 +691,9 @@ Recibe:  MAX_EVALS
 		
 		
 		
-		
-		
 		Para i = 0 hasta poblacion_explotar.size():
 			Si i != mejor_explotar:
-				Para cada elemento j de una solución:
+				Para cada elemento j de una solucion:
 					Si aleatorio(0,1) <= PROB_MOD_GEN
 						poblacion_explotar[i].asignacion[j] = poblacion_explotar[mejor_explotar].asignacion[j]
 						
@@ -724,9 +725,13 @@ Recibe:  MAX_EVALS
 		
 		mejor_explotar = indice_mejor_elemento(poblacion_explotar)
 
+	Fin Mientras
+
 	Devolver poblacion_explotar[mejor_explotar]
 			
 \end{lstlisting}
+
+
 
 
 \subsection{Parámetros escogidos para las ejecuciones.}
