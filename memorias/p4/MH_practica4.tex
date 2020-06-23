@@ -636,17 +636,34 @@ Esto se ha conseguido ya que tanto cada vez que se cambiaba de mejor solución c
 
 \subsection{Parámetros.}
 
+Tras la explicación de como ha avanzado la propuesta original y como se ha adaptado para llegar a la versión final, finalmente el algoritmo contará con los siguientes parámetros:
+
+\begin{enumerate}
+	\item Máximo de evaluaciones: Este algoritmo tendrá como condición de parada el número de evaluaciones que le pasemos por parámetro.
+	\item Tamaño de la población: El número de soluciones que tendremos en la población de explotar. El número de elementos de la población de explorar vendrá en función de este parámetro y otro que veremos más adelante.
+	\item Probabilidad de modificar un gen: Esta probabilidad $p\_modificar\_gen$ será la probabilidad con la que se decidirá en cada elemento de una solución de la población de explotación si dicho elemento se sustituye por el de la mejor solución. Para la probabilidad de si alejarse de la mejor solución en la población de exploración usaremos $1 - p\_modificar\_gen$.
+	\item Porcentaje explorar: Este porcentaje es el porcentaje de tamaño de la población de explorar con respecto al tamaño de la población de explotar. Si tiene valor $1$, ambas poblaciones son del mismo tamaño, si tiene valor $0.5$, la población de explorar tendrá la mitad de soluciones que la población de explotar.
+	\item Porcentaje a intercambiar: Porcentaje de soluciones que se intercambian entre ambas poblaciones en cada iteración. Se intercambian las peores del conjunto de explotar por las mejores del conjunto de explorar.
+	\item Porcentaje BL: Porcentaje de soluciones del conjunto de explotar a las que se le aplicará la búsqueda local suave. Se aplicará a las mejores soluciones.
+	\item Salida: Parámetro por defecto a verdadero, con este controlaremos la salida de información a ficheros para luego obtener las gráficas del comportamiento del algoritmo.
+\end{enumerate}
+
+\newpage
+
+
 \subsection{Pseudocódigo.}
-
-\subsection{Parámetros escogidos para las ejecuciones.}
-
-
 
 El pseudocódigo final del algoritmo quedaría de la siguiente forma:
 
 \begin{lstlisting}
 Devuelve: Solución del PAR - Recibe: 
 \end{lstlisting}
+
+
+\subsection{Parámetros escogidos para las ejecuciones.}
+
+
+
 
 
 \section{Proceso de implementación.}
