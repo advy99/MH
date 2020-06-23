@@ -64,7 +64,7 @@
   framesep         = 0.19em,
   rulecolor        = \color{listing-rule},
   frameround       = ffff,
-  tabsize          = 4,
+  tabsize          = 3,
   numberstyle      = \color{listing-numbers},
   aboveskip        = 1.0em,
   belowskip        = 0.1em,
@@ -102,8 +102,8 @@
 
 \setmarginsrb{2 cm}{1 cm}{2 cm}{2 cm}{1 cm}{1.5 cm}{1 cm}{1.5 cm}
 
-\title{Práctica 4:\\
-PAR - Estudio de metaheurística propia.  \hspace{0.05cm} }
+\title{Práctica 4\\
+PAR - Estudio de metaheurística propia  \hspace{0.05cm} }
 \author{Antonio David Villegas Yeguas}
 \date{\today}
 
@@ -627,7 +627,7 @@ Esta solución ha dado un buen resultado, y además, debido a que una vez se est
 
 En esta gráfica, un poco distinta de las otras, vemos en verde la mejor solución de la población de explotación, en negro la peor de la población de explotación y en azul la mejor de la población de exploración.
 
-Vemos como al principio del algoritmo, cuando todavía no ha logrado converger, se consigue reducir el valor de la función objetivo gracias al método de acercamiento de soluciones a la mejor, sumado a la exploración que nos da la segunda población, que como vemos, las mejores soluciones de exploración y las peores de explotación se intercambian de forma correcta. Vemos como sobre la evaluación 100.000 se encuentra un mínimo local, la solución se estanca y se reinicializa, de ahí el primer pico que encontramos en la peor solución del conjunto de explotación. Esta reinicialización nos sirve para encontrar un nuevo mínimo más adelante, y a partir de ahí ya con mayor dificultad de encontrar una mejor solución ya que la actual es bastante buena, comienza a verse cada vez más reinicializaciones, fomentando la exploración cuando ya no puede explotar más.
+Vemos como al principio del algoritmo, cuando todavía no ha logrado converger, se consigue reducir el valor de la función objetivo gracias al método de acercamiento de soluciones a la mejor, sumado a la exploración que nos da la segunda población, que como vemos, las mejores soluciones de exploración y las peores de explotación se intercambian de forma correcta. Vemos como en distintas ocasiones se encuentra un mínimo local, la solución se estanca y se reinicializa, o incluso mientras desciende se da el caso de que una solución llega a la mejor, de ahí el primer pico que encontramos en la peor solución del conjunto de explotación, ya que se cambia por una solución aleatoria cuando una llega a la misma que teníamos, y la nueva aleatoria con alta probabilidad va a ser muy mala solución, siendo la nueva peor. Esta reinicialización nos sirve para encontrar un nuevo mínimo más adelante, y a partir de ahí ya con mayor dificultad de encontrar una mejor solución ya que la actual es bastante buena, comienza a verse cada vez más reinicializaciones, fomentando la exploración cuando ya no puede explotar más.
 
 De esta forma hemos conseguido equilibrar tanto la exploración como la explotación y se ha llegado a diseñar una metaheurística que es capaz de cambiar de estrategia dependiendo de la situación de las soluciones a las que llegue.
 
@@ -645,7 +645,7 @@ Tras la explicación de como ha avanzado la propuesta original y como se ha adap
 	\item Porcentaje explorar: Este porcentaje es el porcentaje de tamaño de la población de explorar con respecto al tamaño de la población de explotar. Si tiene valor $1$, ambas poblaciones son del mismo tamaño, si tiene valor $0.5$, la población de explorar tendrá la mitad de soluciones que la población de explotar.
 	\item Porcentaje a intercambiar: Porcentaje de soluciones que se intercambian entre ambas poblaciones en cada iteración. Se intercambian las peores del conjunto de explotar por las mejores del conjunto de explorar.
 	\item Porcentaje BL: Porcentaje de soluciones del conjunto de explotar a las que se le aplicará la búsqueda local suave. Se aplicará a las mejores soluciones.
-	\item Salida: Parámetro por defecto a verdadero, con este controlaremos la salida de información a ficheros para luego obtener las gráficas del comportamiento del algoritmo.
+	\item Salida: Parámetro por defecto a verdadero, con este controlaremos la salida de información a ficheros para luego obtener las gráficas del comportamiento del algoritmo. No se tendrá en cuenta en el pseudocódigo que presentaré, ya que es opcional.
 \end{enumerate}
 
 \newpage
@@ -653,10 +653,79 @@ Tras la explicación de como ha avanzado la propuesta original y como se ha adap
 
 \subsection{Pseudocódigo.}
 
-El pseudocódigo final del algoritmo quedaría de la siguiente forma:
+Para este algoritmo usaremos la representación de un vector de enteros donde cada posición representa un elemento, de forma que el número que este en una posición indica el cluster al que asignamos ese elemento. Por ejemplo, si la posición 0 tiene un 1, quiere decir que el elemento 0 esta asignado al cluster 1.
+
+Las soluciones se representan como una pareja de el vector con la asignación y el valor de la función objetivo.
+
+El pseudocódigo final del algoritmo quedaría de la siguiente forma. Los argumentos son los explicados en el apartado anterior en orden. Todas las variables en el código son variables para operaciones auxiliares o bien para realizar la salida:
 
 \begin{lstlisting}
-Devuelve: Solución del PAR - Recibe: 
+Devuelve: Solución del PAR (pareja asignación y valoración)
+Recibe:  MAX_EVALS
+		 TAM_POB_INI
+		 PROB_MOD_GEN
+		 PORCENTAJE_EXPLORAR
+		 PORCENTAJE_INTERCAMBIAR
+		 PORCENTAJE_BL
+		 
+		 
+	poblacion_explotar = generar_poblacion_aleatoria(TAM_POB_INI)
+	poblacion_explorar = generar_poblacion_aleatoria(TAM_POB_INI * PORCENTAJE_EXPLORAR)
+	
+	mejor_explotar = indice_mejor_elemento(poblacion_explotar)
+	
+	evals = 0
+	
+	Mientras evals < MAX_EVALS:
+		Para i = 0 hasta poblacion_explorar.size():
+			Para cada elemento j de una solución:
+				Si aleatorio(0,1) <= 1 - PROB_MOD_GEN:
+					Modificamos la asignacion poblacion_explorar[i].asignacion[j] a una distinta a poblacion_explotar[mejor_explotar].asignacion[j]
+					
+			poblacion_explorar[i].valoracion = funcion_objetivo(poblacion_explorar[i].asignacion)
+			evals++
+		
+		
+		
+		
+		
+		
+		Para i = 0 hasta poblacion_explotar.size():
+			Si i != mejor_explotar:
+				Para cada elemento j de una solución:
+					Si aleatorio(0,1) <= PROB_MOD_GEN
+						poblacion_explotar[i].asignacion[j] = poblacion_explotar[mejor_explotar].asignacion[j]
+						
+				poblacion_explotar[i].valoracion = funcion_objetivo(poblacion_explotar[i].asignacion)
+				evals++
+
+				Si poblacion_explotar[i] == poblacion_explotar[mejor_explotar]
+					poblacion_explotar[i] = generar_solucion_aleatoria()
+					poblacion_explotar[i].valoracion = funcion_objetivo(poblacion_explotar[i].asignacion)
+					evals++
+					
+					
+				
+				
+			
+			
+		indices_mejores_explotar = bucar_indices_mejores(poblacion_explotar, TAM_POB_INI * PORCENTAJE_BL)
+		
+		Para todo i en indices_mejores_explotar:
+			// la busqueda local suave devuelve las evaluaciones utilizadas			
+			eval += algoritmo_BLS(poblacion_explotar[i])
+			
+			
+		indices_mejores_explorar = buscar_indices_mejores(poblacion_explorar, TAM_POB_INI * PORCENTAJE_INTERCAMBIAR)
+		
+		indices_peores_explotar = buscar_indices_peores(poblacion_explotar, TAM_POB_INI * PORCENTAJE_INTERCAMBIAR)
+		
+		Intercambiamos las soluciones de ambas poblaciones usando los indices obtenidos
+		
+		mejor_explotar = indice_mejor_elemento(poblacion_explotar)
+
+	Devolver poblacion_explotar[mejor_explotar]
+			
 \end{lstlisting}
 
 
