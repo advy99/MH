@@ -612,11 +612,33 @@ Aun así vemos que esto sigue siendo demasiada explotación, y el algoritmo no s
 
 \subsubsection{Mejora de la implementación y versión final: Ajuste de la convergencia y reinicialización de soluciones estancadas.}
 
+Finalmente, una forma de hacer una mayor convergencia en el algoritmo pero sin que sea tan brusca como la búsqueda local ha sido utilizar la búsqueda local suave vista en la práctica 2 a las mejores soluciones de la población de explotación.
 
+Esta solución ha dado un buen resultado, y además, debido a que una vez se estancaba la mejor solución, rápidamente toda la población de explotación acababa siendo una copia de esta solución he añadido una reinicialización de soluciones, cuando una solución de la población de explotación llega a ser la misma que la mejor solución encontrada, esta se desecha y la reemplazamos por una solución aleatoria. Con estas modificaciones conseguimos los siguientes resultados:
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.50]{final_ecoli.png}
+	
+	\caption{Comportamiento de la versión final, con BL suave y reinicialización de soluciones.}
+	\label{fig:final_ecoli}
+\end{figure}
+
+En esta gráfica, un poco distinta de las otras, vemos en verde la mejor solución de la población de explotación, en negro la peor de la población de explotación y en azul la mejor de la población de exploración.
+
+Vemos como al principio del algoritmo, cuando todavía no ha logrado converger, se consigue reducir el valor de la función objetivo gracias al método de acercamiento de soluciones a la mejor, sumado a la exploración que nos da la segunda población, que como vemos, las mejores soluciones de exploración y las peores de explotación se intercambian de forma correcta. Vemos como sobre la evaluación 100.000 se encuentra un mínimo local, la solución se estanca y se reinicializa, de ahí el primer pico que encontramos en la peor solución del conjunto de explotación. Esta reinicialización nos sirve para encontrar un nuevo mínimo más adelante, y a partir de ahí ya con mayor dificultad de encontrar una mejor solución ya que la actual es bastante buena, comienza a verse cada vez más reinicializaciones, fomentando la exploración cuando ya no puede explotar más.
+
+De esta forma hemos conseguido equilibrar tanto la exploración como la explotación y se ha llegado a diseñar una metaheurística que es capaz de cambiar de estrategia dependiendo de la situación de las soluciones a las que llegue.
+
+Esto se ha conseguido ya que tanto cada vez que se cambiaba de mejor solución como en los intercambios de información de las poblaciones, el resto de la población seguía manteniendo información sobre las mejores soluciones antiguas, y esto les llevaba a encontrar nuevas soluciones mejores. Una vez una solución gana peso sobre las demás y hace que todas las otras soluciones se estanquen en esa, se reinicializan con el objetivo de encontrar una solución distinta.
+
+
+\subsection{Parámetros.}
 
 \subsection{Pseudocódigo.}
 
-\subsection{Parámetros escogidos.}
+\subsection{Parámetros escogidos para las ejecuciones.}
 
 
 
