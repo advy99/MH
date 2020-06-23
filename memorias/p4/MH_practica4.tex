@@ -714,7 +714,7 @@ Recibe:  MAX_EVALS
 		
 		Para todo i en indices_mejores_explotar:
 			// la busqueda local suave devuelve las evaluaciones utilizadas			
-			eval += algoritmo_BLS(poblacion_explotar[i])
+			eval += algoritmo_BLS(poblacion_explotar[i], poblacion_explotar[i]*0.3)
 			
 			
 		indices_mejores_explorar = buscar_indices_mejores(poblacion_explorar, TAM_POB_INI * PORCENTAJE_INTERCAMBIAR)
@@ -736,7 +736,19 @@ Recibe:  MAX_EVALS
 
 \subsection{Parámetros escogidos para las ejecuciones.}
 
+De cara a la ejecución del algoritmo he escogido los siguientes valores de los parámetros:
 
+
+\begin{enumerate}
+	\item Máximo de evaluaciones: $100.000$, al igual que en las otras prácticas, y $500.000$ para estudiar el comportamiento del algoritmo con más evaluaciones.
+	\item Tamaño de la población: $50$, al igual que la práctica 2, aporta suficiente diversidad sin llegar a tener tantos elementos que consuman todas las evaluaciones.
+	\item Probabilidad de modificar un gen: $0.4$, con este parámetro controlamos el porcentaje de solución que se va a copiar al explotar, y el que se va a alejar al explorar, más adelante en el análisis de resultados y experimentos explicare porque este valor.
+	\item Porcentaje explorar: $1$, en principio el tamaño de las poblaciones será el mismo. Añadí este parámetro ya que creía que modificar el tamaño podría hacer una reducción en el uso de evaluaciones, sin embargo como veremos en el análisis de resultados y experimentos, no afecta. Esto sumado a los intercambios de información me ha llevado a dejar el mismo tamaño.
+	\item Porcentaje a intercambiar: $0.4$ para tener una gran comunicación, ya que los cambios en cada iteración serán bruscos al modificar gran parte de las soluciones.
+	\item Porcentaje BL: $0.1$, la búsqueda local consumirá parte de las evaluaciones, luego es importante no aplicarla al total de la población para no consumir todas las evaluaciones en esta parte, y no en la propuesta como tal.
+\end{enumerate}
+
+Estos parámetros son los mejores encontrados para los conjuntos de datos de los que disponemos. Más adelante, en el apartado de experimentos y análisis de resultados realizaré un análisis en detalle explicando el porque he escogido estos parámetros.
 
 
 
