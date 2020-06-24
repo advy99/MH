@@ -46,3 +46,6 @@ bin/
 *.txt
 
 graficas/salidas_png/*.png
+
+*.nav
+*.snm
