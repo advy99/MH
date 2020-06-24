@@ -553,7 +553,7 @@ Mi propuesta a partir de la idea de Nietzsche consiste en contar con dos poblaci
 
 La principal idea de la propuesta es contar con estas dos poblaciones, de forma que se fomente tanto la exploración como la explotación.
 
-Esta propuesta no esta ajustada a ningún criterio ni se ha equilibrado la exploración y exploración. Continuaré con todos estos detalles de adaptación en el siguiente punto, donde adaptaré esta propuesta para que sea viable como metaheurística y poder implementarla.
+Esta propuesta no esta ajustada a ningún criterio ni se ha equilibrado la exploración y explotación. Continuaré con todos estos detalles de adaptación en el siguiente punto, donde adaptaré esta propuesta para que sea viable como metaheurística y poder implementarla.
  
 
 \subsection{Implementación y adaptaciones de la propuesta.}
@@ -596,7 +596,7 @@ Vemos como claramente tenemos un problema de convergencia ya que incluso con med
 
 Con el objetivo de paliar el problema de la convergencia demasiado lenta, decidí aplicar búsqueda local que implementé en la práctica 1 con pocas evaluaciones a la población de explotación. En principio esto soluciona el problema de convergencia, pero hace que se genere justo el problema contrario, existe demasiada convergencia y la búsqueda local requiere demasiadas evaluaciones, lo que hace que el algoritmo se pare de forma temprana y sin apenas explorar.
 
-Para intentar paliar esto modifique la forma de aplicar la búsqueda local, ya no se aplicará al total de la población, si no solo a cierto porcentaje de esta, a las mejores soluciones que tenemos actualmente.
+Para intentar paliar esto modifiqué la forma de aplicar la búsqueda local, ya no se aplicará al total de la población, si no solo a cierto porcentaje de esta, a las mejores soluciones que tenemos actualmente.
 
 
 \begin{figure}[H]
@@ -1178,7 +1178,7 @@ En Ecoli si notamos la diferencia. Este conjunto de datos es mucho más complejo
 
 Con los algoritmos vistos en prácticas, el que mejor se comportaba era el algoritmo memético con una población de 50 elementos y una búsqueda local normal aplicada al diez por ciento de la población, seguido de el mismo algoritmo pero aplicando la búsqueda local al diez por ciento de los mejores elementos de la población. Con la nueva propuesta de metaheurística le aparece un nuevo competidor, y la verdad es que esta propuesta se comporta bastante bien. 
 
-Llegamos a mejora al segundo mejor algoritmo hasta ahora y nos quedamos cerca del mejor, vemos como la diferencia entre los dos mejores algoritmos desarrollados en prácticas era que se aplicaba la búsqueda local a las mejores soluciones, o no se tenia en cuenta eso, se aplicaba a soluciones al azar. En nuestra propuesta hemos aplicado la búsqueda local a las mejores soluciones, luego como experimento podríamos aplicarla a soluciones aleatorias.
+Llegamos a mejorar al segundo mejor algoritmo hasta ahora y nos quedamos cerca del mejor, vemos como la diferencia entre los dos mejores algoritmos desarrollados en prácticas era que se aplicaba la búsqueda local a las mejores soluciones, o no se tenia en cuenta eso, se aplicaba a soluciones al azar. En nuestra propuesta hemos aplicado la búsqueda local a las mejores soluciones, luego como experimento podríamos aplicarla a soluciones aleatorias.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
