@@ -1,7 +1,9 @@
 \documentclass{beamer}
 \usepackage[spanish]{babel}
 \usetheme{metropolis}           % Use metropolis theme
+\graphicspath{{images/}}
 
+\usepackage{multicol}
 
 \usepackage[default]{sourcesanspro}
 
@@ -25,7 +27,7 @@
 \medskip
 \textit{advy99@correo.ugr.es}
 }
-
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
 
 \begin{document}
 
@@ -38,12 +40,42 @@
   
 \section{Inspiración}
 \begin{frame}{Inspiración: Filosofía de Nietzsche}
+
+	\begin{minipage}{0.3\textwidth}
+    	\begin{figure}
+   		 	\includegraphics[scale=0.26]{nietzsche.jpg}
+    		\caption{\footnotesize{Friedrich Nietzsche 15/10/1844 - 25/09/1900}}
+   	
+    	\end{figure}
+    	
+    \end{minipage}
+    \hfill
+	\begin{minipage}{0.6\textwidth}	
+    	Idea obtenida de la filosofía de Nietzsche:
     
+    	\begin{itemize}
+			\item Sociedad sumida en nihilismo existencial. Desvalorización de los valores morales.
+			\item Búsqueda del superhombre. Ser superior capaz de crear una moral propia, nuevos valores morales.
+    	\end{itemize}
+	\end{minipage}
+	
 \end{frame}
   
   
   
 \section{Propuesta}
+  
+\begin{frame}{Propuesta:}
+Siguiendo la idea de Nietzsche, algoritmo con dos poblaciones:
+
+\begin{enumerate}
+	\item Población sumida en el nihilismo: Exploración del entorno. Búsqueda de mejores zonas del espacio de búsqueda. Intentar salir del nihilismo.
+	\item Población con superhombre: Explotación del entorno. La mejor solución hará de superhombre, el resto de soluciones intentarán parecerse a esta solución.
+\end{enumerate}
+
+\end{frame}  
+  
+  
   
 \section{Implementación}
   
