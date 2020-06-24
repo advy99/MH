@@ -1,7 +1,9 @@
+---
 layout: page
 title: "Página principal"
 permalink: /
 filename: pagina_principal
+---
 
 # Prácticas de la asignatura Metaheurísticas
 
