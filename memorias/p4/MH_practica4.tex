@@ -1423,9 +1423,39 @@ Como conclusión, vemos como en los conjuntos de datos Rand, Iris y Newthyroid e
 
 Esto cambia para el conjunto de datos de Ecoli, que al ser más complejo si que tenemos que valorar que algoritmo es mejor. Aun consumiendo más tiempo, vemos como la mejor opción es usar un algoritmo memético o la nueva propuesta, por lo que vemos como la idea ha sido fructífera e incluso es competitiva con muchos algoritmos que ya llevan años siendo estudiados.
 
-
+\newpage
 
 \subsection{Otros experimentos: Estudio de los parámetros de la metaheurística propuesta.}
+
+Para decidir los parámetros he probado distintas ejecuciones y comprobado su comportamiento.
+
+\textbf{Probabilidad de cambiar gen:} Para decidir este parámetro he realizado distintas pruebas con valores cercanos a $0$, cercanos a $1$ y cercanos a $0.5$.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.5]{ecoli_1_cambiar.png}
+	
+	\caption{Ecoli con 100.000 evaluaciones, un 10\% de restricciones y 0.9 de probabilidad de cambiar de gen.}
+	\label{fig:ecoli_2}
+\end{figure}
+
+Como vemos, con valores cercanos a $1$ rápidamente se estanca en una solución y no es capaz de mejorarla, ya que es indiferente que soluciones entren en el conjunto de explotación, en una única iteración será igual a la mejor ya encontrada.
+
+
+Usando un valor cercano a $0$ es muy difícil que explote por obtener buenos genes, y converge gracias a la búsqueda local, no al método que intentaba seguir en un principio.
+
+
+Por estos motivos he escogido un valor de $0.4$ que mantiene un equilibrio entre los dos puntos. Todas las pruebas del análisis están realizadas con este valor.
+
+
+\textbf{Porcentaje explorar}: Este parámetro nos dice el tamaño de la población que explora con respecto a la que explota. Decidí añadir este parámetro ya que en distintas pruebas también pensé en aplicar una búsqueda local a la población de explorar, pero esto consumía demasiadas iteraciones y podía conseguir el mismo resultado haciendo una mayor comunicación entre ambas poblaciones, que es lo que finalmente aplique. Por este motivo este parámetro tiene valor $1$ para que ambas poblaciones sean del mismo tamaño.
+
+\textbf{Porcentaje intercambiar:} Porcentaje de soluciones intercambiadas entre poblaciones en cada iteración. Con este parámetro controlamos el nivel de comunicación entre ambas poblaciones. Si es un valor cercano a $0$ no habrá ninguna comunicación, y si es un valor cercano a $1$ todas las soluciones se intercambiarán. Debido a que el principal problema que encontré era la falta de comunicación, automáticamente descarte valores cercanos a 0. También deseche valores cercanos a $1$ ya que eso implicaría que todas las soluciones se estarían intercambiando y no daría tiempo a hacer una explotación de las mejores. Por estos motivos decidí escoger un valor de $0.4$.
+
+\textbf{Porcentaje BL:} Porcentaje de mejores soluciones de la población de explotación al que aplicar la búsqueda local suave. Decidí establecer un porcentaje bajo ya que como vimos en la práctica dos con los algoritmo meméticos, si se aplica a gran parte de la población consume demasiadas evaluaciones la búsqueda local y no llega a obtener buenas soluciones. Por este motivo este parámetro tendrá un valor de $0.1$ al igual que los algoritmo meméticos.
+
+
+
 
 
 \end{document}
