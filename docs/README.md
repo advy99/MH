@@ -1,3 +1,7 @@
+layout: page
+title: "Página principal"
+permalink: /
+
 # Prácticas de la asignatura Metaheurísticas
 
 ## Autor: Antonio David Villegas Yeguas
