@@ -1088,6 +1088,7 @@ Principalmente existen dos variantes:
 
 Todos los algoritmos están explicados en prácticas anteriores, tanto su construcción, su implementación como un análisis de estos en el problema del PAR.
 
+
 \subsubsection{10\% de restricciones.}
 
 
@@ -1095,7 +1096,6 @@ Todos los algoritmos están explicados en prácticas anteriores, tanto su constr
 % \usepackage{multirow}
 \begin{table}[H]
 \centering
-
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 \multicolumn{5}{|c|}{\textbf{Resultados globales para el PAR con un 10\% de restricciones}}                                 \\ \hline
@@ -1119,17 +1119,21 @@ Todos los algoritmos están explicados en prácticas anteriores, tanto su constr
 \textbf{ES-BOLTZMANN*}      & 4,447966                  & 481,4                       & 26,08294               & 0,0100016  \\ \hline
 \textbf{ES-BOLTZMANN-MOD*}  & 0,595316                  & 0                           & 0,595316               & 2,778972   \\ \hline
 \textbf{ES-CONST*}          & 3,687164                  & 343,2                       & 19,1112                & 0,6276966  \\ \hline
+\textbf{BMB}                & 0,595316                  & 0                           & 0,595316               & 0,4653014  \\ \hline
+\textbf{ILS}                & 0,595316                  & 0                           & 0,595316               & 0,2753672  \\ \hline
+\textbf{ILS-ES}             & 0,595316                  & 0                           & 0,595316               & 5,029974   \\ \hline
 \textbf{ALG-PROPIO-100.000} & 0,595316                  & 0                           & 0,595316               & 18,64226   \\ \hline
 \textbf{ALG-PROPIO-500.000} & 0,595316                  & 0                           & 0,595316               & 97,20534   \\ \hline
 \end{tabular}
 \end{table}
+
+Para el conjunto Iris vemos que no hay diferencias entre la propuesta y el resto de algoritmos ya que todos (los que funcionan bien) llegan a la misma solución y esta es bastante buena, al tener una desviación general baja y no incumplir ninguna restricción.
 
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
 \begin{table}[H]
 \centering
-
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 \multicolumn{5}{|c|}{\textbf{Resultados globales para el PAR con un 10\% de restricciones}}                                 \\ \hline
@@ -1153,17 +1157,24 @@ Todos los algoritmos están explicados en prácticas anteriores, tanto su constr
 \textbf{ES-BOLTZMANN*}      & 2348,378                  & 1794,4                      & 9617,802               & 0,0449562  \\ \hline
 \textbf{ES-BOLTZMANN-MOD*}  & 1068,118                  & 50,8                        & 1273,914               & 3,340806   \\ \hline
 \textbf{ES-CONST*}          & 2347,68                   & 1755,2                      & 9458,296               & 1,03066    \\ \hline
+\textbf{BMB}                & 1436,632                  & 173,2                       & 2138,298               & 7,161956   \\ \hline
+\textbf{ILS}                & 1009,2122                 & 28,8                        & 1125,886               & 4,582162   \\ \hline
+\textbf{ILS-ES}             & 2329,352                  & 1727                        & 9325,73                & 7,635098   \\ \hline
 \textbf{ALG-PROPIO-100.000} & 1019,946                  & 28,2                        & 1134,19                & 100,73792  \\ \hline
 \textbf{ALG-PROPIO-500.000} & 987,1312                  & 21,6                        & 1074,636               & 499,3044   \\ \hline
 \end{tabular}
 \end{table}
 
+En Ecoli si notamos la diferencia. Este conjunto de datos es mucho más complejo y si hay diferencias significativas entre los distintos algoritmos.
+
+Con los algoritmos vistos en prácticas, el que mejor se comportaba era el algoritmo memético con una población de 50 elementos y una búsqueda local normal aplicada al diez por ciento de la población, seguido de el mismo algoritmo pero aplicando la búsqueda local al diez por ciento de los mejores elementos de la población. Con la nueva propuesta de metaheurística le aparece un nuevo competidor, y la verdad es que esta propuesta se comporta bastante bien. 
+
+Llegamos a mejora al segundo mejor algoritmo hasta ahora y nos quedamos cerca del mejor, vemos como la diferencia entre los dos mejores algoritmos desarrollados en prácticas era que se aplicaba la búsqueda local a las mejores soluciones, o no se tenia en cuenta eso, se aplicaba a soluciones al azar. En nuestra propuesta hemos aplicado la búsqueda local a las mejores soluciones, luego como experimento podríamos aplicarla a soluciones aleatorias.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
 \begin{table}[H]
 \centering
-
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 \multicolumn{5}{|c|}{\textbf{Resultados globales para el PAR con un 10\% de restricciones}}                                 \\ \hline
@@ -1187,20 +1198,21 @@ Todos los algoritmos están explicados en prácticas anteriores, tanto su constr
 \textbf{ES-BOLTZMANN*}      & 8,231654                  & 472,8                       & 35,62158               & 0,0089755  \\ \hline
 \textbf{ES-BOLTZMANN-MOD*}  & 0,746683                  & 0                           & 0,746683               & 0,31910325 \\ \hline
 \textbf{ES-CONST*}          & 6,747462                  & 352,4                       & 27,16246               & 0,6858465  \\ \hline
+\textbf{BMB}                & 0,746683                  & 0                           & 0,746683               & 0,4432915  \\ \hline
+\textbf{ILS}                & 0,746683                  & 0                           & 0,746683               & 0,27528675 \\ \hline
+\textbf{ILS-ES}             & 0,746683                  & 0                           & 0,746683               & 5,1976125  \\ \hline
 \textbf{ALG-PROPIO-100.000} & 0,746683                  & 0                           & 0,746683               & 18,923025  \\ \hline
 \textbf{ALG-PROPIO-500.000} & 0,746683                  & 0                           & 0,746683               & 97,284075  \\ \hline
 \end{tabular}
 \end{table}
 
-
-
+En el caso de Rand ocurre lo mismo que con Iris, la mayoría de algoritmos llegan a una buena 
 
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
 \begin{table}[H]
 \centering
-
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 \multicolumn{5}{|c|}{\textbf{Resultados globales para el PAR con un 10\% de restricciones}}                                 \\ \hline
@@ -1224,11 +1236,13 @@ Todos los algoritmos están explicados en prácticas anteriores, tanto su constr
 \textbf{ES-BOLTZMANN*}      & 294,0466                  & 1142                        & 3807,014               & 0,018691   \\ \hline
 \textbf{ES-BOLTZMANN-MOD*}  & 291,219                   & 22                          & 358,8944               & 1,0504342  \\ \hline
 \textbf{ES-CONST*}          & 300,8396                  & 1067,2                      & 3583,708               & 0,6481654  \\ \hline
+\textbf{BMB}                & 288,636                   & 6                           & 307,093                & 1,421452   \\ \hline
+\textbf{ILS}                & 288,636                   & 6                           & 307,093                & 0,9347308  \\ \hline
+\textbf{ILS-ES}             & 307,8254                  & 985,6                       & 3339,68                & 6,69461    \\ \hline
 \textbf{ALG-PROPIO-100.000} & 288,636                   & 6                           & 307,093                & 37,50062   \\ \hline
 \textbf{ALG-PROPIO-500.000} & 288,636                   & 6                           & 307,093                & 188,7344   \\ \hline
 \end{tabular}
 \end{table}
-
 
 \subsubsection{20\% de restricciones.}
 
@@ -1236,7 +1250,6 @@ Todos los algoritmos están explicados en prácticas anteriores, tanto su constr
 % \usepackage{multirow}
 \begin{table}[H]
 \centering
-
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 \multicolumn{5}{|c|}{\textbf{Resultados globales para el PAR con un 20\% de restricciones}}                                 \\ \hline
@@ -1260,17 +1273,21 @@ Todos los algoritmos están explicados en prácticas anteriores, tanto su constr
 \textbf{ES-BOLTZMANN*}      & 4,445                     & 944,2                       & 25,65252               & 0,0118606  \\ \hline
 \textbf{ES-BOLTZMANN-MOD*}  & 0,595316                  & 0                           & 0,595316               & 2,2894336  \\ \hline
 \textbf{ES-CONST*}          & 3,48508                   & 738                         & 20,06116               & 0,7038264  \\ \hline
+\textbf{BMB}                & 0,595316                  & 0                           & 0,595316               & 0,5360418  \\ \hline
+\textbf{ILS}                & 0,595316                  & 0                           & 0,595316               & 0,338354   \\ \hline
+\textbf{ILS-ES}             & 0,595316                  & 0                           & 0,595316               & 5,661596   \\ \hline
 \textbf{ALG-PROPIO-100.000} & 0,595316                  & 0                           & 0,595316               & 33,81382   \\ \hline
 \textbf{ALG-PROPIO-500.000} & 0,595316                  & 0                           & 0,595316               & 166,7704   \\ \hline
 \end{tabular}
 \end{table}
 
 
+
+
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
 \begin{table}[H]
 \centering
-
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 \multicolumn{5}{|c|}{\textbf{Resultados globales para el PAR con un 20\% de restricciones}}                                 \\ \hline
@@ -1294,6 +1311,9 @@ Todos los algoritmos están explicados en prácticas anteriores, tanto su constr
 \textbf{ES-BOLTZMANN*}      & 2338,602                  & 3591,8                      & 9614,104               & 0,0442088  \\ \hline
 \textbf{ES-BOLTZMANN-MOD*}  & 1013,5206                 & 105,6                       & 1227,42                & 2,84408    \\ \hline
 \textbf{ES-CONST*}          & 2338,376                  & 3534                        & 9496,8                 & 1,204014   \\ \hline
+\textbf{BMB}                & 1306,218                  & 293,2                       & 1900,12                & 8,828548   \\ \hline
+\textbf{ILS}                & 1000,5852                 & 68,6                        & 1139,542               & 5,971454   \\ \hline
+\textbf{ILS-ES}             & 2320,116                  & 3480,4                      & 9369,964               & 8,84201    \\ \hline
 \textbf{ALG-PROPIO-100.000} & 993,061                   & 62                          & 1118,648               & 148,8098   \\ \hline
 \textbf{ALG-PROPIO-500.000} & 990,6744                  & 54,8                        & 1101,676               & 748,1102   \\ \hline
 \end{tabular}
@@ -1301,11 +1321,13 @@ Todos los algoritmos están explicados en prácticas anteriores, tanto su constr
 
 
 
+
+
+
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
 \begin{table}[H]
 \centering
-
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 \multicolumn{5}{|c|}{\textbf{Resultados globales para el PAR con un 20\% de restricciones}}                                 \\ \hline
@@ -1329,11 +1351,13 @@ Todos los algoritmos están explicados en prácticas anteriores, tanto su constr
 \textbf{ES-BOLTZMANN*}      & 8,238774                  & 953,2                       & 35,83648               & 0,0117474  \\ \hline
 \textbf{ES-BOLTZMANN-MOD*}  & 0,746683                  & 0                           & 0,746683               & 0,3437946  \\ \hline
 \textbf{ES-CONST*}          & 0,746683                  & 0                           & 0,746683               & 0,305715   \\ \hline
+\textbf{BMB}                & 0,746683                  & 0                           & 0,746683               & 0,517601   \\ \hline
+\textbf{ILS}                & 0,746683                  & 0                           & 0,746683               & 0,33316975 \\ \hline
+\textbf{ILS-ES}             & 0,746683                  & 0                           & 0,746683               & 5,760605   \\ \hline
 \textbf{ALG-PROPIO-100.000} & 0,746683                  & 0                           & 0,746683               & 31,8367    \\ \hline
 \textbf{ALG-PROPIO-500.000} & 0,746683                  & 0                           & 0,746683               & 159,1726   \\ \hline
 \end{tabular}
 \end{table}
-
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
@@ -1362,6 +1386,9 @@ Todos los algoritmos están explicados en prácticas anteriores, tanto su constr
 \textbf{ES-BOLTZMANN*}      & 292,3022                  & 2301,2                      & 3830,954               & 0,0176734  \\ \hline
 \textbf{ES-BOLTZMANN-MOD*}  & 313,299                   & 0                           & 313,299                & 0,4608432  \\ \hline
 \textbf{ES-CONST*}          & 300,2416                  & 2204,2                      & 3689,732               & 0,7691834  \\ \hline
+\textbf{BMB}                & 313,299                   & 0                           & 313,299                & 1,582194   \\ \hline
+\textbf{ILS}                & 313,299                   & 0                           & 313,299                & 1,0687554  \\ \hline
+\textbf{ILS-ES}             & 313,7838                  & 2038,2                      & 3448,01                & 7,416618   \\ \hline
 \textbf{ALG-PROPIO-100.000} & 313,299                   & 0                           & 313,299                & 59,18156   \\ \hline
 \textbf{ALG-PROPIO-500.000} & 313,299                   & 0                           & 313,299                & 305,4452   \\ \hline
 \end{tabular}
