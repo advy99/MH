@@ -23,7 +23,7 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 
 	double tiempo = 0.0d;
 
-	unsigned evaluaciones = 500000;
+	unsigned evaluaciones = 100000;
 	unsigned tam_pob_ini = 10;
 
 	start_timers();
@@ -50,15 +50,15 @@ void ejecutar_PAR(PAR & par,const std::string datos, const std::string restricci
 	} else if (alg == "AM-10-0_1mej"){
 		tam_pob_ini = 10;
 		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::UNIFORME, tipo_generacion::MEMETICO_0_1_MEJ );
-	} else if (alg == "AM-BL-10-1"){
+	} else if (alg == "AM-BL-50-1"){
 		evaluaciones = 500000;
 		tam_pob_ini = 50;
 		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::UNIFORME, tipo_generacion::MEMETICO_BL_1 );
-	} else if (alg == "AM-BL-10-0_1"){
+	} else if (alg == "AM-BL-50-0_1"){
 		evaluaciones = 500000;
 		tam_pob_ini = 50;
 		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::UNIFORME, tipo_generacion::MEMETICO_BL_0_1 );
-	} else if (alg == "AM-BL-10-0_1mej"){
+	} else if (alg == "AM-BL-50-0_1mej"){
 		tam_pob_ini = 50;
 		evaluaciones = 500000;
 		solucion = par.algoritmos_AG(evaluaciones, tam_pob_ini, 0.001, 0.7, operador_cruce::UNIFORME, tipo_generacion::MEMETICO_BL_0_1_MEJ );
@@ -162,15 +162,15 @@ int main(int argc, char ** argv){
 	//
 	// Set_random( semilla );
 	//
-	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-BL-10-1");
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-BL-50-1");
 	//
 	// Set_random( semilla );
 	//
-	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-BL-10-0_1");
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-BL-50-0_1");
 	//
 	// Set_random( semilla );
 	//
-	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-BL-10-0_1mej");
+	// ejecutar_PAR(par, datos, restricciones, clus, semilla, "AM-BL-50-0_1mej");
 	//
 	// Set_random( semilla );
 	//
