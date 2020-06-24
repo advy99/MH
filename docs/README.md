@@ -5,29 +5,6 @@
 En este proyecto podrá encontrar mi implementación para resolver el problema de agrupación con restricciones (de ahora en adelante PAR) escrita en C/C++.
 
 
-# Compilar
-
-Para compilar el programa basta con abir una terminal y situarse en la carpeta donde se encuentra este fichero README, tras eso compilar ejecutando make:
-
-`make`
-
-
-# Ejecutar
-
-El binario generado en la sección anterior recibirá 4 parámetros:
-
-`./bin/practica1 <fichero_datos> <fichero_restricciones> <num_clusters> <semilla>`
-
-Esto hará que se realice una ejecución de cada algoritmo con la semilla dada.
-
-Para automatizar las distintas ejecuciones con las semillas aleatorias también es posible ejecutar el script en shell `ejecuciones.sh`:
-
-`./ejecuciones.sh`
-
-Con esto ejecutaremos el programa con todos los datasets para las distintas semillas, haciendo un total de 30 ejecuciones.
-
-Este fichero ya está preparado para ejecutar todos los datasets con las distintas restricciones y semillas.
-
 # Descripción de los archivos por carpetas
 
 ## Carpeta bin
