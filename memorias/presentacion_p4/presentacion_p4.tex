@@ -159,7 +159,7 @@ Mientras evaluaciones < MAX_EVALS:
 			Para cada asignacion de un elemento j en P_explotar[i]:
 				Si Aleatorio(0,1) <= PROB_CAM_GEN:
 					P_explotar[i].asig[j] = P_explotar[ind_mejor_explotar].asig[j]
-		Evaluar P_explorar[i] Y evaluaciones++
+		Evaluar P_explotar[i] Y evaluaciones++
 		
 	Aplicar BL_suave al P_BL% mejores soluciones de P_explotar
 	evaluaciones += evaluaciones consumidas por todas las BL_suave	
