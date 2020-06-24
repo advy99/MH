@@ -1,4 +1,3 @@
-
 layout: page
 title: "Manual de uso"
 permalink: /manual_uso/
