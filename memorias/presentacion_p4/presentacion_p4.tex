@@ -50,7 +50,7 @@
     	
     \end{minipage}
     \hfill
-	\begin{minipage}{0.6\textwidth}	
+	\begin{minipage}{0.65\textwidth}	
     	Idea obtenida de la filosofía de Nietzsche:
     
     	\begin{itemize}
@@ -65,15 +65,40 @@
   
 \section{Propuesta}
   
-\begin{frame}{Propuesta:}
+\begin{frame}{Propuesta: Dos poblaciones}
 Siguiendo la idea de Nietzsche, algoritmo con dos poblaciones:
 
 \begin{enumerate}
-	\item Población sumida en el nihilismo: Exploración del entorno. Búsqueda de mejores zonas del espacio de búsqueda. Intentar salir del nihilismo.
-	\item Población con superhombre: Explotación del entorno. La mejor solución hará de superhombre, el resto de soluciones intentarán parecerse a esta solución.
+	\item Población con superhombre:
+		\begin{itemize}
+			\item Explotación del entorno. 
+			\item La mejor solución hará de superhombre.
+			\item El resto de soluciones intentarán parecerse a esta solución.
+		\end{itemize}
+	\item Población sumida en el nihilismo: 
+		\begin{itemize}
+			\item Exploración del entorno.
+			\item Búsqueda de mejores zonas del espacio de búsqueda. 
+			\item No creen en los valores morales del superhombre, las soluciones de esta población intentarán ser distintas a la mejor solución. Intentar salir del nihilismo.
+		\end{itemize}
+
 \end{enumerate}
 
 \end{frame}  
+
+\begin{frame}{Propuesta: Adaptaciones}
+
+\begin{itemize}
+
+\item Aplicación de búsqueda local suave a parte de la población de explotación para aumentar la explotación.
+
+\item Reinicializar soluciones que son copias de la mejor con soluciones aleatorias. Evitamos estancarnos.
+
+\item Intercambio de las peores soluciones de la población de explotación por las mejores de la población de exploración para mayor comunicación. Aprovechamos buenas asignaciones y desechamos las que hasta el momento no han sido útiles.
+
+\end{itemize}
+
+\end{frame}
   
   
   
