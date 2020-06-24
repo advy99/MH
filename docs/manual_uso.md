@@ -1,3 +1,7 @@
+layout: page
+title: "Manual de uso"
+permalink: /manual_uso/
+
 # Manual de uso
 
 En esta sección explicaré como compilar y ejecutar el programa para probar los distintos algoritmos implementados.
