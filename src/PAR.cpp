@@ -1795,6 +1795,11 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::operador_mutacion_segmento_fij
 */
 
 
+bool son_iguales(const double & a, const double & b, const double epsilon = 0.005d){
+    return (fabs(a - b) < epsilon);
+}
+
+
 std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_UNO(const int MAX_EVAL, const int TAM_POB_INI,
 																					 const double PROB_CAMBIAR_GEN, const double PORCENTAJE_EXPLORAR,
 																					 const double PORCENTAJE_INTERCAMBIAR,
@@ -1924,7 +1929,7 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_UNO(const int MAX_EV
 				poblacion_explotar[i].second = funcion_objetivo();
 				eval++;
 
-				if (poblacion_explotar[i].second == poblacion_explotar[mejor_explotar].second){
+				if ( son_iguales(poblacion_explotar[i].second, poblacion_explotar[mejor_explotar].second)){
 					poblacion_explotar[i].first = clusters_to_solucion(generar_solucion_aleatoria());
 					clusters = solucion_to_clusters(poblacion_explotar[i].first);
 					calcular_desviacion_general();
