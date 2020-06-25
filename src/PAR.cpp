@@ -1795,10 +1795,10 @@ std::pair<std::vector<PAR::Cluster>, double> PAR::operador_mutacion_segmento_fij
 */
 
 
-std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_propio(const int MAX_EVAL, const int TAM_POB_INI,
-																						 const double PROB_CAMBIAR_GEN, const double PORCENTAJE_EXPLORAR,
-																					 	 const double PORCENTAJE_INTERCAMBIAR,
-																						 const double PORCENTAJE_BL, const bool SALIDA){
+std::pair<std::vector<PAR::Cluster>, double> PAR::algoritmo_UNO(const int MAX_EVAL, const int TAM_POB_INI,
+																					 const double PROB_CAMBIAR_GEN, const double PORCENTAJE_EXPLORAR,
+																					 const double PORCENTAJE_INTERCAMBIAR,
+																				 	 const double PORCENTAJE_BL, const bool SALIDA){
 
 	// algoritmo propio para la p4
 

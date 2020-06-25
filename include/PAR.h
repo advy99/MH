@@ -92,10 +92,10 @@ class PAR{
 																				 	 const tipo_ils algoritmo_trayectorias);
 
 
-		std::pair<std::vector<PAR::Cluster>, double> algoritmo_propio(const int MAX_EVAL, const int TAM_POB_INI,
-																						  const double PROB_CAMBIAR_GEN, const double PORCENTAJE_EXPLORAR,
-																					  	  const double PORCENTAJE_INTERCAMBIAR,
-																						  const double PORCENTAJE_BL, const bool SALIDA = true);
+		std::pair<std::vector<PAR::Cluster>, double> algoritmo_UNO(const int MAX_EVAL, const int TAM_POB_INI,
+																					  const double PROB_CAMBIAR_GEN, const double PORCENTAJE_EXPLORAR,
+																					  const double PORCENTAJE_INTERCAMBIAR,
+																					  const double PORCENTAJE_BL, const bool SALIDA = true);
 
 		int calcular_infactibilidad() const;
 		std::vector<Cluster> generar_solucion_aleatoria();
