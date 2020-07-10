@@ -111,3 +111,11 @@ En esta carpeta encontramos:
 - Este propio fichero de documentación.
 - `Makefile`: Fichero para compilar el programa
 - `ejecuciones.sh`: Fichero para ejecutar las 30 ejecuciones pedidas en la práctica.
+
+
+## Invítame a un café
+
+Todo mi trabajo esta publicado como software libre, aun así, si te ha resultado util y quieres invitarme a un café:
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y81WT9M)
+
